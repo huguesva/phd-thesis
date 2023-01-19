@@ -1,0 +1,7 @@
+\babel@toc {english}{}\relax 
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces An Electron}}{8}{figure.caption.37}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Left: MNIST t-SNE (perp : 30) embeddings initialized with i.i.d $\mathcal {N}(0,1)$ coordinates. Middle: using these t-SNE embeddings, mean coordinates for each digit are represented. Right: we compute a matrix of mean input coordinates for each of the $10$ digits and embed it using PCA. For t-SNE embeddings, the positions of clusters vary accross different runs and don't visually match the PCA embeddings of input mean vectors (right plot).\relax }}{20}{figure.caption.82}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Top: MNIST embeddings produced by PCA, Laplacian eigenmaps, \textit {ccPCA} and finally t-SNE launched after the previous three embeddings to improve the fine-grain structure. Bottom: mean coordinates for each digit using the embeddings of the first row. The color legend is the same as in \cref {fig:tSNE-clusters-truth}. t-SNE was trained during $1000$ iterations using default parameters with the openTSNE implementation \blx@tocontentsinit {0}\cite {polivcar2019opentsne}.\relax }}{22}{figure.caption.86}%
+\addvspace {10\p@ }
