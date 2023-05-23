@@ -46,14 +46,14 @@ t-SNEkhorn with t-SNE and UMAP \cite{mcinnes2018umap} on real-world images and g
 % \end{minipage}
 
 \textbf{Simulated data.}
-We take inspiration from \cite{landa2021doubly} and consider the task of discriminating between samples from two multinomial distributions. We first sample uniformly two vectors $\p_1$ and $\p_2$ in the $10^4$-dimensional probability simplex. We then generate $n=10^3$ samples as $\x_i =\tilde{\x}_i / (\sum_j \tilde{x}_{ij})$ such that:
+We take inspiration from \cite{landa2021doubly} and consider the task of discriminating between samples from two multinomial distributions. We first sample uniformly two vectors $\pb_1$ and $\pb_2$ in the $10^4$-dimensional probability simplex. We then generate $n=10^3$ samples as $\xb_i =\tilde{\xb}_i / (\sum_j \tilde{xb}_{ij})$ such that:
 \begin{align*}
-    \tilde{\x}_i \sim 
+    \tilde{\xb}_i \sim 
     \left\{
     \begin{array}{ll}
-        \mathcal{M}(10^3, \p_1), & 1\leq i \leq 500 \\
-        \mathcal{M}(10^3, \p_2), & 501\leq i \leq 750 \\
-        \mathcal{M}(10^4, \p_2), & 751\leq i \leq 1000 \:.
+        \mathcal{M}(10^3, \pb_1), & 1\leq i \leq 500 \\
+        \mathcal{M}(10^3, \pb_2), & 501\leq i \leq 750 \\
+        \mathcal{M}(10^4, \pb_2), & 751\leq i \leq 1000 \:.
     \end{array}
     \right.
 \end{align*}

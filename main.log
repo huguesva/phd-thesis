@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.12.12)  23 MAY 2023 15:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.12.12)  23 MAY 2023 16:50
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -763,9 +763,33 @@ Document Style `algorithmic' - environment
 \WF@box=\box71
 \WF@everypar=\toks49
 Package: wrapfig 2003/01/31  v 3.6
-)
-\c@theorem=\count353
-\c@claim=\count354
+) (/usr/local/texlive/2022/texmf-dist/tex/latex/thmtools/thm-restate.sty
+Package: thm-restate 2020/08/01 v0.72
+ (/usr/local/texlive/2022/texmf-dist/tex/latex/thmtools/thmtools.sty
+Package: thmtools 2020/08/01 v0.72
+\thmt@toks=\toks50
+\c@thmt@dummyctr=\count353
+ (/usr/local/texlive/2022/texmf-dist/tex/latex/thmtools/thm-patch.sty
+Package: thm-patch 2020/08/01 v0.72
+ (/usr/local/texlive/2022/texmf-dist/tex/latex/thmtools/parseargs.sty
+Package: parseargs 2020/08/01 v0.72
+\@parsespec=\toks51
+)) (/usr/local/texlive/2022/texmf-dist/tex/latex/thmtools/thm-kv.sty
+Package: thm-kv 2020/08/01 v0.72
+Package thm-kv Info: Theorem names will be uppercased on input line 42.
+Package thm-kv Info: kvsetkeys patch (v1.16 or later) on input line 158.
+) (/usr/local/texlive/2022/texmf-dist/tex/latex/thmtools/thm-autoref.sty
+Package: thm-autoref 2020/08/01 v0.72
+ (/usr/local/texlive/2022/texmf-dist/tex/latex/thmtools/aliasctr.sty
+Package: aliasctr 2020/08/01 v0.72
+)) (/usr/local/texlive/2022/texmf-dist/tex/latex/thmtools/thm-listof.sty
+Package: thm-listof 2020/08/01 v0.72
+) (/usr/local/texlive/2022/texmf-dist/tex/latex/thmtools/thm-amsthm.sty
+Package: thm-amsthm 2020/08/01 v0.72
+\thmt@style@headstyle=\toks52
+)))
+\c@theorem=\count354
+\c@claim=\count355
 )
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 354.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/ot1lmr.fd
@@ -845,17 +869,17 @@ Package microtype Info: No adjustment of character kerning.
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
 ) (/usr/local/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count355
+\scratchcounter=\count356
 \scratchdimen=\dimen334
 \scratchbox=\box72
-\nofMPsegments=\count356
-\nofMParguments=\count357
-\everyMPshowfont=\toks50
-\MPscratchCnt=\count358
+\nofMPsegments=\count357
+\nofMParguments=\count358
+\everyMPshowfont=\toks53
+\MPscratchCnt=\count359
 \MPscratchDim=\dimen335
-\MPnumerator=\count359
-\makeMPintoPDFobject=\count360
-\everyMPtoPDFconversion=\toks51
+\MPnumerator=\count360
+\makeMPintoPDFobject=\count361
+\everyMPtoPDFconversion=\toks54
 ) (/usr/local/texlive/2022/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
@@ -870,7 +894,7 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (/usr/local/texlive/2022/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count361
+\c@section@level=\count362
 )
 LaTeX Info: Redefining \ref on input line 354.
 LaTeX Info: Redefining \pageref on input line 354.
@@ -1041,6 +1065,7 @@ LaTeX Warning: Reference `sec:towards_large_scale' on page 1 undefined on input 
 
 LaTeX Warning: Reference `PCA_graph_coupling' on page 1 undefined on input line 25.
 
+Package hyperref Info: bookmark level for unknown definition defaults to 0 on input line 36.
 
 LaTeX Warning: Citation `Chung97' on page 4 undefined on input line 45.
 
@@ -1059,9 +1084,11 @@ LaTeX Warning: Citation `maaten2008tSNE' on page 5 undefined on input line 61.
 
 LaTeX Warning: Citation `kobak2019heavy' on page 5 undefined on input line 61.
 
+Package hyperref Info: bookmark level for unknown theorem defaults to 0 on input line 63.
 
 LaTeX Warning: Reference `proof:lambda_perp_integrability' on page 1 undefined on input line 67.
 
+Package hyperref Info: bookmark level for unknown remark defaults to 0 on input line 74.
 
 LaTeX Warning: Reference `prop:integrability_pairwise_MRF' on page 1 undefined on input line 74.
 
@@ -1085,15 +1112,6 @@ LaTeX Warning: Reference `eq:unnormalized_MRF' on page 5 undefined on input line
 
 
 LaTeX Warning: Citation `rue2005gaussian' on page 5 undefined on input line 82.
-
-./Chapters/GraphCoupling/GraphCoupling.tex:83: Undefined control sequence.
-l.83 ...$f^{\varepsilon}(\cdot, \Wb) \Xbrightarrow
-                                                  [\varepsilon \to 0]{} 1$ a...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
 
 [5]
 
@@ -1120,6 +1138,7 @@ Overfull \hbox (4.21669pt too wide) has occurred while \output is active
 
 LaTeX Warning: Reference `proof:posterior_limit' on page 1 undefined on input line 123.
 
+Package hyperref Info: bookmark level for unknown proposition defaults to 0 on input line 125.
 
 LaTeX Warning: Reference `prop:integrability_pairwise_MRF' on page 1 undefined on input line 126.
 
@@ -1128,17 +1147,6 @@ LaTeX Warning: Reference `def:prior_W' on page 1 undefined on input line 131.
 
 
 LaTeX Warning: Reference `prop:integrability_pairwise_MRF' on page 1 undefined on input line 136.
-
-./Chapters/GraphCoupling/GraphCoupling.tex:136: Undefined control sequence.
-<recently read> \Zbb 
-                     
-l.136 ...iated kernel matrices on  $\Xb$ and $\Zbb
-                                                  $ respectively. For both g...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
 
 
 LaTeX Warning: Citation `hinton2002stochastic' on page 7 undefined on input line 144.
@@ -1171,8 +1179,8 @@ LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 191.
 
 \g__nicematrix_max_cell_width_dim=\dimen336
-\c@iRow=\count362
-\c@jCol=\count363
+\c@iRow=\count363
+\c@jCol=\count364
 \l__nicematrix_cell_box=\box73
 \l__nicematrix_the_array_box=\box74
 \l__nicematrix_left_delim_dim=\dimen337
@@ -1187,18 +1195,18 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 \g__nicematrix_dp_ante_last_row_dim=\dimen342
 \g__nicematrix_ht_last_row_dim=\dimen343
 \g__nicematrix_dp_last_row_dim=\dimen344
-\g__nicematrix_ddots_int=\count364
-\g__nicematrix_iddots_int=\count365
+\g__nicematrix_ddots_int=\count365
+\g__nicematrix_iddots_int=\count366
 \g__nicematrix_delta_x_one_dim=\dimen345
 \g__nicematrix_delta_y_one_dim=\dimen346
 \g__nicematrix_delta_x_two_dim=\dimen347
 \g__nicematrix_delta_y_two_dim=\dimen348
-\l__nicematrix_initial_i_int=\count366
-\l__nicematrix_initial_j_int=\count367
-\l__nicematrix_final_i_int=\count368
-\l__nicematrix_final_j_int=\count369
-\l__nicematrix_local_start_int=\count370
-\l__nicematrix_local_end_int=\count371
+\l__nicematrix_initial_i_int=\count367
+\l__nicematrix_initial_j_int=\count368
+\l__nicematrix_final_i_int=\count369
+\l__nicematrix_final_j_int=\count370
+\l__nicematrix_local_start_int=\count371
+\l__nicematrix_local_end_int=\count372
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <12> on input line 206.
 LaTeX Font Info:    External font `lmex10' loaded for size
@@ -1308,11 +1316,12 @@ LaTeX Warning: Reference `eq:add_term_Coupling' on page 10 undefined on input li
 
 LaTeX Warning: Reference `fig:graphical_model_hierarchical' on page 1 undefined on input line 269.
 
-<Figures/tSNE_truth.pdf, id=111, 1221.27814pt x 382.11256pt>
+<Figures/tSNE_truth.pdf, id=120, 1221.27814pt x 382.11256pt>
 File: Figures/tSNE_truth.pdf Graphic file (type pdf)
 <use Figures/tSNE_truth.pdf>
 Package pdftex.def Info: Figures/tSNE_truth.pdf  used on input line 273.
 (pdftex.def)             Requested size: 213.39568pt x 66.76575pt.
+Package hyperref Info: bookmark level for unknown corollary defaults to 0 on input line 279.
 
 LaTeX Warning: Reference `eq:loss_LW' on page 10 undefined on input line 286.
 
@@ -1339,7 +1348,7 @@ Overfull \hbox (9.21669pt too wide) has occurred while \output is active
 [10]
 LaTeX Font Info:    Font shape `OT1/lmss/bx/it' in size <12> not available
 (Font)              Font shape `OT1/lmss/bx/sl' tried instead on input line 291.
-<Figures/cluster_positions.pdf, id=121, 2283.10143pt x 709.49564pt>
+<Figures/cluster_positions.pdf, id=132, 2283.10143pt x 709.49564pt>
 File: Figures/cluster_positions.pdf Graphic file (type pdf)
 <use Figures/cluster_positions.pdf>
 Package pdftex.def Info: Figures/cluster_positions.pdf  used on input line 295.
@@ -1509,26 +1518,6 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/intro.tex:52: Undefined control sequence.
-l.52 ...= -\sum_{i} p_i(\log(p_i)-1) = -\langle \p
-                                                  , \log \p - \bm{1} \rangle...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/intro.tex:52: Undefined control sequence.
-<recently read> \p 
-                   
-l.52 ...i} p_i(\log(p_i)-1) = -\langle \p, \log \p
-                                                   - \bm{1} \rangle$. The Ku...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
 ) (/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/background.tex
 /Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/background.tex:26: Undefined control sequence.
 <recently read> \X 
@@ -1552,36 +1541,9 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/background.tex:26: Undefined control sequence.
-l.26 ...atrix} $\mathbf{C} \in \mathcal{D} := \{\C
-                                                   \in \mathbb{R}_+^{n \time...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/background.tex:26: Undefined control sequence.
-l.26 ...:= \{\C \in \mathbb{R}_+^{n \times n} : \C
-                                                   = \C^\top \text{and } C_{...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/background.tex:26: Undefined control sequence.
-l.26 ...\C \in \mathbb{R}_+^{n \times n} : \C = \C
-                                                  ^\top \text{and } C_{ij}=0...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/background.tex:26: Undefined control sequence.
-l.26 ...wise normalization of the kernel $\exp(-\C
-                                                   / \varepsilon)$, where $\...
+/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/background.tex:28: Undefined control sequence.
+l.28 \pragraph
+              {Entropic Affinities (EAs).} Another frequently used approach ...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -2187,28 +2149,6 @@ and I'll forget about whatever was undefined.
 
 LaTeX Warning: Citation `idel2016review' on page 15 undefined on input line 96.
 
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/background.tex:100: Undefined control sequence.
-<argument> ...\mathbf {f} \oplus \mathbf {f} - \C 
-                                                  ) / \nu \right ) \text { w...
-l.100 \end{align}
-                 
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/background.tex:100: Undefined control sequence.
-<argument> ...\mathbf {f} \oplus \mathbf {f} - \C 
-                                                  ) / \nu \right ) \text { w...
-l.100 \end{align}
-                 
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
 
 Overfull \hbox (21.99763pt too wide) has occurred while \output is active
 \OT1/lmr/m/sl/10 2.2.  ENTROPIC AFFINITIES, DIMENSIONALITY REDUCTION AND OPTIMAL TRANSPORT \OT1/lmr/m/n/10 15
@@ -2250,33 +2190,7 @@ LaTeX Warning: Reference `eq:entropy_constrained_OT' on page 16 undefined on inp
 LaTeX Warning: Reference `sec:proofs' on page 16 undefined on input line 15.
 
 
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/method.tex:16: LaTeX Error: Environment restatable undefined.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.16 \begin{restatable}
-                       {proposition}{entropicaffinityaslinearprogram}
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-LaTeX Warning: Reference `eq:entropic_affinity_pb' on page 16 undefined on input line 18.
-
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/method.tex:23: LaTeX Error: \begin{document} ended by \end{restatable}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.23 \end{restatable}
-                     
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
+LaTeX Warning: Reference `eq:entropic_affinity_pb' on page 16 undefined on input line 23.
 
 
 LaTeX Warning: Reference `eq:entropic_affinity_semi_relaxed' on page 16 undefined on input line 25.
@@ -2365,6 +2279,12 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
+Overfull \hbox (50.33089pt too wide) has occurred while \output is active
+\OT1/lmr/m/n/10 16 \OT1/lmr/m/sl/10 CHAPTER 2.  SNEKHORN: DIMENSION REDUCTION WITH SYMMETRIC ENTROPIC AFFINITIES
+ []
+
+[16]
+
 LaTeX Warning: File `figures/Ps_vs_Pse.pdf' not found on input line 44.
 
 
@@ -2380,29 +2300,23 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Reference `eq:plan_sym_sinkhorn' on page 16 undefined on input line 45.
+LaTeX Warning: Reference `eq:plan_sym_sinkhorn' on page 17 undefined on input line 45.
 
 
-LaTeX Warning: Reference `eq:sym_entropic_affinity' on page 16 undefined on input line 45.
+LaTeX Warning: Reference `eq:sym_entropic_affinity' on page 17 undefined on input line 45.
 
 
-LaTeX Warning: Reference `eq:plan_sym_sinkhorn' on page 16 undefined on input line 45.
+LaTeX Warning: Reference `eq:plan_sym_sinkhorn' on page 17 undefined on input line 45.
 
 
-LaTeX Warning: Reference `eq:sym_entropic_affinity' on page 16 undefined on input line 45.
+LaTeX Warning: Reference `eq:sym_entropic_affinity' on page 17 undefined on input line 45.
 
 
-LaTeX Warning: Reference `eq:entropic_affinity_semi_relaxed' on page 16 undefined on input line 51.
+LaTeX Warning: Reference `eq:entropic_affinity_semi_relaxed' on page 17 undefined on input line 51.
 
 
-LaTeX Warning: Reference `eq:entropy_constrained_OT' on page 16 undefined on input line 51.
+LaTeX Warning: Reference `eq:entropy_constrained_OT' on page 17 undefined on input line 51.
 
-
-Overfull \hbox (50.33089pt too wide) has occurred while \output is active
-\OT1/lmr/m/n/10 16 \OT1/lmr/m/sl/10 CHAPTER 2.  SNEKHORN: DIMENSION REDUCTION WITH SYMMETRIC ENTROPIC AFFINITIES
- []
-
-[16]
 /Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/method.tex:56: Undefined control sequence.
 <argument> ..._{\Pb \in \mathcal {H}_{\xi } \Cbap 
                                                   \mathcal {S}} \: \langle \...
@@ -2450,33 +2364,7 @@ LaTeX Warning: Reference `eq:sym_entropic_affinity' on page 17 undefined on inpu
 LaTeX Warning: Reference `proof:main_props' on page 17 undefined on input line 57.
 
 
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/method.tex:58: LaTeX Error: Environment restatable undefined.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.58 \begin{restatable}
-                       [Saturation of the entropies]{proposition}{saturation}
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-LaTeX Warning: Reference `eq:sym_entropic_affinity' on page 17 undefined on input line 60.
-
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/method.tex:61: LaTeX Error: \begin{document} ended by \end{restatable}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.61 \end{restatable}
-                     
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
+LaTeX Warning: Reference `eq:sym_entropic_affinity' on page 17 undefined on input line 61.
 
 
 LaTeX Warning: Reference `eq:sym_entropic_affinity' on page 17 undefined on input line 63.
@@ -2488,24 +2376,13 @@ LaTeX Warning: Reference `symmetrization_tsne' on page 17 undefined on input lin
 LaTeX Warning: Reference `recap_properties_sym' on page 1 undefined on input line 64.
 
 
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/method.tex:65: LaTeX Error: Environment restatable undefined.
+LaTeX Warning: Reference `eq:sym_entropic_affinity' on page 17 undefined on input line 74.
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.65 \begin{restatable}
-                       [Solving for \ref{eq:sym_entropic_affinity}]{proposit...
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-LaTeX Warning: Reference `eq:sym_entropic_affinity' on page 17 undefined on input line 65.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/method.tex:67: Undefined control sequence.
-l.67 ... = \min_{\Pb \in \R_{+}^{n \times n} \Cbap
-                                                   \mathcal{S}} \mathcal{L}(...
+/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/method.tex:74: Undefined control sequence.
+\thmt@stored@solvingsea ...{+}^{n \times n} \Cbap 
+                                                  \mathcal {S}} \mathcal {L}...
+l.74 \end{restatable}
+                     
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -2513,27 +2390,14 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Reference `eq:sym_entropic_affinity' on page 17 undefined on input line 67.
+LaTeX Warning: Reference `eq:sym_entropic_affinity' on page 17 undefined on input line 74.
 
 
 pdfTeX warning (ext4): destination with the same identifier (name{equation.2.3.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.73 \end{align}
-                
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/method.tex:74: LaTeX Error: \begin{document} ended by \end{restatable}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
 l.74 \end{restatable}
                      
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
 
 LaTeX Warning: Reference `eq:dual_problem' on page 17 undefined on input line 136.
 
@@ -2795,6 +2659,7 @@ LaTeX Warning: Citation `kingma2014adam' on page 17 undefined on input line 159.
 
 LaTeX Warning: Citation `bertsekas1997nonlinear' on page 17 undefined on input line 167.
 
+[17]
 
 LaTeX Warning: Reference `Pe_proj' on page 1 undefined on input line 183.
 
@@ -2833,7 +2698,6 @@ and I'll forget about whatever was undefined.
 
 LaTeX Warning: Reference `sec:dykstra' on page 1 undefined on input line 185.
 
-[17]
 
 LaTeX Warning: Reference `fig:Ps_vs_Pse' on page 1 undefined on input line 192.
 
@@ -2925,85 +2789,9 @@ and I'll forget about whatever was undefined.
 
 LaTeX Warning: Citation `kobak2020heavy' on page 18 undefined on input line 22.
 
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/DR.tex:25: Undefined control sequence.
-l.25 ..., it corresponds to choosing the cost $[\C
-                                                  _{\Zb}]_{ij} = \left(\log(...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/DR.tex:25: Undefined control sequence.
-l.25 ...ost $[\C_{\Zb}]_{ij} = \left(\log(1 + \|\Z
-                                                  _{i:}-\Z_{j:}\|_2^2)\right...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/DR.tex:25: Undefined control sequence.
-l.25 ..._{\Zb}]_{ij} = \left(\log(1 + \|\Z_{i:}-\Z
-                                                  _{j:}\|_2^2)\right)_{ij}$
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/DR.tex:26: Undefined control sequence.
-l.26 instead of $(\|\Z
-                      _{i:}-\Z_{j:}\|_2^2)_{ij}$.
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/DR.tex:26: Undefined control sequence.
-l.26 instead of $(\|\Z_{i:}-\Z
-                              _{j:}\|_2^2)_{ij}$.
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/DR.tex:29: Undefined control sequence.
-<recently read> \Z 
-                   
-l.29 ...astic normalization for each update of $\Z
-                                                  $. Interestingly, to compu...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
 /Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/DR.tex:29: Undefined control sequence.
 l.29 ...oned Sinkhorn fixed point iteration \citep
                                                   {knight2014symmetry, feydy...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-LaTeX Warning: Reference `fig:snekhorn_not_DS' on page 1 undefined on input line 35.
-
-
-LaTeX Warning: Reference `eq:sinkhorn_iterations_log_sym_accelerated' on page 18 undefined on input line 35.
-
-
-LaTeX Warning: Reference `sec:DR_experiments' on page 1 undefined on input line 35.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/DR.tex:36: Undefined control sequence.
-<recently read> \Z 
-                   
-l.36 $\Z
-        $ is updated through gradient descent with gradients obtained by per...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -3017,59 +2805,46 @@ Overfull \hbox (50.33089pt too wide) has occurred while \output is active
 
 [18]
 
-LaTeX Warning: Citation `lu2019doubly' on page 19 undefined on input line 48.
+LaTeX Warning: Reference `fig:snekhorn_not_DS' on page 1 undefined on input line 35.
 
 
-LaTeX Warning: Reference `eq:plan_sym_sinkhorn' on page 19 undefined on input line 49.
+LaTeX Warning: Reference `eq:sinkhorn_iterations_log_sym_accelerated' on page 19 undefined on input line 35.
 
 
-LaTeX Warning: Reference `fig:Ps_vs_Pse' on page 1 undefined on input line 49.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/DR.tex:50: Undefined control sequence.
-<recently read> \Z 
-                   
-l.50 ...spherical constraints on the embedding $\Z
-                                                  $.
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
+LaTeX Warning: Reference `sec:DR_experiments' on page 1 undefined on input line 35.
 
 
-LaTeX Warning: Reference `fig:snekhorn_not_DS' on page 1 undefined on input line 52.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/DR.tex:52: Undefined control sequence.
-<recently read> \Z 
-                   
-l.52 ...stochastic} so that latent coordinates $\Z
-                                                  $ are not subject to spher...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
+LaTeX Warning: Citation `lu2019doubly' on page 19 undefined on input line 46.
 
 
-LaTeX Warning: Reference `fig:simulated_data_multinomial' on page 1 undefined on input line 53.
+LaTeX Warning: Reference `eq:plan_sym_sinkhorn' on page 19 undefined on input line 47.
 
 
-LaTeX Warning: File `figures/snekhorn_not_DS.pdf' not found on input line 59.
+LaTeX Warning: Reference `fig:Ps_vs_Pse' on page 1 undefined on input line 47.
 
 
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/DR.tex:59: Package pdftex.def Error: File `figures/snekhorn_not_DS.pdf' not found: using draft setting.
+LaTeX Warning: Reference `fig:snekhorn_not_DS' on page 1 undefined on input line 50.
+
+
+LaTeX Warning: Reference `fig:simulated_data_multinomial' on page 1 undefined on input line 51.
+
+
+LaTeX Warning: File `Figures/snekhorn_not_DS.pdf' not found on input line 57.
+
+
+/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/DR.tex:57: Package pdftex.def Error: File `Figures/snekhorn_not_DS.pdf' not found: using draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.59 ...=\linewidth]{figures/snekhorn_not_DS.pdf}}
+l.57 ...=\linewidth]{Figures/snekhorn_not_DS.pdf}}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/DR.tex:60: Undefined control sequence.
-l.60     \captionof
+/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/DR.tex:58: Undefined control sequence.
+l.58     \captionof
                    {figure}{Left: SNEkhorn embedding on the simulated data o...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3078,18 +2853,18 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Reference `sec:DR_experiments' on page 1 undefined on input line 60.
+LaTeX Warning: Reference `sec:DR_experiments' on page 1 undefined on input line 58.
 
 
-LaTeX Warning: Reference `eq:sinkhorn_iterations_log_sym_accelerated' on page 19 undefined on input line 60.
+LaTeX Warning: Reference `eq:sinkhorn_iterations_log_sym_accelerated' on page 19 undefined on input line 58.
 
 ) (/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex
-Overfull \hbox (17.30836pt too wide) in paragraph at lines 46--2
+Overfull \hbox (17.30836pt too wide) in paragraph at lines 44--2
 []$[]$   $[]$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 46--2
+Underfull \hbox (badness 10000) in paragraph at lines 44--2
 
  []
 
@@ -3132,171 +2907,7 @@ LaTeX Warning: Citation `mcinnes2018umap' on page 19 undefined on input line 19.
 
 LaTeX Warning: Citation `landa2021doubly' on page 19 undefined on input line 49.
 
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex:49: Undefined control sequence.
-<recently read> \p 
-                   
-l.49 ... We first sample uniformly two vectors $\p
-                                                  _1$ and $\p_2$ in the $10^...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex:49: Undefined control sequence.
-<recently read> \p 
-                   
-l.49 ...ample uniformly two vectors $\p_1$ and $\p
-                                                  _2$ in the $10^4$-dimensio...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex:49: Undefined control sequence.
-<recently read> \x 
-                   
-l.49 .... We then generate $n=10^3$ samples as $\x
-                                                  _i =\tilde{\x}_i / (\sum_j...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex:49: Undefined control sequence.
-<recently read> \x 
-                   
-l.49 ...rate $n=10^3$ samples as $\x_i =\tilde{\x}
-                                                  _i / (\sum_j \tilde{x}_{ij...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex:49: Undefined control sequence.
-<argument> \x 
-              
-l.49 ...rate $n=10^3$ samples as $\x_i =\tilde{\x}
-                                                  _i / (\sum_j \tilde{x}_{ij...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex:59: Undefined control sequence.
-<recently read> \x 
-                   
-l.59 \end{align*}
-                 
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex:59: Undefined control sequence.
-<argument> \x 
-              
-l.59 \end{align*}
-                 
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex:59: Undefined control sequence.
-<argument> ...n {array}{ll} \mathcal {M}(10^3, \p 
-                                                  _1), & 1\leq i \leq 500 \\...
-l.59 \end{align*}
-                 
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex:59: Undefined control sequence.
-<argument> ...i \leq 500 \\ \mathcal {M}(10^3, \p 
-                                                  _2), & 501\leq i \leq 750 ...
-l.59 \end{align*}
-                 
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex:59: Undefined control sequence.
-<argument> ...i \leq 750 \\ \mathcal {M}(10^4, \p 
-                                                  _2), & 751\leq i \leq 1000...
-l.59 \end{align*}
-                 
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex:59: Undefined control sequence.
-<recently read> \x 
-                   
-l.59 \end{align*}
-                 
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex:59: Undefined control sequence.
-<argument> \x 
-              
-l.59 \end{align*}
-                 
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex:59: Undefined control sequence.
-<argument> ...n {array}{ll} \mathcal {M}(10^3, \p 
-                                                  _1), & 1\leq i \leq 500 \\...
-l.59 \end{align*}
-                 
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex:59: Undefined control sequence.
-<argument> ...i \leq 500 \\ \mathcal {M}(10^3, \p 
-                                                  _2), & 501\leq i \leq 750 ...
-l.59 \end{align*}
-                 
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex:59: Undefined control sequence.
-<argument> ...i \leq 750 \\ \mathcal {M}(10^4, \p 
-                                                  _2), & 751\leq i \leq 1000...
-l.59 \end{align*}
-                 
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
+[19]
 /Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex:61: Undefined control sequence.
 <recently read> \p 
                    
@@ -3320,19 +2931,19 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Citation `kobak2019art' on page 19 undefined on input line 61.
+LaTeX Warning: Citation `kobak2019art' on page 20 undefined on input line 61.
 
 
-LaTeX Warning: Citation `tran2020benchmark' on page 19 undefined on input line 61.
+LaTeX Warning: Citation `tran2020benchmark' on page 20 undefined on input line 61.
 
 
 LaTeX Warning: Reference `fig:simulated_data_multinomial' on page 1 undefined on input line 64.
 
 
-LaTeX Warning: Reference `symmetrization_tsne' on page 19 undefined on input line 64.
+LaTeX Warning: Reference `symmetrization_tsne' on page 20 undefined on input line 64.
 
 
-LaTeX Warning: Reference `eq:sym_entropic_affinity' on page 19 undefined on input line 64.
+LaTeX Warning: Reference `eq:sym_entropic_affinity' on page 20 undefined on input line 64.
 
 /Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex:64: Undefined control sequence.
 <recently read> \p 
@@ -3356,7 +2967,6 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-[19]
 
 LaTeX Warning: Citation `nene1996columbia' on page 20 undefined on input line 99.
 
@@ -3461,6 +3071,17 @@ LaTeX Warning: Reference `fig:spectral_clustering_sensibility' on page 1 undefin
 LaTeX Warning: Reference `fig:spectral_clustering_sensibility' on page 1 undefined on input line 152.
 
 
+Overfull \hbox (50.33089pt too wide) has occurred while \output is active
+\OT1/lmr/m/n/10 20 \OT1/lmr/m/sl/10 CHAPTER 2.  SNEKHORN: DIMENSION REDUCTION WITH SYMMETRIC ENTROPIC AFFINITIES
+ []
+
+[20
+pdfTeX warning (ext4): destination with the same identifier (name{table.2.1}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.159 
+      ]
+
 LaTeX Warning: File `figures/fig_sc.pdf' not found on input line 161.
 
 
@@ -3485,19 +3106,19 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Citation `paszke2017automatic' on page 20 undefined on input line 167.
+LaTeX Warning: Citation `paszke2017automatic' on page 21 undefined on input line 167.
 
 
-LaTeX Warning: Citation `kingma2014adam' on page 20 undefined on input line 170.
+LaTeX Warning: Citation `kingma2014adam' on page 21 undefined on input line 170.
 
 
-LaTeX Warning: Citation `rousseeuw1987silhouettes' on page 20 undefined on input line 170.
+LaTeX Warning: Citation `rousseeuw1987silhouettes' on page 21 undefined on input line 170.
 
 
-LaTeX Warning: Citation `venna2001neighborhood' on page 20 undefined on input line 170.
+LaTeX Warning: Citation `venna2001neighborhood' on page 21 undefined on input line 170.
 
 
-LaTeX Warning: Citation `scikit-learn' on page 20 undefined on input line 170.
+LaTeX Warning: Citation `scikit-learn' on page 21 undefined on input line 170.
 
 
 LaTeX Warning: Reference `tab:DR_genomics_data' on page 1 undefined on input line 171.
@@ -3505,17 +3126,6 @@ LaTeX Warning: Reference `tab:DR_genomics_data' on page 1 undefined on input lin
 
 LaTeX Warning: Reference `fig:sc' on page 1 undefined on input line 171.
 
-
-Overfull \hbox (50.33089pt too wide) has occurred while \output is active
-\OT1/lmr/m/n/10 20 \OT1/lmr/m/sl/10 CHAPTER 2.  SNEKHORN: DIMENSION REDUCTION WITH SYMMETRIC ENTROPIC AFFINITIES
- []
-
-[20
-pdfTeX warning (ext4): destination with the same identifier (name{table.2.1}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.172 
-      ]
 /Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/experiments.tex:201: Undefined control sequence.
 l.201 \ra
          {1.01}
@@ -3531,28 +3141,28 @@ LaTeX Warning: Command \ss invalid in math mode on input line 224.
 
 LaTeX Warning: Command \ss invalid in math mode on input line 225.
 
-) (/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/conclusion.tex
-
-LaTeX Warning: Citation `van2022probabilistic' on page 21 undefined on input line 8.
-
-
-LaTeX Warning: Citation `lee2015multi' on page 21 undefined on input line 9.
-
-
-LaTeX Warning: Citation `van2013barnes' on page 21 undefined on input line 9.
-
-
-LaTeX Warning: Citation `linderman2019fast' on page 21 undefined on input line 9.
-
-
-LaTeX Warning: Citation `zhai2023sigmareparam' on page 21 undefined on input line 9.
-
-[21
+) (/Users/hugues/Documents/Github/phd-thesis/Chapters/SNEkhorn/sections/conclusion.tex [21
 pdfTeX warning (ext4): destination with the same identifier (name{table.2.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.11 \section*{Acknowledgments}
-                               ]))
+l.6 
+    ]
+
+LaTeX Warning: Citation `van2022probabilistic' on page 22 undefined on input line 8.
+
+
+LaTeX Warning: Citation `lee2015multi' on page 22 undefined on input line 9.
+
+
+LaTeX Warning: Citation `van2013barnes' on page 22 undefined on input line 9.
+
+
+LaTeX Warning: Citation `linderman2019fast' on page 22 undefined on input line 9.
+
+
+LaTeX Warning: Citation `zhai2023sigmareparam' on page 22 undefined on input line 9.
+
+))
 Overfull \hbox (50.33089pt too wide) has occurred while \output is active
 \OT1/lmr/m/n/10 22 \OT1/lmr/m/sl/10 CHAPTER 2.  SNEKHORN: DIMENSION REDUCTION WITH SYMMETRIC ENTROPIC AFFINITIES
  []
@@ -3592,18 +3202,18 @@ Package rerunfilecheck Info: Checksums for `main.out':
 (rerunfilecheck)             After:  E302AE81C05D13E6B2764888BB5FDFEF;5733.
  ) 
 Here is how much of TeX's memory you used:
- 30487 strings out of 478268
- 609922 string characters out of 5846346
- 943968 words of memory out of 5000000
- 47671 multiletter control sequences out of 15000+600000
- 594734 words of font info for 269 fonts, out of 8000000 for 9000
+ 31255 strings out of 478268
+ 626879 string characters out of 5846346
+ 944968 words of memory out of 5000000
+ 48389 multiletter control sequences out of 15000+600000
+ 594578 words of font info for 266 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 110i,18n,106p,1788b,868s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 110i,18n,106p,1788b,870s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rmtt.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rmsc.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmro10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmssbo10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on main.pdf (24 pages, 2005417 bytes).
+Output written on main.pdf (24 pages, 2006729 bytes).
 PDF statistics:
- 485 PDF objects out of 1000 (max. 8388607)
- 300 compressed objects within 3 object streams
- 96 named destinations out of 1000 (max. 500000)
+ 520 PDF objects out of 1000 (max. 8388607)
+ 334 compressed objects within 4 object streams
+ 124 named destinations out of 1000 (max. 500000)
  73751 words of extra memory for PDF output out of 74296 (max. 10000000)
 

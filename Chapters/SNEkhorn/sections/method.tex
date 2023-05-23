@@ -156,7 +156,7 @@ By defining the symmetric matrix $\Pb(\bm{\gamma}, \bm{\lambda}) =
 \end{minipage}
 
 
-\textbf{Numerical optimization.} The dual problem \eqref{eq:dual_problem} is concave and can be solved with guarantees through a dual ascent approach with closed-form gradients (using \eg \texttt{SGD}, \texttt{BFGS} \cite{liu1989limited} or \texttt{ADAM} \cite{kingma2014adam}).
+\paragraph{Numerical optimization.} The dual problem \eqref{eq:dual_problem} is concave and can be solved with guarantees through a dual ascent approach with closed-form gradients (using \eg \texttt{SGD}, \texttt{BFGS} \cite{liu1989limited} or \texttt{ADAM} \cite{kingma2014adam}).
 % (as depicted in algorithm \ref{algo:dual_ascent})
 % \begin{align*}
 %     \nabla_{\bm{\gamma}} \mathcal{G}(\bm{\gamma}, \bm{\lambda}) &= (\log \xi + 1 )\bm{1} - \operatorname{H}_{\mathrm{r}}(\Pb^\star(\bm{\gamma}, \bm{\lambda})) \\
