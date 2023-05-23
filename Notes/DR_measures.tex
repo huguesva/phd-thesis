@@ -1,0 +1,36 @@
+\paragraph{Notations.}
+Let $\mathcal{P}(\R^d)$ stand for the set of Borel probability measures in $\R^d$. We also denote by 
+\begin{align*}
+\mathcal{P}_2(\R^d) = \bigg\{\mu \in \mathcal{P}(\R^d) \bigg| \int \| x \|^2 d\mu(x) < \infty \bigg\} \:.
+\end{align*}
+Let $k \in \integ{d}$, we denote the Grassmannian of
+$k$-dimensional subspaces by
+\begin{align*}
+  \mathcal{G}_k = \{E \subset \R^d | \mathrm{dim}(E) = k \} \:.
+\end{align*}
+For $E \in \mathcal{G}_k$, $\mathrm{Proj}^{\ell^2}_{E \#}$ stands for the Euclidean projection onto $E$.
+% \begin{align*}
+%   &\max_{E \in \mathcal{G}_k} \quad \sum_{i \in \integ{n}} \operatorname{H} \big(\mathrm{Proj}^{\KL}_{E \#} (\mu_i) \big)
+% \end{align*}
+\begin{align*}
+  &\inf_{E \in \mathcal{G}_k} \quad \sum_{i \in \integ{n}} \KL \big(\mathrm{Proj}^{\ell^2}_{E \#} (\mu_i) \big| \mu_i \big)
+\end{align*}
+
+Est-ce que ça ça existe? 
+\begin{align*}
+  &\inf_{E \in \mathcal{G}_k} \quad \KL \big(\mathrm{Proj}^{\ell^2}_{E \#} (\mu) \big| \mu \big) \\
+  &\inf_{E \in \mathcal{G}_k} \quad \mathcal{W}_2^2 \big(\mathrm{Proj}^{\ell^2}_{E \#} (\mu), \mu \big)
+\end{align*}
+
+avec Wasserstein:
+\begin{align*}
+  &\inf_{E \in \mathcal{G}_k} \quad \sum_{i \in \integ{n}} \mathcal{W}_2^2 \big(\mathrm{Proj}^{\ell^2}_{E \#} (\mu_i), \mu_i \big)
+\end{align*}
+
+\begin{align*}
+  &\inf_{E \in \mathcal{G}_k} \quad \sum_{i \in \integ{n}} \inf_{\pi \in \Pi(\mu_i, \mu_i)} \int \big\|\mathrm{Proj}^{\ell^2}_{E \#}(x) - y \big\|^2 d\pi(x,y)
+\end{align*}
+
+\begin{align*}
+  &\inf_{U \in \mathrm{St}(k,d)} \quad \sum_{i \in \integ{n}} \inf_{\pi \in \Pi(\mu_i, \mu_i)} \int \big\| UU^{\top} x - y \big\|^2 d\pi(x,y)
+\end{align*}

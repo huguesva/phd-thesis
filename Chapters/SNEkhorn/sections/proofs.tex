@@ -1,0 +1,509 @@
+%!TEX root = ../paper.tex 
+
+\section{Proofs}\label{sec:proofs}
+
+\subsection{Euclidean Projection onto $\mathcal{S}$}\label{sec:sym_proj}
+
+% \paragraph{Euclidean projection onto $\mathcal{S}$.}
+It amounts to the following problem.
+\begin{align}
+    \argmin_{\Pb \in \mathcal{S}} \: &\| \Pb - \K \|_2^2 \:.
+\end{align}
+With $\W \in \R^{n \times n}$, the Lagrangian takes the form: 
+\begin{equation}
+\mathcal{L}(\Pb, \W) = \| \Pb - \K \|_2^2 +\langle \W, \Pb -\Pb^{\top} \rangle \:.
+\end{equation}
+Cancelling the gradient of $\mathcal{L}$ with respect to $\Pb$ gives $2(\Pb^\star - \K) + \W - \W^\top = \bm{0}$. Thus $\Pb^\star = \K + \frac{1}{2} \left(\W^\top - \W \right)$. Using the symmetry constraint on $\Pb^\star$ yields $\Pb^\star = \frac{1}{2} \left(\K + \K^\top \right)$.
+Hence we have:
+\begin{equation}
+\argmin_{\Pb \in \mathcal{S}} \: \| \Pb -  \K \|_2^2 = \frac{1}{2} \left(\K + \K^\top \right) \:.
+\end{equation}
+
+\subsection{From Symmetric Entropy-Constrained OT to Sinkhorn Iterations}\label{sec:proof_sinkhorn}
+
+In this section, we derive Sinkhorn iterations from the problem (\ref{eq:entropy_constrained_OT}). Let $\C \in \mathcal{D}$. We start by making the constraints explicit.
+\begin{align}
+    \min_{\Pb \in \R_+^{n \times n}} \quad &\langle \Pb, \C \rangle \\
+    \text{s.t.} \quad &\sum_{i \in \integ{n}} \operatorname{H}(\Pb_{i:}) \geq \eta \\
+    & \Pb \bm{1} = \bm{1}, \quad \Pb = \Pb^\top \:.
+\end{align}
+For the above convex problem the Lagrangian writes, where $\nu \in \mathbb{R}_+$, $\mathbf{f} \in \mathbb{R}^n$ and $\bm{\Gamma} \in \mathbb{R}^{n \times n}$:
+\begin{align}
+    \mathcal{L}(\Pb, \mathbf{f}, \nu, \bm{\Gamma}) &= \langle \Pb, \C \rangle + \Big\langle \nu, \eta - \sum_{i \in \integ{n}} \operatorname{H}(\Pb_i) \Big\rangle + 2\langle \mathbf{f}, \bm{1} - \Pb \bm{1} \rangle + \big\langle \bm{\Gamma}, \Pb - \Pb^\top \big\rangle \:.
+\end{align}
+Strong duality holds and the first order KKT condition gives for the optimal primal $\Pb^\star$ and dual $(\nu^\star, \mathbf{f}^\star, \bm{\Gamma}^\star)$ variables: 
+\begin{align}
+    \nabla_{\Pb} \mathcal{L}(\Pb^\star, \mathbf{f}^\star, \nu^\star, \bm{\Gamma}^\star) &= \C + \nu^\star \log{\Pb^\star} - 2\mathbf{f}^\star \bm{1}^\top + \bm{\Gamma}^\star - \bm{\Gamma}^{\star\top} = \bm{0} \:.
+\end{align}
+Since $\Pb^\star, \C \in \mathcal{S}$ we have $\bm{\Gamma}^\star - \bm{\Gamma}^{\star\top} = \mathbf{f}^\star \bm{1}^\top - \bm{1}\mathbf{f}^{\star \top}$. Hence $\C + \nu^\star \log{\Pb^\star} - \mathbf{f}^\star \oplus \mathbf{f}^\star = \bm{0}$. Suppose that $\nu^\star = 0$ then the previous reasoning implies that $\forall (i,j), C_{ij} = f_i^\star + f_j^\star$. Using that $\C \in \mathcal{D}$ we have $C_{ii} = C_{jj} = 0$ thus $\forall i,  f^\star_i = 0$ and thus this would imply that $\C = 0$ which is not allowed by hypothesis. Therefore $\nu^\star \neq 0$ and the entropy constraint is saturated at the optimum by complementary slackness. Isolating $\Pb^\star$ then yields:
+\begin{align}
+    \Pb^{\star} &= \exp{\left( (\mathbf{f}^\star \oplus \mathbf{f}^{\star} - \C) / \nu^\star \right)} \:.
+\end{align}
+$\Pb^\star$ must be primal feasible in particular $\Pb^\star \bm{1} = \bm{1}$. This constraint gives us the Sinkhorn fixed point relation for $\mathbf{f}^\star$:
+\begin{align}
+    \forall i \in \integ{n}, \quad [\mathbf{f}^\star]_i = - \nu^\star \operatorname{LSE} \big((\mathbf{f}^\star - \C_{:i}) / \nu^\star \big)\,,
+\end{align}
+where for a vector $\bm{\alpha}$, we use the notation
+$\operatorname{LSE}(\bm{\alpha}) = \log \sum_{k} \exp (\alpha_k)$.
+
+
+
+\subsection{Proof of \cref{prop:entropic_affinity_as_linear_program}}
+
+We recall the result
+\entropicaffinityaslinearprogram*
+
+\begin{proof}
+We begin by rewriting the above problem to make the constraints more explicit.
+\begin{align*}
+    \min_{\Pb \in \R_+^{n \times n}} \quad &\langle \Pb, \C \rangle \\
+    \text{s.t.} \quad &\forall i, \: \operatorname{H}(\Pb_{i:}) \geq \log{\xi} + 1 \\
+    & \Pb \bm{1} = \bm{1} \:.
+\end{align*}
+By concavity of entropy, one has that the entropy constraint is convex thus the above primal problem is a convex optimization problem. Moreover, the latter is strictly feasible for any $\xi \in \integ{n-1}$. Therefore Slater's condition is satisfied and strong duality holds.
+
+Introducing the dual variables $\bm{\lambda} \in \mathbb{R}^n$ and $\bm{\varepsilon} \in \mathbb{R}_+^n$, the Lagrangian of the above problem writes:
+\begin{align}
+    \mathcal{L}(\Pb, \bm{\lambda}, \bm{\varepsilon}) &= \langle \Pb, \C \rangle + \langle \bm{\varepsilon}, (\log{\xi}+1) \bm{1} - \operatorname{H}_{\mathrm{r}}(\Pb) \rangle + \langle \bm{\lambda}, \bm{1} - \Pb \bm{1} \rangle\,,
+\end{align}
+where we recall that $\operatorname{H}_{\mathrm{r}}(\Pb) = \left( \operatorname{H}(\Pb_{i:}) \right)_{i}$. Note that we will deal with the constraint $\Pb \in \R_+^{n \times n}$ directly, hence there is no associated dual variable. Since strong duality holds, for any solution $\Pb^\star$ to the primal problem and any solution $(\bm{\varepsilon}^\star, \bm{\lambda}^\star)$ to the dual problem, the pair $\Pb^\star, (\bm{\varepsilon}^\star, \bm{\lambda}^\star)$ must satisfy the Karush-Kuhn-Tucker (KKT) conditions. The first-order optimality condition gives:
+\begin{equation}
+\label{kkt_ea}
+\tag{first-order}
+    \nabla_{\Pb} \mathcal{L}(\Pb^\star, \bm{\varepsilon}^\star, \bm{\lambda}^\star) = \C + \operatorname{diag}(\bm{\varepsilon}^\star)\log{\Pb^\star} - \bm{\lambda}^\star \bm{1}^\top = \bm{0} \:.
+\end{equation}
+Assume that there exists $\ell \in \integ{n}$ such that $\bm{\varepsilon}_\ell^\star = 0$. Then \eqref{kkt_ea} gives that the $\ell^{th}$ row of $\C$ is constant which is not allowed by hypothesis. Therefore $\bm{\varepsilon}^\star>\bm{0}$ (\ie $\bm{\varepsilon}^\star$ has positive entries). 
+Thus isolating $\Pb^\star$ in the first order condition results in:
+\begin{align}
+    \Pb^\star &= \operatorname{diag}(\mathbf{u}) \exp{(-\operatorname{diag}(\bm{\varepsilon}^\star)^{-1}\C)}
+\end{align}
+where $\mathbf{u} = \exp{(\bm{\lambda}^\star \oslash \bm{\varepsilon}^\star)}$.
+This matrix must satisfy the stochasticity constraint $\Pb \bm{1}=\bm{1}$. Hence one has $\mathbf{u} = \bm{1} \oslash (\exp{(\operatorname{diag}(\bm{\varepsilon}^\star)^{-1}\C)} \bm{1})$ and $\Pb^\star$ has the form
+\begin{align}
+    \forall (i,j) \in \integ{n}^2, \quad P^{\star}_{ij} = \frac{\exp{(-C_{ij}/\varepsilon^\star_i)}}{\sum_\ell \exp{(-C_{i\ell}/\varepsilon^\star_i)}} \:.
+\end{align}
+As a consequence of $\bm{\varepsilon}^\star \bm{>} \bm{0}$, complementary slackness in the KKT conditions gives us that for all $i$, the entropy constraint is saturated \ie $\operatorname{H}(\Pb^\star_{i:}) = \log{\xi} + 1$. Therefore $\Pb^\star$ solves the problem \eqref{eq:entropic_affinity_pb}. Conversely any solution of \eqref{eq:entropic_affinity_pb} $P^{\star}_{ij} = \frac{\exp{(-C_{ij}/\varepsilon^\star_i)}}{\sum_\ell \exp{(-C_{i\ell}/\varepsilon^\star_i)}}$ with $(\varepsilon^\star_i)$ such that $\operatorname{H}(\Pb^\star_{i:}) = \log{\xi} + 1$  gives an admissible matrix for $\min_{\Pb \in \mathcal{H}_\xi} \langle \Pb, \C \rangle$ and the associated variables satisfy the KKT conditions which are sufficient conditions for optimality since the problem is convex.
+\end{proof}
+
+\subsection{Proof of \cref{prop:saturation_entropies} and \cref{prop:sol_gamma_non_null} \label{proof:main_props}}
+
+The goal of this section is to prove the following results:
+
+\saturation*
+
+\solvingsea*
+
+The unicity of the solution in \cref{prop:saturation_entropies} is a consequence of the following lemma
+
+\begin{lemma} 
+\label{lemma:unicity}
+  Let $\C \neq 0 \in \mathcal{S}$ with zero diagonal. Then the problem $\min_{\Pb \in \mathcal{H}_{\xi} \cap \mathcal{S}} \: \langle \Pb, \C \rangle$ has a unique solution.
+\end{lemma}
+
+\begin{proof}
+Making the constraints explicit, the primal problem of symmetric entropic affinity takes the following form
+\begin{equation}
+\begin{aligned}
+    \min_{\Pb \in \R_+^{n \times n}} \quad &\langle \Pb, \C \rangle \\
+    \text{s.t.} \quad &\forall i, \: \operatorname{H}(\Pb_{i:}) \geq \log{\xi} + 1 \\
+    & \Pb \bm{1} = \bm{1}, \quad \Pb = \Pb^\top \:.
+\end{aligned}
+\tag{SEA}\label{opt-sym_P}
+\end{equation}
+Suppose that the solution is not unique \ie there exists a couple of optimal solutions $(\Pb_1, \Pb_2)$ that satisfy the constraints of \eqref{opt-sym_P} and such that $\langle \Pb_1, \C \rangle=\langle \Pb_2, \C \rangle$. For $i \in \integ{n}$, we denote the function $f_{i}: \Pb \rightarrow (\log{\xi} + 1)-\operatorname{H}(\Pb_{i:})$. Then  $f_i$ is continuous, strictly convex and the entropy conditions of  \eqref{opt-sym_P} can be written as $\forall i \in \integ{n}, f_{i}(\Pb) \leq 0$. 
+
+Now consider $\Qb = \frac{1}{2} (\Pb_1 + \Pb_2)$. Then clearly $\Qb \bm{1} = \bm{1}, \Qb = \Qb^\top$. Since $f_i$ is strictly convex we have $f_i(\Qb) = f_i(\frac{1}{2}\Pb_1+\frac{1}{2}\Pb_2) < \frac{1}{2} f_i(\Pb_1) +\frac{1}{2} f(\Pb_2) \leq 0$. Thus $f_i(\Qb) < 0$ for any $i \in \integ{n}$. Take any $\varepsilon >0$ and $i \in \integ{n}$. By continuity of $f_i$ there exists $\delta_i > 0$ such that, for any $\Hb$ with $\|\Hb\|_F \leq \delta_i$, we have $f_{i}(\Qb+\Hb) < f_{i}(\Qb)+ \varepsilon$. Take $\varepsilon >0$ such that $\forall i \in \integ{n},  0 < \varepsilon < -\frac{1}{2} f_{i}(\Qb)$ (this is possible since for any $i \in \integ{n}, f_{i}(\Qb) <0$) and $\Hb$ with $\|\Hb\|_F \leq \min_{i \in \integ{n}} \delta_i$. Then for any $i \in \integ{n}, f_{i}(\Qb+\Hb) < 0$. In other words, we have proven that there exists $\eta > 0$ such that for any $\Hb$ such that $\|\Hb\|_F \leq \eta$, it holds: $\forall i \in \integ{n}, f_i(\Qb+\Hb) < 0$.
+
+Now let us take $\Hb$ as the Laplacian matrix associated to $\C$ \ie for any $(i,j) \in \integ{n}^2$, $H_{ij} = -C_{ij}$ if $i \neq j$ and $\sum_l C_{il}$ otherwise.
+Then we have $\langle \Hb, \C \rangle = -\sum_{i \neq j} C_{ij}^2+ 0 = - \sum_{i \neq j} C_{ij}^2 < 0$ since $\C$ has zero diagonal (and is nonzero). Moreover, $\Hb = \Hb^\top$ since $\C$ is symmetric and $\Hb \bm{1} = \bm{0}$ by construction. Consider for $0 < \beta \leq \frac{\eta}{\|\Hb\|_F}$, the matrix $\Hb_{\beta} := \beta \Hb$. Then $\|\Hb_\beta\|_F = \beta \|\Hb\|_F \leq \eta$. By the previous reasoning one has: $\forall i \in \integ{n}, f_i(\Qb+\Hb_{\beta}) < 0$. Moreover, $(\Qb+\Hb_{\beta})^{\top} = \Qb+\Hb_{\beta}$ and $(\Qb+\Hb_{\beta})\bm{1} = \bm{1}$. For $\beta$ small enough we have $\Qb+\Hb_{\beta}\in \R_{+}^{n \times n}$ and thus there is a $\beta$ (that depends on $\Pb_1$ and $\Pb_2$) such that $\Qb+\Hb_{\beta}$ is admissible \ie satisfies the constraints of \eqref{opt-sym_P}. Then, for such $\beta$, 
+\begin{equation}
+\begin{split}
+\langle \C, \Qb+\Hb_{\beta} \rangle- \langle \C, \Pb_1 \rangle &= \frac{1}{2} \langle \C, \Pb_1+ \Pb_2 \rangle + \langle \C, \Hb_{\beta} \rangle -\langle \C, \Pb_1 \rangle\\
+&= \langle \C, \Hb_{\beta} \rangle = \beta \langle \Hb, \C \rangle < 0\,.
+\end{split}
+\end{equation}
+Thus $\langle \C, \Qb+\Hb_{\beta} \rangle <\langle \C, \Pb_1 \rangle$ which leads to a contradiction.
+\end{proof}
+We can now prove the rest of the claims of  \cref{prop:saturation_entropies} and \cref{prop:sol_gamma_non_null}.
+\begin{proof}
+Let $\C \in \mathcal{D}$. We first prove \cref{prop:saturation_entropies}. The unicity is a consequence of \cref{lemma:unicity}. For the saturation of the entropies we consider the Lagrangian of the problem \eqref{opt-sym_P} that writes $$\mathcal{L}(\Pb, \bm{\lambda}, \bm{\gamma, \bm{\Gamma}}) = \langle \Pb, \C \rangle + \langle \bm{\gamma}, (\log{\xi}+1) \bm{1} - \operatorname{H}_r(\Pb) \rangle + \langle \bm{\lambda}, \bm{1} - \Pb \bm{1} \rangle + \langle \bm{\Gamma}, \Pb - \Pb^\top \rangle$$ for dual variables $\bm{\gamma} \in \mathbb{R}_+^n$, $\bm{\lambda} \in \mathbb{R}^n$ and $\bm{\Gamma} \in \mathbb{R}^{n \times n}$. Strong duality holds by Slater's conditions because $\frac{1}{n} \bm{1} \bm{1}^{\top}$ is stricly feasible for $\xi \leq n-1$. Since strong duality holds, for any solution $\Pb^\star$ to the primal problem and any solution $(\bm{\gamma}^\star, \bm{\lambda}^\star, \bm{\Gamma}^\star)$ to the dual problem, the pair $\Pb^\star, (\bm{\gamma}^\star, \bm{\lambda}^\star, \bm{\Gamma}^\star)$ must satisfy the KKT conditions. They can be stated as follows:
+\begin{equation}
+    \begin{aligned}
+    &\C + \operatorname{diag}(\bm{\gamma}^\star)\log{\Pb^\star} - \bm{\lambda}^\star \bm{1}^\top + \bm{\Gamma}^\star - \bm{\Gamma}^{\star\top} = \bm{0} \\
+    &\Pb^\star \bm{1} = \bm{1}, \: \operatorname{H}_r(\Pb^\star) \geq (\log{\xi} + 1)\bm{1}, \: \Pb^\star = \Pb^{\star \top} \\
+    &\bm{\gamma}^\star \bm{\geq} \bm{0} \\
+    &\forall i, \gamma_i^\star (\operatorname{H}(\Pb_{i:}^\star) - (\log{\xi} + 1)) = 0\:.
+\end{aligned}
+\tag{KKT-SEA}\label{KKT-sym_P}
+\end{equation}
+Let us denote $I = \{\ell \in \integ{n} \: \text{s.t.} \: \gamma_\ell^\star = 0\}$. For $\ell \in I$, using the first-order condition, one has for $i \in \integ{n}, C_{\ell i} = \lambda^\star_\ell - \Gamma^\star_{\ell i} + \Gamma^{\star}_{i \ell}$. Since $\C \in \mathcal{D}$, we have $C_{\ell \ell} = 0$ thus $\lambda^\star_\ell = 0$ and $C_{\ell i} = \Gamma^\star_{i \ell} - \Gamma^{\star}_{\ell i}$.
+For $(\ell, \ell') \in I^2$, one has $C_{\ell \ell'} = \Gamma^\star_{\ell' \ell} - \Gamma^{\star}_{\ell \ell'} = - (\Gamma^{\star}_{\ell \ell'} - \Gamma^\star_{\ell' \ell}) = - C_{\ell' \ell}$. $\C$ is symmetric thus $C_{\ell \ell'}=0$. Since $\C$ only has null entries on the diagonal, this shows that $\ell = \ell'$ and therefore $I$ has at most one element. By complementary slackness condition (last row of the \ref{KKT-sym_P} conditions) it holds that $\forall i \neq \ell, \operatorname{H}(\Pb^{\star}_{i:}) = \log \xi + 1$. Since the solution of \eqref{opt-sym_P} is unique $\Pb^\star = \Pb^{\mathrm{se}}$ and thus $\forall i \neq \ell, \operatorname{H}(\Pb^{\mathrm{se}}_{i:}) = \log \xi + 1$ which proves \cref{prop:saturation_entropies} but also that for at least $n-1$ indices $\gamma_i^\star > 0$. Moreover, from the KKT conditions we have
+\begin{equation}
+\forall (i,j) \in \integ{n}^2, \ \Gamma^\star_{ji}-\Gamma^\star_{ij} =  C_{ij}+\gamma^\star_i \log P^\star_{ij}-\lambda^\star_i\,.
+\end{equation}
+Now take $(i,j) \in \integ{n}^2$ fixed. From the previous equality 
+$\Gamma^\star_{ji}-\Gamma^\star_{ij} =  C_{ij}+\gamma^\star_i \log P^\star_{ij}-\lambda^\star_i$ but also $\Gamma^\star_{ij}-\Gamma^\star_{ji} =  C_{ji}+\gamma^\star_j \log P^\star_{ji}-\lambda^\star_j$. Using that $\Pb^\star=(\Pb^{\star})^{\top}$ and $\C \in \mathcal{S}$ we get $\Gamma^\star_{ij}-\Gamma^\star_{ji} =  C_{ij}+\gamma^\star_j \log P^\star_{ij}-\lambda^\star_j$. But $\Gamma^\star_{ij}-\Gamma^\star_{ji} = -(\Gamma^\star_{ji}-\Gamma^\star_{ij})$ which gives
+\begin{equation}
+C_{ij}+\gamma^\star_j \log P^\star_{ij}-\lambda^\star_j =  -(C_{ij}+\gamma^\star_i \log P^\star_{ij}-\lambda^\star_i)\,.
+\end{equation}
+This implies
+\begin{equation}
+\forall (i,j) \in \integ{n}^2, \ 2C_{ij}+(\gamma^\star_i+\gamma^\star_j) \log P^\star_{ij}-(\lambda^\star_i+ \lambda^\star_j) =  0\,.
+\end{equation}
+Consequently, if $\gammab^\star > 0$ we have the desired form from the above equation and by complementary slackness $\operatorname{H}_{\mathrm{r}}(\Pb^{\mathrm{se}}) = (\log \xi + 1)\bm{1}$ which proves \cref{prop:sol_gamma_non_null}. Note that otherwise, it holds
+\begin{equation}
+\forall (i,j) \neq (\ell, \ell), \ P_{ij}^\star = \exp \left(\frac{\lambda^\star_i+ \lambda^\star_j-2C_{ij}}{\gamma^\star_i+\gamma^\star_j}\right)\,.
+\end{equation}
+
+%Moreover by duality if $\bm{\gamma}^\star, \lambdab^\star \in \operatorname{argmax}_{\bm{\gamma} \geq 0, \lambdab} q(\bm{\gamma}, \bm{\lambda})$ then 
+\end{proof}
+
+
+
+% \subsubsection{Saturation of the Entropies at Optimality}
+
+% In what follows, we denote by $\{\Pb^{\mathrm{se}} \} = \argmin_{\Pb \in \mathcal{H}_{\xi} \cap \mathcal{S}} \langle \Pb, \C \rangle$ the solution of \eqref{opt-sym_P}.  
+
+% \begin{lemma}\label{lemma:n-1_entropy_saturated}
+%     Let $\C \in \mathcal{D}$. For at least $n-1$ indices $i \in \integ{n}$, it holds $\operatorname{H}(\Pb^{\mathrm{se}}_{i:}) = \log \xi + 1$. 
+% \end{lemma}
+
+% \begin{proof}
+  
+% \end{proof}
+
+%\subsubsection{Characterization as a $\KL$ Projection}
+
+% In the above proof, we have seen that $\gamma^\star_i > 0$ for at least $n-1$ indices $i$ in $\integ{n}$, where $\bm{\gamma}^\star$ is the optimal dual variable associated with the entropy constraint. Since one entry of $\bm{\gamma}^\star$ can be null, it is not straightforward to derive the form of $\Pb^{\mathrm{se}}$ directly from the above \ref{KKT-sym_P} conditions. We will use a workaround, starting with the following lemma.
+% \begin{lemma}\label{lemma:threshold_sigma_bar}
+%     Denoting by $\mathcal{E}_{\Delta} = \{\bm{\Delta} \in \R^{n \times n} \: \text{s.t.}\ \: \Pb^{\mathrm{se}} + \bm{\Delta} \in \mathcal{H}_{\xi} \cap \mathcal{S} \}$ and $\mathcal{E}_{D} = \{\D \in \R^{n \times n} \: \text{s.t.}\ \: \forall \bm{\Delta} \in \mathcal{E}_{\Delta} \: \text{s.t.}\ \: \bm{\Delta} \neq \bm{0}, \: \langle \bm{\Delta}, \D \rangle > 0 \}$. It holds that $\C \in \mathcal{E}_{D}$ and there exists $\overline{\sigma}$ small enough such that for any $0 < \sigma < \overline{\sigma}$ and $\D \in \R^{n \times n}$, it holds $\C + \overline{\sigma} \D \in \mathcal{E}_D$. 
+% \end{lemma}
+
+% \begin{proof}
+% Note that $\D \in \mathcal{E}_{D}$ if and only if $\langle \bm{\Delta}, \D \rangle > 0$ for any $\bm{\Delta} \in \mathcal{E}_{\Delta}$ such that $\| \bm{\Delta} \|_F = \kappa$, for $\kappa$ small enough such that such $\bm{\Delta} \in \mathcal{E}_{\Delta}$ exists. Indeed, $\langle \bm{\Delta}, \D \rangle > 0 \iff \frac{\kappa}{\| \bm{\Delta} \|_F}\langle \bm{\Delta}, \D \rangle > 0$. Let us now consider such a $\kappa$. 
+
+% On the compact set $\mathcal{E}_{\Delta} \cap \{\bm{\Delta} \in \R^{n \times n} \: \text{s.t.} \: \| \bm{\Delta} \|_F = \kappa \}$ and for any $\D \in \R^{n \times n}$, the map $\bm{\Delta} \mapsto \langle \bm{\Delta}, \D \rangle$ reaches its minimum which we denote $\delta_{\D}$. 
+
+% By definition and uniqueness of $\Pb^{\mathrm{se}}$, we have that $\C \in \mathcal{E}_{D}$. Indeed, for any $\bm{\Delta} \in \mathcal{E}_{\Delta}$, $\langle \Pb^{\mathrm{se}} + \bm{\Delta}, \C \rangle - \langle \Pb^{\mathrm{se}}, \C \rangle = \langle \bm{\Delta}, \C \rangle > 0$. Hence in particular, $\delta_{\C} > 0$. 
+
+% Let $\D \in \R^{n \times n}$ and $\sigma > 0$. The minimum of the map $\bm{\Delta} \mapsto \langle \bm{\Delta}, \C + \sigma \D \rangle$ on $\mathcal{E}_{\Delta} \cap \{\bm{\Delta} \in \R^{n \times n} \: \text{s.t.} \: \| \bm{\Delta} \|_F = \kappa \}$ is $\delta_{\C + \sigma \D}$. The latter obeys the inequality $\delta_{\C + \sigma \D} \geq \delta_{\C} + \sigma \delta_{\D}$. 
+
+% As $\delta_{\C} > 0$, we can take $\overline{\sigma}$ small enough such that $\delta_{\C + \overline{\sigma} \D} > 0$. Therefore, for any $\D \in \R^{n \times n}$, there exists $\overline{\sigma}$ such that $\C + \sigma \D \in \mathcal{E}_D$ for any for any $0 < \sigma < \overline{\sigma}$.
+% \textcolor{blue}{
+% For $\kappa > 0$ such that $\{\Pb_0 \in \mathcal{H}_{\xi} \cap \mathcal{S}: \\ \|\Pb_0-\Pb^{\mathrm{se}}\|_F = \kappa\}$ is not empty we define
+% \begin{equation}
+% \delta_{\D}:= \underset{\begin{smallmatrix} \Pb_0 \in \mathcal{H}_{\xi} \cap \mathcal{S}: \\ \|\Pb_0-\Pb^{\mathrm{se}}\|_F = \kappa \end{smallmatrix}}{\min} \ \langle \Pb_0, \D \rangle - \langle \Pb^{\mathrm{se}}, \D \rangle \,.
+% \end{equation}
+% We have that $\delta_{\C} > 0$ because $\Pb^{\mathrm{se}}$ is unique by Lemma \ref{lemma:unicity}. We consider $\D_\sigma = \log \Pb^{\mathrm{se}}+\sigma^{-1} \C$. We want to show that there exists $\overline{\sigma} >0$ such that $\forall 0 < \sigma < \overline{\sigma}, \ \delta_{\D_\sigma}(\kappa) = \delta_{\log \Pb^{\mathrm{se}}+\sigma^{-1} \C}  > 0$. However (to detail) $\delta_{\log \Pb^{\mathrm{se}}+\sigma^{-1} \C} \geq \delta_{\log \Pb^{\mathrm{se}}}+\delta_{\sigma^{-1} \C}= \delta_{\log \Pb^{\mathrm{se}}}+\sigma^{-1} \delta_{\C}$. If $\delta_{\log \Pb^{\mathrm{se}}} \geq 0$ then blabla.. THus we have prove that there exists $\overline{\sigma} >0$ such that for any $0 < \sigma < \overline{\sigma}$
+% \begin{equation}
+% \forall \Pb_0 \in \mathcal{H}_{\xi} \cap \mathcal{S} \text{ such that } \|\Pb_0-\Pb^{\mathrm{se}}\|_F = \kappa \text{ then } \langle \Pb_0-\Pb^{\mathrm{se}}, \log \Pb^{\mathrm{se}}+\sigma^{-1} \C\rangle > 0\,.
+% \end{equation}
+% which NOT implies (??)
+% \begin{equation}
+% \forall \Pb_0 \in \mathcal{H}_{\xi} \cap \mathcal{S}, \langle \frac{\kappa(\Pb_0-\Pb^{\mathrm{se}})}{\|\Pb_0-\Pb^{\mathrm{se}}\|_F}, \log \Pb^{\mathrm{se}}+\sigma^{-1} \C\rangle > 0\,.
+% \end{equation}
+% which implies
+% \begin{equation}
+% \forall \Pb_0 \in \mathcal{H}_{\xi} \cap \mathcal{S}\neq \Pb^{\mathrm{se}},  \langle \Pb_0-\Pb^{\mathrm{se}}, \log \Pb^{\mathrm{se}}+\sigma^{-1} \C\rangle > 0\,.
+% \end{equation}
+% % \begin{equation}
+% % \forall \Delta: \Pb^{\mathrm{se}}+\Delta \in \mathcal{H}_{\xi} \cap \mathcal{S} \text{ and } \|\Delta\|_F = \kappa, \langle \Delta, \log \Pb^{\mathrm{se}}+\sigma^{-1} \C\rangle > 0\,.
+% % \end{equation}
+% }
+
+% \end{proof}
+
+% Relying on the above technical lemma, one can express $\Pb^{\mathrm{se}}$ as a KL projection, as stated in the following result.
+% \begin{lemma}\label{lemma:entropy_saturated_projKL}
+%     There exists $\overline{\sigma}$ such that for any $0 < \sigma < \overline{\sigma}$, it holds for $\K^\sigma = \exp(- \C / \sigma)$
+%     \begin{align*}
+%         \Pb^{\mathrm{se}} = \mathrm{Proj}^{\KL}_{\mathcal{H}_{\xi} \cap \mathcal{S}}(\K^\sigma) \:.
+%     \end{align*}
+% \end{lemma}
+
+% \begin{proof}
+% Recall that between a non negative matrix $\Pb \in \R_{+}^{n \times n}$ and a matrix $\K \in \R_{+}^{n \times n}$ such that for all $(i,j)$, $\K_{ij} >0$, the Kullback-Leibler divergence takes the form:
+% \begin{align*}
+% \KL(\Pb | \K) = \langle \Pb, \log \left(\Pb \oslash \K \right) -\bm{1}\bm{1}^\top \rangle \:.
+% \end{align*}
+% Let $\sigma>0$ and $\K^\sigma = \exp(- \C / \sigma)$, we have 
+% $$\KL(\Pb | \K^\sigma) = \frac{1}{\sigma}\langle \Pb, \C \rangle - \langle \operatorname{H}(\Pb), \bm{1} \rangle \:.$$ 
+% We also denote by $\Pb^\sigma = \mathrm{Proj}^{\KL}_{\mathcal{H}_{\xi} \cap \mathcal{S}}(\K^\sigma)$. 
+% % Note that by definition of $\Pb^\sigma$ and $\Pb^{\mathrm{se}} \in \mathcal{H}_{\xi} \cap \mathcal{S}$, one has
+% % \begin{align*}
+% %     \langle \Pb^\sigma,\C \rangle - \langle \Pb^{\mathrm{se}},\C \rangle \leq \langle \sigma \bm{1}, \operatorname*{H}(\Pb^\sigma) - \operatorname*{H}(\Pb^{\mathrm{se}}) \rangle \:.
+% % \end{align*}
+% % Therefore, as $\operatorname*{H}(\Pb^\sigma) - \operatorname*{H}(\Pb^{\mathrm{se}})$ is bounded, the above gives us that $\Pb^\sigma \xrightarrow[\sigma \to 0]{} \Pb^{\mathrm{se}}$. 
+% We are now going to show that there exists a threshold value $\sigma \leq \overline{\sigma}$ for which $\Pb^\sigma = \Pb^{\mathrm{se}}$. To do so, note that by construction there exists $\bm{\Delta} \in \mathcal{E}_{\Delta}$ such that $\Pb^{\sigma} = \bm{\Delta} + \Pb^{\mathrm{se}}$. By convexity of the $\KL$, we have:
+% \begin{align*}
+%     \KL(\Pb^\sigma | \K^\sigma) \geq \KL(\Pb^{\mathrm{se}} | \K^\sigma) + \langle \bm{\Delta}, \sigma^{-1} \C + \log \Pb^{\mathrm{se}} \rangle \:.
+% \end{align*}
+% Using \cref{lemma:threshold_sigma_bar}, there exists $\overline{\sigma}$ such that for any $0 < \sigma < \overline{\sigma}$, $\bm{\Delta} \neq \bm{0}$ implies that $\KL(\Pb^\sigma | \K^\sigma) > \KL(\Pb^{\mathrm{se}} | \K^\sigma)$. Therefore since $\Pb^\sigma = \mathrm{Proj}^{\KL}_{\mathcal{H}_{\xi} \cap \mathcal{S}}(\K^\sigma)$, the above inequality shows that $\bm{\Delta} = \bm{0}$ when $0 < \sigma < \overline{\sigma}$. Hence $\Pb^\sigma = \Pb^{\mathrm{se}}$.  
+
+% \end{proof}
+
+
+
+
+\subsection{EA and SEA as a KL projection \label{sec:proj_KL}}
+
+We prove the characterization as a projection of \eqref{eq:entropic_affinity_pb}  in \cref{lemma_ea_proj} and of \eqref{eq:sym_entropic_affinity} in \cref{lemma_sea_proj}.
+
+\begin{lemma}\label{lemma_ea_proj}
+    Let $\C \in \mathcal{D}, \sigma >0$ and $\K_\sigma = \exp(-\C/\sigma)$. Then for any $\sigma \leq \min_i \varepsilon^\star_i$, it holds $\Pb^{\mathrm{se}} = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{H}_{\xi}}(\K_{\sigma}) =  \argmin_{\Pb \in \mathcal{H}_{\xi} } \KL(\Pb | \K_\sigma)$.
+    % It holds
+    % \begin{align*}
+    %     \Pb^{\mathrm{se}} &= \exp{\left(\left(\lambdab^\star \oplus \lambdab^\star - 2 \C \right) \oslash \left(\bm{\gamma}^\star \oplus \bm{\gamma}^\star \right) \right)}
+    % \end{align*}
+    % for $\bm{\gamma}^\star \in (\mathbb{R}_+^*)^n$ and $\lambdab^\star \in \mathbb{R}^n$.
+\end{lemma}
+
+\begin{proof}
+The $\KL$ projection of $\K$ onto $\mathcal{H}_{\xi}$ reads
+\begin{align}
+    \min_{\Pb \in \R_+^{n \times n}} \quad &\operatorname{KL}(\Pb | \K) \\
+    \text{s.t.} \quad &\forall i, \: \operatorname{H}(\Pb_{i:}) \geq \log{\xi} + 1 \\
+    & \Pb \bm{1} = \bm{1} \:.
+\end{align}
+Introducing the dual variables $\bm{\lambda} \in \mathbb{R}^n$ and $\bm{\kappa} \in \mathbb{R}_+^n$, the Lagrangian of this problem reads:
+\begin{align}
+    \mathcal{L}(\Pb, \bm{\lambda}, \bm{\kappa}) &=  \operatorname{KL}(\Pb | \K)  + \langle \bm{\kappa}, (\log{\xi} + 1) \bm{1} - \operatorname{H}(\Pb) \rangle + \langle \bm{\lambda}, \bm{1} - \Pb \bm{1} \rangle
+\end{align}
+Strong duality holds hence for any solution $\Pb^\star$ to the above primal problem and any solution $(\bm{\kappa}^\star, \bm{\lambda}^\star)$ to the dual problem, the pair $\Pb^\star, (\bm{\kappa}^\star, \bm{\lambda}^\star)$ must satisfy the KKT conditions. The first-order optimality condition gives:
+\begin{align}
+    \nabla_{\Pb} \mathcal{L} (\Pb^\star, \bm{\kappa}^\star, \bm{\lambda}^\star) &= \log \left( \Pb^\star \oslash \K \right) + \operatorname{diag}(\bm{\kappa}^\star)\log{\Pb^\star} - \bm{\lambda}^\star \bm{1}^\top = \bm{0} \:.
+\end{align}
+Solving for $\bm{\lambda}^\star$ given the stochasticity constraint and isolating $\Pb^\star$ gives
+\begin{align}
+    \forall (i,j) \in \integ{n}^2, \quad P^\star_{ij} = \frac{\exp{((\log K_{ij})/(1 + \kappa^\star_i)})}{\sum_\ell \exp{((\log K_{i\ell})/(1 + \kappa^\star_i)})} \:.
+\end{align}
+We now consider $\Pb^\star$ as a function of $\bm{\kappa}$. Plugging this expression back in $\mathcal{L}$ yields the dual function $\bm{\kappa} \mapsto \mathcal{G}(\bm{\kappa})$. The latter is concave as any dual function and its gradient reads:
+\begin{align}
+    \nabla_{\bm{\kappa}} \mathcal{G}(\bm{\kappa}) = (\log \xi + 1 )\bm{1} - \operatorname{H}(\Pb^\star(\bm{\kappa})) \:.
+\end{align}
+Denoting by $\bm{\rho} = \bm{1} + \bm{\kappa}$ and taking the dual feasibility constraint $\bm{\kappa} \bm{\geq} \bm{0}$ into account gives the solution: for any $i$, $\rho^\star_i = \max(\varepsilon^\star_i, 1)$ where $\bm{\varepsilon}^\star$ solves (\ref{eq:entropic_affinity_pb}) with cost $\C = -\log \K$.
+Moreover we have that $\sigma \leq \min(\bm{\varepsilon}^\star)$ where $\bm{\varepsilon}^\star \in (\R^*_+)^n$ solves (\ref{eq:entropic_affinity_pb}). Therefore for any $i \in \integ{n}$, one has $\varepsilon_i^\star / \sigma \geq 1$. Thus there exists $\kappa_i^\star \in \R_+$ such that $\sigma (1 + \kappa_i^\star) = \varepsilon_i^\star$. 
+
+This $\bm{\kappa}^\star$ cancels the above gradient \ie $(\log \xi + 1 )\bm{1} = \operatorname{H}(\Pb^\star(\bm{\kappa}^\star))$ thus solves the dual problem. Therefore given the expression of $\Pb^\star$ we have that $\operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{H}_{\xi}}(\K) = \Pb^{\mathrm{e}}$.
+\end{proof}
+
+\begin{lemma}\label{lemma_sea_proj}
+Let $\C \in \mathcal{D}, \sigma >0$ and $\K_\sigma = \exp(-\C/\sigma)$. Suppose that the optimal dual variable $\gamma^\star$ associated with the entropy constraint of \eqref{opt-sym_P} is positive. Then for any $\sigma \leq \min_i \gamma^\star_i$, it holds $\Pb^{\mathrm{se}} = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{H}_{\xi} \cap
+  \mathcal{S}}(\K_{\sigma})$.
+% It holds
+% \begin{align*}
+%     \Pb^{\mathrm{se}} &= \exp{\left(\left(\lambdab^\star \oplus \lambdab^\star - 2 \C \right) \oslash \left(\bm{\gamma}^\star \oplus \bm{\gamma}^\star \right) \right)}
+% \end{align*}
+% for $\bm{\gamma}^\star \in (\mathbb{R}_+^*)^n$ and $\lambdab^\star \in \mathbb{R}^n$.
+\end{lemma}
+
+
+\begin{proof}
+
+Let $\sigma > 0$. The $\KL$ projection of $\K$ onto $\mathcal{H}_{\xi} \cap \mathcal{S}$ boils down to the following optimization problem.
+\begin{equation}
+\label{projkl}
+\begin{split}
+    \min_{\Pb \in \R_+^{n \times n}} \quad &\operatorname{KL}(\Pb | \K_\sigma) \\
+    \text{s.t.} \quad &\forall i, \: \operatorname{H}(\Pb_{i:}) \geq \log{\xi} + 1 \\
+    & \Pb \bm{1} = \bm{1}, \quad \Pb^\top = \Pb \:.
+\end{split}
+\tag{SEA-Proj}
+\end{equation}
+By strong convexity of $\Pb \rightarrow \KL(\Pb | \K_\sigma)$ and convexity of the constraints the problem \eqref{projkl} admits a unique solution. Moreover, the Lagrangian of this problem takes the following form, where $\bm{\omega} \in \mathbb{R}_+^n$, $\bm{\mu} \in \mathbb{R}^n$ and $\bm{\Gamma} \in \mathbb{R}^{n \times n}$:
+\begin{align*}
+    \mathcal{L}(\Pb, \bm{\mu}, \bm{\omega}, \bm{\Gamma}) &= \operatorname{KL}(\Pb | \K_\sigma) + \langle \bm{\omega}, (\log{\xi} + 1) \bm{1} - \operatorname{H}_r(\Pb) \rangle + \langle \bm{\mu}, \bm{1} - \Pb \bm{1} \rangle + \langle \bm{\beta}, \Pb - \Pb^\top \rangle \:.
+\end{align*}
+Strong duality holds by Slater's conditions thus the KKT conditions are necessary and sufficient. In particular if $\Pb^\star$ and $(\bm{\omega}^\star, \bm{\mu}^\star, \bm{\beta}^\star)$ satisfy
+\begin{equation}
+\label{kkt1}
+\begin{split}
+    &\nabla_\Pb \mathcal{L}(\Pb^\star, \bm{\mu}^\star, \bm{\omega}^\star, \bm{\Gamma}^\star) = \log \left( \Pb^\star \oslash \K \right) + \operatorname{diag}(\bm{\omega}^\star)\log{\Pb^\star} - \bm{\mu}^\star \bm{1}^\top + \bm{\beta}^\star - \bm{\beta}^{\star\top} = \bm{0} \\
+    &\Pb^\star \bm{1} = \bm{1}, \: \operatorname{H}_r(\Pb^\star) \geq (\log{\xi} + 1)\bm{1}, \: \Pb^\star = \Pb^{\star \top} \\
+    &\bm{\omega}^\star \bm{\geq} \bm{0} \\
+    &\forall i, \omega_i^\star (\operatorname{H}(\Pb_{i:}^\star) - (\log{\xi} + 1)) = 0\:.
+\end{split}
+\tag{KKT-Proj}
+\end{equation}
+then $\Pb^\star$ is a solution to \eqref{projkl} and $(\bm{\omega}^\star, \bm{\mu}^\star, \bm{\beta}^\star)$ are optimal dual variables. The first condition rewrites
+\begin{equation}
+\forall (i,j), \ \log(P^\star_{ij}) + \frac{1}{\sigma} C_{ij}+ \omega_i^\star \log(P^\star_{ij}) -\mu^\star_i+\beta_{ij}^\star-\beta_{ji}^\star = 0\,,
+\end{equation}
+which is equivalent to 
+\begin{equation}
+\forall (i,j), \ \sigma(1+\omega_i^\star)\log(P^\star_{ij}) + C_{ij} -\sigma \mu^\star_i+\sigma(\beta_{ij}^\star-\beta_{ji}^\star) = 0\,.
+\end{equation}
+Now take $\Pb^{\mathrm{se}}$ the optimal solution of \eqref{opt-sym_P}. As written in the proof \cref{prop:sol_gamma_non_null} of  $\Pb^{\mathrm{se}}$ and the optimal dual variables $(\bm{\gamma}^\star, \bm{\lambda}^\star, \bm{\Gamma}^\star)$ satisfy the KKT conditions:
+\begin{equation}
+\label{eq:kkt2}
+    \begin{aligned}
+    &\forall (i,j), \ C_{ij} + \gamma_i^\star\log{P^{\mathrm{se}}_{ij}} - \lambda_i^\star + \Gamma^\star_{ij}-\Gamma^\star_{ji} = \bm{0} \\
+    &\Pb^{\mathrm{se}} \bm{1} = \bm{1}, \: \operatorname{H}_r(\Pb^{\mathrm{se}}) \geq (\log{\xi} + 1)\bm{1}, \: \Pb^{\mathrm{se}} = (\Pb^{\mathrm{se}})^\top \\
+    &\bm{\gamma}^\star \bm{\geq} \bm{0} \\
+    &\forall i, \gamma_i^\star (\operatorname{H}(\Pb^{\mathrm{se}}_{i:}) - (\log{\xi} + 1)) = 0\:.
+\end{aligned}
+\tag{KKT-SEA}
+\end{equation}
+By hypothesis $\gammab^\star > 0$ which gives $\forall i, \operatorname{H}(\Pb^{\mathrm{se}}_{i:}) - (\log{\xi} + 1) = 0$. Now take $0 < \sigma \leq \min_i \gamma^\star_i$ and define $\forall i, \omega_i^\star = \frac{\gamma_i^\star}{\sigma} -1$. Using the hypothesis on $\sigma$ we have $\forall i, \omega_i^\star \geq 0$ and $\bm{\omega}^\star$ satisfies $\forall i, \ \sigma(1+\omega^\star_i) = \gamma_{i}^\star$. Moreover for any $i \in \integ{n}$
+\begin{equation}
+\omega_i^\star(\operatorname{H}(\Pb^{\mathrm{se}}_{i:}) - (\log{\xi} + 1)) = 0 \,.
+\end{equation}
+Define also $\forall i, \mu_i^\star = \lambda_i^\star/\sigma$ and $\forall (i,j), \beta_{ij}^\star = \Gamma_{ij}^\star/\sigma$. Since $\Pb^{\mathrm{se}}, (\bm{\gamma}^\star, \bm{\lambda}^\star, \bm{\Gamma}^\star)$ satisfies the KKT conditions \eqref{eq:kkt2} then by the previous reasoning $\Pb^{\mathrm{se}}, (\bm{\omega}^\star, \bm{\mu}^\star, \bm{\beta}^\star)$ satisfy the KKT conditions \eqref{kkt1} and in particular $\Pb^{\mathrm{se}}$ is an optimal solution of \eqref{projkl} since KKT conditions are sufficient. Thus we have proven that $\Pb^{\mathrm{se}} \in \argmin_{\Pb \in \mathcal{H}_{\xi} \cap \mathcal{S}} \KL(\Pb | \K_\sigma)$ and by the uniqueness of the solution this is in fact an equality.
+\end{proof}
+
+\section{Alternating Bregman Projections for Solving \eqref{eq:sym_entropic_affinity}}\label{sec:dykstra}
+
+% \paragraph{Entropic affinities existence.}
+% Solving \eqref{eq:entropic_affinity_pb} consists in $n$ independent root
+% finding problems in $\varepsilonb$. To see whether it is well-defined, one can
+% look at edge cases. For any data point index $i$, we denote the stochastic
+% kernel $P_{ij}(\varepsilon_i) = \exp{(-C_{ij}/\varepsilon_i)}/\left(\sum_\ell
+% \exp{(-C_{i\ell}/\varepsilon_i)}\right)$. When $\varepsilon_i \to +\infty$, one
+% has that $\exp{(-C_{ij}/\varepsilon_i)} \to 1$. Therefore for all $j$,
+% $P_{ij}(\varepsilon_i)$ converges towards $\frac{1}{n}$ which is the maximum
+% entropy distribution with $\operatorname{H}(\Pb_{i:}) = \log{n} + 1$ at this limit.
+% On the other hand, when $\varepsilonb_i \to 0$, then the denominator is
+% equivalent to $\exp{(-C_{ij^\star}/\varepsilon_i)}$ where $j^\star = \argmin_j
+% C_{ij}$. Then $\Pb_{i:}(\varepsilon_i)$ converges towards the vector with one at
+% position $j^\star$ and zero elsewhere. The latter has the smallest entropy (one with
+% our definition), as it corresponds to a deterministic choice of neighbor for
+% point $i$. Hence as $\operatorname{H} \circ \Pb$ is continuous, a solution to
+% (\ref{eq:entropic_affinity_pb}) exists for any $\xi \in [n-1]$. Moreover one can
+% show that for any $i$, $\varepsilon_i \mapsto \operatorname{H} \circ
+% \Pb_{i:}(\varepsilon_i)$ is an increasing function. Thus in practice, binary
+% search is applied and is guaranteed to find the root $\bm{\varepsilon}^\star$
+% solving (\ref{eq:entropic_affinity_pb}). Note that it can be done very
+% efficiently using the tight bounds on the kernel bandwidth $\bm{\varepsilon}$
+% derived by \cite{vladymyrov2013entropic}.
+
+
+% \section{Additional details about SNEkhorn}
+
+% \subsection{Objective Definition}
+
+% Recall the optimization problem of \texttt{SNEkhorn}:
+% \begin{align}\label{decompose_A_B}
+%     \min_{\Z \in \mathbb{R}^{n \times q}} \quad \langle \Pb^{\mathrm{se}}_{\xi}(\C_X), \C_Z \rangle - 2 \langle \f, \bm{1} \rangle \:.
+% \end{align}
+
+% \paragraph{Link with Laplacian Eigenmaps.}
+% When $\C_Z$ is the squared Euclidean distance matrix, the first term of the above decomposition can be written as the quadratic term $\Z^\top \Lb \Z$ where we denoted by $\Lb$ the graph Laplacian of $\Pb^{\mathrm{se}}_{\xi}(\C_X)$ \ie the matrix such that for $(i,j)$, $L_{ij} = - P^{\mathrm{se}}(\C_X)_{ij}$ if $i \neq j$ and $\sum_{k \in [n]} P^{\mathrm{se}}(\C_X)_{ik}$ otherwise. Note that this amounts to picking $\Pb^{\mathrm{s}}$ in the form of a DS Gaussian kernel $\K = \exp(-\C)$ as shown in section \ref{sec:entropy_reg_OT} and that in this case the attractice term can be seen as an unconstrained Laplacian eigenmaps objective \cite{belkin2003laplacian}.
+
+% % One can derive the gradient of the objective \textit{w.r.t.}\ $\Z$ as
+% % \begin{align*}
+% %     \nabla_{\Z} \mathcal{J}(\X, \Z) = 2 \left(\Lb \Z - \nabla_{\Z}\f^{\top} \bm{1} \right) \:.
+% % \end{align*}
+
+% \subsection{SNEkhorn Gradients}\label{sec:snekhorn_gradients}
+
+% In this section, we derive the expression of the Jacobian $J_{\Z}\f$ in closed form using the implicit function theorem.
+
+% In \texttt{SNEkhorn}, as presented in \cref{eq:plan_sym_sinkhorn}, the DS affinity used in the latent space takes the form:
+% \begin{align*}
+%     \Pb^{\mathrm{s}} = \exp \left(\f \oplus \f - \C_Z \right)
+% \end{align*}
+% where $\f$ is such that the above matrix is DS. Throughout, we will use the notation $\bm{z} = \mathrm{vec}(\Z)$.
+
+% We now focus on computing the Jacobian of $\f$ with respect to $\bm{z}$. To do so, we will start from the stochasticity constraint that defines $\bm{z} \mapsto \f(\bm{z})$ implicitly:
+% \begin{align*}
+%     \exp \left(\f(\bm{z}) \oplus \f(\bm{z}) - \C_Z \right) \bm{1} = \bm{1} \:.
+% \end{align*}
+% In what follows we denote $\bm{\tau} \colon (\bm{z}, \f) \mapsto  \exp \left(\f \oplus \f - \C_Z \right) \bm{1}$.
+
+% $\bm{\tau}$ is continuously differentiable. Therefore by the implicit function theorem, if the Jacobian $J_{\f} \bm{\tau}(\bm{z}, \f(\bm{z}))$ is invertible, then there exists an open neighborhood of $\bm{z}$ where $\bm{z} \mapsto \f(\bm{z})$ is invertible and its Jacobian writes:
+% \begin{align*}
+%     J_{\bm{z}} \f(\bm{z}) &= -\left( J_{\f} \bm{\tau}(\bm{z}, \f(\bm{z}) \right)^{-1} J_{\bm{z}} \bm{\tau}(\bm{z}, \f(\bm{z})) \:.
+% \end{align*}
+% Denoting $\bm{P} \colon \bm{z} \mapsto \exp(\mathbf{f}(\bm{z}) \oplus \mathbf{f}(\bm{z}) - \C_Z)$, the Jacobian of $\bm{\tau}$ with respect to $\f$ can be computed as:
+% \begin{align*}
+%     J_{\f} \bm{\tau}(\bm{z}, \f(\bm{z})) &= \bm{P}(\bm{z}) + \bm{I}_n
+% \end{align*}
+% since $\bm{P}(\bm{z}) \bm{1} = \bm{1}$. Note that the above is invertible since $\Pb(\bm{z})$ is positive semi-definite.
+
+% The second Jacobian can be computed as:
+% \begin{align*}
+%     J_{\bm{z}} \bm{\tau}(\bm{z}, \f(\bm{z})) &= J_{\bm{z}} \left( \bm{P}(\bm{z}) \bm{1} \right) \\
+%     &= \left(\bm{\bm{1}}^\top \otimes \bm{I}_n \right) J_{\bm{z}}\bm{p}(\bm{z}) \\
+%     &= \left(\bm{\bm{1}}^\top \otimes \bm{I}_n \right)\operatorname{diag}(\bm{p}(\bm{z})) J_{\bm{z}}(\bm{c}_Z) \:.
+% \end{align*}
+% where we denoted $\bm{c}_Z = \mathrm{vec}(\C_Z)$ and $\bm{p}(\bm{z}) = \mathrm{vec}\left(\bm{P}(\bm{z}) \right)$.
+
+% \paragraph{Solution when $\gammab^\star$ has a null coordinate.} When there exists $j$ such that $\gamma^\star_j = 0$ (meaning that $\operatorname*{H}(\Pb^{\mathrm{se}}_j) > \log \xi + 1$) then we cannot apply the dual ascent algorithm resulting from the primal-dual relation from \cref*{prop:sol_gamma_non_null}. We propose to consider the following regularized problem, where $\sigma > 0$:
+% \begin{align}\label{eq:sym_entropic_affinity_regularized}
+%   \min_{\Pb \in \mathcal{H}_{\xi} \cap \mathcal{S}} \: \langle \Pb, \C \rangle + \sigma \operatorname{H}(\Pb)\:.
+% \end{align}
+
+For $\sigma > 0$ and $\K_{\sigma} = \exp(-\C/\sigma)$, we introduce $\Pb^{\mathrm{se}}_{\sigma} = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{H}_{\xi} \cap \mathcal{S}}(\K_{\sigma})$. Note that \cref{lemma_sea_proj} gives us that when $\sigma \leq \min_i \gamma^\star_i$ ($\bm{\gamma}^\star$ is defined as the solution in $\bm{\gamma}$ of the \ref{eq:dual_problem} problem), we get $\Pb^{\mathrm{se}}_{\sigma} = \Pb^{\mathrm{se}}$. In \cref{subsec:sea}, we have seen a dual ascent algorithm to compute $\Pb^{\mathrm{se}}$. We now provide an alternative computational approach to compute $\Pb^{\mathrm{se}}_{\sigma}$ for any $\sigma$. In particular, when $\sigma \leq \min_i \gamma^\star_i$, the presented approach provides an alternative to dual ascent for solving \eqref{eq:sym_entropic_affinity}.
+
+To compute $\Pb^{\mathrm{se}}_{\sigma}$, one can rely on the well-studied convergence of alternating Bregman projection methods \cite{benamou2015iterative}. The core idea is to alternate projection onto $\mathcal{H}_{\xi}$  with the projection onto $\mathcal{S}$. As $\mathcal{H}_{\xi}$ is not affine, one needs to resort to the Dykstra procedure \cite{dykstra1983algorithm} described in \cref{algo:Dykstra_symmetric_entropic_affinity}. Note that Dykstra's algorithm can be applied to any Bregman divergence including $\KL$ \cite{censor1998dykstra} with guarantees \cite{bauschke2000dykstras}. 
+
+\begin{algorithm}[H]
+    \caption{\textit{Dykstra} for computing  $\Pb^{\mathrm{se}}_{\sigma}$}
+    \label{algo:Dykstra_symmetric_entropic_affinity}
+    \begin{algorithmic}[1]
+        \STATE {\textbf{Input}: cost $\C$, perplexity $\xi$, scaling $\sigma$} \\
+        % \STATE $t \leftarrow 0$ \\
+        \STATE $\left(\Pb_s, \bm{\Xi} \right) \leftarrow \left(\exp(-\C / \sigma), \bm{1} \bm{1}^\top \right)$ \\
+        \WHILE{not converged}
+            % \STATE $t \leftarrow t+1$ \\
+            \STATE $\Pb_h \leftarrow \operatorname{Proj}^{\operatorname{KL}}_{\mathcal{H}_{\xi}}(\Pb_s \odot \bm{\Xi})$ 
+            \\
+            \STATE $\bm{\Xi} \leftarrow \bm{\Xi} \odot \Pb_s \oslash \Pb_h$
+            \\
+            \STATE $\Pb_s \leftarrow \operatorname{Proj}^{\operatorname{KL}}_{\mathcal{S}}(\Pb_h)$
+        \ENDWHILE  
+        \STATE {\bfseries Output: $\Pb_s$}
+\end{algorithmic}
+\end{algorithm}
+    
+The factor $\sigma$ scales the distance matrix such that row-wise entropies are controlled when projecting onto $\mathcal{H}_\xi$. As such, choosing a $\sigma$ too high might result in some entropies being unsaturated while a $\sigma$  too small generally leads to slow convergence.
+
+We now describe how to perform the two $\KL$ projection steps. 
+
+% \textbf{Projection onto $\mathcal{S}$.}
+% The symmetric projection is given by the following lemma.
+
+% \begin{lemma}
+%     For any matrix $\Pb \in \R_+^{n \times n}$, it holds $\operatorname{Proj}^{\operatorname{KL}}_{\mathcal{S}}(\Pb) = \big(\Pb \odot \Pb^\top \big)^{\odot \frac{1}{2}}$.
+% \end{lemma}
+
+\textbf{Projection onto $\mathcal{S}$.} The $\KL$ projection onto $\mathcal{S}$ of $\K \in \R_+^{n \times n}$ amounts to the following problem.
+\begin{align}
+    \argmin_{\Pb \in \mathcal{S}} \ &\KL(\Pb | \K) \:.
+\end{align}
+For this problem the Lagrangian reads, where $\W \in \R^{n \times n}$ is a dual variable: 
+\begin{equation}
+\mathcal{L}(\Pb, \W) = \KL(\Pb | \K) +\langle \W, \Pb -\Pb^{\top} \rangle \:.
+\end{equation}
+Similarly as before, if we cancel the gradient of $\mathcal{L}$ with respect to $\Pb$ we obtain $\log(\Pb^\star \oslash \K) + \W - \W^\top = \bm{0}$. Thus $\Pb^\star = \exp( \W-\W^\top) \odot \K$. We must also have the primal feasibility that is $\Pb^\star = \Pb^{\star \top}$. Plugging the expression in this condition leads to $\W - \W^\top= \frac{1}{2} \log(\K^\top \oslash \K)$. Hence plugging it back we get $\Pb^\star = \exp( \frac{1}{2} \log(\K^\top \oslash \K)) \odot \K = \left(\K^\top \oslash \K \right)^{\odot \frac {1}{2}} \odot \K = \left(\K \odot \K^{\top}\right)^{\odot \frac {1}{2}}$. Overall the projection reads:
+\begin{equation}
+\argmin_{\Pb \in \mathcal{S}} \: \KL(\Pb | \K) = \left(\K \odot \K^{\top}\right)^{\odot \frac{1}{2}} \:.
+\end{equation}
+
+\textbf{Projection onto $\mathcal{H}_{\xi}$.}
+Concerning the entropic projection, on can compute $\operatorname{Proj}^{\operatorname{KL}}_{\mathcal{H}_{\xi}} \colon \mathcal{S} \to \mathcal{H}_\xi$ using a slight adaptation of \cref{lemma_ea_proj}. For any $\Pb \in \mathcal{S}$, it holds
+\begin{align}
+  \forall (i,j), \quad \operatorname{Proj}^{\operatorname{KL}}_{\mathcal{H}_{\xi}}(\Pb)_{ij} =  \frac{\exp{(-\log P_{ij}/\rho_i)}}{\sum_\ell \exp{(- \log P_{i\ell}/\rho_i)}}
+\end{align}
+where for any $i$, $\rho_i = \max(\varepsilon^\star_i, 1)$ where $\bm{\varepsilon}^\star$ solves (\ref{eq:entropic_affinity_pb}) with cost $\C = -\log \K$. Note that this projection is more efficient to compute than $\Pb^{\mathrm{e}}$ as one can stop the search when the upper bound on the root becomes smaller than one. 
+
+% \section{Experiment's Supplementary Material}
+
+% % \begin{wrapfigure}[9]{R}{0.53\textwidth}
+% %   \centering
+% %   \begin{minipage}{0.52\textwidth}
+% \begin{algorithm}[H]
+%     \caption{\textit{Dual Ascent} for solving \eqref{eq:dual_problem}}
+%     \label{algo:dual_ascent}
+%     \begin{algorithmic}[1]
+%     \STATE {\textbf{Input}: cost $\C$, perplexity $\xi$, learning rate $\alpha$} \\
+%     \WHILE{not converged}
+%     \STATE $(\gammab, \lambdab) \leftarrow (\max(\gammab + \alpha \bm{\delta}_{\gamma}, \bm{0}), \lambdab + \alpha \bm{\delta}_{\lambda})$ \\
+%     \STATE $\Pb \leftarrow \exp \left((\lambdab \oplus \lambdab - 2 \C) \oslash (\gammab \oplus \gammab) \right)$ \\
+%     \STATE $(\bm{\delta}_{\gamma}, \bm{\delta}_{\lambda}) \leftarrow ((\log{\xi}+1) \bm{1} - \operatorname{H}_{\mathrm{r}}(\Pb), \bm{1} - \Pb \bm{1})$
+%     \ENDWHILE
+%     \STATE {\bfseries Output: $\Pb$}
+%     \end{algorithmic}
+% \end{algorithm}
+% \end{minipage}
+% \end{wrapfigure}

@@ -1,0 +1,55 @@
+% !TeX root = ../paper.tex
+
+\section{Introduction}
+
+Exploring and analyzing high-dimensional data is a core problem of data science that requires building low-dimensional and interpretable
+representations of the data through dimensionality reduction (DR). Ideally, these representations should preserve the data structure by mimicking, in the reduced representation space (called \emph{latent space}), a notion of similarity between samples. 
+We call \emph{affinity} the weight matrix of a graph that encodes this similarity. It has positive entries and the higher the weight in position $(i,j)$, the
+higher the similarity or proximity between samples $i$ and $j$.
+Seminal approaches relying on affinities include Laplacian
+eigenmaps \cite{belkin2003laplacian}, spectral clustering
+\cite{von2007tutorial} and semi-supervised learning \cite{zhou2003learning}. Numerous methods can be employed to construct such affinities. A common choice is to use a kernel (\eg Gaussian) derived from a distance matrix normalized by a bandwidth parameter that usually has a large influence on the outcome of the algorithm. 
+Indeed, excessively small kernel bandwidth can result in %points \nc{points ?} 
+solely capturing the positions of closest neighbors, at the expense of large-scale dependencies. Inversely, setting too large a bandwidth blurs information about close-range pairwise relations. Ideally, one should select a different bandwidth for each point to accommodate varying sampling densities and noise levels. One approach is to compute the bandwidth of a point based on the distance from its $k$-th nearest neighbor \cite{zelnik2004self}. However, this method fails to consider the entire distribution of distances.
+In general, selecting appropriate kernel bandwidths can be a laborious task, and many practitioners resort to greedy search methods. This can be limiting in some settings, particularly when dealing with large sample sizes.
+
+\textbf{Entropic Affinities and SNE/t-SNE.}
+Entropic affinities (EAs) were first introduced in the
+seminal paper \emph{Stochastic Neighbor Embedding} (SNE) 
+\cite{hinton2002stochastic}. It consists in normalizing each row $i$ of a distance matrix by a
+bandwidth parameter $\varepsilon_i$ such that the distribution associated with each row of the corresponding stochastic (\ie row-normalized) Gaussian affinity has a fixed entropy. The value of this entropy, whose exponential is called
+the \emph{perplexity}, is then the only hyperparameter left to tune and has
+an intuitive interpretation as the number of effective neighbors of each point \cite{vladymyrov2013entropic}.
+EAs are notoriously used to encode pairwise relations in a high-dimensional space for the DR algorithm t-SNE \cite{van2008visualizing}, among other DR methods including \cite{carreira2010elastic}. t-SNE is increasingly popular in many applied fields \cite{kobak2019art,
+melit2020unsupervised} mostly due to its ability to represent clusters in the data \cite{linderman2019clustering, JMLR:v23:21-0524}. Nonetheless, one major flaw of EAs is that they are inherently directed and often require post-processing symmetrization.
+
+\textbf{Doubly Stochastic Affinities.}
+Doubly stochastic (DS) affinities are non-negative matrices whose rows and columns have unit $\ell_1$ norm.
+%As such, they encompass symmetric stochastic matrices. 
+In many applications, it has been demonstrated that DS affinity normalization (\ie determining the nearest DS matrix to a given affinity matrix) offers numerous benefits. First, it can be seen as a relaxation of k-means \cite{zass2005unifying} and it is well-established that it enhances spectral clustering performances \cite{Ding_understand,Zass,beauchemin2015affinity}. Additionally, DS matrices present the benefit of being invariant to the various Laplacian normalizations \cite{von2007tutorial}. Recent observations indicate that the DS projection of the Gaussian kernel under the $\KL$ geometry is more resilient to heteroscedastic noise compared to its stochastic counterpart \cite{landa2021doubly}. It also offers a more natural analog to the heat kernel \cite{marshall2019manifold}.
+These properties have led to a growing interest in DS affinities, with their use expanding to various applications such as smoothing filters \cite{Milanfar}, subspace clustering \cite{lim2020doubly} and transformers \cite{sander2022sinkformers}.
+%attention mechanisms 
+
+\textbf{Contributions.} In this work, we study the missing
+link between EAs, which are easy to tune and adaptable to data with heterogeneous density, and DS affinities which have interesting properties in practical applications as aforementioned. 
+%To this end, we tackle two major challenges.
+%Extending entropic affinities from stochastic to
+%doubly stochastic seems promising given all the aforementioned benefits. 
+%However, two main challenges appear. 
+% First, the current formulation of entropic affinities is specifically tailored for directed stochastic affinities. Secondly, as pointed out in \citep{lu2019doubly}, when one
+% runs t-SNE with a doubly stochastic affinity, low dimensional
+% coordinates tend to concentrate on spheres thus making embedding onto a 2D
+% surface (typical use case of DR) of limited use \titouan{a reformuler ces deux phrases: la deuxieme est effectivement un challenge mais je ne comprends pas en quoi ce qu'on fait le résoud, et le premier c'est pas vraiment un challenge, c'est juste que ça n'existe pas}\nc{agree with that}.  
+Our main contributions are as follows. We uncover the convex
+optimization problem that underpins classical entropic affinities, exhibiting
+novel links with entropy-regularized Optimal Transport (OT) (\cref{sec:entropic_affinity_semi_relaxed}). We then propose in \cref{subsec:sea} a principled symmetrization of entropic
+affinities. The latter enables controlling the entropy in each point, unlike
+t-SNE's post-processing symmetrization, and producing a genuinely doubly stochastic affinity. We show how to
+compute this new affinity efficiently using a dual ascent algorithm.
+In \cref{sec:DR_with_OT}, we introduce SNEkhorn: a DR algorithm that couples this new symmetric entropic affinity with a doubly stochastic kernel in the low-dimensional embedding space, without sphere concentration issue \cite{lu2019doubly}. We finally showcase the benefits of symmetric entropic affinities on a variety of applications in Section \ref{sec:DR_experiments} including spectral clustering and DR experiments on datasets ranging from images to genomics data.
+
+\textbf{Notations.} $\integ{n}$ denotes the set $\{1,...,n\}$. $\exp$ and $\log$ applied to vectors/matrices are taken element-wise. $\bm{1}
+= (1,...,1)^\top$ is the vector of $1$. $\langle \cdot, \cdot \rangle$ is the standard inner product for matrices/vectors. $\mathcal{S}$ is the space of $n \times n$ symmetric matrices. $\mathbf{P}_{i:}$ denotes the $i$-th row of a matrix $\mathbf{P}$. $\odot$ (\textit{resp.} $\oslash$) stands for element-wise multiplication (\textit{resp.} division) between vectors/matrices. For $\bm{\alpha}, \bm{\beta} \in \R^n, \bm{\alpha} \oplus \bm{\beta} \in \R^{n \times n}$ is $(\alpha_i + \beta_j)_{ij}$. The entropy of $\p \in \mathbb{R}^{n}_+$ is\footnote{With the convention $0 \log 0 = 0$.} $\operatorname{H}(\p) = -\sum_{i} p_i(\log(p_i)-1) = -\langle \p, \log \p - \bm{1} \rangle$. The Kullback-Leibler divergence between two matrices $\Pb, \Qb$ with nonnegative entries such that $Q_{ij} = 0 \implies P_{ij}=0$ is $\KL(\Pb | \Qb) = \sum_{ij} P_{ij}\left(\log(\frac{P_{ij}}{Q_{ij}})-1\right) = \langle \Pb, \log \left(\Pb \oslash \Qb \right) - \bm{1}\bm{1}^\top \rangle$.
+%Throughout the paper, when not specified indices such as $i$ and $j$ are assumed to be taken in $\integ{n}$.
+%
+%$\langle \: \cdot \: \rangle$ is the Euclidean inner product between vectors and $\langle \: \cdot \: \rangle$ is the Frobenius inner product between matrices. 

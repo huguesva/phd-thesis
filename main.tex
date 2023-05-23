@@ -1,290 +1,375 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Masters/Doctoral Thesis 
-% LaTeX Template
-% Version 2.5 (27/8/17)
-%
-% This template was downloaded from:
-% http://www.LaTeXTemplates.com
-%
-% Version 2.x major modifications by:
-% Vel (vel@latextemplates.com)
-%
-% This template is based on a template by:
-% Steve Gunn (http://users.ecs.soton.ac.uk/srg/softwaretools/document/templates/)
-% Sunil Patel (http://www.sunilpatel.co.uk/thesis-template/)
-%
-% Template license:
-% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[a4paper,10pt,twoside]{StyleThese}
 
-%----------------------------------------------------------------------------------------
-%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
-%----------------------------------------------------------------------------------------
-
-\documentclass[
-11pt, % The default document font size, options: 10pt, 11pt, 12pt
-%oneside, % Two side (alternating margins) for binding by default, uncomment to switch to one side
-english, % ngerman for German
-singlespacing, % Single line spacing, alternatives: onehalfspacing or doublespacing
-%draft, % Uncomment to enable draft mode (no pictures, no links, overfull hboxes indicated)
-%nolistspacing, % If the document is onehalfspacing or doublespacing, uncomment this to set spacing in lists to single
-%liststotoc, % Uncomment to add the list of figures/tables/etc to the table of contents
-%toctotoc, % Uncomment to add the main table of contents to the table of contents
-%parskip, % Uncomment to add space between paragraphs
-%nohyperref, % Uncomment to not load the hyperref package
-headsepline, % Uncomment to get a line under the header
-%chapterinoneline, % Uncomment to place the chapter title next to the number on one line
-%consistentlayout, % Uncomment to change the layout of the declaration, abstract and acknowledgements pages to match the default layout
-]{MastersDoctoralThesis} % The class file specifying the document structure
-
-\usepackage[utf8]{inputenc} % Required for inputting international characters
-\usepackage[T1]{fontenc} % Output font encoding for international characters
-
-\usepackage{mathpazo} % Use the Palatino font by default
-
-\usepackage[backend=bibtex,style=authoryear,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
-
-\addbibresource{example.bib} % The filename of the bibliography
-
-\usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
-
-\input{notations.tex}
+\def\myauthor{Hugues Van Assel}
+\def\mytitle{Phd Thesis}
 
 
-%----------------------------------------------------------------------------------------
-%	MARGIN SETTINGS
-%----------------------------------------------------------------------------------------
+\synctex=1
+\setlength{\marginparwidth}{2cm}
+\usepackage[left=3cm,right=3cm,top=2.5cm,bottom=2.5cm,includefoot,includehead,headheight=13.6pt]{geometry}
 
-\geometry{
-	paper=a4paper, % Change to letterpaper for US letter
-	inner=2.5cm, % Inner margin
-	outer=3.8cm, % Outer margin
-	bindingoffset=.5cm, % Binding offset
-	top=1.5cm, % Top margin
-	bottom=1.5cm, % Bottom margin
-	%showframe, % Uncomment to show how the type block is set on the page
-}
+\renewcommand{\baselinestretch}{1.05}
+\renewcommand{\baselinestretch}{1.05}
 
-%----------------------------------------------------------------------------------------
-%	THESIS INFORMATION
-%----------------------------------------------------------------------------------------
+\newcommand{\refname}{{\sffamily References}}
+\usepackage{aecompl}
+\usepackage[intoc]{nomencl}
+\renewcommand{\nomname}{Notations and Acronyms}
+\nomlabelwidth=25mm
+\makenomenclature
+\renewcommand{\nomgroup}[1]{\ifthenelse{\equal{#1}{N}}{\item[\Large\sffamily\textbf{Notations}]}{\ifthenelse{\equal{#1}{X}}{\item[\Large\sffamily\textbf{Acronyms}]}{}}}
+\usepackage{makeidx}
+\makeindex
+\makenomenclature
 
-\thesistitle{Thesis Title} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
-\supervisor{Dr. James \textsc{Smith}} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
-\examiner{} % Your examiner's name, this is not currently used anywhere in the template, print it elsewhere with \examname
-\degree{Doctor of Philosophy} % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
-\author{John \textsc{Smith}} % Your name, this is used in the title page and abstract, print it elsewhere with \authorname
-\addresses{} % Your address, this is not currently used anywhere in the template, print it elsewhere with \addressname
 
-\subject{Biological Sciences} % Your subject area, this is not currently used anywhere in the template, print it elsewhere with \subjectname
-\keywords{} % Keywords for your thesis, this is not currently used anywhere in the template, print it elsewhere with \keywordnames
-\university{\href{http://www.university.com}{University Name}} % Your university's name and URL, this is used in the title page and abstract, print it elsewhere with \univname
-\department{\href{http://department.university.com}{Department or School Name}} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
-\group{\href{http://researchgroup.university.com}{Research Group Name}} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
-\faculty{\href{http://faculty.university.com}{Faculty Name}} % Your faculty's name and URL, this is used in the title page and abstract, print it elsewhere with \facname
 
-\AtBeginDocument{
-\hypersetup{pdftitle=\ttitle} % Set the PDF's title to your title
-\hypersetup{pdfauthor=\authorname} % Set the PDF's author to your name
-\hypersetup{pdfkeywords=\keywordnames} % Set the PDF's keywords to your keywords
-}
+% \usepackage{ifpdf}
+
+% \ifpdf
+%   \usepackage{graphicx}
+%   \DeclareGraphicsExtensions{.jpg,.pdf,.png}
+%   \usepackage[pagebackref,hyperindex=true]{hyperref}
+% \else
+%   \usepackage{graphicx}
+%   \DeclareGraphicsExtensions{.ps,.eps}
+%   \usepackage[dvipdfm,pagebackref,hyperindex=true]{hyperref}
+% \fi
+
+% \usepackage{cleveref}[2012/02/15]\crefformat{footnote}{#2\footnotemark[#1]#3}
+
+
+
+% \graphicspath{{.}{imgs/}}
+% \lstset{style=mystyle,language=Python}
+
+
+
+% \newcommand{\addref}{\todo[color=red!40]{Référence!}}
+% \newcommand{\addfig}{\todo[color=red!40]{Figure!} }
+% \newcommand{\todoi}[1]{\todo[inline]{#1}}
+% \setlength{\marginparwidth}{2cm}
+
+% \newcommand{\captionfonts}{\small}
+
+% \makeatletter  \long\def\@makecaption#1#2{  \vskip\abovecaptionskip
+%   \sbox\@tempboxa{{\captionfonts #1: #2}}  \ifdim \wd\@tempboxa >\hsize
+%     {\captionfonts #1: #2\par}
+%   \else
+%     \hbox to\hsize{\hfil\box\@tempboxa\hfil}  \fi
+%   \vskip\belowcaptionskip}
+% \makeatother   
+% \usepackage{tikz}
+% \usetikzlibrary{arrows,automata}
+
+% \usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm,includefoot,includehead,headheight=13.6pt]{geometry}
+
+
+% \renewcommand*{\backref}[1]{}
+% \renewcommand*{\backrefalt}[4]{\ifcase #1 (Not cited)\or
+% (Cited on page~#2.)\else
+% (Cited on pages~#2.)\fi}
+% \renewcommand*{\backrefsep}{, }
+% \renewcommand*{\backreftwosep}{ and~}
+% \renewcommand*{\backreflastsep}{ and~}
+
+% \usepackage{color}
+% \definecolor{linkcol}{rgb}{0,0,0.4}
+% \definecolor{citecol}{rgb}{0.5,0,0}
+
+
+% \hypersetup
+% {
+% bookmarksopen=true,
+% pdftitle=\mytitle,
+% pdfauthor=\myauthor, pdfsubject="", pdfmenubar=true, pdfhighlight=/O, colorlinks=true, pdfpagemode=None, pdfpagelayout=SinglePage, pdffitwindow=true, linkcolor=linkcol, citecolor=citecol, urlcolor=linkcol }
+
+% \usepackage{pdfpages}
+% \usepackage{appendix}
+
+
+% \setcounter{secnumdepth}{2}
+% \setcounter{tocdepth}{2}
+
+
+% \newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+% \def\abs{\operatorname{abs}}
+% \def\argmax{\operatornamewithlimits{arg\,max}}
+% \def\argmin{\operatornamewithlimits{arg\,min}}
+% \def\diag{\operatorname{Diag}}
+% \newcommand{\eqRef}[1]{(\ref{#1})}
+% \newcommand{\lp}[1]{$\ell_{#1}$}
+
+% \usepackage{multicol}
+% \usepackage{rotating}                                                                                                      \usepackage{fancyhdr}                    
+ 
+
+% \pagestyle{fancy}                       \fancyfoot{}                            
+
+
+% \fancyhead[LE,RO]{\sffamily\bfseries\thepage}    \fancyhead[RE]{\sffamily\bfseries\nouppercase{\leftmark}}      \fancyhead[LO]{\sffamily\bfseries\nouppercase{\rightmark}}     
+% \let\headruleORIG\headrule
+% \renewcommand{\headrule}{\color{black} \headruleORIG}
+% \renewcommand{\headrulewidth}{1.0pt}
+% \usepackage{colortbl}
+% \arrayrulecolor{black}
+
+% \fancypagestyle{plain}{
+%   \fancyhead{}
+%   \fancyfoot{}
+%   \renewcommand{\headrulewidth}{0pt}
+% }
+
+
+
+
+% \makeatletter
+
+% \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else  \hbox{}  \thispagestyle{empty}  \newpage  \if@twocolumn\hbox{}\newpage\fi\fi\fi}
+
+% \makeatother
+
+
+
+
+% \newcommand{\reviewtimetoday}[2]{\special{!userdict begin
+%     /bop-hook{gsave 20 710 translate 45 rotate 0.8 setgray
+%       /Times-Roman findfont 12 scalefont setfont 0 0   moveto (#1) show
+%       0 -12 moveto (#2) show grestore}def end}}
+
+% \newenvironment{maxime}[1]
+% {
+% \vspace*{0cm}
+% \hfill
+% \begin{minipage}{0.5\textwidth}\hrulefill $\:$ {\bf #1}\\
+% \it
+% }{
+% \hrulefill
+% \vspace*{0.5cm}\end{minipage}
+% }
+
+
+% \usepackage{multirow}
+% \newenvironment{bulletList}{ \begin{list}	{$\bullet$}	{\setlength{\labelwidth}{25pt}	 \setlength{\leftmargin}{30pt}	 \setlength{\itemsep}{\parsep}}}{ \end{list} }
+
+% \newtheorem{definition}{Definition}[section]
+% \newtheorem*{hypotheses}{Hypothèses}
+% \renewcommand{\epsilon}{\varepsilon}
+
+% \newenvironment{vcenterpage}
+% {\newpage\vspace*{\fill}\thispagestyle{empty}\renewcommand{\headrulewidth}{0pt}}
+% {\vspace*{\fill}}
+
+
+
+% \newenvironment{rubrique}[2][\linewidth] {
+% \setlength{\lenB}{#1}
+% \setlength{\lenC}{\linewidth}
+% \addtolength{\lenC}{-\lenA}
+% \addtolength{\lenC}{-\lenB}
+% \addtolength{\lenC}{-\parindent}
+% \addtolength{\lenC}{-9pt}\vspace{-1mm}
+% \setlength\itemsep{-1mm}
+% \indentStd\begin{longtable}[t]{p{\lenB}p{\lenC}}
+
+%     }
+% {\end{longtable}}
+
+% \newcommand{\ligne}[1]{\rule[0.5ex]{.96\textwidth}{#1}\\}
+% \newcommand{\interRubrique}{\bigskip}
+% \newcommand{\styleRub}[1]{\noindent\textsf{\textbf{\Large #1}}\par}
+% \newcommand{\indentStd}{\noindent\hspace{\lenA}}
+
+
+
+% \newcommand{\lieu}[1]{\textsl{#1}}
+% \newcommand{\activite}[1]{\textbf{#1}}
+% \newcommand{\comment}[1]{\textsl{#1}}
+% \newcommand{\papername}[1]{\textsl{#1}}
+
+
+
+
+
+
+% \newcommand{\vectd}{\mathbf{d}}
+% \newcommand{\vectf}{\mathbf{f}}
+
+
+% \newcommand{\bleu}[1]{{\color{blue}{#1}}}
+% \newcommand{\ver}[1]{{\color{green}{#1}}}
+% \newcommand{\rouge}[1]{{\color{red}{#1}}}
+
+% \newcommand{\pasfini}[1]{\bleu{}\todoi{Pas fini! je te dirai quand
+%     c'est fait}}
+
+
+%     \usepackage{minitoc}
+% \setcounter{minitocdepth}{2}
+% \mtcindent=10pt
+
+% \mtcsetfeature{minitoc}{open}{\vspace{1.5mm}}
+% \mtcsetfeature{minitoc}{close}{\vspace{1.5mm}}
+
+
+% \let\minitocORIG\minitoc
+% \renewcommand{\minitoc}{\minitocORIG \vspace{1.5em}}
+
+% \renewcommand{\mtcfont}{\sffamily\small}
+% \renewcommand{\mtcSfont}{\sffamily\small\upshape\bfseries}
+% \renewcommand{\mtcSSfont}{\sffamily\small}
+% \renewcommand{\mtcSSSfont}{\sffamily\small}
+% \renewcommand{\mtifont}{\sffamily\large\bfseries}
+% \renewcommand{\ptifont}{\sffamily\Huge\bfseries}
+
+% \def\alphab{\boldsymbol\alpha}
+% \def\betab{\boldsymbol\beta}
+% \def\epsilonb{\boldsymbol\epsilon}
+% \def\Sigmab{\boldsymbol\Sigma}
+% \def\Lambdab{\boldsymbol\Lambda}
+% \def\thetab{\boldsymbol\theta}
+
+
+% \def\G{\pi}
+% \def\GG{\boldsymbol\G}
+% \def\Gs{\pi^s}
+% \def\GGs{\boldsymbol\pi^s}
+% \def\Gv{\pi^v}
+% \def\GGv{\boldsymbol\pi^v}
+% \def\a{{\bf a}}
+% \def\b{{\bf b}}
+% \newcommand{\pibf}{{\mathbf{\pi}}}
+% \def\graph{{\text{graph}}}
+
+% \def\h{{\bf h}}
+% \def\g{{\bf g}}
+% \def\Gbf{{\bf G}}
+
+% \def\e{{\bf e}}
+% \def\w{{\bf w}}
+% \def\v{{\bf v}}
+% \def\x{{\bf x}}
+% \def\y{{\bf y}}
+% \def\V{{\bf V}}
+% \def\Dbf{{\bf D}}
+% \def\Bbf{{\bf B}}
+% \def\Mbf{{\bf M}}
+
+% \def\X{{\bf X}}
+% \def\Y{{\bf Y}}
+% \def\L{{\bf L}}
+% \def\R{{\mathbb{R}}}
+% \def\Abf{{\mathbf{A}}}
+% \def\Bbf{{\mathbf{B}}}
+% \def\U{{\mathbf{U}}}
+
+% \def\vec{{\text{vec}}}
+% \def\tr{{\text{tr}}}
+% \def\one{{\mathbf{1}}}
+% \newcommand{\CCOT}{\texttt{CCOT}}
+% \newcommand{\CCOTGW}{\texttt{CCOT-GW}}
+% \newcommand{\MovieL}{\textsc{MovieLens}}
+% \newcommand{\COOT}{\text{COOT}}
+% \newcommand{\bz}{\mathbf{z}}
+% \newcommand{\bw}{\mathbf{w}}
+% \newcommand{\xbf}{\mathbf{x}}
+% \newcommand{\ebf}{\mathbf{e}}
+% \newcommand{\ybf}{\mathbf{y}}
+% \newcommand{\zbf}{\mathbf{z}}
+% \newcommand{\sbf}{\mathbf{s}}
+
+% \newcommand{\simplex}{\Sigma}
+% \newcommand{\ie}{\textit{i.e.}}
+% \newcommand{\featurespace}{C}
+% \newcommand{\mmspacex}{\mathcal{X}}
+% \newcommand{\mmspacey}{\mathcal{Y}}
+% \newcommand{\couplingset}{\Pi}
+% \newcommand{\Pm}{\mathcal{P}}
+% \newcommand{\E}{\mathbb{E}}
+% \newcommand{\C}{\mathbf{C}}
+
+% \newcommand{\Sp}{\mathbb{S}}
+% \newcommand{\gw}{GW}
+% \newcommand{\wass}{W}
+% \newcommand{\sgw}{SGW}
+% \newcommand{\risgw}{RISGW}
+% \newcommand{\gm}{GM}
+% \newcommand{\D}{\Delta}
+% \newcommand{\Sn}{S_{n}}
+% \newcommand{\insided}{c}
+% \newcommand{\supp}{\text{supp}}
+% \newcommand{\Stief}{\mathbb{V}_{p}(\R^{q})}
+% \newcommand{\lebsm}{\mathcal{L}}
+% \newcommand{\comp}{comp}
+% \newcommand{\XX}{\mathfrak{X}}
+
+% \usepackage{bm}
+
+% \newtheorem{prop}{Proposition}[section]
+% \newtheorem*{prop*}{Proposition}
+% \newtheorem*{theo*}{Theorem}
+% \newtheorem*{lemma*}{Lemma}
+
+
+% \newmdtheoremenv[innertopmargin=0pt]{theo}{Theorem}[section]
+% \newtheorem{corr}{Corollary}[section]
+% \newtheorem{lemma}{Lemma}[section]
+% \newtheorem{prob}{Problem}
+
+% \newtheorem{Example}{Example}[section]
+% \newtheorem{Remark}{Remark}[section]
+
+
+% \newmdtheoremenv[backgroundcolor=black!10,rightline=false,leftline=false,bottomline=false,innertopmargin=2pt]{memo}{Memo}[section]
+
+
+% \newcounter{Memo}[section]
+% \newenvironment{Memo}[1][]{  \stepcounter{Memo}  \ifstrempty{#1}  {\mdfsetup{    frametitle={      \tikz[baseline=(current bounding box.east),outer sep=0pt]
+%       \node[line width=1pt,anchor=east,rectangle,draw=blue!20,fill=white]
+%     {\strut \color{DarkOliveGreen}{Memo}~\theMemo};}}
+%   }  {\mdfsetup{    frametitle={      \tikz[baseline=(current bounding box.east),outer sep=0pt]
+%       \node[line width=1pt,anchor=east,rectangle,draw=blue!20,fill=white]
+%     {\strut \color{DarkOliveGreen}{Memo}~\theMemo:~\color{Maroon}{#1}};}}  }  \mdfsetup{innertopmargin=10pt,linecolor=blue!20,            linewidth=1pt,topline=true,            frametitleaboveskip=\dimexpr-\ht\strutbox\relax,}
+%   \begin{mdframed}[]\relax  }{\end{mdframed}}
+
+
+
+
+
+% \def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+% \let\endchangemargin=\endlist 
+
+% \newcommand\summaryname{Summary of the contributions}
+% \newenvironment{Abstract}    {\small\begin{center}    \bfseries{\summaryname} \end{center}}
+
+% \newcommand\tv[1]{#1}
+
+
+\input{notations}
+
+
+% \renewcommand{\baselinestretch}{1.2}
+
 
 \begin{document}
+% \renewcommand{\bibname}{{\sffamily Bibliography}}
+% \newcommand{\lc}[1]{\textcolor{magenta}{(#1)}}
+% \newcommand{\rt}[1]{\textcolor{green}{(#1)}}
+% \begin{titlepage}
 
-\frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
+% \includepdf[pages={1},pagecommand={\pagestyle{fancy}}]{./main_style.pdf}
 
-\pagestyle{plain} % Default to the plain heading style until the thesis style is called for the body content
+% \end{titlepage}
+% \sloppy
 
-%----------------------------------------------------------------------------------------
-%	TITLE PAGE
-%----------------------------------------------------------------------------------------
+\titlepage
 
-\begin{titlepage}
-\begin{center}
+\input{Chapters/Acknowledgements.tex}
+\input{Chapters/GraphCoupling/GraphCoupling.tex}
+\input{Chapters/SNEkhorn/SNEkhorn.tex}
 
-\vspace*{.06\textheight}
-{\scshape\LARGE \univname\par}\vspace{1.5cm} % University name
-\textsc{\Large Doctoral Thesis}\\[0.5cm] % Thesis type
 
-\HRule \\[0.4cm] % Horizontal line
-{\huge \bfseries \ttitle\par}\vspace{0.4cm} % Thesis title
-\HRule \\[1.5cm] % Horizontal line
- 
-\begin{minipage}[t]{0.4\textwidth}
-\begin{flushleft} \large
-\emph{Author:}\\
-\href{http://www.johnsmith.com}{\authorname} % Author name - remove the \href bracket to remove the link
-\end{flushleft}
-\end{minipage}
-\begin{minipage}[t]{0.4\textwidth}
-\begin{flushright} \large
-\emph{Supervisor:} \\
-\href{http://www.jamessmith.com}{\supname} % Supervisor name - remove the \href bracket to remove the link  
-\end{flushright}
-\end{minipage}\\[3cm]
- 
-\vfill
 
-\large \textit{A thesis submitted in fulfillment of the requirements\\ for the degree of \degreename}\\[0.3cm] % University requirement text
-\textit{in the}\\[0.4cm]
-\groupname\\\deptname\\[2cm] % Research group name and department name
- 
-\vfill
+\end{document}
 
-{\large \today}\\[4cm] % Date
-%\includegraphics{Logo} % University/department logo - uncomment to place it
- 
-\vfill
-\end{center}
-\end{titlepage}
 
-%----------------------------------------------------------------------------------------
-%	DECLARATION PAGE
-%----------------------------------------------------------------------------------------
-
-\begin{declaration}
-\addchaptertocentry{\authorshipname} % Add the declaration to the table of contents
-\noindent I, \authorname, declare that this thesis titled, \enquote{\ttitle} and the work presented in it are my own. I confirm that:
-
-\begin{itemize} 
-\item This work was done wholly or mainly while in candidature for a research degree at this University.
-\item Where any part of this thesis has previously been submitted for a degree or any other qualification at this University or any other institution, this has been clearly stated.
-\item Where I have consulted the published work of others, this is always clearly attributed.
-\item Where I have quoted from the work of others, the source is always given. With the exception of such quotations, this thesis is entirely my own work.
-\item I have acknowledged all main sources of help.
-\item Where the thesis is based on work done by myself jointly with others, I have made clear exactly what was done by others and what I have contributed myself.\\
-\end{itemize}
- 
-\noindent Signed:\\
-\rule[0.5em]{25em}{0.5pt} % This prints a line for the signature
- 
-\noindent Date:\\
-\rule[0.5em]{25em}{0.5pt} % This prints a line to write the date
-\end{declaration}
-
-\cleardoublepage
-
-%----------------------------------------------------------------------------------------
-%	QUOTATION PAGE
-%----------------------------------------------------------------------------------------
-
-\vspace*{0.2\textheight}
-
-\noindent\enquote{\itshape Thanks to my solid academic training, today I can write hundreds of words on virtually any topic without possessing a shred of information, which is how I got a good job in journalism.}\bigbreak
-
-\hfill Dave Barry
-
-%----------------------------------------------------------------------------------------
-%	ABSTRACT PAGE
-%----------------------------------------------------------------------------------------
-
-\begin{abstract}
-\addchaptertocentry{\abstractname} % Add the abstract to the table of contents
-The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
-\end{abstract}
-
-%----------------------------------------------------------------------------------------
-%	ACKNOWLEDGEMENTS
-%----------------------------------------------------------------------------------------
-
-\begin{acknowledgements}
-\addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
-The acknowledgments and the people to thank go here, don't forget to include your project advisor\ldots
-\end{acknowledgements}
-
-%----------------------------------------------------------------------------------------
-%	LIST OF CONTENTS/FIGURES/TABLES PAGES
-%----------------------------------------------------------------------------------------
-
-\tableofcontents % Prints the main table of contents
-
-\listoffigures % Prints the list of figures
-
-\listoftables % Prints the list of tables
-
-%----------------------------------------------------------------------------------------
-%	ABBREVIATIONS
-%----------------------------------------------------------------------------------------
-
-\begin{abbreviations}{ll} % Include a list of abbreviations (a table of two columns)
-
-\textbf{LAH} & \textbf{L}ist \textbf{A}bbreviations \textbf{H}ere\\
-\textbf{WSF} & \textbf{W}hat (it) \textbf{S}tands \textbf{F}or\\
-
-\end{abbreviations}
-
-%----------------------------------------------------------------------------------------
-%	PHYSICAL CONSTANTS/OTHER DEFINITIONS
-%----------------------------------------------------------------------------------------
-
-\begin{constants}{lr@{${}={}$}l} % The list of physical constants is a three column table
-
-% The \SI{}{} command is provided by the siunitx package, see its documentation for instructions on how to use it
-
-Speed of Light & $c_{0}$ & \SI{2.99792458e8}{\meter\per\second} (exact)\\
-%Constant Name & $Symbol$ & $Constant Value$ with units\\
-
-\end{constants}
-
-%----------------------------------------------------------------------------------------
-%	SYMBOLS
-%----------------------------------------------------------------------------------------
-
-\begin{symbols}{lll} % Include a list of Symbols (a three column table)
-
-$a$ & distance & \si{\meter} \\
-$P$ & power & \si{\watt} (\si{\joule\per\second}) \\
-%Symbol & Name & Unit \\
-
-\addlinespace % Gap to separate the Roman symbols from the Greek
-
-$\omega$ & angular frequency & \si{\radian} \\
-
-\end{symbols}
-
-%----------------------------------------------------------------------------------------
-%	DEDICATION
-%----------------------------------------------------------------------------------------
-
-\dedicatory{For/Dedicated to/To my\ldots} 
-
-%----------------------------------------------------------------------------------------
-%	THESIS CONTENT - CHAPTERS
-%----------------------------------------------------------------------------------------
-
-\mainmatter % Begin numeric (1,2,3...) page numbering
-
-\pagestyle{thesis} % Return the page headers back to the "thesis" style
-
-% Include the chapters of the thesis as separate files from the Chapters folder
-% Uncomment the lines as you write the chapters
-
-\include{Chapters/Chapter1}
-\include{Chapters/GraphCoupling} 
-%\include{Chapters/Chapter3}
-%\include{Chapters/Chapter4} 
-%\include{Chapters/Chapter5} 
-
-%----------------------------------------------------------------------------------------
-%	THESIS CONTENT - APPENDICES
-%----------------------------------------------------------------------------------------
-
-\appendix % Cue to tell LaTeX that the following "chapters" are Appendices
-
-% Include the appendices of the thesis as separate files from the Appendices folder
-% Uncomment the lines as you write the Appendices
-
-\include{Appendices/AppendixA}
-%\include{Appendices/AppendixB}
-%\include{Appendices/AppendixC}
-
-%----------------------------------------------------------------------------------------
-%	BIBLIOGRAPHY
-%----------------------------------------------------------------------------------------
-
-\printbibliography[heading=bibintoc]
-
-%----------------------------------------------------------------------------------------
-
-\end{document}  

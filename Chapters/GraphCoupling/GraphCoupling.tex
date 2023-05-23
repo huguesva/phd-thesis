@@ -1,0 +1,314 @@
+
+\chapter{A Probabilistic Graph Coupling View of Dimension Reduction}
+\label{Chapter_GraphCoupling}
+
+\section{Introduction}\label{intro}
+
+Dimensionality reduction (DR) is of central importance when dealing with high-dimensional data \citep{donoho2000high}. It mitigates the curse of dimensionality, allowing for greater statistical flexibility and less computational complexity. DR also enables visualization that can be of great practical interest for understanding and interpreting the structure of large datasets.
+Most seminal approaches include Principal Component Analysis (PCA) \cite{pearson1901liii},  multidimensional scaling \cite{kruskal1978multidimensional} and more broadly kernel eigenmaps methods such as Isomap \cite{balasubramanian2002isomap}, Laplacian eigenmaps \citep{belkin2003laplacian} and diffusion maps \citep{coifman2006diffusion}. These methods share the definition of a pairwise similarity kernel that assigns a high value to close neighbors and the resolution of a spectral problem. They are well understood and unified in the kernel PCA framework \citep{ham2004kernel}.
+
+In the past decade, the field has witnessed a major shift with the emergence of a new class of methods. They are also based on pairwise similarities but these are not converted into inner products. Instead, they define pairwise similarity functions in both input and latent spaces and optimize a cost between the two. Among such methods, the Stochastic Neighbor Embedding (SNE) algorithm \cite{NIPS2002SNE}, its heavy-tailed symmetrized version t-SNE \cite{maaten2008tSNE} or more recent approaches like LargeVis \cite{tang2016visualizing} and UMAP \cite{mcinnes2018umap} are arguably the most used in practice. These will be referred to as \textit{SNE-like} or \textit{neighbor embedding} methods in what follows. They are increasingly popular and now considered as the state-of-art techniques in many fields \cite{li2017application,kobak2019art,anders2018dissecting}. Their popularity is mainly due to their exceptional ability to preserve local structure, \textit{i.e.}\ close points in the input space have close embeddings, as shown empirically \cite{wang2021understanding}. They also demonstrate impressive performances in identifying clusters \cite{arora2018analysis, linderman2019clustering}. However this is done at the expense of global structure, that these methods struggle in preserving \cite{wattenberg2016use, coenen2019understanding} \textit{i.e.}\ the relative large-scale distances between embedded points do not necessarily correspond to the original ones. 
+
+Due to a lack of clear probabilistic foundations, these properties remain mostly empirical. This gap between theory and practice is detrimental as practitioners may rely on strategies that are not optimal for their use case.
+While recent software developments are making these methods more scalable \cite{chan2018t,pezzotti2019gpgpu,linderman2019fast} and further expanding their use, the need for a well-established probabilistic framework is becoming more prominent.
+In this work we define the generative probabilistic model that encompasses current embedding methods, while establishing new links with the well-established PCA model.
+
+\paragraph{Outline.} 
+Consider $\Xb = (\Xb_1,..., \Xb_n)^\top \in \mathbb{R}^{n \times p}$, an input dataset that consists of $n$ vectors of dimension $p$. Our task is to embed $\Xb$ in a lower dimensional space of dimension $q<p$ (typically $q=2$ for visualization), and we denote by $\Zb = (\Zb_1, ..., \Zb_n)^\top \in \mathbb{R}^{n \times q}$ the unknown embeddings. The rationale of our framework is to suppose that the observations $\Xb$ and $\Zb$ are structured by two latent graphs with $\Wb_{\scaleto{X}{4pt}}$ and $\Wb_{\scaleto{Z}{4pt}}$ standing for their $n$-square weight matrices.
+As the goal of DR is to preserve the input's structure in the latent space, we propose to find the best low-dimensional representation $\Zb$ of $\Xb$ such that $\Wb_{\scaleto{X}{4pt}}$ and $\Wb_{\scaleto{Z}{4pt}}$ are close. To build a flexible and robust probabilistic framework, we consider random graphs distributed according to some predefined prior distributions. Our objective is to match the posterior distributions of $\Wb_{\scaleto{X}{4pt}}$ and $\Wb_{\scaleto{Z}{4pt}}$. Note that as they share the same dimensionality the latter graphs can be easily compared unlike $\Xb$ and $\Zb$. The coupling is done with a cross entropy criterion, the minimization of which will be referred to as graph coupling.
+
+In this work, our main contributions are as follows.
+
+\begin{itemize}
+    \item We show that SNE, t-SNE, LargeVis and UMAP are all instances of graph coupling and characterized by different choices of prior for discrete latent structuring graphs (\cref{sec:GC_unified}). We demonstrate that such graphs essentially capture conditional independencies among rows through a pairwise Markov Random Field (MRF) model which construction can be found in \cref{sec:graph_structure}.
+    \item We uncover the intrinsic probabilistic property explaining why such methods perform poorly on conserving the large scale structure of the data as a consequence of a degeneracy of the MRF when shift invariant kernels are used (\cref{prop:integrability_pairwise_MRF}). Such degeneracy induces the loss of the relative positions of clusters corresponding to the connected components of the posterior latent graphs which distributions are identified (\cref{prop:posterior_W}). These findings are highlighted by a new initialization of the embeddings that is empirically tested (\cref{sec:towards_large_scale}).
+    \item We show that for Gaussian MRFs, when adapting graph coupling to precision matrices with suitable priors, PCA appears as a natural extension of the coupling problem in its continuous version (\cref{PCA_graph_coupling}). Such model does not suffer from the aforementioned degeneracy hence preserves the large-scale structure.
+\end{itemize}
+
+\section {Shift-Invariant Pairwise MRF to Model Row Dependencies} \label{sec:graph_structure}
+
+We start by defining the distribution of the observations given a graph. The latter takes the form of a pairwise MRF model which as we show is improper (\textit{i.e.}\ not integrable on $\mathbb{R}^{n \times p}$) when shift-invariant kernels are used. We consider a fixed directed graph $\Wb \in \mathcal{S}_{\scaleto{W}{4pt}}$ where:
+$$\mathcal{S}_{\scaleto{W}{4pt}} = \left\{\Wb \in \mathbb{N}^{n \times n} \mid \forall (i,j) \in \integ{n}^2, W_{ii}=0, W_{ij} \leq n \right\}$$
+Throughout, $(E, \mathcal{B}(E), \lambda_E)$ denotes a measure space where $\mathcal{B}(E)$ is the Borel $\sigma$-algebra on $E$ and $\lambda_E$ is the Lebesgue measure on $E$.
+
+\subsection{Graph Laplacian Null Space}\label{sec:laplacian_prop}
+A central element in our construction is the graph Laplacian linear map, defined as follows, where $\mathcal{S}^n_+(\mathbb{R})$ is the set of positive semidefinite matrices.
+\begin{definition}\label{graph_laplacian}
+The graph Laplacian operator is the map $L \colon \mathbb{R}_+^{n \times n} \to \mathcal{S}^n_+(\mathbb{R})$ such that
+$$\text{for } (i,j) \in \integ{n}^2, \quad L(\Wb)_{ij} = \left\{
+\begin{array}{ll}
+    - W_{ij} & \text{if } i \neq j \\
+    \sum_{k \in \integ{n}} W_{ik} & \text{otherwise} \:.
+\end{array} 
+\right. $$
+\end{definition}
+With an abuse of notation, let $\bm{L} = L(\overline{\Wb})$ where $\overline{\Wb} = \Wb + \Wb^\top$. Let $(C_1,...,C_{\scaleto{R}{4pt}})$ be a partition of $\integ{n}$ (\textit{i.e.}\ the set $\{1,2,...,n\}$) corresponding to the connected components (CCs) of $\overline{\Wb}$. As well known in spectral graph theory \cite{Chung97}, the null space of $\bm{L}$ is spanned by the orthonormal vectors $\{\bm{U}_{r}\}_{r \in [R]}$ such that for $r \in [R]$,
+$\bm{U}_{r} = \left(n_r^{-1/2} \ind_{i \in C_r}\right)_{i \in \integ{n}}$ with $n_r = \operatorname{Card}(C_r)$. By the spectral theorem, $\bm{U}_{\scaleto{[R]}{5pt}}$ can be completed such that $\bm{L} = \bm{U \Lambda U^\top}$ where $\bm{U} = (\bm{U}_1, ..., \bm{U}_n)$ is orthogonal and $\bm{\Lambda} = \operatorname{diag}((\lambda_i)_{i \in \integ{n}})$ with $0 = \lambda_1 = ... = \lambda_R < \lambda_{R+1} \leq ... \leq \lambda_n$. In the following, the data is split into two parts: $\Xb_{\scaleto{M}{4pt}}$, the orthogonal projection of $\Xb$ on $\mathcal{S}_{\scaleto{M}{4pt}} = (\ker \bm{L}) \otimes \mathbb{R}^p$, and $\Xb_{\scaleto{C}{4pt}}$, the projection on $\mathcal{S}_{\scaleto{C}{4pt}} = (\ker \bm{L})^{\perp} \otimes \mathbb{R}^p$. For $i \in \integ{n}$, $\Xb_{\scaleto{M}{4pt},i} = \sum_{r \in [R]} n_r^{-1} \ind_{i \in C_r}\sum_{\ell \in C_r} \Xb_{\ell} $ hence $\Xb_{\scaleto{M}{4pt}}$ stands for the empirical means of $\Xb$ on CCs, thus modelling the CC positions, while $\Xb_{\scaleto{C}{4pt}} = \Xb - \Xb_{\scaleto{M}{4pt}}$ is CC-wise centered, thus modeling the relative positions of the nodes within CCs. We now introduce the probability distribution of these variables.
+
+\subsection{Pairwise MRF and Shift-Invariances}\label{sec:within_CC}
+
+In this work, the dependency structure among rows of the data is governed by a graph. The strength of the connection between two nodes is given by a symmetric function $k : \mathbb{R}^p \to \mathbb{R}_+$. We consider the following pairwise MRF unnormalized density function:
+\begin{align}\label{eq:unnormalized_MRF}
+  f_{k} \colon (\Xb,\Wb) &\mapsto \prod_{(i,j) \in \integ{n}^2} k(\Xb_{i} - \Xb_{j})^{W_{ij}} \: .
+\end{align}
+As we will see shortly, the above is at the heart of DR methods based on pairwise similarities. Note that as $k$ measures the similarity between couples of samples, $f_k$ will take high values if the rows of $\Xb$ vary smoothly on the graph $\Wb$. Thus we can expect $\Xb_i$ and $\Xb_j$ to be close if there is an edge between node $i$ and node $j$ in $\Wb$. A key remark is that $f_{k}$ is kept invariant by translating $\Xb_{\scaleto{M}{4pt}}$. Namely for all $\Xb \in \mathbb{R}^{n \times p}$, $f_{k}(\Xb, \Wb) = f_{k}(\Xb_{\scaleto{C}{4pt}}, \Wb)$. This invariance results in $f_{k}(\cdot, \Wb)$ being non integrable on $\mathbb{R}^{n \times p}$, as we see with the following example. 
+
+\paragraph{Gaussian kernel.} For a positive definite matrix $\bm{\Sigma} \in \mathcal{S}^n_{++}(\mathbb{R})$, consider the Gaussian kernel $k : \bm{x} \mapsto e^{- \frac{1}{2}\| \bm{x} \|_{\bm{\Sigma}}^2}$ where $\bm{\Sigma}$ stands for the covariance among columns. One has:
+\begin{align}\label{eq:gaussian_kernel}
+    \log f_{k}(\Xb, \Wb) &= -\sum_{(i,j) \in \integ{n}^2} W_{ij} \| \bm{X}_{i}-\bm{X}_{j} \|^2_{\bm{\Sigma}}
+    = - \operatorname{tr} \left(\bm{\Sigma}^{-1} \bm{X}^{T} \bm{L} \bm{X}\right)
+\end{align}
+by property of the graph Laplacian (\cref{graph_laplacian}). In this case, it is clear that due to the rank deficiency of $\bm{L}$, $f_{k}(\cdot, \Wb)$ is only $\lambda_{\mathcal{S}_{\scaleto{C}{3pt}}}$-integrable. In general DR settings one does not want to rely on Gaussian kernels only. A striking example is the use of the Student kernel in t-SNE \cite{maaten2008tSNE}. Heavy-tailed kernels appear useful when the dimension of the embeddings is smaller than the intrinsic dimension of the data \cite{kobak2019heavy}. Our contribution provides flexibility by extending the previous result to a large class of kernels, as stated in the following theorem.
+
+\begin{theorem}\label{prop:integrability_pairwise_MRF}
+If $k$ is $\lambda_{\mathbb{R}^p}$-integrable and bounded above $\lambda_{\mathbb{R}^p}$-almost everywhere then $f_{k}(\cdot, \Wb)$ is $\lambda_{\mathcal{S}_{\scaleto{C}{3pt}}}$-integrable.
+\end{theorem}
+
+We refer to \cref{proof:lambda_perp_integrability} for the proof.
+We can now define a distribution on $(\mathcal{S}_{\scaleto{C}{4pt}}, \mathcal{B}(\mathcal{S}_{\scaleto{C}{4pt}}))$, where $\mathcal{C}_{k}(\Wb) = \int f_{k}(\cdot, \Wb) d\lambda_{\mathcal{S}_{\scaleto{C}{3pt}}}$:
+\begin{align}\label{eq:proba_perp}
+\mathbb{P}_{k}(d\Xb_{\scaleto{C}{4pt}} | \Wb) = \mathcal{C}_{k}(\Wb)^{-1} f_{k}(\Xb_{\scaleto{C}{4pt}}, \Wb) \lambda_{\mathcal{S}_{\scaleto{C}{3pt}}}(d\Xb_{\scaleto{C}{4pt}}) \: .
+\end{align}
+
+\begin{remark}
+Kernels may have node-specific bandwidths $\bm{\tau}$, set during a pre-processing step, giving $f_{k}(\Xb,\Wb) = \prod_{(i,j)} k((\Xb_{i} - \Xb_{j})/\tau_{i})^{W_{ij}}$. Note that such bandwidth does not affect the degeneracy of the distribution and \cref{prop:integrability_pairwise_MRF} still holds.
+\end{remark}
+
+
+\paragraph{Between-Rows Dependency Structure.} By symmetry of $k$, reindexing gives: $f_{k}(\Xb, \Wb) = \prod_{j \in \integ{n}} \prod_{i \in [j]} k(\Xb_{i} - \Xb_{j})^{\overline{W}_{ij}}$. Hence distribution \eqref{eq:proba_perp} boils down to a pairwise MRF model \citep{clifford1990markov} with respect to the undirected graph $\overline{\Wb}$, $\mathcal{C}_{k}$ playing the role of the partition function. Note that since $f_k$ (Equation \ref{eq:unnormalized_MRF}) trivially factorize according to the cliques of $\overline{\Wb}$, the Hammersley-Clifford theorem ensures that the rows of $\Xb_{\scaleto{C}{4pt}}$ satisfy the local and global Markov properties with respect to $\overline{\Wb}$. 
+
+\subsection{Uninformative Model for CC-wise Means}
+
+We showed that the MRF (\ref{eq:unnormalized_MRF}) is only integrable on $\mathcal{S}_{\scaleto{C}{4pt}}$, the definition of which depends on the connectivity structure of $\Wb$. As we now demonstrate, the latter MRF can be seen as a limit of proper distributions on $\mathbb{R}^{n \times p}$, see \textit{e.g.}\ \cite{rue2005gaussian} for a similar construction in the Gaussian case. 
+We introduce the Borel function $f^{\varepsilon}(\cdot, \Wb) \colon \mathbb{R}^{n \times p} \to \mathbb{R}_+$ for $\varepsilon > 0$ such that for all $\Xb \in \mathbb{R}^{n \times p}$, $f^{\varepsilon}(\Xb, \Wb) = f^{\varepsilon}(\Xb_{\scaleto{M}{4pt}}, \Wb)$. To allow $f^{\varepsilon}$ to become arbitrarily non-informative, we assume that for all $\Wb \in \mathcal{S}_{\scaleto{W}{4pt}}$, $f^\varepsilon(\cdot, \Wb)$ is $\lambda_{\scaleto{\mathcal{S}_{\scaleto{M}{3pt}}}{6pt}}$-integrable for all $\varepsilon \in \mathbb{R}^*_+$ and $f^{\varepsilon}(\cdot, \Wb) \Xbrightarrow[\varepsilon \to 0]{} 1$ almost everywhere.
+We now define the conditional distribution on $(\mathcal{S}_{\scaleto{M}{4pt}}, \mathcal{B}(\mathcal{S}_{\scaleto{M}{4pt}}))$ as follows:
+\begin{align}\label{eq:proba_parallel}
+     \mathbb{P}^{\varepsilon}(d\Xb_{\scaleto{M}{4pt}}| \Wb) = \mathcal{C}^{\varepsilon}(\Wb)^{-1} f^{\varepsilon}(\Xb_{\scaleto{M}{4pt}}, \Wb) \lambda_{\mathcal{S}_{\scaleto{M}{3pt}}}(d\Xb_{\scaleto{M}{4pt}})
+\end{align}
+where $\mathcal{C}^{\varepsilon}(\Wb) = \int f^{\varepsilon}(\cdot, \Wb) d\lambda_{\mathcal{S}_{\scaleto{M}{3pt}}}$.
+With this at hand, the joint conditional is defined as the product measure of (\ref{eq:proba_perp}) and (\ref{eq:proba_parallel}) over the row axis, the integrability of which is ensured by the Fubini-Tonelli theorem. In the following we will use the compact notation $\mathcal{C}^{\varepsilon}_k(\Wb) = \mathcal{C}_k(\Wb)\mathcal{C}^{\varepsilon}(\Wb)$ for the joint normalizing constant.
+% \begin{align*}
+%     \mathbb{P}(d\bm{X} | \Wb, \varepsilon) = \mathbb{P}(d\Xb_{\scaleto{C}{4pt}} | \Wb) \overset{row}{\otimes} \mathbb{P}(d\Xb_{\scaleto{M}{4pt}}| \Wb, \varepsilon) \:.
+% \end{align*}
+%For simplicity, we will not explicit the reference measure in what follows, denoting the above by $\mathbb{P}_k(\bm{X} | \Wb, \bm{\Theta})$.
+
+\begin{remark}
+At the limit $\varepsilon \to 0$ the above construction amounts to setting an infinite variance on the distribution of the empirical means of $\Xb$ on CCs, thus loosing the inter-CC structure. 
+\end{remark}
+
+As an illustration, one can structure the CCs' relative positions according to a Gaussian model with positive definite precision $\varepsilon \bm{\Theta} \in \mathcal{S}_{++}^R(\mathbb{R})$, as it amounts to choosing $f^{\varepsilon} : \Xb \to \exp \left(-\frac{\varepsilon}{2} \operatorname{tr}\left(\bm{\Sigma}^{-1}\Xb^\top\bm{U}_{\scaleto{[:R]}{5pt}}  \bm{\Theta}\bm{U}^\top_{\scaleto{[R]}{5pt}} \Xb\right)\right)$ such that: $\mathrm{vec}(\Xb_{\scaleto{M}{4pt}}) | \bm{\Theta} \sim \mathcal{N}\left(\bm{0}, \left(\varepsilon \bm{U}_{\scaleto{[:R]}{5pt}}  \bm{\Theta}\bm{U}^\top_{\scaleto{[R]}{5pt}}\right)^{-1} \otimes \bm{\Sigma}\right)$ where $\otimes$ denotes the Kronecker product.
+
+\section{Graph Coupling as a Unified Objective for Pairwise Similarity Methods}\label{sec:GC_unified}
+
+In this section, we show that neighbor embedding methods can be recovered in the presented framework. They are obtained, for particular choices of graph priors, at the limit $\varepsilon \to 0$ when $f^{\varepsilon}$ becomes non informative and the CCs' relative positions are lost. 
+
+We now turn to the priors for $\Wb$. Our methodology is similar to that of constructing conjugate priors for distributions in the exponential family \cite{wainwright2008graphical}, notably we insert the cumulant function $\mathcal{C}_k^{\varepsilon}$ (\textit{i.e.}\ normalizing constant of the conditional) as a multivariate term of the prior. 
+% Note however that the following priors are not conjugate with the conditional built in the previous section due to the correcting term $f^{\varepsilon}$. 
+We consider different forms: binary ($B$), unitary out-degree ($D$) and $n$-edges ($E$), relying on an additional term ($\Omega$) to constraint the topology of the graph. For a matrix $\bm{A}$, $A_{i+}$ denotes $\sum_j A_{ij}$ and $A_{++}$ denotes $\sum_{ij} A_{ij}$. In the following, $\bm{\pi}$ plays the role of the edge's prior. The latter can be leveraged to incorporate some additional information about the dependency structure, for instance when a network is observed \cite{li2020high}. 
+
+\begin{definition}\label{def:prior_W}
+Let $\bm{\pi} \in \mathbb{R}_+^{n \times n}$, $\varepsilon \in \mathbb{R}_+$, $\alpha \in \mathbb{R}$, $k$ satisfies the assumptions of \cref{prop:integrability_pairwise_MRF} and $\mathcal{P} \in \{B,D,E\}$. For $\Wb \in \mathcal{S}_{\scaleto{W}{4pt}}$ we introduce:
+$$\mathbb{P}_{\scaleto{\mathcal{P},k}{5pt}}^{\varepsilon}(\bm{W}; \bm{\pi}, \alpha) \propto \mathcal{C}^{\varepsilon}_k(\Wb)^{\alpha} \: \Omega_{\scaleto{\mathcal{P}}{4pt}}(\Wb) \prod_{(i,j) \in \integ{n}^2} \pi_{ij}^{W_{ij}}$$
+where $\Omega_{\scaleto{B}{4pt}}(\Wb) = \prod_{ij} \ind_{W_{ij} \leq 1}$, $\Omega_{\scaleto{D}{4pt}}(\Wb) = \prod_{i} \ind_{W_{i+} = 1}$ and $\Omega_{\scaleto{E}{4pt}}(\Wb) = \ind_{W_{++} = n}\prod_{ij}(W_{ij}!)^{-1}$.
+\end{definition}
+
+%\tibo{where we recall that $W_{i+} =. $ and $W_{++}=.$ ou where $W_{i+},W_{++}$ are defined at the end of section $1$  ?} 
+When $\alpha = 0$, the above no longer depends on $\varepsilon$ and $k$. We will use the compact notation $\mathbb{P}_{\scaleto{\mathcal{P}}{4pt}}(\Wb ; \bm{\pi}) = \mathbb{P}_{\scaleto{\mathcal{P},k}{5pt}}^{\varepsilon}(\bm{W}; \bm{\pi}, 0)$. Note that by $\Wb \sim \mathbb{P}_{\scaleto{\mathcal{P}}{4pt}}(\cdot \: ; \bm{\pi})$ we have the following simple Bernoulli $(\mathcal{B})$ and multinomial $(\mathcal{M})$ distributions, where matrix or vector division is to be understood as element-wise.
+\begin{itemize}
+    \item If $\mathcal{P} = B$, $\forall (i,j) \in \integ{n}^2, \: W_{ij} \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{B}\left(\pi_{ij}/(1 + \pi_{ij}) \right)$.
+    \item If $\mathcal{P} = D$, $\forall i \in \integ{n}, \: \Wb_{i} \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{M}\left(1, \bm{\pi}_{i}/\pi_{i+} \right)$.
+    \item If $\mathcal{P} = E$, $\Wb \sim \mathcal{M}\left(n, \bm{\pi}/\pi_{++} \right)$.
+\end{itemize}
+
+We now show that the posterior distribution of the graph given the observations takes a simple form when the distribution of CC empirical means $\bm{X}_{\scaleto{M}{4pt}}$ diffuses \textit{i.e.}\ when $\varepsilon \to 0$ (a proof of the following result can be found in \cref{proof:posterior_limit}). In the following, $\odot$ stands for the Hadamard product and $\mathcal{D}$ for the convergence in distribution.
+
+\begin{proposition}\label{prop:posterior_W}
+Let $\bm{\pi} \in \mathbb{R}_+^{n \times n}$, $k$ satisfies the assumptions of \cref{prop:integrability_pairwise_MRF} with  $\bm{K}_{\scaleto{X}{4pt}} = (k(\Xb_{i} - \Xb_{j}))_{(i,j) \in \integ{n}^2}$ and $\mathcal{P}\in \{B, D, E\}$. If $\Wb^{\varepsilon} \sim \mathbb{P}_{\scaleto{\mathcal{P},k}{5pt}}^{\varepsilon}(\cdot \: ; \bm{\pi},1)$ then
+$$\Wb^{\varepsilon} | \Xb \xrightarrow[\varepsilon \to 0]{\mathcal{D}} \mathbb{P}_{\scaleto{\mathcal{P}}{4pt}}(\cdot \: ;\bm{\pi} \odot \bm{K}_{\scaleto{X}{4pt}}) \:.$$
+\end{proposition}
+
+\begin{remark}
+For all $\Wb \in \mathcal{S}_{\scaleto{W}{4pt}}$, $\mathcal{C}^{\varepsilon}(\Wb)$ diverges as $\varepsilon \to 0$, hence the graph prior (\cref{def:prior_W}) is improper at the limit. This compensates for the uninformative diffuse conditional and allows to retrieve a well-defined tractable posterior limit.
+\end{remark}
+
+\subsection{Retrieving Well Known Dimension Reduction Methods}\label{sec:retrieving_DR_methods}
+
+We now provide a unified view of neighbor embedding objectives as a coupling between graph posterior distributions. To that extent we derive the cross entropy associated with the various graph priors at hand. In what follows, $k_x$ and $k_z$ satisfy the assumptions of \cref{prop:integrability_pairwise_MRF} and we denote by $\bm{K}_{\scaleto{X}{4pt}}$ and $\bm{K}_{\scaleto{Z}{4pt}}$ the associated kernel matrices on  $\Xb$ and $\Zbb$ respectively. For both graph priors we consider the parameters $\bm{\pi}=\bm{1}$ and $\alpha=1$. For $(\mathcal{P}_{\scaleto{X}{4pt}}, \mathcal{P}_{\scaleto{Z}{4pt}}) \in \{B,D,E\}^2$, we introduce the 
+cross entropy between the limit posteriors at $\varepsilon \to 0$,
+\begin{align*}
+    \mathcal{H}_{\scaleto{\mathcal{P}_X}{4pt}, \scaleto{\mathcal{P}_Z}{4pt}} = - \mathbb{E}_{\Wb_{\scaleto{X}{3pt}} \sim \mathbb{P}_{\scaleto{\mathcal{P}_{\scaleto{X}{2pt}}}{3pt}}(\cdot;\bm{K}_{\scaleto{X}{3pt}})}[\log \mathbb{P}_{\scaleto{\mathcal{P}_{\scaleto{Z}{3pt}}}{4pt}}(\Wb_{\scaleto{Z}{4pt}} = \Wb_{\scaleto{X}{4pt}}; \bm{K}_{\scaleto{Z}{4pt}})]
+\end{align*}
+defining a coupling criterion to be optimized with respect to embedding coordinates $\Zb$. We now go through each couple $(\mathcal{P}_{\scaleto{X}{4pt}}, \mathcal{P}_{\scaleto{Z}{4pt}})$ such that $\operatorname{supp}\left(\mathbb{P}_{\scaleto{\mathcal{P}_X}{4pt}}\right) \subset \operatorname{supp}\left(\mathbb{P}_{\scaleto{\mathcal{P}_Z}{4pt}}\right)$ for the cross-entropy to be defined.
+
+\paragraph{SNE.}
+When $\mathcal{P}_{\scaleto{X}{4pt}} = \mathcal{P}_{\scaleto{Z}{4pt}} = D$, the probability of the limit posterior graphs factorizes over the nodes and the cross-entropy between limit posteriors takes the form of the objective of SNE \cite{hinton2002stochastic}, where for $i \in \integ{n}, \bm{P}^{D}_{i} = \bm{K}_{\scaleto{X}{4pt},i} / K_{\scaleto{X}{4pt},i+}$ and $\bm{Q}^{D}_{i} = \bm{K}_{\scaleto{Z}{4pt},i} / K_{\scaleto{Z}{4pt},i+}$,
+$$\mathcal{H}_{D,D}= - \sum_{i \neq j} P^{D}_{ij} \log Q^{D}_{ij} \:.$$
+
+\paragraph{Symmetric-SNE.}
+Choosing $\mathcal{P}_{\scaleto{X}{4pt}} = D$ and $\mathcal{P}_{\scaleto{Z}{4pt}} = E$, we define for $(i,j) \in \integ{n}^2$, $\bm{Q}^{E}_{ij} = K_{\scaleto{Z}{4pt},ij} / K_{\scaleto{Z}{4pt},++}$ and $\overline{P}^{D}_{ij} = P^{D}_{ij} + P^{D}_{ji}$. The symmetry of $\bm{Q}^{E}$ yields:
+\begin{align*}
+    \mathcal{H}_{D,E} &= - \sum_{i \neq j} P^{D}_{ij} \log Q^{E}_{ij} = - \sum_{i < j} \overline{P}^{D}_{ij} \log Q^{E}_{ij}
+\end{align*}
+and the symmetrized objective of t-SNE \cite{maaten2008tSNE} is recovered. 
+% Hence considering directed graphs justify the symmetrization of the objective.
+% \franck{Hence we have provided a non-trivial theoretical justification of the symmetrization that was proposed initially by \cite{maaten2008tSNE}.}
+
+\paragraph{LargeVis.}
+Now choosing $\mathcal{P}_{\scaleto{X}{4pt}} = D$ and $\mathcal{P}_{\scaleto{Z}{4pt}} = B$, one can also notice that $\bm{Q}^{B} = \left( K_{\scaleto{Z}{4pt},ij} / (1+K_{\scaleto{Z}{4pt},ij}) \right)_{(i,j) \in \integ{n}^2}$ is symmetric. With this at hand the limit cross-entropy reads
+\begin{align*}
+    \mathcal{H}_{D,B} = - \sum_{i \neq j} P^{D}_{ij} \log Q^{B}_{ij} + \left(1 - P^{D}_{ij} \right) \log\left(1-Q^{B}_{ij} \right)
+    = - \sum_{i < j} \overline{P}^{D}_{ij} \log Q^{B}_{ij} + \left(2-\overline{P}^{D}_{ij}\right) \log (1- Q^{B}_{ij})
+\end{align*}
+which is the objective of LargeVis \cite{tang2016visualizing}.
+
+\paragraph{UMAP.}
+Let us take $\mathcal{P}_{\scaleto{X}{4pt}} = \mathcal{P}_{\scaleto{Z}{4pt}} = B$ and consider the symmetric thresholded graph $\widetilde{\Wb}_{\scaleto{X}{4pt}} = \ind_{\Wb_{\scaleto{X}{4pt}} + \Wb_X^\top \geq 1}$. By independence of the edges, $\widetilde{W}_{\scaleto{X}{4pt},ij} \sim \mathcal{B}\left(\widetilde{P}^{B}_{ij} \right) \quad \text{where} \quad  \widetilde{P}^{B}_{ij} = P^{B}_{ij} + P^{B}_{ji} - P^{B}_{ij} P^{B}_{ji}$ and $\bm{P}^{B} = \left( K_{\scaleto{X}{4pt},ij} / (1+K_{\scaleto{X}{4pt},ij}) \right)_{(i,j) \in \integ{n}^2}$. Coupling $\widetilde{\Wb}_{\scaleto{X}{4pt}}$ and $\Wb_{\scaleto{Z}{4pt}}$ gives:
+\begin{align*}
+    \mathcal{H}_{\widetilde{B},B} &= -2 \sum_{i<j} \widetilde{P}_{ij}^{B} \log Q_{ij}^{B} + \left(1 - \widetilde{P}_{ij}^{B} \right) \log \left( 1 - Q_{ij}^{B} \right)
+\end{align*}
+which is the loss function considered in UMAP \cite{mcinnes2018umap}, the construction of $\widetilde{\Wb}_{\scaleto{X}{4pt}}$ being borrowed from section 3.1 of the paper.
+% \tibo{Pour Umap, je me sens arnaqué à cause du $\rho_i$ dans l'exponentielle de UMAP, qu'on retrouve pas avec ce qui est écrit au dessus il me semble. Je pense qu'une remarque qui mettrait le doit dessus aiderait. Il me semble qu'on s'était convaincus qu'il y avait une approximation du modèle degré fixé par un modèle bernoulli, avec un argument ou on garde le terme dominant dans la somme d'exponentielles.
+
+% edit : ça marche pas, donc 
+% \begin{itemize}
+%     \item Soit on fait juste une remarque pour soulever la subtilité
+%     \item Soit on en parle pas du tout
+%     \item Soit on dit qu'ils auraient du faire autrement (ça c'est pas ma préférée, parcequ'on peut se faire défoncer par un rapporteur).
+% \end{itemize}
+% }
+% \hugues{Je vote option 1. Et on dit qu'on se place dans un régime où les points sont uniformes sur la variété, le cas général est laissé pour de futurs travaux.}
+% % \franck{C'est le genre de remarque qu'on pourrait laisser à un reviewer; On n'est pas obligé d'avoir réponse à tout dès le premier tour, et en plus je ne suis pas sûr qu'on ait creusé suffisamment pour être sûrs de nous ici.}
+% \julien{Je suis pour mettre une remarque car il est clair à la lecture que se raccrocher à UMAP est un poil plus compliqué que les autres méthodes (coup du seul en plus et $\rho$})
+% \franck{D'accord avec Hugues. Je trouve que meme si la question est importante, au vu de la generalite du cadre, ce serait vraiment abuser de nous jeter pour ça.}
+
+\begin{remark}
+One can also consider $\mathcal{H}_{E,E}$ but as detailed in \cite{maaten2008tSNE}, this criterion fails at positioning outliers and is therefore not considered. 
+Interestingly, any other feasible combination of the presented priors relates to an existing method.
+\end{remark}
+
+\subsection{Interpretations}\label{sec:interpretations}
+
+\begin{table}[]
+    \caption{Prior distributions for $\Wb_{\scaleto{X}{4pt}}$ and $\Wb_{\scaleto{Z}{4pt}}$ associated with the pairwise similarity coupling DR algorithms. Grey-colored boxes are such that the cross-entropy is undefined.}
+    \begin{center}
+    \begin{small}
+    \begin{sc}
+    \centering
+    \renewcommand{\arraystretch}{2}
+    \begin{NiceTabular}{|W{c}{1cm}|W{c}{1.8cm}|W{c}{1.8cm}|W{c}{1.8cm}|}
+    \hline
+    \diagbox{{\fontsize{12}{15}\selectfont $\mathcal{P}_{\scaleto{X}{4pt}}$}}{{\fontsize{12}{15}\selectfont $\mathcal{P}_{\scaleto{Z}{4pt}}$}} & $B$ & $D$ & $E$ \\
+    \hline
+    $\widetilde{B}$ & UMAP & \cellcolor{black!10} & \cellcolor{black!10} \\
+    \hline
+    $D$ & LargeVis & SNE & T-SNE\\
+    \hline
+    \end{NiceTabular}
+    \label{tableau_priors}
+    \end{sc}
+    \end{small}
+    \end{center}
+    \label{priors_methods}
+\end{table}
+
+As we have seen in \cref{sec:retrieving_DR_methods}, SNE-like methods can all be derived from the graph coupling framework.  What characterizes each of them is the choice of priors considered for the latent structuring graphs. To the best of our knowledge, the presented framework is the first that manages to unify all these DR algorithms. Such a framework opens many perspectives for improving upon current practices as we discuss in \cref{sec:towards_large_scale} and \cref{Perspectives}. 
+We now focus on a few insights that our work provides about the empirical performances of these methods. 
+
+\paragraph{Repulsion \& Attraction.}
+Decomposing $\mathcal{H}_{\scaleto{\mathcal{P}_X}{4pt}, \scaleto{\mathcal{P}_Z}{4pt}}$ with Bayes' rule and simplifying constant terms one has the following optimization problem: 
+\begin{align}\label{eq:optim_H_Z}
+    \min_{\Zb \in \mathbb{R}^{n \times q}} -\hspace{-0.2cm}\sum_{(i,j) \in \integ{n}^2} \bm{P}^{\scaleto{\mathcal{P}_X}{4pt}}_{ij}\log k_z(\Zb_i - \Zb_j) + \log \mathbb{P}(\Zb).
+\end{align}
+The first and second terms in \cref{eq:optim_H_Z} respectively summarize the attractive and repulsive forces of the objective. Recall from \cref{prop:posterior_W}
+that $\bm{P}^{\scaleto{\mathcal{P}_X}{4pt}}$ is the posterior expectation of $\Wb_{\scaleto{X}{4pt}}$. Hence in SNE-like methods, the attractive forces resume to a pairwise MRF log likelihood with respect to a graph posterior expectation given $\Xb$. For instance if $k_z$ is the Gaussian kernel, this attractive term reads $\operatorname{tr} \left(\Zb^\top \bm{L}^\star \Zb \right)$ where $\bm{L}^\star = \mathbb{E}_{\Wb \sim \mathbb{P}_{\scaleto{\mathcal{P}_X}{4pt}}(\cdot;\bm{K}_{\scaleto{X}{4pt}})}[L(\Wb)]$, boiling down to the objective of Laplacian eigenmaps \cite{belkin2003laplacian}. Therefore, for Gaussian MRFs, the attractive forces resume to an unconstrained Laplacian eigenmaps objective. Such link, already noted in \cite{carreira2010elastic}, is easily unveiled in our framework. Moreover, one can notice that only this attractive term depends on $\Xb$ as the repulsion is given by the marginal term in (\ref{eq:optim_H_Z}). The latter reads $\mathbb{P}(\Zb) = \sum_{\Wb \in \mathcal{S}_{\scaleto{W}{4pt}}} \mathbb{P}(\Zb, \Wb)$ with $\mathbb{P}(\Zb, \Wb) \propto f_k(\Zb, \Wb)\Omega_{\scaleto{\mathcal{P}_Z}{4pt}}(\Wb)$. Such penalty notably prevents a trivial solution, as $\bm{0}$, like any constant vector, is a mode of $f_k(\cdot, \Wb)$ for all $\Wb$. Also note that the prior for $\Wb_{\scaleto{X}{4pt}}$ only conditions attraction while the prior for $\Wb_{\scaleto{Z}{4pt}}$ only affects repulsion. In the present work we focus solely on deciphering the probabilistic model that accounts for neighbor embedding loss functions and refer to \cite{bohm2020unifying} for a quantitative study of attraction and repulsion in these methods.
+
+\paragraph{Global Structure Preservation. }
+To gain intuition, consider that $\Wb_{\scaleto{X}{4pt}}$ is observed. As we showed in \cref{sec:within_CC}, when one relies on shift-invariant kernels, the positions of the CC means are taken from a diffuse distribution. Since the above methods are all derived from the limit posteriors at $\varepsilon \to 0$, $\Xb_{\scaleto{M}{4pt}}$ and $\Zb_{\scaleto{M}{4pt}}$ have no influence on the coupling objective. Hence if two nodes belong to different CCs, their low dimensional pairwise distance will likely not be faithful. We can expect this phenomenon to persist when the expectation on $\Wb_{\scaleto{X}{4pt}}$ is considered, especially when clusters are well distinguishable in $\Xb$. This observation is central to understand the large scale deficiency of these methods. Note that this happens at the benefit of the local structure which is faithfully represented in low dimension, as discussed in \cref{intro}. In the following section we propose to mitigate the global structure deficiency with non-degenerate MRF models.
+
+\section{Towards Capturing Large-Scale Dependencies}\label{sec:towards_large_scale}
+
+In this section, we investigate the ability of graph coupling to faithfully represent the global structure in low dimensions. To gain intuition on the case where the distribution induced by the graph is not degenerate, we consider a proper Gaussian graph coupling model and show its equivalence with PCA. We then provide a new initialization procedure to alleviate the large scale deficiency of graph coupling when degenerate MRFs are used.
+
+\subsection{PCA as Graph Coupling}
+
+As we argue that the inability of SNE-like methods to reproduce the coarse-grain dependencies of the input in the latent space is due to the degeneracy of the conditional (\ref{eq:proba_perp}), a natural solution would be to consider graphical models that are well defined and integrable on the entire definition spaces of $\Xb$ and $\Zb$. For simplicity, we consider the Gaussian model and leave the extension to other kernels for future works. Note that in this case integrability translates into the precision matrix being full-rank. As we see with the following, the natural extension of our framework to such models leads to a well-established PCA algorithm. In the following, for a continuous variable $\bm{\Theta}_{\scaleto{Z}{4pt}}$, $\mathbb{P}(\bm{\Theta}_{\scaleto{Z}{4pt}} = \cdot)$ denotes its density.
+\begin{theorem}\label{PCA_graph_coupling}
+Let $\nu \geq n$,  $\bm{\Theta}_{\scaleto{X}{4pt}} \sim \mathcal{W}(\nu, \bm{I}_n)$ and $\bm{\Theta}_{\scaleto{Z}{4pt}} \sim \mathcal{W}(\nu + p - q, \bm{I}_n)$. Assume that $\bm{\Theta}_{\scaleto{X}{4pt}}$ and $\bm{\Theta}_{\scaleto{Z}{4pt}}$ structure the rows of respectively $\Xb$ and $\Zb$ such that: 
+\begin{align}
+    \mathrm{vec}(\Xb) | \bm{\Theta}_{\scaleto{X}{4pt}} &\sim \mathcal{N}(\bm{0}, \bm{\Theta}_{\scaleto{X}{4pt}}^{-1} \otimes \bm{I}_p), \label{eq:X_given_theta} \\
+    \mathrm{vec}(\Zb) | \bm{\Theta}_{\scaleto{Z}{4pt}} &\sim \mathcal{N}(\bm{0}, \bm{\Theta}_{\scaleto{Z}{4pt}}^{-1} \otimes \bm{I}_q) \label{eq:Z_given_theta} \:.
+\end{align}
+Then the solution of the precision coupling problem:
+\begin{align*}
+    \min_{\Zb \in \mathbb{R}^{n \times q}} -\mathbb{E}_{\bm{\Theta}_{\scaleto{X}{3pt}} | \Xb}\left[\log \mathbb{P}(\bm{\Theta}_{\scaleto{Z}{4pt}}=\bm{\Theta}_{\scaleto{X}{4pt}}|\Zb)\right]
+\end{align*}
+is a PCA embedding of $\Xb$ with $q$ components.
+\end{theorem}
+We now highlight the parallels with the previous construction done for neighbor embedding methods. First note that the multivariate Gaussian with full-rank precision is inherently a pairwise MRF \cite{rue2005gaussian}. When choosing the Gaussian kernel for neighbor embedding methods, we saw that the graph Laplacian $\bm{L}_{\scaleto{X}{4pt}}$ of $\Wb_{\scaleto{X}{4pt}}$ was playing the role of the among-row precision matrix, as we had $\Xb | \Wb_{\scaleto{X}{4pt}} \sim \mathcal{N}(\bm{0}, \bm{L}_{\scaleto{X}{4pt}}^{-1} \otimes \bm{I}_p)$ (equation \ref{eq:gaussian_kernel}). Recall that the later always has a null-space which is spanned by the CC indicator vectors of $\Wb$ (\cref{sec:laplacian_prop}). Here, the key difference is that we impose a full-rank constraint on the precision $\bm{\Theta}$. Concerning the priors, we choose the ones that are conjugate to the conditionals (\ref{eq:X_given_theta}) and (\ref{eq:Z_given_theta}), as previously done when constructing the prior for neighbor embedding methods (definition \ref{def:prior_W}). Hence in the full-rank setting, the prior simply amounts to a Wishart distribution denoted by $\mathcal{W}$.
+
+The above theorem further highlights the flexibility and generality of the graph coupling framework. Unlike usual constructions of PCA or probabilistic PCA \cite{tipping1999probabilistic}, in the above the linear relation between $\Xb$ and $\Zb$ is recovered by solving the graph coupling problem and not explicitly stated beforehand. To the best of our knowledge, it is the first time such a link is uncovered between PCA and SNE-like methods. In contrast with the latter, PCA is well-known for its ability to preserve global structure while being significantly less efficient at identifying clusters \cite{anowar2021conceptual}. Therefore, as suspected in \cref{sec:interpretations}, the degeneracy of the conditional distribution given the graph is key to determine the distance preservation properties of the embeddings. We propose in \cref{sec:hierarchical_modelling} to combine both graph coupling approaches to strike a balance between global and local structure preservation.
+
+% \begin{remark}\label{rm:eigenmaps_coupling}
+% With the above theorem, one can adapt the model on $\Xb$ to retrieve an embedding $\Zb$ that corresponds to the projection of $\Xb$ onto the principal eigen-subspaces of the expectation of any posterior precision. For instance, when choosing a graph $\Wb_{\scaleto{X}{4pt}}$ as constructed as in section \ref{sec:graph_structure} for $\Xb$ only, one ends-up diagonalizing the graph Laplacian of a neighborhood graph hence retrieves a Laplacian eigenmaps embedding. This remark places Laplacian eigenmaps as an in-between strategy combining full-rank (\textit{i.e.}\ PCA-like) structure in $\Zb$ and degenerate structure (\textit{i.e.}\ similar to neighbor embedding methods) in $\Xb$.
+% \end{remark}
+
+\subsection{Hierarchical Graph Coupling}\label{sec:hierarchical_modelling}
+
+The goal of this section is to show that global structure in SNE-like embeddings can be improved by structuring the CCs' positions. We consider the following hierarchical model for $\Xb$, where $\mathcal{P}_{\scaleto{X}{4pt}} \in \{B,D,E\}$, $k_x$ satisfies the assumptions of \cref{prop:integrability_pairwise_MRF} and $\nu_{\scaleto{X}{4pt}} \geq n$:
+\begin{align*}
+    \Wb_{\scaleto{X}{4pt}} \sim \mathbb{P}_{\scaleto{\mathcal{P}_{\scaleto{X}{3pt}},k_x}{5pt}}^{\varepsilon}(\cdot \: ; \bm{1},1), &\quad \bm{\Theta}_{\scaleto{X}{4pt}} | \Wb_{\scaleto{X}{4pt}} \sim \mathcal{W}(\nu_{\scaleto{X}{4pt}}, \bm{I}_{\scaleto{R}{4pt}}) \\
+    \Xb_{\scaleto{C}{4pt}} |\Wb_{\scaleto{X}{4pt}} \sim \mathbb{P}_{k_x}(\cdot \:| \Wb_{\scaleto{X}{4pt}}), &\quad \mathrm{vec}(\Xb_{\scaleto{M}{4pt}}) | \bm{\Theta}_{\scaleto{X}{4pt}} \sim \mathcal{N}\left(\bm{0}, \left(\varepsilon \bm{U}_{\scaleto{[:R]}{5pt}}  \bm{\Theta}_{\scaleto{X}{4pt}}\bm{U}^\top_{\scaleto{[R]}{5pt}}\right)^{-1} \otimes \bm{I}_p\right)
+\end{align*}
+where $\bm{U}_{\scaleto{[R]}{5pt}}$ are the eigenvectors associated to the Laplacian null-space of $\overline{\Wb}_{\scaleto{X}{4pt}}$. Given a graph $\Wb_{\scaleto{X}{4pt}}$, the idea is to structure the CCs' relative positions with a full-rank Gaussian model.
+The same model is considered for $\Wb_{\scaleto{Z}{4pt}}$, $\bm{\Theta}_{\scaleto{Z}{4pt}}$ and $\Zb$, choosing $\nu_{\scaleto{Z}{4pt}} = \nu_{\scaleto{X}{4pt}} + p - q$ for the Wishart prior to satisfy the assumption of \cref{PCA_graph_coupling}.  With this in place, we aim at providing a complete coupling objective, matching the pairs  $(\Wb_{\scaleto{X}{4pt}},\bm{\Theta}_{\scaleto{X}{4pt}})$ and  $(\Wb_{\scaleto{Z}{4pt}},\bm{\Theta}_{\scaleto{Z}{4pt}})$. The joint negative cross-entropy can be decomposed as follows:
+\begin{align}
+    &\mathbb{E}_{(\Wb_{\scaleto{X}{3pt}}, \bm{\Theta}_{\scaleto{X}{3pt}})|\Xb}\left[\log \mathbb{P}((\Wb_{\scaleto{Z}{4pt}},\bm{\Theta}_{\scaleto{Z}{4pt}}) = (\Wb_{\scaleto{X}{4pt}},\bm{\Theta}_{\scaleto{X}{4pt}}) | \Zb)\right] \nonumber\\
+    &= \mathbb{E}_{\Wb_{\scaleto{X}{3pt}}|\Xb}\left[\log \mathbb{P}(\Wb_{\scaleto{Z}{4pt}} = \Wb_{\scaleto{X}{4pt}} | \Zb)\right] + \label{eq:loss_LW} \\
+    & \mathbb{E}_{(\Wb_{\scaleto{X}{3pt}},\bm{\Theta}_{\scaleto{X}{3pt}})|\Xb}\left[ \log \mathbb{P}(\bm{\Theta}_{\scaleto{Z}{4pt}} = \bm{\Theta}_{\scaleto{X}{4pt}}| \Wb_{\scaleto{Z}{4pt}} = \Wb_{\scaleto{X}{4pt}}, \Zb) \right] \label{eq:add_term_Coupling}
+\end{align}
+where (\ref{eq:loss_LW}) is the usual coupling criterion of $\Wb_X$ and $\Wb_Z$ capturing intra-CC variability while (\ref{eq:add_term_Coupling}) is a penalty resulting from the Gaussian structure on $\mathcal{S}_{\scaleto{M}{4pt}}$. Constructed as such, the above objective allows a trade-of between local and global structure preservation. Following current trends in DR \cite{kobak2021initialization}, we propose to take care of the global structure first \textit{i.e.}\ focusing on (\ref{eq:add_term_Coupling}) before (\ref{eq:loss_LW}). The difficulty of dealing with (\ref{eq:add_term_Coupling}) lies in the hierarchical construction of the graph and the Gaussian precision (see \cref{fig:graphical_model_hierarchical}). We state the following result.
+
+\begin{wrapfigure}[15]{R}{0.5\textwidth}
+\begin{center}
+\centerline{\includegraphics[width=0.5\columnwidth]{Figures/tSNE_truth.pdf}}
+\caption{Left: MNIST t-SNE (perp : 30) embeddings initialized with i.i.d $\mathcal{N}(0,1)$ coordinates. Middle: using these t-SNE embeddings, mean coordinates for each digit are represented. Right: we compute a matrix of mean input coordinates for each of the $10$ digits and embed it using PCA. For t-SNE embeddings, the positions of clusters vary accross different runs and don't visually match the PCA embeddings of input mean vectors (right plot).}
+\label{fig:tSNE-clusters-truth}
+\end{center}
+\end{wrapfigure}
+
+\begin{corollary}\label{corollary_ccPCA}
+Let $\Wb_{\scaleto{X}{4pt}} \in \mathcal{S}_{\scaleto{W}{4pt}}$, $\bm{L} = L(\overline{\Wb}_{\scaleto{X}{4pt}})$ and $\mathcal{S}^q_{\scaleto{M}{4pt}}= (\ker \bm{L}) \otimes \mathbb{R}^q$, then for all $\varepsilon > 0$, given the above hierarchical model, the solution of the problem:
+$$\min_{\Zb \in \mathcal{S}^q_{M}} \: -\mathbb{E}_{\bm{\Theta}_{\scaleto{X}{3pt}}| \Xb}\left[ \log \mathbb{P}(\bm{\Theta}_{\scaleto{Z}{4pt}} = \bm{\Theta}_{\scaleto{X}{4pt}}| \Wb_{\scaleto{Z}{4pt}} = \Wb_{\scaleto{X}{4pt}}, \Zb) \right]$$
+is a PCA embedding of $\bm{U}_{\scaleto{[:R]}{5pt}}\bm{U}_{\scaleto{[R]}{5pt}}^\top\Xb$ where $\bm{U}_{\scaleto{[:R]}{5pt}}$ are the CCs' membership vectors of $\overline{\Wb}_{\scaleto{X}{4pt}}$.
+\end{corollary}
+
+\begin{remark}
+Note that while (\ref{eq:loss_LW}) approximates the objective of SNE-like methods when $\varepsilon \to 0$, the minimizer of (\ref{eq:add_term_Coupling}) given by \cref{corollary_ccPCA} is stable for all $\varepsilon$.
+\end{remark}
+
+From this observation, we propose a simple heuristic to minimize (\ref{eq:add_term_Coupling}) that consists in computing a PCA embedding of $\mathbb{E}_{\mathbb{P}_{\scaleto{\mathcal{P}_X}{4pt}}(\cdot;\bm{K}_{\scaleto{X}{3pt}})}\left[ \bm{U}_{\scaleto{[:R]}{5pt}}\bm{U}_{\scaleto{[R]}{5pt}}^\top \right]\Xb$. The distribution of the connected components of the posterior of $\Wb_{\scaleto{X}{4pt}}$ being intractable, we resort to a Monte-Carlo estimation of the above expectation. The latter procedure called \textit{ccPCA} aims at recovering the inter-CC structure that is filtered by SNE-like methods. \textit{ccPCA} may then be used as initialization for optimizing (\ref{eq:loss_LW}) which is done by running the DR method corresponding to the graph priors at hand (\cref{sec:retrieving_DR_methods}). This second step essentially consists in refining the intra-CC structure. 
+
+\subsection{Experiments with \textit{ccPCA}}\label{sec:ccPCA}
+
+\begin{figure*}[t]
+\begin{center}
+\centerline{\includegraphics[width=\columnwidth]{Figures/cluster_positions.pdf}}
+\caption{Top: MNIST embeddings produced by PCA, Laplacian eigenmaps, \textit{ccPCA} and finally t-SNE launched after the previous three embeddings to improve the fine-grain structure. Bottom: mean coordinates for each digit using the embeddings of the first row. The color legend is the same as in \cref{fig:tSNE-clusters-truth}. t-SNE was trained during $1000$ iterations using default parameters with the openTSNE implementation \cite{polivcar2019opentsne}.}
+\label{fig:methods_embeddings}
+\end{center}
+\vspace{-0.8cm}
+\end{figure*}
+
+\Cref{fig:tSNE-clusters-truth} shows that a t-SNE embedding of a balanced MNIST dataset of 10000 samples \cite{deng2012mnist} with isotropic Gaussian initialization performs poorly in conserving the relative positions of clusters. As each digit cluster contains approximately $1000$ points, with a perplexity of $30$, sampling an edge across digit clusters in the graph posterior $\mathbb{P}_{\scaleto{\mathcal{P}_X}{4pt}}(\cdot;\bm{K}_{\scaleto{X}{4pt}})$ is very unlikely. Recall that the perplexity value \cite{maaten2008tSNE} corresponds to the approximate number of effective neighbors of each point. Hence images of different digits are with very high probability in different CCs of the graph posterior and their CC-wise means are not coupled as discussed in \cref{sec:interpretations}. To remedy this in practice, PCA or Laplacian eigenmaps are usually used as initialization \cite{kobak2021initialization}. 
+
+These strategies are tested (\cref{fig:methods_embeddings}) together with \textit{ccPCA}. This shows that 
+\textit{ccPCA} manages to retrieve the digits that mostly support the large-scale variability as measured by the peripheral positioning of digits $0$ (blue), $2$ (green), $6$ (pink) and $7$ (grey) given by the right side of \cref{fig:tSNE-clusters-truth}. Other perplexity values for \textit{ccPCA} are explored in appendix \ref{sec:other_perp} while the experimental setup is detailed in appendix \ref{sec:setup_exp}. In appendix \ref{sec:quantitative_evaluation}, we perform quantitative evaluations of \textit{ccPCA} for both t-SNE and UMAP on various datasets using K-ary neighborhood criteria. We find that using \textit{ccPCA} as initialization is in general more reliable than PCA and Laplacian eigenmaps for preserving global structure using both t-SNE and UMAP. 
+
+Compared to PCA, \textit{ccPCA} manages to aggregate points into clusters, thus filtering the intra-cluster variability and focusing solely on the inter-cluster structure. Compared to Laplacian eigenmaps which perform well at identifying clusters but suffers from the same deficiency as t-SNE for positioning them, \textit{ccPCA} retains more of the coarse-grain structure. These observations support our unifying probabilistic framework and the theoretical results about the MRF degeneracy which are the leading contributions of this article. The \textit{ccPCA} initialization appears as a first stepping stone towards more grounded DR methods based on the probabilistic model presented in this article.
+
+\section{Conclusion and Perspectives}\label{Perspectives}
+
+In this work, we shed new light on the most popular DR methods by showing that they can be unified within a common probabilistic model in the form of latent Markov Random Fields Graphs coupled by a cross entropy. The definition of such a model constitutes a major step towards the understanding of common dimension reduction methods, in particular their structure preservation properties as discussed in this article. 
+
+Our work offers many perspectives, among which the possibility to enrich the probabilistic model with more suited graph priors. Currently considered priors are simply the ones that are conjugate to the MRFs thus they are mostly designed to yield a tractable coupling objective. However they may not be optimal and could be modified to capture targeted features, \textit{e.g.}\ communities, in the input data, and give adapted representations in the latent space. The graph coupling approach could also be extended to more general latent structures governing the joint distribution of observations.
+Finally, the probabilistic model could be leveraged to tackle hyper-parameter calibration, especially kernel bandwidths that have a great influence on the quality of the representations and are currently tuned using heuristics with unclear motivations.
