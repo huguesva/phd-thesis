@@ -4,7 +4,7 @@
   (generated)
   "main.ilg"
   "main.ind"
-["pdflatex"] 1684853413 "/Users/hugues/Documents/Github/phd-thesis/main.tex" "main.pdf" "main" 1684853413
+["pdflatex"] 1684869550 "/Users/hugues/Documents/Github/phd-thesis/main.tex" "main.pdf" "main" 1684869550
   "/Users/hugues/Documents/Github/phd-thesis/main.tex" 1684853412 10391 1f084bca65cde3182dcac10bf4250b84 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1202520719 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1202520719 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
@@ -292,9 +292,9 @@
   "/usr/local/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1670829718 2826437 519c784199492fac39a43f92dfbc9f82 ""
   "/usr/local/texlive/2022/texmf.cnf" 1647878952 577 209b46be99c9075fd74d4c0369380e8c ""
   "Chapters/Acknowledgements.tex" 1684845134 55 e0ea3ab122a4a6e9db8d04625f12415f ""
-  "Chapters/GraphCoupling/GraphCoupling.tex" 1684853403 47829 de0e12b376f2f7fa464435950d483f1b ""
+  "Chapters/GraphCoupling/GraphCoupling.tex" 1684869549 47831 2bc765e0fc02efe24d25de3ec0206129 ""
   "Chapters/SNEkhorn/SNEkhorn.tex" 1684848080 612 9d616cb36c19f19072722b67808afdce ""
-  "Chapters/SNEkhorn/sections/DR.tex" 1684852517 6830 7947310b6fe71b4f21e3b3938afd4ddc ""
+  "Chapters/SNEkhorn/sections/DR.tex" 1684869327 6833 6c66798c31b1eebfb06aa0fac544abbf ""
   "Chapters/SNEkhorn/sections/background.tex" 1684852988 17106 cf4d7b225d35cda1c9db0509ed20e1ea ""
   "Chapters/SNEkhorn/sections/conclusion.tex" 1684852757 1628 bea74fdb8b33f31020abd9d20288facb ""
   "Chapters/SNEkhorn/sections/experiments.tex" 1684852876 17763 90f75f5cb9d5e55863c160d473958187 ""
@@ -311,7 +311,7 @@
   "figures/fig_sc.pdf" 0 -1 0 ""
   "figures/heteroscedastic_noise.pdf" 0 -1 0 ""
   "figures/spectral_clustering_sensibility.pdf" 0 -1 0 ""
-  "main.aux" 1684853413 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "main.aux" 1684869550 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
   "main.ind" 0 -1 0 "makeindex main.idx"
   "main.out" 0 -1 0 "pdflatex"
   "main.tex" 1684853412 10391 1f084bca65cde3182dcac10bf4250b84 ""

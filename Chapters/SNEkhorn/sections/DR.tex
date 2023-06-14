@@ -12,10 +12,10 @@ we propose the optimization problem
     \min_{\Zb \in \mathbb{R}^{n \times q}} \:  \mathrm{KL}\big(\Pb^{\mathrm{se}} | \mathbf{Q}^{\mathrm{ds}}_{\Zb} \big)\,,
 \tag{SNEkhorn}
 \end{align}
-where $\mathbf{Q}^{\mathrm{ds}}_{\Zb} = \exp \left(\mathbf{f}_{\Zb} \oplus \mathbf{f}_{\Zb} - \C_{\Zb} \right)$ stands for the $\eqref{eq:plan_sym_sinkhorn}$ affinity computed with cost $\C_{\Zb}$ and $\mathbf{f}_{\Zb}$ is the optimal dual variable found by Sinkhorn's algorithm.
-% In the above, $\Pb^{\mathrm{se}}_{\xi}(\C_\X)$ stands for the \eqref{eq:sym_entropic_affinity} matrix associated to the cost $\C_\X$ with perplexity $\xi$. 
+where $\mathbf{Q}^{\mathrm{ds}}_{\Zb} = \exp \left(\mathbf{f}_{\Zb} \oplus \mathbf{f}_{\Zb} - \Cb_{\Zb} \right)$ stands for the $\eqref{eq:plan_sym_sinkhorn}$ affinity computed with cost $\Cb_{\Zb}$ and $\mathbf{f}_{\Zb}$ is the optimal dual variable found by Sinkhorn's algorithm.
+% In the above, $\Pb^{\mathrm{se}}_{\xi}(\C_\X)$ stands for the \eqref{eq:sym_entropic_affinity} matrix associated to the cost $\C_\X$ with perplexity $\xi$.
 We set the bandwidth to $\nu = 1$ in $\Qb^{\mathrm{ds}}_{\Zb}$ similarly to \cite{van2008visualizing} as the bandwidth in the low dimensional space only affects the scales of the embeddings and not their shape.
-Keeping only the terms that depend on $\Z$ and relying on the double stochasticity of $\Pb^{\mathrm{se}}$, the objective in (\ref{coupling_pb}) can be expressed as $\langle \Pb^{\mathrm{se}}, \C_{\Zb} \rangle - 2 \langle \mathbf{f}_{\Zb}, \bm{1} \rangle$. %In this decomposition, the left term settles attractive forces and the right term repulsive ones. pas tres clair j'enelve
+Keeping only the terms that depend on $\Zb$ and relying on the double stochasticity of $\Pb^{\mathrm{se}}$, the objective in (\ref{coupling_pb}) can be expressed as $\langle \Pb^{\mathrm{se}}, \Cb_{\Zb} \rangle - 2 \langle \mathbf{f}_{\Zb}, \bm{1} \rangle$. %In this decomposition, the left term settles attractive forces and the right term repulsive ones. pas tres clair j'enelve
 
 \paragraph{Heavy-tailed kernel in latent space.}
 Since it is well known that heavy-tailed kernels can be beneficial in DR
