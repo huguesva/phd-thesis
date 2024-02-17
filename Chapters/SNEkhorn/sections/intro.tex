@@ -7,10 +7,12 @@ representations of the data through dimensionality reduction (DR). Ideally, thes
 We call \emph{affinity} the weight matrix of a graph that encodes this similarity. It has positive entries and the higher the weight in position $(i,j)$, the
 higher the similarity or proximity between samples $i$ and $j$.
 Seminal approaches relying on affinities include Laplacian
-eigenmaps \cite{belkin2003laplacian}, spectral clustering
-\cite{von2007tutorial} and semi-supervised learning \cite{zhou2003learning}. Numerous methods can be employed to construct such affinities. A common choice is to use a kernel (\eg Gaussian) derived from a distance matrix normalized by a bandwidth parameter that usually has a large influence on the outcome of the algorithm. 
+eigenmaps \citep{belkin2003laplacian}, spectral clustering
+\citep{von2007tutorial} and semi-supervised learning \citep{zhou2003learning}. Numerous methods can be employed to construct such affinities. A common choice is to use a kernel (\eg Gaussian) derived from a distance matrix normalized by a bandwidth parameter that usually has a large influence on the outcome of the algorithm. 
 Indeed, excessively small kernel bandwidth can result in %points \nc{points ?} 
-solely capturing the positions of closest neighbors, at the expense of large-scale dependencies. Inversely, setting too large a bandwidth blurs information about close-range pairwise relations. Ideally, one should select a different bandwidth for each point to accommodate varying sampling densities and noise levels. One approach is to compute the bandwidth of a point based on the distance from its $k$-th nearest neighbor \cite{zelnik2004self}. However, this method fails to consider the entire distribution of distances.
+solely capturing the positions of closest neighbors, at the expense of large-scale dependencies. Inversely, setting too large a bandwidth blurs information about close-range pairwise relations. 
+
+Ideally, one should select a different bandwidth for each point to accommodate varying sampling densities and noise levels. One approach is to compute the bandwidth of a point based on the distance from its $k$-th nearest neighbor \cite{zelnik2004self}. However, this method fails to consider the entire distribution of distances.
 In general, selecting appropriate kernel bandwidths can be a laborious task, and many practitioners resort to greedy search methods. This can be limiting in some settings, particularly when dealing with large sample sizes.
 
 \paragraph{Entropic Affinities and SNE/t-SNE.}

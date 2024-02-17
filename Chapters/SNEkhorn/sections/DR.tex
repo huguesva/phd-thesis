@@ -41,20 +41,17 @@ iterations can be further accelerated with a \emph{warm start} strategy by plugg
 %     \nabla_{\Zb} \mathcal{J}(\X, \Z) = 2 \left(\Lb \Z - \nabla_{\Zb}\f^{\top} \bm{1} \right) \:.
 % \end{align*} 
 
-\begin{minipage}{0.59\linewidth}
-        \textbf{Related work.}
-        Using doubly stochastic affinities for SNE has been proposed in \cite{lu2019doubly}, with two key differences from our work. First, they
-        do not consider EAs and resort to $\Pb^{\mathrm{ds}}$ \eqref{eq:plan_sym_sinkhorn}. This affinity, unlike $\Pb^{\mathrm{se}}$, is not adaptive to the data heterogeneous density (as illusrated in \cref{fig:Ps_vs_Pse}). 
-        Second, they use the affinity $\widetilde{\Qb}_{\Zb}$ in the low-dimensional space and demonstrate both empirically and theoretically that matching the latter with a doubly stochastic matrix (\eg $\Pb^{\mathrm{ds}}$ or $\Pb^{\mathrm{se}}$) imposes spherical constraints on the embedding $\Zb$.
-        % As a consequence, latent coordinates tend to concentrate on spheres \titouan{pas clair: DS + pas DS = sphere, DS + DS = pas sphere ?}. As a consequence, they focus on building embeddings on spheres in a $3D$ space.
-        This is detrimental for projections onto a $2D$ flat space (typical use case of DR) where embeddings tend to form circles. This can be verified on the left side of \cref{fig:snekhorn_not_DS}. In contrast, in SNEkhorn, the latent affinity \emph{is also doubly stochastic} so that latent coordinates $\Zb$ are not subject to spherical constraints anymore.
-        The corresponding SNEkhorn embedding is shown in \cref{fig:simulated_data_multinomial} (bottom right).
-        % their proposed method called \texttt{DOSNES} does
-\end{minipage}
-\hspace{0.005\linewidth}
-\begin{minipage}{0.4\linewidth} 
-\vspace{-0.2cm}
-    \centerline{\includegraphics[width=\linewidth]{Figures/snekhorn_not_DS.pdf}}
-    \captionof{figure}{Left: SNEkhorn embedding on the simulated data of \cref{sec:DR_experiments} using $\widetilde{\Qb}_{\Zb}$ instead of $\Qb^{\mathrm{ds}}_{\Zb}$ with $\xi=30$. Right: number of iterations needed to achieve $\| \Qb^{\mathrm{ds}}_{\Zb} \bm{1} - \bm{1} \|_{\infty} \leq \text{tol}$ with \eqref{eq:sinkhorn_iterations_log_sym_accelerated}.}
+
+\paragraph{Related work.}
+    Using doubly stochastic affinities for SNE has been proposed in \cite{lu2019doubly}, with two key differences from our work. First, they
+    do not consider EAs and resort to $\Pb^{\mathrm{ds}}$ \eqref{eq:plan_sym_sinkhorn}. This affinity, unlike $\Pb^{\mathrm{se}}$, is not adaptive to the data heterogeneous density (as illusrated in \cref{fig:Ps_vs_Pse}). 
+    Second, they use the affinity $\widetilde{\Qb}_{\Zb}$ in the low-dimensional space and demonstrate both empirically and theoretically that matching the latter with a doubly stochastic matrix (\eg $\Pb^{\mathrm{ds}}$ or $\Pb^{\mathrm{se}}$) imposes spherical constraints on the embedding $\Zb$.
+    This is detrimental for projections onto a $2D$ flat space (typical use case of DR) where embeddings tend to form circles. This can be verified on the left side of \cref{fig:snekhorn_not_DS}. In contrast, in SNEkhorn, the latent affinity \emph{is also doubly stochastic} so that latent coordinates $\Zb$ are not subject to spherical constraints anymore.
+    The corresponding SNEkhorn embedding is shown in \cref{fig:simulated_data_multinomial} (bottom right).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\linewidth]{figures/SNEkhorn/snekhorn_not_DS.pdf}    
+    \caption{Left: SNEkhorn embedding on the simulated data of \cref{sec:DR_experiments} using $\widetilde{\Qb}_{\Zb}$ instead of $\Qb^{\mathrm{ds}}_{\Zb}$ with $\xi=30$. Right: number of iterations needed to achieve $\| \Qb^{\mathrm{ds}}_{\Zb} \bm{1} - \bm{1} \|_{\infty} \leq \text{tol}$ with \eqref{eq:sinkhorn_iterations_log_sym_accelerated}.}
     \label{fig:snekhorn_not_DS}
-\end{minipage}
+\end{figure}

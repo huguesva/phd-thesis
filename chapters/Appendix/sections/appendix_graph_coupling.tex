@@ -1,0 +1,134 @@
+% Appendix Template
+
+\section{Appendix of \Cref{chapter:GraphCoupling}}
+
+\subsection{Proof of \cref{prop:integrability_pairwise_MRF}} \label{proof:lambda_perp_integrability}
+
+\integrabilitypairwiseMRF*
+
+\begin{proof}
+$\W \in \mathcal{S}_W$ is the weight matrix of a graph with $R$ connected components $\{C_1, ..., C_R\}$ partitioning $\integ{n}$. Since $k$ is upper bounded by a constant, there exists $M_+ > 1$ that upper bounds $k$. Let $\bm{\mathcal{T}}$ be the adjacency matrix of a spanning forest of $\W$, since each edge of $\W$ is bounded by $n$, one has:
+\begin{align}
+    \int f_{k}(\X, \W) \lambda_{\mathcal{S}_{C}}(d\X) &= \int \prod_{(i,j) \in \integ{n}^2} k(\mathbf{x}_{i} - \mathbf{x}_{j})^{W_{ij}} \lambda_{\mathcal{S}_{C}}(d\X) \nonumber \\
+    &\leq M_+^{n^{3}} \int \prod_{(i,j) \in \integ{n}^2} k(\mathbf{x}_{i} - \mathbf{x}_{j})^{\mathcal{T}_{ij}} \lambda_{\mathcal{S}_{C}}(d\X) \nonumber \\
+    &\leq M_+^{n^{3}} \prod_{r \in \integ{R}} \int \prod_{(i,j) \in C_{r}^2} k(\mathbf{x}_{i} - \mathbf{x}_{j})^{\mathcal{T}_{ij}} \lambda_{\mathcal{S}_{C}}(d\X) \:. \label{bound_MRF_product_CC}
+\end{align}
+Let $r \in \integ{R}$. The spanning tree corresponding to the $r^{th}$ connected component called $\bm{\mathcal{T}}^r$ has exactly $n_r-1$ edges. There exists a leaf node $\ell \in \integ{n}$ of $\bm{\mathcal{T}}^r$ and let $\tilde{\ell}$ be the node linked to it. Consider a bijective map $\sigma \colon C_r \backslash \{\ell\} \to \integ{n_r - 1}$ such that $\sigma(\tilde{\ell}) = 1$ and for $(i,j) \in (C_r \backslash \{\ell\})^2$, $\sigma(i) \leq \sigma(j)$ implies that node $i$ has a shorter path on $\overline{\bm{\mathcal{T}}^r}$\footnote{Symmetrized version \textit{i.e.}\ $\overline{\bm{\mathcal{T}}^r} = \bm{\mathcal{T}}^r + \bm{(\mathcal{T}}^r)^\top$.} to $\ell$ than node $j$. There exists a bijective map $e \colon \integ{2:n_r - 1} \to \integ{n_r - 2}$ such that for $i \in \integ{2:n_R-1}$, $\overline{\bm{\mathcal{T}}^r}_{\sigma^{-1}(i), \sigma^{-1}(e(i))} > 0$ and node $\sigma^{-1}(e(i))$ has a shorter path on $\overline{\bm{\mathcal{T}}^r}$ to node $\ell$ than node $\sigma^{-1}(i)$.
+
+Recall that since $\X \in \mathcal{S}_{C}$ one has: $\sum_{i \in C_r} \mathbf{x}_i = 0$ hence $\mathbf{x}_{\ell} = - \sum_{i \neq \ell} \mathbf{x}_i$. Let us now consider the linear map $\phi^r$ such that:
+\begin{align*}
+\forall i \in [n_r - 1], \quad \phi^r(\mathbf{x}_i) = \left\{
+    \begin{array}{ll}
+        \mathbf{x}_{\sigma^{-1}(i)} + \sum_{j \in \integ{n_r - 1}} \mathbf{x}_{\sigma^{-1}(j)} & \mbox{if i = 1}\\
+        \mathbf{x}_{\sigma^{-1}(i)} - \mathbf{x}_{\sigma^{-1}(e(i))} & \mbox{otherwise} \:.
+    \end{array}
+\right.
+\end{align*}
+
+We now show that the change of variable $\phi^r$ is a $\mathcal{C}^1$ diffeomorphism by proving that its Jacobian has full rank. Ordering the columns with the map $\sigma$, the latter takes the form:
+\[
+    \mathbf{J}_{\phi^r} = \left(
+    \begin{array}{ccccc}
+    2 & 1 & 1 & \dots & 1 \\
+      & 1 & 0 & \dots & 0 \\
+      &   & \ddots &  \ddots & \vdots \\
+      & \Ab &   & \ddots & 0 \\
+      &               &   &   & 1
+    \end{array}
+    \right)
+\]
+where $\Ab$ is a strictly lower triangular matrix such that for all $i \in \integ{2:n_r-1}$, $A_{ie(i)} = -1$ and for all $t \neq e(i)$, $A_{it}=0$. The above can be factorized as:
+\[
+\mathbf{J}_{\phi^r} = 
+\left(
+    \begin{array}{ccccc}
+    \alpha_{n_r-1} & \alpha_{n_r-2} & \dots & \alpha_2 & \alpha_1 \\
+    0  & 1 & 0 & \dots & 0 \\
+    \vdots & \ddots & \ddots & \ddots & \vdots \\
+    \vdots & & \ddots & \ddots & 0 \\
+    0 & \dots & \dots & 0 & 1
+    \end{array}
+    \right)^{-1}
+\left(
+    \begin{array}{ccccc}
+    1 & 0 & \dots & \dots & 0 \\
+      & 1 & \ddots & & \vdots\\
+      & & \ddots & \ddots & \vdots \\
+      & \Ab & & \ddots & 0 \\
+      & & & & 1
+    \end{array}
+\right)
+\]
+where $\alpha_{1}=-1$ and for $\ell > 1$, $\alpha_\ell = \sum_{j < l} \alpha_j\ind_{e(n_r - j)=n_r -\ell} - 1$. With this in place, for $i \in \integ{n_r -1}$, $\alpha_i \neq 0$ in particular $\alpha_{n_r-1} \neq 0$ therefore $|\mathbf{J}_{\phi^r}| \neq 0 $ and $\phi^r$ is a $\mathcal{C}^1$ diffeomorphism. This change of variable yields:
+\begin{align*}
+\int \prod_{(i,j) \in C_{r}^2} k(\mathbf{x}_{i} - \mathbf{x}_{j})^{\mathcal{T}_{ij}} \lambda_{\mathcal{S}_{C}}(d\X) 
+&= \int \bigotimes_{i \in \integ{n_r - 1}} k(\mathbf{y}_i) |\mathbf{J}_{\phi^r}(\mathbf{Y})|^{-1} \lambda_{\mathbb{R}^p}(d\mathbf{Y}) \\
+&= |\mathbf{J}_{\phi^r}|^{-1} \prod_{i \in \integ{n_r - 1}} \int k(\mathbf{y}_i) \lambda_{\mathbb{R}^p}(d\mathbf{y}_i)
+\end{align*}
+using the Fubini Tonelli theorem. The result follows from $\lambda_{\mathbb{R}^p}$-integrability of $k$ and upper bound \ref{bound_MRF_product_CC}.
+\end{proof}
+
+
+\subsection{Proof of \cref{prop:posterior_W}}
+\label{proof:posterior_limit}
+
+\posteriorW
+
+\begin{proof}
+Let $\mathcal{P} \in \{B, D, E\}$, $k$ be a valid kernel (assumptions of \cref{prop:integrability_pairwise_MRF}) with $\K_{X} = (k(\mathbf{x}_{i} - \mathbf{x}_{j}))_{(i,j) \in \integ{n}^2}$ and $\bm{\pi} \in \mathbb{R}_+^{n \times n}$. Let $\W \sim \mathbb{P}_{\mathcal{P},k}^{\varepsilon}(\cdot \: ; \bm{\pi},1)$. Inversion of conditional with Bayes rule gives:
+\begin{align}
+    \forall \bm{W} \in \mathcal{S}_{W}, \quad \mathbb{P}(\W | \bm{X}) \propto
+    \mathcal{C}_{k}^{\varepsilon}(\W)^{-1} f^{\varepsilon}(\X, \W) f_{k}(\X, \W) \mathbb{P}^{\varepsilon}_{\mathcal{P},k}(\W; \bm{\pi}, 1) \label{inversion_Conditional}
+\end{align}
+where the prior reads:
+\begin{align}
+    \mathbb{P}_{\mathcal{P},k}^{\varepsilon}(\bm{W}; \bm{\pi}, 1) \propto \mathcal{C}^{\varepsilon}_k(\W) \Omega_{\mathcal{P}}(\W) \prod_{(i,j) \in \integ{n}^2} \pi_{ij}^{W_{ij}} \:.
+\end{align}
+Hence the joint normalizing constant simplifies such that:
+\begin{align}
+    \forall \bm{W} \in \mathcal{S}_{W}, \quad \mathbb{P}(\W | \bm{X}) &\propto
+    f^{\varepsilon}(\X, \W) \Omega_{\mathcal{P}}(\W) \prod_{(i,j) \in \integ{n}^2} \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \\
+    &\xrightarrow[\varepsilon \to 0]{} \Omega_{\mathcal{P}}(\W) \prod_{(i,j) \in \integ{n}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}}
+\end{align}
+which ends the proof. As a complement, we now explicit the simple forms taken by the posterior limit graph in each case.
+
+\paragraph{$B$-Prior.}
+Recall that in this case the prior reads:
+\begin{align*}
+    \mathbb{P}_{B}^{\varepsilon}(\bm{W}; \bm{\pi},1) &\propto \mathcal{C}_{k}^{\varepsilon}(\bm{W}) \prod_{(i,j) \in \integ{n}^2} \pi_{ij}^{W_{ij}} \ind_{W_{ij} \leq 1} \:.
+\end{align*}
+Therefore the posterior limit graph has the distribution:
+\begin{align*}
+    \mathbb{P}_{B}(\W ;\bm{\pi} \odot \bm{K}_{X})
+    &= \frac{\prod_{(i,j) \in \integ{n}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{ij} \leq 1}}{\sum_{\W \in \mathcal{S}_{W}} \prod_{(i,j) \in \integ{n}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{ij} \leq 1}} \\
+    &= \prod_{(i,j) \in \integ{n}^2}  \left(\frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{1+\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}\right)^{W_{ij}} \left(\frac{1}{1+\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}\right)^{1-W_{ij}} \ind_{W_{ij} \leq 1} \:.
+\end{align*}
+
+This distribution amounts to: $\forall (i,j) \in \integ{n}^2, \quad \W_{ij} \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{B}\left( \frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{1+\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)} \right)$.
+
+\paragraph{$D$-Prior.} The prior writes:
+\begin{align*}
+    \mathbb{P}_{D}^{\varepsilon}(\bm{W}; \bm{\pi}, 1) &\propto \mathcal{C}_{k}^{\varepsilon}(\bm{W}) \prod_{(i,j) \in \integ{n}^2} \pi_{ij}^{W_{ij}} \ind_{W_{i+} = 1} \:.
+\end{align*}
+The distribution of the posterior limit then becomes:
+\begin{align*}
+    \mathbb{P}_{D}(\W ;\bm{\pi} \odot \bm{K}_{X}) &= \frac{\prod_{(i,j) \in \integ{n}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{i+} = 1}}{\sum_{\W \in \mathcal{S}_{W}} \prod_{(i,j) \in \integ{n}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{i+} = 1}} \\
+    &= \frac{\prod_{(i,j) \in \integ{n}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{i+} = 1}}{\prod_{i \in \integ{n}} \sum_{\ell \in \integ{n}} \pi_{i\ell} k(\mathbf{x}_i - \mathbf{x}_{\ell})} \\
+    &= \prod_{(i,j) \in \integ{n}^2} \left(\frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{\sum_{\ell \in \integ{n}} \pi_{i\ell} k(\mathbf{x}_i - \mathbf{x}_{\ell})}\right)^{W_{ij}} \ind_{W_{i+} = 1} \:.
+\end{align*}
+
+This distribution amounts to: $\forall i \in \integ{n}, \quad \W_{i} \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{M}\left(1, \left(\frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{\sum_{\ell \in \integ{n}} \pi_{i\ell} k(\mathbf{x}_i - \mathbf{x}_{\ell})}\right)_{j \in \integ{n}}\right)$.
+
+\paragraph{$E$-Prior.}
+In this case the prior reads:
+\begin{align*}
+    \mathbb{P}_{E}^{\varepsilon}(\bm{W}; \bm{\pi}, 1) &\propto \mathcal{C}_{k}^{\varepsilon}(\bm{W}) \prod_{(i,j) \in \integ{n}^2} \frac{\pi_{ij}^{W_{ij}}}{W_{ij}!} \ind_{W_{++} = n} \:.
+\end{align*}
+Finally, deriving the distribution of the posterior graph limit:
+\begin{align*}
+    \mathbb{P}_{E}(\W ;\bm{\pi} \odot \bm{K}_{X}) &= \frac{\prod_{(i,j) \in \integ{n}^2}  (W_{ij}!)^{-1}\left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{++} = n}}{\sum_{\W \in \mathcal{S}_{W}} \prod_{(i,j) \in \integ{n}^2} (W_{ij}!)^{-1} \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{++} = n}} \\
+    &= n! \prod_{(i,j) \in \integ{n}^2} (W_{ij})^{-1} \left(\frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{\sum_{(\ell,t) \in \integ{n}^2} \pi_{\ell t} k(\mathbf{x}_{\ell} - \mathbf{x}_t)}\right)^{W_{ij}} \ind_{W_{++} = n} \:.
+\end{align*}
+
+This distribution amounts to: $\W \sim \mathcal{M}\left(n, \left(\frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{\sum_{(\ell,t) \in \integ{n}^2} \pi_{\ell t} k(\mathbf{x}_{\ell} - \mathbf{x}_t)}\right)_{(i,j) \in \integ{n}^2}\right)$.
+\end{proof}

@@ -22,7 +22,7 @@ Let $\Cb \in \R^{n \times n}$ without constant rows. Then $\Pb^{\mathrm{e}}$ sol
 \end{equation}
 \end{restatable}
 Interestingly, this result shows that EAs boil down to minimizing a transport objective with cost $\Cb$ and row-wise entropy constraints $\mathcal{H}_{\xi}$ where
-$\xi$ is the desired perplexity. As such, \eqref{eq:entropic_affinity_semi_relaxed} can be seen as a specific \emph{semi-relaxed} OT problem \cite{rabin2014adaptive,flamary2016optimal} (\ie without the second constraint on the marginal $\Pb^\top \bm{1}= \bm{1}$) but with entropic constraints on the rows of $\Pb$. We also show that the optimal solution $\Pb^\star$ of \eqref{eq:entropic_affinity_semi_relaxed} has \emph{saturated entropy} \ie $\forall i, \: \operatorname{H}(\Pb^\star_{i:}) = \log{\xi} + 1$. In other words, relaxing the equality constraint in \eqref{eq:entropic_affinity_pb} as a inequality constraint in $\Pb \in \mathcal{H}_{\xi}$ does not affect the solution while it allows reformulating entropic affinity as a convex optimization problem. To the best of our knowledge, this connection between OT and entropic affinities is novel and is an essential key to the method proposed in the
+$\xi$ is the desired perplexity. As such, \eqref{eq:entropic_affinity_semi_relaxed} can be seen as a specific \emph{semi-relaxed} OT problem \citep{rabin2014adaptive,flamary2016optimal} (\ie without the second constraint on the marginal $\Pb^\top \bm{1}= \bm{1}$) but with entropic constraints on the rows of $\Pb$. We also show that the optimal solution $\Pb^\star$ of \eqref{eq:entropic_affinity_semi_relaxed} has \emph{saturated entropy} \ie $\forall i, \: \operatorname{H}(\Pb^\star_{i:}) = \log{\xi} + 1$. In other words, relaxing the equality constraint in \eqref{eq:entropic_affinity_pb} as a inequality constraint in $\Pb \in \mathcal{H}_{\xi}$ does not affect the solution while it allows reformulating entropic affinity as a convex optimization problem. To the best of our knowledge, this connection between OT and entropic affinities is novel and is an essential key to the method proposed in the
 next section.
 % To gain intuition on the entropy saturation at the optimum, one can simply notice that, since $\Cb \in
 % \mathcal{D}$, transferring some mass from anywhere off-diagonal to the diagonal
@@ -33,28 +33,27 @@ next section.
 \end{remark}
 
 \begin{remark}\label{Pe_proj}
-  Let $\K_{\sigma} = \exp(-\Cb/\sigma)$. As shown in \cref{sec:proj_KL}, if $\bm{\varepsilon}^\star$ solves (\ref{eq:entropic_affinity_pb}) and $\sigma \leq \min(\bm{\varepsilon}^\star)$, then $\Pb^{\mathrm{e}} = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{H}_{\xi}}(\K_{\sigma})  =  \argmin_{\Pb \in \mathcal{H}_{\xi}} \KL(\Pb | \K_\sigma)$.
-  Therefore $\Pb^{\mathrm{e}}$ can be seen as a $\KL$ Bregman projection \cite{benamou2015iterative} of a Gaussian kernel onto $\mathcal{H}_{\xi}$. Hence the input matrix in \eqref{symmetrization_tsne}  is $\overline{\Pb^{\mathrm{e}}}= \operatorname{Proj}^{\ell_2}_{\mathcal{S}}(\operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{H}_{\xi}}(\K_\sigma))$ which corresponds to a surprising mixture of $\KL$ and orthogonal projections.
+  Let $\K_{\sigma} = \exp(-\Cb / \sigma)$. As shown in \cref{sec:proj_KL}, if $\bm{\varepsilon}^\star$ solves (\ref{eq:entropic_affinity_pb}) and $\sigma \leq \min(\bm{\varepsilon}^\star)$, then $\Pb^{\mathrm{e}} = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{H}_{\xi}}(\K_{\sigma})  =  \argmin_{\Pb \in \mathcal{H}_{\xi}} \KL(\Pb | \K_\sigma)$.
+  Therefore $\Pb^{\mathrm{e}}$ can be seen as a $\KL$ Bregman projection \citep{benamou2015iterative} of a Gaussian kernel onto $\mathcal{H}_{\xi}$. Hence the input matrix in \eqref{symmetrization_tsne}  is $\overline{\Pb^{\mathrm{e}}}= \operatorname{Proj}^{\ell_2}_{\mathcal{S}}(\operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{H}_{\xi}}(\K_\sigma))$ which corresponds to a surprising mixture of $\KL$ and orthogonal projections.
 \end{remark}
 
 \subsection{Symmetric Entropic Affinity Formulation}\label{subsec:sea}
 
 \begin{figure*}[t]
   \begin{center}
-  \centerline{\includegraphics[width=\columnwidth]{figures/Ps_vs_Pse.pdf}}
+  \centerline{\includegraphics[width=\columnwidth]{figures/SNEkhorn/Ps_vs_Pse.pdf}}
   \caption{Samples from a mixture of three Gaussians with varying standard deviations. The edges' strength is proportional to the weights in the affinities $\Pb^{\mathrm{ds}}$ \eqref{eq:plan_sym_sinkhorn} and $\Pb^{\mathrm{se}}$ \eqref{eq:sym_entropic_affinity} computed with $\xi=5$ (for $\Pb^{\mathrm{ds}}$, $\xi$ is the average perplexity such that $\sum_i \operatorname{H}(\Pb^{\mathrm{ds}}_{i:})=\sum_i \operatorname{H}(\Pb^{\mathrm{se}}_{i:})$). Points' color represents the perplexity $e^{\operatorname{H}(\Pb_{i:})-1}$. Right plot: smallest eigenvalues of the Laplacian for the two affinities.}
   \label{fig:Ps_vs_Pse}
   \end{center}
-  % \vspace{-0.8cm}
 \end{figure*}
 
 Based on the previous formulation we now propose symmetric entropic affinities: a symmetric version of EAs that enables keeping the entropy associated with each row (or equivalently column) to the desired value of $\log \xi + 1$ while producing a symmetric doubly stochastic affinity matrix. Our strategy is to enforce symmetry through an additional constraint in (\ref{eq:entropic_affinity_semi_relaxed}), in a similar fashion as \eqref{eq:entropy_constrained_OT}. More precisely we consider the convex optimization problem
 \begin{align}
 \label{eq:sym_entropic_affinity}
 \tag{SEA}
-  \min_{\Pb \in \mathcal{H}_{\xi} \Cbap \mathcal{S}} \: \langle \Pb, \Cb \rangle \:. 
+  \min_{\Pb \in \mathcal{H}_{\xi} \cap \mathcal{S}} \: \langle \Pb, \Cb \rangle \:. 
 \end{align}
-where we recall that $\mathcal{S}$ is the set of $n \times n$ symmetric matrices. Note that for any $\xi \leq n-1$, $\frac{1}{n} \bm{1}\bm{1}^\top \in \mathcal{H}_{\xi} \Cbap \mathcal{S}$ hence the set $\mathcal{H}_{\xi} \Cbap \mathcal{S}$ is a non-empty and convex set. We first detail some important properties of problem \eqref{eq:sym_entropic_affinity} (the proofs of the following results can be found in Appendix \ref{proof:main_props}).
+where we recall that $\mathcal{S}$ is the set of $n \times n$ symmetric matrices. Note that for any $\xi \leq n-1$, $\frac{1}{n} \bm{1}\bm{1}^\top \in \mathcal{H}_{\xi} \cap \mathcal{S}$ hence the set $\mathcal{H}_{\xi} \cap \mathcal{S}$ is a non-empty and convex set. We first detail some important properties of problem \eqref{eq:sym_entropic_affinity} (the proofs of the following results can be found in Appendix \ref{proof:main_props}).
 \begin{restatable}[Saturation of the entropies]{proposition}{saturation}
 \label{prop:saturation_entropies}
 Let $\Cb \in \mathcal{S}$ with zero diagonal, then \eqref{eq:sym_entropic_affinity} with cost $\Cb$ has a \emph{unique solution} that we denote by $\Pb^{\mathrm{se}}$. If moreover $\Cb \in \mathcal{D}$, then for at least $n-1$ indices $i \in \integ{n}$ the solution satisfies $\operatorname{H}(\Pb^{\mathrm{se}}_{i:}) = \log \xi + 1$.
@@ -64,7 +63,7 @@ problem \eqref{eq:sym_entropic_affinity} allows accurate control over the point-
 \eqref{symmetrization_tsne}, as summarized in \cref{recap_properties_sym}. In the sequel, we denote by $\operatorname{H}_{\mathrm{r}}(\Pb) = \left( \operatorname{H}(\Pb_{i:}) \right)_{i}$ the vector of row-wise entropies of $\Pb$. We rely on the following result to compute $\Pb^{\mathrm{se}}$.
 \begin{restatable}[Solving for \ref{eq:sym_entropic_affinity}]{proposition}{solvingsea}
 \label{prop:sol_gamma_non_null}
-Let $\Cb \in \mathcal{D}, \mathcal{L}(\Pb, \bm{\gamma}, \bm{\lambda})= \langle \Pb, \Cb \rangle + \langle \gammab, (\log{\xi} + 1) \bm{1} - \operatorname{H}_{\mathrm{r}}(\Pb) \rangle + \langle \lambdab, \bm{1} - \Pb \bm{1} \rangle$ and $q(\bm{\gamma}, \bm{\lambda}) = \min_{\Pb \in \R_{+}^{n \times n} \Cbap \mathcal{S}} \mathcal{L}(\Pb, \bm{\gamma}, \bm{\lambda})$. Strong duality holds for \eqref{eq:sym_entropic_affinity}. Moreover, let
+Let $\Cb \in \mathcal{D}, \mathcal{L}(\Pb, \bm{\gamma}, \bm{\lambda})= \langle \Pb, \Cb \rangle + \langle \gammab, (\log{\xi} + 1) \bm{1} - \operatorname{H}_{\mathrm{r}}(\Pb) \rangle + \langle \lambdab, \bm{1} - \Pb \bm{1} \rangle$ and $q(\bm{\gamma}, \bm{\lambda}) = \min_{\Pb \in \R_{+}^{n \times n} \cap \mathcal{S}} \mathcal{L}(\Pb, \bm{\gamma}, \bm{\lambda})$. Strong duality holds for \eqref{eq:sym_entropic_affinity}. Moreover, let
 $\bm{\gamma}^\star, \lambdab^\star \in \operatorname{argmax}_{\bm{\gamma} \geq 0, \lambdab} q(\bm{\gamma}, \bm{\lambda})$ be the optimal dual variables respectively associated with the entropy and marginal constraints. Then, for at least $n-1$ indices $i \in \integ{n}, \gamma^{\star}_i > 0$.
 When $\forall i \in \integ{n}$, $\gamma^\star_i > 0$ then $\operatorname{H}_{\mathrm{r}}(\Pb^{\mathrm{se}}) = (\log \xi + 1)\bm{1}$ and $\Pb^{\mathrm{se}}$ has the form
 \begin{align}
@@ -100,7 +99,7 @@ By defining the symmetric matrix $\Pb(\bm{\gamma}, \bm{\lambda}) =
 % at the optimum. Indeed, let us imagine that there exists two rows $(\ell,
 % \ell')$ for which the entropies are strictly greater than $\log \xi + 1$. 
 % \begin{wraptable}[9]{R}{7cm}
-%   \Cbaption{Properties of $\Pb^{\mathrm{e}}$, $\overline{\Pb^{\mathrm{e}}}$, $\Pb^{\mathrm{ds}}$ and $\Pb^{\mathrm{se}}$}
+%   \caption{Properties of $\Pb^{\mathrm{e}}$, $\overline{\Pb^{\mathrm{e}}}$, $\Pb^{\mathrm{ds}}$ and $\Pb^{\mathrm{se}}$}
 %   % \begin{small}
 %   %  \begin{minipage}{7cm}
 %   \begin{sc} \setlength\tabcolsep{1mm}
@@ -132,28 +131,24 @@ By defining the symmetric matrix $\Pb(\bm{\gamma}, \bm{\lambda}) =
 % shows that there can not be more than one unsaturated entropy at the optimum. 
 % It also proves that $\bm{\gamma}^\star_i > 0$ for at least $n-1$ indices. 
 % For all the real-world cases that we considered (see Section \ref{sec:DR_experiments}), we found that the optimum of \eqref{eq:dual_problem} had indeed $n$ saturated entropies.
-\begin{minipage}{0.47\linewidth}
-  Consequently, to find $\Pb^{\mathrm{se}}$ we solve the problem \eqref{eq:dual_problem}. Although the form of $\Pb^{\mathrm{se}}$ presented in Proposition \ref{prop:sol_gamma_non_null} is only valid when $\bm{\gamma}^\star$ is positive and we have only proved it for $n-1$ indices, we emphasize that if \eqref{eq:dual_problem} has a finite solution, then it is equal to $\Pb^{\mathrm{se}}$. Indeed in this case the solution satisfies the KKT system associated with \eqref{eq:sym_entropic_affinity}.
-\end{minipage}
-\hspace{0.005\linewidth}
-\begin{minipage}{0.5\linewidth} 
-  \vspace{-0.1cm}
-  \begin{sc} \setlength\tabcolsep{1mm}
-  \Cbaptionof{table}{\label{recap_properties_sym} Properties of $\Pb^{\mathrm{e}}$, $\overline{\Pb^{\mathrm{e}}}$, $\Pb^{\mathrm{ds}}$ and $\Pb^{\mathrm{se}}$}
-  \vspace{-0.1cm}
+Consequently, to find $\Pb^{\mathrm{se}}$ we solve the problem \eqref{eq:dual_problem}. Although the form of $\Pb^{\mathrm{se}}$ presented in Proposition \ref{prop:sol_gamma_non_null} is only valid when $\bm{\gamma}^\star$ is positive and we have only proved it for $n-1$ indices, we emphasize that if \eqref{eq:dual_problem} has a finite solution, then it is equal to $\Pb^{\mathrm{se}}$. Indeed in this case the solution satisfies the KKT system associated with \eqref{eq:sym_entropic_affinity}.
+  
+\begin{table}
+\begin{center}
+\caption{Properties of $\Pb^{\mathrm{e}}$, $\overline{\Pb^{\mathrm{e}}}$, $\Pb^{\mathrm{ds}}$ and $\Pb^{\mathrm{se}}$.}
   \begin{tabular}{lcccc}
   \toprule[1.5pt]
   Affinity matrix& $\Pb^{\mathrm{e}}$& $\overline{\Pb^{\mathrm{e}}}$
   & $\Pb^{\mathrm{ds}}$& $\Pb^{\mathrm{se}}$ \\
-  Reference & \cite{hinton2002stochastic} & \citep{van2008visualizing} & \cite{lu2019doubly} & \eqref{eq:sym_entropic_affinity} \\
+  % Reference & \cite{hinton2002stochastic} & \citep{van2008visualizing} & \cite{lu2019doubly} & \eqref{eq:sym_entropic_affinity} \\
   \midrule
-  $\Pb=\Pb^\top$ & $\red{\boldsymbol\times}$ & $\green{\Cbheckmark}$ & $\green{\Cbheckmark}$ & $\green{\Cbheckmark}$ \\
-  $\Pb \bm{1} = \Pb^\top \bm{1} = \bm{1}$ & $\red{\boldsymbol\times}$ & $\red{\boldsymbol\times}$ & $\green{\Cbheckmark}$ & $\green{\Cbheckmark}$ \\
-  $\operatorname{H}_{\mathrm{r}}(\Pb) = (\log \xi + 1)\bm{1}$ & $\green{\Cbheckmark}$ & $\red{\boldsymbol\times}$ & $\red{\boldsymbol\times}$ & $\green{\Cbheckmark}$ \\
+  $\Pb=\Pb^\top$ & $\red{\boldsymbol\times}$ & $\green{\checkmark}$ & $\green{\checkmark}$ & $\green{\checkmark}$ \\
+  $\Pb \bm{1} = \Pb^\top \bm{1} = \bm{1}$ & $\red{\boldsymbol\times}$ & $\red{\boldsymbol\times}$ & $\green{\checkmark}$ & $\green{\checkmark}$ \\
+  $\operatorname{H}_{\mathrm{r}}(\Pb) = (\log \xi + 1)\bm{1}$ & $\green{\checkmark}$ & $\red{\boldsymbol\times}$ & $\red{\boldsymbol\times}$ & $\green{\checkmark}$ \\
   \bottomrule[1.5pt]
   \end{tabular}
-  \end{sc}
-\end{minipage}
+  \end{center}
+\end{table}
 
 
 \paragraph{Numerical optimization.} The dual problem \eqref{eq:dual_problem} is concave and can be solved with guarantees through a dual ascent approach with closed-form gradients (using \eg \texttt{SGD}, \texttt{BFGS} \cite{liu1989limited} or \texttt{ADAM} \cite{kingma2014adam}).
@@ -181,12 +176,8 @@ operations. From a practical perspective, we found that using a change of variab
 
 \begin{remark}
   In the same spirit as \cref{Pe_proj}, one can express $\Pb^{\mathrm{se}}$ as a $\KL$ projection of $\K_{\sigma} = \exp(-\Cb/\sigma)$.
-  Indeed, we show in \cref{sec:proj_KL} that if $0 < \sigma \leq \min_i \gamma^\star_i$, then $\Pb^{\mathrm{se}} = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{H}_{\xi} \Cbap
+  Indeed, we show in \cref{sec:proj_KL} that if $0 < \sigma \leq \min_i \gamma^\star_i$, then $\Pb^{\mathrm{se}} = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{H}_{\xi} \cap
   \mathcal{S}}(\K_{\sigma})$. This characterization opens the door for alternating Bregman projection methods (described in \cref{sec:dykstra}) which were not found to be more efficient than dual ascent.
-  % the corresponding iterative Bregman projections algorithm shares similar complexity and has not proven to converge faster than dual ascent in our experiments. 
-  % Note that for the non-symmetric case, if $\bm{\varepsilon}^\star \in (\R^\star_+)^n$ solves (\ref{eq:entropic_affinity_pb}) and $\sigma < \min(\bm{\varepsilon}^\star)$, then $\Pb^{\mathrm{e}} = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{H}_{\xi}}(\K_{\sigma})$. Thus, starting from a Gaussian kernel $\K$, t-SNE similarities in the input space are computed as: $\Pb^{\mathrm{e}} \leftarrow \operatorname{Proj}^{\operatorname{KL}}_{\mathcal{H}_{\xi}}(\K_{\sigma})$ then
-  % $\overline{\Pb^{\mathrm{e}}} \leftarrow
-  % \operatorname{Proj}^{\ell_2}_{\mathcal{S}}(\Pb^{\mathrm{e}})= \frac{1}{2}(\Pb^{\mathrm{e}} + \Pb^{\mathrm{e} \top})$. Hence these steps correspond to a surprising mixture of orthogonal and $\KL$ projections.
 \end{remark}
 
 \textbf{Comparison between $\Pb^{\mathrm{ds}}$ and $\Pb^{\mathrm{se}}$.} In \cref{fig:Ps_vs_Pse} we illustrate the ability of our proposed affinity $\Pb^{\mathrm{se}}$ to adapt to varying noise levels. In the OT problem that we consider, each sample is given a mass of one that is distributed over its neighbors (including itself since self-loops are allowed). For each sample, we refer to the entropy of the distribution over its neighbors as the \emph{spreading} of its mass. One can notice that for $\Pb^{\mathrm{ds}}$ \eqref{eq:plan_sym_sinkhorn} 
@@ -194,7 +185,3 @@ operations. From a practical perspective, we found that using a change of variab
 , the samples do not spread their mass evenly depending on the density around them. On the contrary, the per-row entropy constraints of $\Pb^{\mathrm{se}}$ force equal spreading among samples.
 % thereby adapting to the variance of each cluster. 
 This can have benefits, particularly for clustering, as illustrated in the rightmost plot, which shows the eigenvalues of the associated Laplacian matrices (recall that the number of connected components equals the dimension of the null space of its Laplacian \cite{chung1997spectral}). As can be seen, $\Pb^{\mathrm{ds}}$ results in many unwanted clusters, unlike $\Pb^{\mathrm{se}}$, which is robust to varying noise levels (its Laplacian matrix has only $3$ vanishing eigenvalues). 
-% This point will be further illustrated in the experiments in \cref{sec:DR_experiments}.
-
-%Hence 
-% Indeed, as it is costly to create links in sparse regions (square points), $\Pb^{\mathrm{ds}}$' edges concentrate in dense regions (round points) where the number of effective neighbors of each point is thus high. In sparse regions, this tends to create artefactual clusters and isolated nodes that don't connect to any neighbors.
