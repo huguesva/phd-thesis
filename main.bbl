@@ -1,4 +1,4 @@
-\begin{thebibliography}{137}
+\begin{thebibliography}{142}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -69,6 +69,11 @@ Dimitri~P Bertsekas.
 \newblock Nonlinear programming.
 \newblock \emph{Journal of the Operational Research Society}, 48\penalty0
   (3):\penalty0 334--334, 1997.
+
+\bibitem[Bertsimas and Tsitsiklis(1997)]{bertsimas1997introduction}
+Dimitris Bertsimas and John~N Tsitsiklis.
+\newblock \emph{Introduction to linear optimization}, volume~6.
+\newblock Athena scientific Belmont, MA, 1997.
 
 \bibitem[Bhatia(2006)]{bhatia2006infinitely}
 Rajendra Bhatia.
@@ -304,6 +309,11 @@ R{\'e}mi Flamary, C{\'e}dric F{\'e}votte, Nicolas Courty, and Valentin Emiya.
   transcription.
 \newblock \emph{Neural Information Processing Systems (NeurIPS)}, 29, 2016.
 
+\bibitem[Gangbo and McCann(1996)]{gangbo1996geometry}
+Wilfrid Gangbo and Robert~J McCann.
+\newblock The geometry of optimal transportation.
+\newblock 1996.
+
 \bibitem[Ghojogh et~al.(2021)Ghojogh, Ghodsi, Karray, and
   Crowley]{ghojogh2021unified}
 Benyamin Ghojogh, Ali Ghodsi, Fakhri Karray, and Mark Crowley.
@@ -362,6 +372,12 @@ Martin Idel.
 \newblock A review of matrix scaling and sinkhorn's normal form for matrices
   and positive maps.
 \newblock \emph{arXiv preprint arXiv:1609.06349}, 2016.
+
+\bibitem[Kantorovich(1942)]{kantorovich1942translocation}
+Leonid~V Kantorovich.
+\newblock On the translocation of masses.
+\newblock In \emph{Dokl. Akad. Nauk. USSR (NS)}, volume~37, pages 199--201,
+  1942.
 
 \bibitem[Kingma and Ba(2014)]{kingma2014adam}
 Diederik~P Kingma and Jimmy Ba.
@@ -545,6 +561,11 @@ Peyman Milanfar.
   263--284, 2013.
 \newblock \doi{10.1137/120875843}.
 
+\bibitem[Monge(1781)]{monge1781memoire}
+Gaspard Monge.
+\newblock M{\'e}moire sur la th{\'e}orie des d{\'e}blais et des remblais.
+\newblock \emph{Mem. Math. Phys. Acad. Royale Sci.}, pages 666--704, 1781.
+
 \bibitem[Nene et~al.(1996)Nene, Nayar, Murase, et~al.]{nene1996columbia}
 Sameer~A Nene, Shree~K Nayar, Hiroshi Murase, et~al.
 \newblock Columbia object image library (coil-20).
@@ -635,6 +656,11 @@ Michael~E Sander, Pierre Ablin, Mathieu Blondel, and Gabriel Peyr{\'e}.
 \newblock Sinkformers: Transformers with doubly stochastic attention.
 \newblock In \emph{International Conference on Artificial Intelligence and
   Statistics}, pages 3515--3530. PMLR, 2022.
+
+\bibitem[Santambrogio(2015)]{santambrogio2015optimal}
+Filippo Santambrogio.
+\newblock Optimal transport for applied mathematicians.
+\newblock \emph{Birk{\"a}user, NY}, 55\penalty0 (58-63):\penalty0 94, 2015.
 
 \bibitem[Saxena et~al.(2017)Saxena, Prasad, Gupta, Bharill, Patel, Tiwari, Er,
   Ding, and Lin]{saxena2017review}

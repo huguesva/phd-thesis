@@ -1,18 +1,23 @@
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {2.1}Background GC}{\reset@font\mtcSfont 4}{section.2.1}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {2.2}Background SNEkhorn}{\reset@font\mtcSfont 5}{section.2.2}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Entropic Affinities and SNE/t-SNE.}{\reset@font\mtcPfont 5}{paragraph*.4}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Doubly Stochastic Affinities.}{\reset@font\mtcPfont 6}{paragraph*.5}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {2.3}Entropic Affinities, Dimensionality Reduction and Optimal Transport}{\reset@font\mtcSfont 6}{section.2.3}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Entropic Affinities (EAs).}{\reset@font\mtcPfont 6}{paragraph*.6}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Dimension Reduction with SNE/t-SNE.}{\reset@font\mtcPfont 7}{paragraph*.7}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Symmetric Entropy-Constrained Optimal Transport.}{\reset@font\mtcPfont 8}{paragraph*.8}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {2.4}Background DistR}{\reset@font\mtcSfont 8}{section.2.4}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Dimensionality reduction and clustering.}{\reset@font\mtcPfont 9}{paragraph*.9}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Two sides of the same coin.}{\reset@font\mtcPfont 9}{paragraph*.10}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {2.5}Background on Dimensionality Reduction and Optimal Transport}{\reset@font\mtcSfont 9}{section.2.5}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.5.1}Unified View of Dimensionality Reduction }{\reset@font\mtcSSfont 9}{subsection.2.5.1}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Spectral methods.}{\reset@font\mtcPfont 10}{paragraph*.11}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Neighbor embedding methods.}{\reset@font\mtcPfont 11}{paragraph*.12}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Hyperbolic geometry.}{\reset@font\mtcPfont 11}{paragraph*.13}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.5.2}Optimal Transport Across Spaces}{\reset@font\mtcSSfont 11}{subsection.2.5.2}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Gromov-Wasserstein (GW).}{\reset@font\mtcPfont 12}{paragraph*.14}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {2.1}Affinity-Based Unsupervised Learning}{\reset@font\mtcSfont 4}{section.2.1}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Dimensionality reduction and clustering.}{\reset@font\mtcPfont 4}{paragraph*.4}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Two sides of the same coin.}{\reset@font\mtcPfont 5}{paragraph*.5}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {2.2}Dimensionality Reduction}{\reset@font\mtcSfont 5}{section.2.2}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Neighbor embedding methods.}{\reset@font\mtcPfont 7}{paragraph*.6}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Hyperbolic geometry.}{\reset@font\mtcPfont 7}{paragraph*.7}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Entropic Affinities and SNE/t-SNE.}{\reset@font\mtcPfont 7}{paragraph*.8}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Entropic Affinities (EAs).}{\reset@font\mtcPfont 8}{paragraph*.9}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Dimension Reduction with SNE/t-SNE.}{\reset@font\mtcPfont 8}{paragraph*.10}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {2.3}Optimal Transport}{\reset@font\mtcSfont 9}{section.2.3}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.3.1}Comparing Distributions with Optimal Transport}{\reset@font\mtcSSfont 9}{subsection.2.3.1}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Monge formulation.}{\reset@font\mtcPfont 9}{paragraph*.11}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Kantorovich relaxation.}{\reset@font\mtcPfont 10}{paragraph*.12}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.3.2}Affinity via Symmetric OT}{\reset@font\mtcSSfont 10}{subsection.2.3.2}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Doubly Stochastic Affinities.}{\reset@font\mtcPfont 10}{paragraph*.13}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.3.3}From Symmetric Entropy-Constrained OT to Sinkhorn Iterations}{\reset@font\mtcSSfont 11}{subsection.2.3.3}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Symmetric Entropy-Constrained Optimal Transport.}{\reset@font\mtcPfont 11}{paragraph*.14}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.3.4}Optimal Transport Across Spaces : Gromov-Wasserstein Formulation}{\reset@font\mtcSSfont 12}{subsection.2.3.4}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Gromov-Wasserstein (GW).}{\reset@font\mtcPfont 12}{paragraph*.15}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {2.4}Background DistR}{\reset@font\mtcSfont 13}{section.2.4}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {2.5}Background on Dimensionality Reduction and Optimal Transport}{\reset@font\mtcSfont 13}{section.2.5}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.5.1}Unified View of Dimensionality Reduction }{\reset@font\mtcSSfont 13}{subsection.2.5.1}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Spectral methods.}{\reset@font\mtcPfont 14}{paragraph*.16}}

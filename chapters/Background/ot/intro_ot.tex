@@ -1,0 +1,37 @@
+\section{Optimal Transport}\label{sec:background_ot}
+
+Optimal Transport (OT) \citep{villani2009optimal,peyre2019computational} is a popular
+framework for comparing probability distributions and is at the core of \Cref{chapter:SNEkhorn} and \Cref{chapter:DistR} of this thesis.
+
+\subsection{Comparing Distributions with Optimal Transport}
+
+
+Classical OT methods require defining a meaningful transportation cost between the supports of the two distributions. 
+This is however difficult in the context of dimensionality reduction where the two spaces $\R^p$ and $\R^d$ have different dimensions.
+
+
+\paragraph{Monge formulation.}
+We consider two Polish spaces $\mathcal{X}$ and $\mathcal{Y}$ such that we can define a cost function $c_{\mathcal{X} \mathcal{Y}} : \mathcal{X} \times \mathcal{Y} \to \R_+$. Let $\mu \in \mathcal{P}(\mathcal{X})$ and $\nu \in \mathcal{P}(\mathcal{Y})$ be two probability measures that we aim to compare.
+The original formulation \cite{monge1781memoire} of OT seeks the map $T$ satisfying $T_{\#}\mu = \nu$ that minimizes the transportation cost given by
+\begin{align}\label{eq:monge_pb}
+	M(\mu, \nu) \coloneqq \inf_{T_{\#}\mu = \nu} \int_{\mathcal{X}} c_{\mathcal{X} \mathcal{Y}}(\bm{x}, T(\bm{x})) \mathrm{d}\mu(\bm{x}) \:.
+\end{align}
+The above formulation is highly non-linear in $T$ and the set of admissible maps $T$ is not convex hindering an easy analysis. Moreover, the existence of an optimal map $T$ is not guaranteed in general.
+
+\paragraph{Kantorovich relaxation.} To resolve this, a popular relaxation by \cite{kantorovich1942translocation} consists of optimizing instead over the space of probabilistic couplings with marginals $\mu$ and $\nu$
+\begin{align}\label{eq:Wasserstein}
+	W(\mu, \nu) \coloneqq \inf_{\pi \in \Pi(\mu, \nu)} \int_{\mathcal{X} \times \mathcal{Y}} c_{\mathcal{X} \mathcal{Y}}(\bm{x}, \bm{y}) \mathrm{d}\pi(\bm{x}, \bm{y}) \:.
+\end{align}
+This formulation is a convex optimization problem and the infimum is well
+defined under mild assumptions \cite{santambrogio2015optimal}. If the optimal
+coupling $\pi^\star$ is supported on a \emph{deterministic} function, \ie
+$\pi^\star$ is of the form $(\mathrm{id} \times T^\star)\# \mu$, then
+$T^\star$ solves \eqref{eq:monge_pb}. This holds under the assumption that one
+of the inputs is absolutely continuous with respect to the Lebesgue measure
+for $c_{\mathcal{X} \mathcal{Y}}(\bm{x}, \bm{y}) = h(\bm{x} - \bm{y})$ with
+$h$ strictly convex \cite{gangbo1996geometry}. In the case of discrete
+measures, the equivalence holds if $\mu = \frac{1}{N} \sum_{i \in \integ{N}}
+\delta_{\bm{x}_i}$ and $\nu = \frac{1}{N} \sum_{i \in \integ{N}}
+\delta_{\bm{y}_i}$ as the solution of \eqref{eq:Wasserstein} is reached at an
+extremal point of the polytope of doubly stochastic matrices
+\cite{bertsimas1997introduction}.

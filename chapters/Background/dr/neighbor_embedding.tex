@@ -1,0 +1,103 @@
+\section{Dimensionality Reduction}\label{sec:background_dr}
+
+Dimensionality reduction (DR) is of central importance when dealing with high-dimensional data \citep{donoho2000high}. It mitigates the curse of dimensionality, allowing for greater statistical flexibility and less computational complexity. DR also enables visualization that can be of great practical interest for understanding and interpreting the structure of large datasets.
+Most seminal approaches include Principal Component Analysis (PCA) \cite{pearson1901liii},  multidimensional scaling \cite{kruskal1978multidimensional} and more broadly kernel eigenmaps methods such as Isomap \cite{balasubramanian2002isomap}, Laplacian eigenmaps \citep{belkin2003laplacian} and diffusion maps \citep{coifman2006diffusion}. These methods share the definition of a pairwise similarity kernel that assigns a high value to close neighbors and the resolution of a spectral problem. They are well understood and unified in the kernel PCA framework \citep{ham2004kernel}.
+
+In the past decade, the field has witnessed a major shift with the emergence of a new class of methods. They are also based on pairwise similarities but these are not converted into inner products. Instead, they define pairwise similarity functions in both input and latent spaces and optimize a cost between the two. Among such methods, the Stochastic Neighbor Embedding (SNE) algorithm \cite{NIPS2002SNE}, its heavy-tailed symmetrized version t-SNE \cite{maaten2008tSNE} or more recent approaches like LargeVis \cite{tang2016visualizing} and UMAP \cite{mcinnes2018umap} are arguably the most used in practice. These will be referred to as \textit{SNE-like} or \textit{neighbor embedding} methods in what follows. They are increasingly popular and now considered state-of-art techniques in many fields \cite{li2017application,kobak2019art,anders2018dissecting}. Their popularity is mainly due to their exceptional ability to preserve the local structure, \textit{i.e.}\ close points in the input space have close embeddings, as shown empirically \cite{wang2021understanding}. They also demonstrate impressive performances in identifying clusters \cite{arora2018analysis, linderman2019clustering}. However this is done at the expense of global structure, that these methods struggle in preserving \cite{wattenberg2016use, coenen2019understanding} \textit{i.e.}\ the relative large-scale distances between embedded points do not necessarily correspond to the original ones.
+
+Given a dataset $\mathbf{X} \in \mathbb{R}^{n \times p}$ of $n$ samples in dimension $p$, most DR algorithms compute a representation of $\mathbf{X}$ in a lower-dimensional latent space $\mathbf{Z} \in \mathbb{R}^{n \times q}$ with $q \ll p$ that faithfully captures and represents pairwise dependencies between the samples (or rows) in $\X$. This is generally achieved by optimizing $\mathbf{Z}$ such that the corresponding affinity matrix matches another affinity matrix defined from $\X$. These affinities are constructed from a matrix $\mathbf{C} \in \R^{n \times n}$ that encodes a notion of ‘‘distance'' between the samples, \eg the squared Euclidean distance $C_{ij} = \|\mathbf{X}_{i:}-\mathbf{X}_{j:}\|_2^2$ or more generally any \emph{cost matrix} $\mathbf{C} \in \mathcal{D} := \{\Cb \in \mathbb{R}_+^{n \times n} : \Cb = \Cb^\top \text{and } C_{ij}=0 \iff i=j\}$. A commonly used option is the Gaussian affinity that is obtained by performing row-wise normalization of the kernel $\exp(-\Cb / \varepsilon)$, where $\varepsilon >0$ is the bandwidth parameter.
+
+Exploring and analyzing high-dimensional data is a core problem of data science that requires building low-dimensional and interpretable
+representations of the data through dimensionality reduction (DR). Ideally, these representations should preserve the data structure by mimicking, in the reduced representation space (called \emph{latent space}), a notion of similarity between samples. 
+We call \emph{affinity} the weight matrix of a graph that encodes this similarity. It has positive entries and the higher the weight in position $(i,j)$, the
+higher the similarity or proximity between samples $i$ and $j$.
+Seminal approaches relying on affinities include Laplacian
+eigenmaps \citep{belkin2003laplacian}, spectral clustering
+\citep{von2007tutorial} and semi-supervised learning \citep{zhou2003learning}. Numerous methods can be employed to construct such affinities. A common choice is to use a kernel (\eg Gaussian) derived from a distance matrix normalized by a bandwidth parameter that usually has a large influence on the outcome of the algorithm. 
+Indeed, excessively small kernel bandwidth can result in %points \nc{points ?} 
+solely capturing the positions of closest neighbors, at the expense of large-scale dependencies. Inversely, setting too large a bandwidth blurs information about close-range pairwise relations. 
+
+Ideally, one should select a different bandwidth for each point to accommodate varying sampling densities and noise levels. One approach is to compute the bandwidth of a point based on the distance from its $k$-th nearest neighbor \cite{zelnik2004self}. However, this method fails to consider the entire distribution of distances.
+In general, selecting appropriate kernel bandwidths can be a laborious task, and many practitioners resort to greedy search methods. This can be limiting in some settings, particularly when dealing with large sample sizes.
+
+
+\paragraph{Neighbor embedding methods.} An alternative group of methods relies on neighbor embedding techniques which consists in minimizing in $\mZ$ the quantity
+% \begin{equation}
+% \label{eq:neighbor_techniques}
+% 	- \sum_{(i,j) \in \integ{N}^2} [\mC_{\mX}]_{ij} \log [\simi(\mZ)]_{ij}\,.
+% \end{equation}
+\begin{equation}\tag{NE}
+	\label{eq:neighbor_techniques}
+	\sum_{(i,j) \in \integ{N}^2} L_{\KL}([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{ij}) \:.
+\end{equation}
+Within our framework, this corresponds to \cref{eq:DR_criterion} with $L = L_{\KL}$. The objective function of popular methods such as stochastic neighbor embedding (SNE) \cite{hinton2002stochastic} or t-SNE \cite{van2008visualizing} can be derived from \cref{eq:neighbor_techniques} with a particular choice of $\mC_{X}, \mC_{Z}$. For instance SNE and t-SNE both consider in the input space a symmetrized version of the entropic affinity \cite{vladymyrov2013entropic,van2023snekhorn}. In the embedding space, $\mC_Z(\mZ)$ is usually constructed from a ‘‘kernel'' matrix $\mK_\mZ$ which undergoes a scalar \cite{van2008visualizing}, row-stochastic \cite{hinton2002stochastic} or doubly stochastic \cite{lu2019doubly,van2023snekhorn} normalization. Gaussian kernel $[\mK_\mZ]_{ij} = \exp(-\|\vz_i-\vz_j\|_2^2)$, or heavy-tailed Student-t kernel $[\mK_\mZ]_{ij} = (1+\|\vz_i-\vz_j\|_2^2)^{-1}$, are typical choices \cite{van2008visualizing}. We also emphasize that one can retrieve the UMAP objective \cite{mcinnes2018umap} from \cref{eq:DR_criterion} using the binary cross-entropy loss. As described in \cite{van2022probabilistic} from a probabilistic point of view, all these objectives can be derived from a common Markov random field model with various graph priors.
+\begin{remark}
+The usual formulations of neighbor embedding methods rely on the loss $L(x,y) = x \log(x/y)$. However, due to the normalization, the total mass $\sum_{ij} [\mC_Z(\mZ)]_{ij}$ is constant (often equal to $1$) in all of the cases mentioned above. Thus the minimization in $\mZ$ with the $L_{\KL}$ formulation is equivalent.
+\end{remark}
+
+\paragraph{Hyperbolic geometry.} The presented DR methods can also be extended to incorporate non-Euclidean geometries. Hyperbolic spaces \cite{Chami21, Fan_2022_CVPR, Guo22, Lin23} are of particular interest as they can capture hierarchical structures more effectively than Euclidean spaces and mitigate the curse of dimensionality by producing representations with lower distortion rates. 
+For instance, \citet{Guo22} adapted t-SNE by using the Poincaré distance and by changing the Student's t-distribution with a more general hyperbolic Cauchy distribution.  Notions of projection subspaces can also be adapted, \eg \citet{Chami21} use horospheres as one-dimensional subspaces. 
+% \begin{remark}
+
+% 	% where data projections have maximal variances in PCA-like methods.
+% \end{remark}
+% }
+
+\paragraph{Entropic Affinities and SNE/t-SNE.}
+Entropic affinities (EAs) were first introduced in the
+seminal paper \emph{Stochastic Neighbor Embedding} (SNE) 
+\cite{hinton2002stochastic}. It consists in normalizing each row $i$ of a distance matrix by a
+bandwidth parameter $\varepsilon_i$ such that the distribution associated with each row of the corresponding stochastic (\ie row-normalized) Gaussian affinity has a fixed entropy. The value of this entropy, whose exponential is called
+the \emph{perplexity}, is then the only hyperparameter left to tune and has
+an intuitive interpretation as the number of effective neighbors of each point \cite{vladymyrov2013entropic}.
+EAs are notoriously used to encode pairwise relations in a high-dimensional space for the DR algorithm t-SNE \cite{van2008visualizing}, among other DR methods including \cite{carreira2010elastic}. t-SNE is increasingly popular in many applied fields \cite{kobak2019art,
+melit2020unsupervised} mostly due to its ability to represent clusters in the data \cite{linderman2019clustering, JMLR:v23:21-0524}. Nonetheless, one major flaw of EAs is that they are inherently directed and often require post-processing symmetrization.
+
+\paragraph{Entropic Affinities (EAs).} Another frequently used approach to generate affinities from $\mathbf{C} \in \mathcal{D}$ is to employ \emph{entropic affinities}  \cite{hinton2002stochastic}. The main idea is to consider \emph{adaptive} kernel bandwidths $(\varepsilon^\star_i)_{i \in \integ{n}}$ to capture finer structures in the data compared to constant bandwidths \cite{van2018recovering}. Indeed, EAs rescale distances to account for the varying density across regions of the dataset.
+
+Given $\xi \in \integ{n-1}$, the goal of EAs is to build a Gaussian Markov chain transition matrix $\Pb^{\mathrm{e}}$ with prescribed entropy as
+\begin{equation}
+\begin{split}
+    \forall i, \: &\forall j, \: P^{\mathrm{e}}_{ij} = \frac{\exp{(-C_{ij}/\varepsilon^\star_i)}}{\sum_\ell \exp{(-C_{i\ell}/\varepsilon^\star_i)}} \\
+    &\text{with} \:\: \varepsilon^\star_i \in \mathbb{R}^*_+ \:\: \text{s.t.} \: \operatorname{H}(\Pb^{\mathrm{e}}_{i:}) = \log{\xi} + 1\,. \label{eq:entropic_affinity_pb}
+\end{split}\tag{EA}
+\end{equation}
+The hyperparameter $\xi$, which is also known as \emph{perplexity}, can be interpreted as the effective number of neighbors for each data point \cite{vladymyrov2013entropic}. Indeed, a perplexity of $\xi$ means that each row of $\Pb^{\mathrm{e}}$ (which is a discrete probability since $\Pb^{\mathrm{e}}$ is row-wise stochastic) has the same entropy as a uniform distribution over $\xi$ neighbors. Therefore, it provides the practitioner with an interpretable parameter specifying which scale of dependencies the affinity matrix should faithfully capture. In practice, a root-finding algorithm is used to find the bandwidth parameters $(\varepsilon_i^\star)_{i \in \integ{n}}$ that satisfy the constraints \cite{vladymyrov2013entropic}. Hereafter, with a slight abuse of language, we call $e^{\operatorname{H}(\Pb_{i:})-1}$ the perplexity of the point $i$.
+
+\paragraph{Dimension Reduction with SNE/t-SNE.} One of the main applications of EAs
+is the DR algorithm \texttt{SNE} \cite{hinton2002stochastic}. We
+denote by $\C_\X = \left(\|\X_{i:}-\X_{j:}\|_2^2\right)_{ij}$ and $\C_\Z =
+\left(\|\Z_{i:}-\Z_{j:}\|_2^2\right)_{ij}$ the cost matrices derived from the
+rows (\ie the samples) of $\X$ and $\Z$ respectively. \texttt{SNE} focuses on
+minimizing in the latent coordinates $\Z \in \R^{n \times q}$ the objective
+$\operatorname{KL}(\Pb^\mathrm{e} | \Qb_\Z)$ where $\Pb^\mathrm{e}$ solves
+(\ref{eq:entropic_affinity_pb}) with cost $\C_\X$ and $[\Qb_\Z]_{ij} = \exp(-[\C_\Z]_{ij})/(\sum_{\ell}\exp(-[\C_\Z]_{i\ell}))$. In the seminal paper \citep{van2008visualizing}, a newer proposal for a \emph{symmetric} version was presented, which has since replaced \texttt{SNE} in practical applications. Given a symmetric
+normalization for the similarities in latent space $[\widetilde{\Qb}_\Z]_{ij} = \exp(-[\C_\Z]_{ij})/\sum_{\ell,t}\exp(-[\C_\Z]_{\ell t})$ it consists in solving 
+\begin{align}\label{symmetrization_tsne}
+    \min_{\Z \in \R^{n \times q}} \: \operatorname{KL}(\overline{\Pb^{\mathrm{e}}} | \widetilde{\Qb}_\Z) \quad \text{where} \quad \overline{\Pb^{\mathrm{e}}} = \frac{1}{2}(\Pb^{\mathrm{e}} + \Pb^{\mathrm{e} \top}) \,.
+\tag{Symmetric-SNE}
+\end{align}
+In other words, the affinity matrix $\overline{\Pb^{\mathrm{e}}}$ is the Euclidean projection of $\Pb^{\mathrm{e}}$ on the space of symmetric matrices $\mathcal{S}$.
+
+\begin{proposition}
+    $\overline{\Pb^{\mathrm{e}}} = \operatorname{Proj}^{\ell_2}_{\mathcal{S}}(\Pb^{\mathrm{e}}) = \argmin_{\Pb \in \mathcal{S}}\| \Pb - \Pb^{\mathrm{e}} \|_2$. 
+\end{proposition}
+
+\begin{proof}
+For the above problem, the Lagrangian takes the form, with $\W \in \R^{n \times n}$,
+\begin{equation}
+\mathcal{L}(\Pb, \W) = \| \Pb - \K \|_2^2 +\langle \W, \Pb -\Pb^{\top} \rangle \:.
+\end{equation}
+Cancelling the gradient of $\mathcal{L}$ with respect to $\Pb$ gives $2(\Pb^\star - \K) + \W - \W^\top = \bm{0}$. Thus $\Pb^\star = \K + \frac{1}{2} \left(\W^\top - \W \right)$. Using the symmetry constraint on $\Pb^\star$ yields $\Pb^\star = \frac{1}{2} \left(\K + \K^\top \right)$.
+Hence we have:
+\begin{equation}
+\argmin_{\Pb \in \mathcal{S}} \: \| \Pb -  \K \|_2^2 = \frac{1}{2} \left(\K + \K^\top \right) \:.
+\end{equation}
+\end{proof}
+
+
+Instead of the Gaussian kernel, the popular extension t-SNE \citep{van2008visualizing} considers a different distribution in the latent space $[\widetilde{\Qb}_\Z]_{ij} = (1 + [\C_{\Z}]_{ij})^{-1}/\sum_{\ell,t}(1 +
+[\C_{\Z}]_{\ell t})^{-1}$. In this formulation, $\widetilde{\Qb}_\Z$ is a joint
+Student $t$-distribution that accounts for crowding effects: a relatively small
+distance in a high-dimensional space can be accurately represented by a
+significantly greater distance in the low-dimensional space.  

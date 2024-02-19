@@ -1,13 +1,14 @@
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {5.1}Introduction}{\reset@font\mtcSfont 38}{section.5.1}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode A distributional perspective.}{\reset@font\mtcPfont 38}{paragraph*.44}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Our contributions.}{\reset@font\mtcPfont 39}{paragraph*.45}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {5.2}Dimensionality Reduction as OT}{\reset@font\mtcSfont 40}{section.5.2}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Gromov-Monge interpretation of DR.}{\reset@font\mtcPfont 40}{paragraph*.46}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode DR as GW Minimization.}{\reset@font\mtcPfont 41}{paragraph*.47}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {5.3}Distributional Reduction}{\reset@font\mtcSfont 42}{section.5.3}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.3.1}Distributional Reduction Problem}{\reset@font\mtcSSfont 42}{subsection.5.3.1}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Clustering with DistR.}{\reset@font\mtcPfont 43}{paragraph*.48}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode A semi-relaxed objective.}{\reset@font\mtcPfont 43}{paragraph*.49}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.3.2}Clustering Properties }{\reset@font\mtcSSfont 43}{subsection.5.3.2}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.3.3}Computation}{\reset@font\mtcSSfont 45}{subsection.5.3.3}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.3.4}Related Work}{\reset@font\mtcSSfont 45}{subsection.5.3.4}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {5.1}Introduction}{\reset@font\mtcSfont 40}{section.5.1}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Two sides of the same coin.}{\reset@font\mtcPfont 40}{paragraph*.46}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode A distributional perspective.}{\reset@font\mtcPfont 41}{paragraph*.47}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Our contributions.}{\reset@font\mtcPfont 42}{paragraph*.48}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {5.2}Dimensionality Reduction as OT}{\reset@font\mtcSfont 42}{section.5.2}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Gromov-Monge interpretation of DR.}{\reset@font\mtcPfont 42}{paragraph*.49}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode DR as GW Minimization.}{\reset@font\mtcPfont 43}{paragraph*.50}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {5.3}Distributional Reduction}{\reset@font\mtcSfont 44}{section.5.3}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.3.1}Distributional Reduction Problem}{\reset@font\mtcSSfont 45}{subsection.5.3.1}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Clustering with DistR.}{\reset@font\mtcPfont 45}{paragraph*.51}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode A semi-relaxed objective.}{\reset@font\mtcPfont 45}{paragraph*.52}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.3.2}Clustering Properties }{\reset@font\mtcSSfont 46}{subsection.5.3.2}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.3.3}Computation}{\reset@font\mtcSSfont 47}{subsection.5.3.3}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {5.3.4}Related Work}{\reset@font\mtcSSfont 47}{subsection.5.3.4}}

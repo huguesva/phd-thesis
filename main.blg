@@ -4,6 +4,7 @@ The top-level auxiliary file: main.aux
 The style file: plainnat.bst
 Database file #1: biblio.bib
 Warning--can't use both volume and number fields in ezuz2017gwcnn
+Warning--empty journal in gangbo1996geometry
 Warning--empty chapter and pages in Hastie2009
 Warning--empty journal in krizhevsky2009learning
 Warning--there's a number but no series in kruskal1978multidimensional
@@ -11,45 +12,45 @@ Warning--empty journal in Lyu2023bmm
 Warning--empty journal in nene1996columbia
 Warning--empty journal in paszke2017automatic
 Warning--empty booktitle in zhai2023sigmareparam
-You've used 137 entries,
+You've used 142 entries,
             2773 wiz_defined-function locations,
-            1347 strings with 29648 characters,
-and the built_in function-call counts, 70531 in all, are:
-= -- 6268
-> -- 4419
-< -- 105
-+ -- 1494
-- -- 1353
-* -- 5772
-:= -- 10713
-add.period$ -- 444
-call.type$ -- 137
-change.case$ -- 842
-chr.to.int$ -- 133
-cite$ -- 282
-duplicate$ -- 3172
-empty$ -- 5530
-format.name$ -- 1565
-if$ -- 14903
+            1373 strings with 30241 characters,
+and the built_in function-call counts, 72594 in all, are:
+= -- 6458
+> -- 4491
+< -- 114
++ -- 1520
+- -- 1374
+* -- 5900
+:= -- 11012
+add.period$ -- 459
+call.type$ -- 142
+change.case$ -- 863
+chr.to.int$ -- 138
+cite$ -- 293
+duplicate$ -- 3292
+empty$ -- 5725
+format.name$ -- 1595
+if$ -- 15357
 int.to.chr$ -- 5
 int.to.str$ -- 1
-missing$ -- 144
-newline$ -- 702
-num.names$ -- 554
-pop$ -- 1722
+missing$ -- 150
+newline$ -- 727
+num.names$ -- 574
+pop$ -- 1773
 preamble$ -- 1
-purify$ -- 714
+purify$ -- 731
 quote$ -- 0
-skip$ -- 2526
+skip$ -- 2623
 stack$ -- 0
-substring$ -- 2630
-swap$ -- 480
-text.length$ -- 42
+substring$ -- 2710
+swap$ -- 505
+text.length$ -- 46
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 1462
-warning$ -- 8
-while$ -- 608
+type$ -- 1512
+warning$ -- 9
+while$ -- 630
 width$ -- 0
-write$ -- 1800
-(There were 8 warnings)
+write$ -- 1864
+(There were 9 warnings)

@@ -1,0 +1,30 @@
+\subsection{Optimal Transport Across Spaces : Gromov-Wasserstein Formulation}
+
+We review in this section the Gromov-Wasserstein formulation of OT aiming at comparing distributions ‘‘across spaces''.
+
+It is usually impossible to define a meaningful transportation cost from two spaces $\mathcal{X}$ and $\mathcal{Z}$ that are not part of a common ground metric space
+This occurs when considering ambient Euclidean spaces of different dimensions \ie $\mathcal{X} \subseteq \R^p$ and $\mathcal{Z} \subseteq \R^d$ with $p \neq d$ which is precisely the context of dimensionality reduction.
+We first introduce the general GW problem before highlighting its utility to compare distributions in incomparable spaces.
+
+\paragraph{Gromov-Wasserstein (GW).} The GW framework \cite{memoli2011gromov,sturm2012space} comprises a collection of OT methods designed to compare distributions by examining the pairwise relations \emph{within each domain}. For two matrices $\mC \in \R^{N \times N}$, $\overline{\mC} \in \R^{n \times n}$, and weights $\vh \in \Sigma_N, \overline{\vh} \in \Sigma_n$, the GW discrepancy is defined as
+\begin{equation}
+\label{eq:gw_pb} 
+\tag{GW}
+\begin{split}
+	&\GW_L (\mC, \overline{\mC}, \vh, \overline{\vh}) \coloneqq \min_{\mT \in \gU(\vh, \overline{\vh})} E_L(\mC, \overline{\mC}, \mT)\,, \\
+	&\text{where} \quad E_L(\mC, \overline{\mC}, \mT) \coloneqq \sum_{ijkl}  L(C_{ij}, \overline{C}_{kl}) T_{ik} T_{jl}\,,
+\end{split}
+\end{equation}
+% \end{align}
+% \begin{align*}
+%\sum_{\substack{(i,j) \in \integ{N}^2 \\ (k,l) \in \integ{n}^2}}
+%where  $L:\R \times \R \rightarrow \R_+$ is a loss 
+% \footnote[1]{our definition of $L_{\mathrm{KL}}$ differs from \cite{peyre2016gromov} where the generalized Kullback-Leibler divergence is considered.}
+and $\gU(\vh, \overline{\vh}) = \left\{ \mT \in \R_+^{N \times n} : \mT \bm{1}_n = \vh, \mT^\top \bm{1}_N = \overline{\vh} \right\}$ is the set of couplings between $\vh$ and $\overline{\vh}$.
+In this formulation, both pairs $(\mC, \vh)$ and $(\overline{\mC}, \overline{\vh})$ can be interpreted as graphs with corresponding connectivity matrices $\mC, \overline \mC$, and where nodes are weighted by histograms $\vh, \overline \vh$. \Cref{eq:gw_pb} is thus a \emph{quadratic problem} (in $\mT$) which consists in finding a soft-assignment matrix $\mT$ that aligns the nodes of the two graphs in a way that preserves their pairwise connectivities. 
+
+From a distributional perspective, GW can also be viewed as a distance between distributions that do not belong to the same metric space. For two discrete probability distributions $\mu_X = \sum_{i=1}^N [\vh_X]_i \delta_{\vx_i} \in \gP_N(\R^{p}), \mu_Z =\sum_{i=1}^n [\vh_Z]_i \delta_{\vz_i} \in \gP_n(\R^d)$ and pairwise similarity matrices $\simiX(\mX)$ and $\simi(\mZ)$ associated with the supports $\mX = (\vx_1, \cdots, \vx_n)^\top$ and $\mZ = (\vz_1, \cdots, \vz_n)^\top$, the quantity $\GW_L (\simiX(\mX), \simi(\mZ), \vh_X, \vh_Z)$ is a measure of dissimilarity or discrepancy between $\mu_X, \mu_Z$. Specifically, when $L=L_2$, and $\simiX(\mX), \simi(\mZ)$ are pairwise distance matrices, GW defines a proper distance between $\mu_X$ and $\mu_Z$ with respect to measure preserving isometries\footnote{With weaker assumptions on $\simiX, \simi$, GW defines a pseudo-metric \textit{w.r.t.} a different notion of isomorphism \cite{chowdhury2019gromov}. See Appendix \ref{sec:srGW_divergence} for more details.} \cite{memoli2011gromov}. 
+
+Due to its versatile properties, notably in comparing distributions over different domains,  the GW problem has found many applications in machine learning, \textit{e.g.,} for 3D meshes alignment \cite{solomon2016entropic,ezuz2017gwcnn}, NLP \cite{alvarez2018gromov}, (co-)clustering  \cite{peyre2016gromov, redko2020co}, single-cell analysis \cite{demetci2020gromov}, neuroimaging \cite{thual2022aligning}, graph representation learning \cite{xu2020gromov, vincent2021online, liu2022robust, vincent2022template, pmlr-v202-zeng23c} and partitioning \cite{xu2019scalable, chowdhury2021generalized}.
+
+In this work, we leverage the GW discrepancy to extend classical DR approaches, framing them as the projection of a distribution onto a space of lower dimensionality. 

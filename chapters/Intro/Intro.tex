@@ -100,6 +100,13 @@
 	% \item $\uD \odot \vD = (\uD_i \vD_i) \in \RR^n$ for $(\uD, \vD) \in (\RR^n)^2$.
 \end{itemize}
 
+\subsection*{Acronyms.}
+\begin{itemize}
+	\item DR: Dimensionality Reduction.
+	\item OT: Optimal Transport.
+	\item GW: Gromov-Wasserstein.
+\end{itemize}
+
 \paragraph{Notations.} $\integ{n}$ denotes the set $\{1,...,n\}$. $\exp$ and $\log$ applied to vectors/matrices are taken element-wise. $\bm{1}
 = (1,...,1)^\top$ is the vector of $1$. $\langle \cdot, \cdot \rangle$ is the standard inner product for matrices/vectors. $\mathcal{S}$ is the space of $n \times n$ symmetric matrices. $\mathbf{P}_{i:}$ denotes the $i$-th row of a matrix $\Pb$. $\odot$ (\textit{resp.} $\oslash$) stands for element-wise multiplication (\textit{resp.} division) between vectors/matrices. For $\bm{\alpha}, \bm{\beta} \in \R^n, \bm{\alpha} \oplus \bm{\beta} \in \R^{n \times n}$ is $(\alpha_i + \beta_j)_{ij}$. The entropy of $\p \in \mathbb{R}^{n}_+$ is\footnote{With the convention $0 \log 0 = 0$.} $\operatorname{H}(\p) = -\sum_{i} p_i(\log(p_i)-1) = -\langle \pb, \log \pb - \bm{1} \rangle$. The Kullback-Leibler divergence between two matrices $\Pb, \Qb$ with nonnegative entries such that $Q_{ij} = 0 \implies P_{ij}=0$ is $\KL(\Pb | \Qb) = \sum_{ij} P_{ij}\left(\log(\frac{P_{ij}}{Q_{ij}})-1\right) = \langle \Pb, \log \left(\Pb \oslash \Qb \right) - \bm{1}\bm{1}^\top \rangle$.
 

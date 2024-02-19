@@ -12,6 +12,14 @@
 	\vskip -0.3in
 \end{figure}
 
+\paragraph{Two sides of the same coin.} As a matter of fact, methods from both families share many similitudes, %among which is
+including the construction of a similarity graph between input samples. In clustering, many popular approaches design a reduced or coarsened version of the initial similarity graph while preserving some of its spectral properties~\cite{von2007tutorial, schaeffer2007graph}. 
+%attributes related to the graph spectrum 
+In DR, the goal is to solve the inverse problem of finding low-dimensional embeddings that generate a similarity graph close to the %initial
+one computed from input data points \cite{ham2004kernel,hinton2002stochastic}.
+%With so many similarities
+Our work builds on these converging viewpoints and addresses the following question: \emph{can DR and clustering  be expressed in a common and unified framework ?}
+
 \paragraph{A distributional perspective.} To answer this question, we
 propose to look at both problems from a distributional point of view, treating the data as an empirical probability distribution
 $\mu=\frac{1}{N}\sum_i\delta_{\vx_i}$. 

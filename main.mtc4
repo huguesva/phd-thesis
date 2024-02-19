@@ -1,16 +1,16 @@
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.1}Introduction}{\reset@font\mtcSfont 26}{section.4.1}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Contributions.}{\reset@font\mtcPfont 26}{paragraph*.26}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.2}Symmetric Entropic Affinities}{\reset@font\mtcSfont 27}{section.4.2}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.2.1}Entropic Affinities as Entropic Optimal Transport}{\reset@font\mtcSSfont 27}{subsection.4.2.1}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.2.2}Symmetric Entropic Affinity Formulation}{\reset@font\mtcSSfont 28}{subsection.4.2.2}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Numerical optimization.}{\reset@font\mtcPfont 30}{paragraph*.29}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.3}Optimal Transport for Dimension Reduction with SNEkhorn}{\reset@font\mtcSfont 31}{section.4.3}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode SNEkhorn's objective.}{\reset@font\mtcPfont 31}{paragraph*.30}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Heavy-tailed kernel in latent space.}{\reset@font\mtcPfont 31}{paragraph*.31}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Inference.}{\reset@font\mtcPfont 32}{paragraph*.32}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Related work.}{\reset@font\mtcPfont 32}{paragraph*.33}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.4}Numerical experiments}{\reset@font\mtcSfont 32}{section.4.4}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Real-world datasets.}{\reset@font\mtcPfont 34}{paragraph*.37}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Spectral Clustering.}{\reset@font\mtcPfont 35}{paragraph*.39}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Dimension Reduction.}{\reset@font\mtcPfont 36}{paragraph*.41}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.5}Conclusion}{\reset@font\mtcSfont 36}{section.4.5}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.1}Introduction}{\reset@font\mtcSfont 28}{section.4.1}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Contributions.}{\reset@font\mtcPfont 29}{paragraph*.28}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.2}Symmetric Entropic Affinities}{\reset@font\mtcSfont 29}{section.4.2}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.2.1}Entropic Affinities as Entropic Optimal Transport}{\reset@font\mtcSSfont 30}{subsection.4.2.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.2.2}Symmetric Entropic Affinity Formulation}{\reset@font\mtcSSfont 31}{subsection.4.2.2}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Numerical optimization.}{\reset@font\mtcPfont 32}{paragraph*.31}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.3}Optimal Transport for Dimension Reduction with SNEkhorn}{\reset@font\mtcSfont 33}{section.4.3}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode SNEkhorn's objective.}{\reset@font\mtcPfont 33}{paragraph*.32}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Heavy-tailed kernel in latent space.}{\reset@font\mtcPfont 34}{paragraph*.33}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Inference.}{\reset@font\mtcPfont 34}{paragraph*.34}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Related work.}{\reset@font\mtcPfont 34}{paragraph*.35}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.4}Numerical experiments}{\reset@font\mtcSfont 34}{section.4.4}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Real-world datasets.}{\reset@font\mtcPfont 36}{paragraph*.39}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Spectral Clustering.}{\reset@font\mtcPfont 37}{paragraph*.41}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Dimension Reduction.}{\reset@font\mtcPfont 38}{paragraph*.43}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.5}Conclusion}{\reset@font\mtcSfont 38}{section.4.5}}
