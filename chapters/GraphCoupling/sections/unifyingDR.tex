@@ -54,8 +54,8 @@ and the symmetrized objective of t-SNE \cite{maaten2008tSNE} is recovered.
 \paragraph{LargeVis.}
 Now choosing $\mathcal{P}_{X} = D$ and $\mathcal{P}_{Z} = B$, one can also notice that $\Qb^{B} = \left( [\Kb_Z]_{ij} / (1+[\Kb_Z]_{ij}) \right)_{(i,j) \in \integ{n}^2}$ is symmetric. With this at hand the limit cross-entropy reads
 \begin{align*}
-    \mathcal{H}_{D,B} = - \sum_{i \neq j} P^{D}_{ij} \log Q^{B}_{ij} + \left(1 - P^{D}_{ij} \right) \log\left(1-Q^{B}_{ij} \right)
-    = - \sum_{i < j} \overline{P}^{D}_{ij} \log Q^{B}_{ij} + \left(2-\overline{P}^{D}_{ij}\right) \log (1- Q^{B}_{ij})
+    \mathcal{H}_{D,B} &= - \sum_{i \neq j} P^{D}_{ij} \log Q^{B}_{ij} + \left(1 - P^{D}_{ij} \right) \log\left(1-Q^{B}_{ij} \right) \\
+    &= - \sum_{i < j} \overline{P}^{D}_{ij} \log Q^{B}_{ij} + \left(2-\overline{P}^{D}_{ij}\right) \log (1- Q^{B}_{ij})
 \end{align*}
 which is the objective of LargeVis \cite{tang2016visualizing}.
 

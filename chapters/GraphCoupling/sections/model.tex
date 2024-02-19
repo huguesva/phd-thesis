@@ -1,3 +1,26 @@
+\section{PCA as Graph Coupling}
+
+As we argue that the inability of SNE-like methods to reproduce the coarse-grain dependencies of the input in the latent space is due to the degeneracy of the conditional (\ref{eq:proba_perp}), a natural solution would be to consider graphical models that are well defined and integrable on the entire definition spaces of $\Xb$ and $\Zb$. For simplicity, we consider the Gaussian model and leave the extension to other kernels for future works. Note that in this case, integrability translates into the precision matrix being full-rank. As we see with the following, the natural extension of our framework to such models leads to a well-established PCA algorithm. In the following, for a continuous variable $\bm{\Theta}_{Z}$, $\mathbb{P}(\bm{\Theta}_{Z} = \cdot)$ denotes its density.
+
+
+\begin{restatable}{theorem}{PCAgraphcoupling}
+\label{PCA_graph_coupling}
+Let $\nu \geq n$,  $\bm{\Theta}_{X} \sim \mathcal{W}(\nu, \bm{I}_n)$ and $\bm{\Theta}_{Z} \sim \mathcal{W}(\nu + p - q, \bm{I}_n)$. Assume that $\bm{\Theta}_{X}$ and $\bm{\Theta}_{Z}$ structure the rows of respectively $\Xb$ and $\Zb$ such that: 
+\begin{align}
+    \mathrm{vec}(\Xb) | \bm{\Theta}_{X} &\sim \mathcal{N}(\bm{0}, \bm{\Theta}_{X}^{-1} \otimes \bm{I}_p), \label{eq:X_given_theta} \\
+    \mathrm{vec}(\Zb) | \bm{\Theta}_{Z} &\sim \mathcal{N}(\bm{0}, \bm{\Theta}_{Z}^{-1} \otimes \bm{I}_q) \label{eq:Z_given_theta} \:.
+\end{align}
+Then the solution to the precision coupling problem:
+\begin{align*}
+    \min_{\Zb \in \mathbb{R}^{n \times q}} -\mathbb{E}_{\bm{\Theta}_{X} | \Xb}\left[\log \mathbb{P}(\bm{\Theta}_{Z}=\bm{\Theta}_{X}|\Zb)\right]
+\end{align*}
+is a PCA embedding of $\Xb$ with $q$ components.
+\end{restatable}
+
+We now highlight the parallels with the previous construction done for neighbor embedding methods. First note that the multivariate Gaussian with full-rank precision is inherently a pairwise MRF \citep{rue2005gaussian}. When choosing the Gaussian kernel for neighbor embedding methods, we saw that the graph Laplacian $\bm{L}_{X}$ of $\Wb_{X}$ was playing the role of the among-row precision matrix, as we had $\Xb | \Wb_{X} \sim \mathcal{N}(\bm{0}, \bm{L}_{X}^{-1} \otimes \bm{I}_p)$ (equation \ref{eq:gaussian_kernel}). Recall that the latter always has a null space which is spanned by the CC indicator vectors of $\Wb$ (\cref{sec:laplacian_prop}). Here, the key difference is that we impose a full-rank constraint on the precision $\bm{\Theta}$. Concerning the priors, we choose the ones that are conjugate to the conditionals (\ref{eq:X_given_theta}) and (\ref{eq:Z_given_theta}), as previously done when constructing the prior for neighbor embedding methods (definition \ref{def:prior_W}). Hence in the full-rank setting, the prior simply amounts to a Wishart distribution denoted by $\mathcal{W}$.
+
+The above theorem further highlights the flexibility and generality of the graph coupling framework. Unlike usual constructions of PCA or probabilistic PCA \citep{tipping1999probabilistic}, in the above the linear relation between $\Xb$ and $\Zb$ is recovered by solving the graph coupling problem and not explicitly stated beforehand. To the best of our knowledge, it is the first time such a link has been uncovered between PCA and SNE-like methods. In contrast with the latter, PCA is well-known for its ability to preserve global structure while being significantly less efficient at identifying clusters \citep{anowar2021conceptual}. Therefore, as suspected in \cref{sec:interpretations}, the degeneracy of the conditional distribution given the graph is key to determining the distance preservation properties of the embeddings. We propose in \cref{sec:hierarchical_modelling} to combine both graph coupling approaches to strike a balance between global and local structure preservation.
+
 \section {Shift-Invariant Pairwise MRF to Model Row Dependencies} \label{sec:graph_structure}
 
 We start by defining the distribution of the observations given a graph. The latter takes the form of a pairwise MRF model which as we show is improper (\textit{i.e.}\ not integrable on $\mathbb{R}^{n \times p}$) when shift-invariant kernels are used. We consider a fixed directed graph $\Wb \in \mathcal{S}_{W}$ where:
@@ -7,7 +30,7 @@ Throughout, $(E, \mathcal{B}(E), \lambda_E)$ denotes a measure space where $\mat
 \subsection{Graph Laplacian Null Space}\label{sec:laplacian_prop}
 A central element in our construction is the graph Laplacian linear map, defined as follows, where $\mathcal{S}^n_+(\mathbb{R})$ is the set of positive semidefinite matrices.
 \begin{definition}\label{graph_laplacian}
-The graph Laplacian operator is the map $L \colon \mathbb{R}_+^{n \times n} \to \mathcal{S}^n_+(\mathbb{R})$ such that
+The graph Laplacian operator is the map $L \colon \mathbb{R}_+^{n \times n} \cap \mathcal{S}^n(\R) \to \mathcal{S}^n_+(\mathbb{R})$ such that
 $$\text{for } (i,j) \in \integ{n}^2, \quad L(\Wb)_{ij} = \left\{
 \begin{array}{ll}
     - W_{ij} & \text{if } i \neq j \\
@@ -16,11 +39,13 @@ $$\text{for } (i,j) \in \integ{n}^2, \quad L(\Wb)_{ij} = \left\{
 \right. $$
 \end{definition}
 With an abuse of notation, let $\Lb = L(\overline{\Wb})$ where $\overline{\Wb} = \Wb + \Wb^\top$. Let $(C_1,...,C_{R})$ be a partition of $\integ{n}$ (\textit{i.e.}\ the set $\{1,2,...,n\}$) corresponding to the connected components (CCs) of $\overline{\Wb}$. As well known in spectral graph theory \citep{Chung97}, the null space of $\Lb$ is spanned by the orthonormal vectors $\{\Ub_{r}\}_{r \in [R]}$ such that for $r \in [R]$,
-$\Ub_{r} = \left(n_r^{-1/2} \ind_{i \in C_r}\right)_{i \in \integ{n}}$ with $n_r = \operatorname{Card}(C_r)$. By the spectral theorem, $\Ub_{[R]}$ can be completed such that $\Lb = \bm{U \Lambda U^\top}$ where $\Ub = (\Ub_1, ..., \Ub_n)$ is orthogonal and $\bm{\Lambda} = \operatorname{diag}((\lambda_i)_{i \in \integ{n}})$ with $0 = \lambda_1 = ... = \lambda_R < \lambda_{R+1} \leq ... \leq \lambda_n$. In the following, the data is split into two parts: $\Xb_{M}$, the orthogonal projection of $\Xb$ on $\mathcal{S}_{M} = (\ker \Lb) \otimes \mathbb{R}^p$, and $\Xb_{C}$, the projection on $\mathcal{S}_{C} = (\ker \Lb)^{\perp} \otimes \mathbb{R}^p$. For $i \in \integ{n}$, $\Xb_{M,i} = \sum_{r \in [R]} n_r^{-1} \ind_{i \in C_r}\sum_{\ell \in C_r} \Xb_{\ell} $ hence $\Xb_{M}$ stands for the empirical means of $\Xb$ on CCs, thus modelling the CC positions, while $\Xb_{C} = \Xb - \Xb_{M}$ is CC-wise centered, thus modeling the relative positions of the nodes within CCs. We now introduce the probability distribution of these variables.
+$\Ub_{r} = \left(n_r^{-1/2} \ind_{i \in C_r}\right)_{i \in \integ{n}}$ with $n_r = \operatorname{Card}(C_r)$. By the spectral theorem, $\Ub_{[R]}$ can be completed such that $\Lb = \bm{U \Lambda U^\top}$ where $\Ub = (\Ub_1, ..., \Ub_n)$ is orthogonal and $\bm{\Lambda} = \operatorname{diag}((\lambda_i)_{i \in \integ{n}})$ with $0 = \lambda_1 = ... = \lambda_R < \lambda_{R+1} \leq ... \leq \lambda_n$. 
+
+In what follows, the data is split into two parts: $\Xb_{M}$, the orthogonal projection of $\Xb$ on $\mathcal{S}_{M} = (\ker \Lb) \otimes \mathbb{R}^p$, and $\Xb_{C}$, the projection on $\mathcal{S}_{C} = (\ker \Lb)^{\perp} \otimes \mathbb{R}^p$. For $i \in \integ{n}$, $\Xb_{M,i} = \sum_{r \in [R]} n_r^{-1} \ind_{i \in C_r}\sum_{\ell \in C_r} \Xb_{\ell} $ hence $\Xb_{M}$ stands for the empirical means of $\Xb$ on CCs, thus modelling the CC positions, while $\Xb_{C} = \Xb - \Xb_{M}$ is CC-wise centered, thus modeling the relative positions of the nodes within CCs. We now introduce the probability distribution of these variables.
 
 \subsection{Pairwise MRF and Shift-Invariances}\label{sec:within_CC}
 
-In this work, the dependency structure among rows of the data is governed by a graph. The strength of the connection between two nodes is given by a symmetric function $k: \mathbb{R}^p \to \mathbb{R}_+$. We consider the following pairwise MRF unnormalized density function:
+In this work, the dependency structure among rows of the data is governed by a graph. The strength of the connection between two nodes is given by a symmetric function $k: \mathbb{R}^p \to \mathbb{R}_+$ \hva{reformuler symmetric}. We consider the following pairwise MRF unnormalized density function:
 \begin{align}\label{eq:unnormalized_MRF}
   f_{k} \colon (\Xb,\Wb) &\mapsto \prod_{(i,j) \in \integ{n}^2} k(\mathbf{x}_{i} - \mathbf{x}_{j})^{W_{ij}} \: .
 \end{align}
@@ -54,7 +79,7 @@ Kernels may have node-specific bandwidths $\bm{\tau}$, set during a pre-processi
 \subsection{Uninformative Model for CC-wise Means}
 
 We showed that the MRF (\ref{eq:unnormalized_MRF}) is only integrable on $\mathcal{S}_{C}$, the definition of which depends on the connectivity structure of $\Wb$. As we now demonstrate, the latter MRF can be seen as a limit of proper distributions on $\mathbb{R}^{n \times p}$, see \textit{e.g.}\ \cite{rue2005gaussian} for a similar construction in the Gaussian case. 
-We introduce the Borel function $f^{\varepsilon}(\cdot, \Wb) \colon \mathbb{R}^{n \times p} \to \mathbb{R}_+$ for $\varepsilon > 0$ such that for all $\Xb \in \mathbb{R}^{n \times p}$, $f^{\varepsilon}(\Xb, \Wb) = f^{\varepsilon}(\Xb_{M}, \Wb)$. To allow $f^{\varepsilon}$ to become arbitrarily non-informative, we assume that for all $\Wb \in \mathcal{S}_{W}$, $f^\varepsilon(\cdot, \Wb)$ is $\lambda_{\mathcal{S}_{M}{6pt}}$-integrable for all $\varepsilon \in \mathbb{R}^*_+$ and $f^{\varepsilon}(\cdot, \Wb) \xrightarrow[\varepsilon \to 0]{} 1$ almost everywhere.
+We introduce the Borel function $f^{\varepsilon}(\cdot, \Wb) \colon \mathbb{R}^{n \times p} \to \mathbb{R}_+$ for $\varepsilon > 0$ such that for all $\Xb \in \mathbb{R}^{n \times p}$, $f^{\varepsilon}(\Xb, \Wb) = f^{\varepsilon}(\Xb_{M}, \Wb)$. To allow $f^{\varepsilon}$ to become arbitrarily non-informative, we assume that for all $\Wb \in \mathcal{S}_{W}$, $f^\varepsilon(\cdot, \Wb)$ is $\lambda_{\mathcal{S}_{M}}$-integrable for all $\varepsilon \in \mathbb{R}^*_+$ and $f^{\varepsilon}(\cdot, \Wb) \xrightarrow[\varepsilon \to 0]{} 1$ almost everywhere.
 We now define the conditional distribution on $(\mathcal{S}_{M}, \mathcal{B}(\mathcal{S}_{M}))$ as follows:
 \begin{align}\label{eq:proba_parallel}
      \mathbb{P}^{\varepsilon}(d\Xb_{M}| \Wb) = \mathcal{C}^{\varepsilon}(\Wb)^{-1} f^{\varepsilon}(\Xb_{M}, \Wb) \lambda_{\mathcal{S}_{M}}(d\Xb_{M})

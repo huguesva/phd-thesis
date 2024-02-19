@@ -1,0 +1,22 @@
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.1}Introduction}{\reset@font\mtcSfont 13}{section.3.1}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Outline.}{\reset@font\mtcPfont 14}{paragraph*.15}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.2}PCA as Graph Coupling}{\reset@font\mtcSfont 15}{section.3.2}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.3}Shift-Invariant Pairwise MRF to Model Row Dependencies}{\reset@font\mtcSfont 16}{section.3.3}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.3.1}Graph Laplacian Null Space}{\reset@font\mtcSSfont 16}{subsection.3.3.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.3.2}Pairwise MRF and Shift-Invariances}{\reset@font\mtcSSfont 17}{subsection.3.3.2}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Gaussian kernel.}{\reset@font\mtcPfont 17}{paragraph*.16}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Between-Rows Dependency Structure.}{\reset@font\mtcPfont 18}{paragraph*.17}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.3.3}Uninformative Model for CC-wise Means}{\reset@font\mtcSSfont 18}{subsection.3.3.3}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.4}Graph Coupling as a Unified Objective for Pairwise Similarity Methods}{\reset@font\mtcSfont 18}{section.3.4}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.4.1}Retrieving Popular Dimension Reduction Methods}{\reset@font\mtcSSfont 20}{subsection.3.4.1}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode SNE.}{\reset@font\mtcPfont 20}{paragraph*.18}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Symmetric-SNE.}{\reset@font\mtcPfont 20}{paragraph*.19}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode LargeVis.}{\reset@font\mtcPfont 20}{paragraph*.20}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode UMAP.}{\reset@font\mtcPfont 21}{paragraph*.21}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.4.2}Interpretations}{\reset@font\mtcSSfont 21}{subsection.3.4.2}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Repulsion \& Attraction.}{\reset@font\mtcPfont 21}{paragraph*.23}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Global Structure Preservation. }{\reset@font\mtcPfont 22}{paragraph*.24}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.5}Towards Capturing Large-Scale Dependencies}{\reset@font\mtcSfont 22}{section.3.5}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.5.1}Hierarchical Graph Coupling}{\reset@font\mtcSSfont 23}{subsection.3.5.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {3.5.2}Experiments with \textit {ccPCA}}{\reset@font\mtcSSfont 24}{subsection.3.5.2}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {3.6}Conclusion and Perspectives}{\reset@font\mtcSfont 25}{section.3.6}}

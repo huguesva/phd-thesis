@@ -2,7 +2,67 @@
 
 \section{Appendix of \Cref{chapter:GraphCoupling}}
 
-\subsection{Proof of \cref{prop:integrability_pairwise_MRF}} \label{proof:lambda_perp_integrability}
+
+\subsection{Proof of \Cref{PCA_graph_coupling}}
+
+\PCAgraphcoupling*
+
+\begin{proof}
+We consider the following hierarchical model, for $\nu_{X}, \nu_{Z} \geq n$:
+\begin{align*}
+    \bm{\Theta}_{X} &\sim  \mathcal{W}(\nu_{X}, \bm{I}_n) \\
+    \mathrm{vec}(\X) | \bm{\Theta}_{X} &\sim \mathcal{N}(\bm{0}, \bm{\Theta}_{X}^{-1} \otimes \bm{I}_p) \\
+    \bm{\Theta}_{Z} &\sim  \mathcal{W}(\nu_{Z}, \bm{I}_n) \\
+    \mathrm{vec}(\Z) | \bm{\Theta}_{Z} &\sim \mathcal{N}(\bm{0}, \bm{\Theta}_{Z}^{-1} \otimes \bm{I}_q) \:.
+\end{align*}
+With this at hand, the posteriors for $\bm{\Theta}_X$ and $\bm{\Theta}_Z$ can be derived in closed form: 
+\begin{align*}
+    \bm{\Theta}_{X} | \X &\sim  \mathcal{W}(\nu_{X}+p, \left(\bm{I}_n + \X \X^\top\right)^{-1}) \\
+    \bm{\Theta}_{Z} | \Z &\sim  \mathcal{W}(\nu_{Z} + q, \left(\bm{I}_n + \Z \Z^\top\right)^{-1}) \:.
+\end{align*}
+
+Keeping terms of $-\mathbb{E}_{\bm{\Theta}_{X}}[\log \mathbb{P}(\bm{\Theta}_{Z} = \bm{\Theta}_{X}| \Z )| \X]$ that depends on $\Z$, one has the optimization problem:
+\begin{align*}
+    \min_{\Z \in \mathbb{R}^{n \times q}} \quad \frac{\nu_{X}+p}{2}\operatorname{tr}\left(\Z^\top(\bm{I}_n +  \X\X^\top)^{-1}\Z\right) - \frac{\nu_{Z}+q}{2}\log |\bm{I}_n +  \Z\Z^\top|
+\end{align*}
+Consider the eigendecomposition of the sample covariance matrices: $\X\X^\top = \bm{V D} \bm{V}^\top$ and $\Z\Z^\top = \bm{U \Lambda} \bm{U}^\top$ where $\bm{D}=\operatorname{diag}(\bm{d})$ and $\bm{\Lambda}=\operatorname{diag}(\bm{\lambda})$ such that $d_1 \geq ... \geq d_n$ and $\lambda_1 \geq ... \geq \lambda_n$. Denoting $\gamma = (\nu_{X}+q)/(\nu_{Z}+p)$, we consider the following problem:
+\begin{align}
+   \min_{\bm{U} \in \mathcal{O}(n), \bm{\Lambda}} \quad & \operatorname{tr}\left(\bm{U} \bm{\Lambda} \bm{U}^\top \bm{V} (\bm{I}_n + \bm{D})^{-1} \bm{V}^\top\right) - \gamma \log |\bm{I}_n + \bm{\Lambda}| \label{eq:optim_eigenvalues_eigenvectors} \\
+    \textrm{s.t.} \quad & \bm{\Lambda} \succcurlyeq \bm{0} \label{eq:positive_definite_constraint}\\
+    & \operatorname{rank}(\bm{\Lambda}) \leq q \label{eq:rank_constraint}
+\end{align}
+Note that the above problem is non-convex because of the rank constraint (\ref{eq:rank_constraint}). 
+
+First, we focus on finding the optimal eigenvectors. To that extent, let us denote, $\bm{R} = \bm{U}^\top\bm{V}$. Only the left term in (\ref{eq:optim_eigenvalues_eigenvectors}) depends on $\bm{R}$. The optimization problem for eigenvectors writes:
+\begin{align}
+   \min_{\bm{R} \in \mathcal{O}(n)} \quad & \operatorname{tr}\left(\bm{R}^\top \bm{\Lambda} \bm{R} (\bm{I}_n + \bm{D})^{-1} \right) \label{eq:optim_eigenvalues_eigenvectors}
+\end{align}
+The objective (\ref{eq:optim_eigenvalues_eigenvectors}) can be expressed as: $\sum_{(i,j) \in \integ{n}^2} \lambda_i (1 + d_j)^{-1} R_{ij}^2$. Now one can notice that since $\bm{R}$ is orthogonal, $\bm{R} \odot \bm{R}$ is doubly stochastic (\textit{i.e.}\ sum of coefficients on each row and column is equal to one). Therefore thanks to the Birkhoff–von Neumann theorem, there exists $\theta_1, ..., \theta_L \geq 0$, $\sum_{\ell \in \integ{L}} \theta_\ell = 1$ and permutation matrices $\bm{P}_1, ..., \bm{P}_L$ such that:
+$$\bm{R} \odot \bm{R} = \sum_{\ell \in \integ{L}} \theta_\ell \bm{P}_\ell$$
+where for all $\ell \in \integ{L}$, there exists a permutation $\sigma_\ell$ of $\integ{n}$ such that $P_{\ell,ij} = \ind_{\sigma_{\ell}(i) = j}$ for $(i,j) \in \integ{n}^2$. 
+
+With this at hand, objective (\ref{eq:optim_eigenvalues_eigenvectors}) writes: $\sum_{\ell \in \integ{L}} \theta_\ell \sum_{i \in \integ{n}} \lambda_i (1 + d_{\sigma_\ell(i)})^{-1}$. There exists a permutation $\sigma^\star$ such that the quantity $\sum_{i \in \integ{n}} \lambda_i (1 + d_{\sigma_\ell(i)})^{-1}$ is minimal. Note that the identity permutation \textit{i.e.}\ for $i \in \integ{n}$, $ \sigma(i) = i$ is optimal in this case as the $(\lambda_i)_{i \in \integ{n}}$ and the $(d_i)_{i \in \integ{n}}$ are in decreasing order. Then choosing for $\ell \in \integ{L}$, $\theta_\ell = \ind_{\sigma_\ell = \sigma^\star}$ minimizes the latter quantity. Therefore the solution of (\ref{eq:optim_eigenvalues_eigenvectors}) $\bm{R}^{\star}$ is such that for $(i,j) \in \integ{n}^2$, $R^\star_{ij} = \pm \ind_{\sigma^\star(i)=j}$. Thus an optimum in $\bm{U}$ of $\ref{eq:optim_eigenvalues_eigenvectors}$ is such that $\bm{U}^\star = \bm{V} \bm{R}^\star$. 
+
+Hence $\bm{U} = \bm{V}$, in particular, is optimal. We will choose this $\bm{U}$ in what follows as the sign of the axes do not influence the characterization of the final result in $\Z$ as a PCA embedding. Such a choice gives $\Z \Z^\top = \bm{V} \bm{\Lambda} \bm{V}^\top$. 
+
+Now it remains to find the optimal eigenvalues $(\lambda_i)_{i \in \integ{n}}$. The rank constraint (\ref{eq:rank_constraint}) can be easily dealt with: since the eigenvalues are sorted in decreasing order, the constraint implies that for $i \geq q$, $\lambda_i=0$.  Thus the eigenvalue problem can be formulated in $\mathbb{R}^q$:
+\begin{align}
+    \min_{\bm{\lambda} \in \mathbb{R}^q} \quad & \bm{\lambda}^\top (\bm{1} + \bm{d})^{-1} - \gamma \bm{1}^\top \log (\bm{1} + \bm{\lambda}) \label{eq:objective_lambda}\\
+    \textrm{s.t.} \quad & \forall i \in [q], \quad  \lambda_i \geq 0 , \quad \lambda_1 \geq ... \geq \lambda_q \label{eq:feasibility_lambda}
+\end{align}
+where (\ref{eq:feasibility_lambda}) accounts for (\ref{eq:positive_definite_constraint}). The above is convex. (\ref{eq:objective_lambda}) is minimized for $\bm{\lambda} = \gamma (\bm{1} + \bm{d}) - \bm{1}$. Taking the feasibility constraint (\ref{eq:feasibility_lambda}) into account one has a solution $\bm{\lambda}^*$ such that:
+$$\forall i \in \integ{n}, \quad 
+\lambda_i^* = \left\{
+    \begin{array}{ll}
+        \max(0, \gamma(1 + d_i) - 1) \quad &\mbox{if} \quad i \leq q \\
+        0 \quad &\mbox{otherwise} \:.
+    \end{array}
+\right. $$
+
+Note that this solution is not unique if there are repeated eigenvalues. Notice also that one has the freedom to choose the Wishart prior parameters such that $\gamma=1$. Doing so, the solution satisfies $\Z^\star \Z^{\star \:T} = \bm{V}_{[:,q]} \bm{D}_{[q,q]} \bm{V}^\top_{[q,:]}$. Therefore there exists $\bm{R}$ an orthogonal matrix of size $q$ such that $\Z^{\star} = \bm{V}_{[:,q]}\bm{D}_{[q,q]}^{\frac{1}{2}}\bm{R}$. The latter is the output of a PCA model of $\X$ with $q$ components, which is defined up to a rotation.
+\end{proof}
+
+\subsection{Proof of \Cref{prop:integrability_pairwise_MRF}} \label{proof:lambda_perp_integrability}
 
 \integrabilitypairwiseMRF*
 
@@ -69,7 +129,7 @@ using the Fubini Tonelli theorem. The result follows from $\lambda_{\mathbb{R}^p
 \end{proof}
 
 
-\subsection{Proof of \cref{prop:posterior_W}}
+\subsection{Proof of \Cref{prop:posterior_W}}
 \label{proof:posterior_limit}
 
 \posteriorW

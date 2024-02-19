@@ -1,55 +1,84 @@
-\contentsline {chapter}{\numberline {1}A Probabilistic Graph Coupling View of Dimension Reduction}{2}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Introduction}{2}{section.1.1}%
-\contentsline {paragraph}{Outline.}{3}{paragraph*.3}%
-\contentsline {section}{\numberline {1.2}Shift-Invariant Pairwise MRF to Model Row Dependencies}{4}{section.1.2}%
-\contentsline {subsection}{\numberline {1.2.1}Graph Laplacian Null Space}{4}{subsection.1.2.1}%
-\contentsline {subsection}{\numberline {1.2.2}Pairwise MRF and Shift-Invariances}{5}{subsection.1.2.2}%
-\contentsline {paragraph}{Gaussian kernel.}{5}{paragraph*.4}%
-\contentsline {paragraph}{Between-Rows Dependency Structure.}{6}{paragraph*.5}%
-\contentsline {subsection}{\numberline {1.2.3}Uninformative Model for CC-wise Means}{6}{subsection.1.2.3}%
-\contentsline {section}{\numberline {1.3}Graph Coupling as a Unified Objective for Pairwise Similarity Methods}{6}{section.1.3}%
-\contentsline {subsection}{\numberline {1.3.1}Retrieving Popular Dimension Reduction Methods}{8}{subsection.1.3.1}%
-\contentsline {paragraph}{SNE.}{8}{paragraph*.6}%
-\contentsline {paragraph}{Symmetric-SNE.}{8}{paragraph*.7}%
-\contentsline {paragraph}{LargeVis.}{8}{paragraph*.8}%
-\contentsline {paragraph}{UMAP.}{8}{paragraph*.9}%
-\contentsline {subsection}{\numberline {1.3.2}Interpretations}{9}{subsection.1.3.2}%
-\contentsline {paragraph}{Repulsion \& Attraction.}{9}{paragraph*.11}%
-\contentsline {paragraph}{Global Structure Preservation. }{10}{paragraph*.12}%
-\contentsline {section}{\numberline {1.4}Towards Capturing Large-Scale Dependencies}{10}{section.1.4}%
-\contentsline {subsection}{\numberline {1.4.1}PCA as Graph Coupling}{10}{subsection.1.4.1}%
-\contentsline {subsection}{\numberline {1.4.2}Hierarchical Graph Coupling}{12}{subsection.1.4.2}%
-\contentsline {subsection}{\numberline {1.4.3}Experiments with \textit {ccPCA}}{13}{subsection.1.4.3}%
-\contentsline {section}{\numberline {1.5}Conclusion and Perspectives}{14}{section.1.5}%
-\contentsline {chapter}{\numberline {2}SNEkhorn: Dimension Reduction with Symmetric Entropic Affinities}{16}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Introduction}{16}{section.2.1}%
-\contentsline {paragraph}{Entropic Affinities and SNE/t-SNE.}{17}{paragraph*.15}%
-\contentsline {paragraph}{Doubly Stochastic Affinities.}{17}{paragraph*.16}%
-\contentsline {paragraph}{Contributions.}{17}{paragraph*.17}%
-\contentsline {paragraph}{Notations.}{18}{paragraph*.18}%
-\contentsline {section}{\numberline {2.2}Entropic Affinities, Dimensionality Reduction and Optimal Transport}{18}{section.2.2}%
-\contentsline {paragraph}{Entropic Affinities (EAs).}{18}{paragraph*.19}%
-\contentsline {paragraph}{Dimension Reduction with SNE/t-SNE.}{19}{paragraph*.20}%
-\contentsline {paragraph}{Symmetric Entropy-Constrained Optimal Transport.}{20}{paragraph*.21}%
-\contentsline {section}{\numberline {2.3}Symmetric Entropic Affinities}{21}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Entropic Affinities as Entropic Optimal Transport}{21}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Symmetric Entropic Affinity Formulation}{22}{subsection.2.3.2}%
-\contentsline {paragraph}{Numerical optimization.}{23}{paragraph*.24}%
-\contentsline {section}{\numberline {2.4}Optimal Transport for Dimension Reduction with SNEkhorn}{24}{section.2.4}%
-\contentsline {paragraph}{SNEkhorn's objective.}{24}{paragraph*.25}%
-\contentsline {paragraph}{Heavy-tailed kernel in latent space.}{25}{paragraph*.26}%
-\contentsline {paragraph}{Inference.}{25}{paragraph*.27}%
-\contentsline {paragraph}{Related work.}{25}{paragraph*.28}%
-\contentsline {section}{\numberline {2.5}Numerical experiments}{26}{section.2.5}%
-\contentsline {paragraph}{Real-world datasets.}{27}{paragraph*.32}%
-\contentsline {paragraph}{Spectral Clustering.}{28}{paragraph*.34}%
-\contentsline {paragraph}{Dimension Reduction.}{29}{paragraph*.36}%
-\contentsline {section}{\numberline {2.6}Conclusion}{29}{section.2.6}%
-\contentsline {chapter}{\numberline {3}Proofs and Additional Results}{31}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Appendix of \Cref {chapter:GraphCoupling}}{31}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Proof of \cref {prop:integrability_pairwise_MRF}}{31}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Proof of \cref {prop:posterior_W}}{33}{subsection.3.1.2}%
-\contentsline {paragraph}{$B$-Prior.}{33}{paragraph*.38}%
-\contentsline {paragraph}{$D$-Prior.}{34}{paragraph*.39}%
-\contentsline {paragraph}{$E$-Prior.}{34}{paragraph*.40}%
-\contentsline {chapter}{References}{35}{chapter*.41}%
+\contentsline {chapter}{\numberline {1}Introduction}{2}{chapter.1}%
+\contentsline {paragraph}{Notations.}{2}{paragraph*.3}%
+\contentsline {chapter}{\numberline {2}Background on Dimensionality Reduction and Optimal Transport}{4}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Background GC}{4}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Background SNEkhorn}{5}{section.2.2}%
+\contentsline {paragraph}{Entropic Affinities and SNE/t-SNE.}{5}{paragraph*.4}%
+\contentsline {paragraph}{Doubly Stochastic Affinities.}{6}{paragraph*.5}%
+\contentsline {section}{\numberline {2.3}Entropic Affinities, Dimensionality Reduction and Optimal Transport}{6}{section.2.3}%
+\contentsline {paragraph}{Entropic Affinities (EAs).}{6}{paragraph*.6}%
+\contentsline {paragraph}{Dimension Reduction with SNE/t-SNE.}{7}{paragraph*.7}%
+\contentsline {paragraph}{Symmetric Entropy-Constrained Optimal Transport.}{8}{paragraph*.8}%
+\contentsline {section}{\numberline {2.4}Background DistR}{8}{section.2.4}%
+\contentsline {paragraph}{Dimensionality reduction and clustering.}{9}{paragraph*.9}%
+\contentsline {paragraph}{Two sides of the same coin.}{9}{paragraph*.10}%
+\contentsline {section}{\numberline {2.5}Background on Dimensionality Reduction and Optimal Transport}{9}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Unified View of Dimensionality Reduction }{9}{subsection.2.5.1}%
+\contentsline {paragraph}{Spectral methods.}{10}{paragraph*.11}%
+\contentsline {paragraph}{Neighbor embedding methods.}{11}{paragraph*.12}%
+\contentsline {paragraph}{Hyperbolic geometry.}{11}{paragraph*.13}%
+\contentsline {subsection}{\numberline {2.5.2}Optimal Transport Across Spaces}{11}{subsection.2.5.2}%
+\contentsline {paragraph}{Gromov-Wasserstein (GW).}{12}{paragraph*.14}%
+\contentsline {chapter}{\numberline {3}A Probabilistic Graph Coupling View of Dimension Reduction}{13}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Introduction}{13}{section.3.1}%
+\contentsline {paragraph}{Outline.}{14}{paragraph*.15}%
+\contentsline {section}{\numberline {3.2}PCA as Graph Coupling}{15}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Shift-Invariant Pairwise MRF to Model Row Dependencies}{16}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Graph Laplacian Null Space}{16}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Pairwise MRF and Shift-Invariances}{17}{subsection.3.3.2}%
+\contentsline {paragraph}{Gaussian kernel.}{17}{paragraph*.16}%
+\contentsline {paragraph}{Between-Rows Dependency Structure.}{18}{paragraph*.17}%
+\contentsline {subsection}{\numberline {3.3.3}Uninformative Model for CC-wise Means}{18}{subsection.3.3.3}%
+\contentsline {section}{\numberline {3.4}Graph Coupling as a Unified Objective for Pairwise Similarity Methods}{18}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Retrieving Popular Dimension Reduction Methods}{20}{subsection.3.4.1}%
+\contentsline {paragraph}{SNE.}{20}{paragraph*.18}%
+\contentsline {paragraph}{Symmetric-SNE.}{20}{paragraph*.19}%
+\contentsline {paragraph}{LargeVis.}{20}{paragraph*.20}%
+\contentsline {paragraph}{UMAP.}{21}{paragraph*.21}%
+\contentsline {subsection}{\numberline {3.4.2}Interpretations}{21}{subsection.3.4.2}%
+\contentsline {paragraph}{Repulsion \& Attraction.}{21}{paragraph*.23}%
+\contentsline {paragraph}{Global Structure Preservation. }{22}{paragraph*.24}%
+\contentsline {section}{\numberline {3.5}Towards Capturing Large-Scale Dependencies}{22}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Hierarchical Graph Coupling}{23}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Experiments with \textit {ccPCA}}{24}{subsection.3.5.2}%
+\contentsline {section}{\numberline {3.6}Conclusion and Perspectives}{25}{section.3.6}%
+\contentsline {chapter}{\numberline {4}SNEkhorn: Dimension Reduction with Symmetric Entropic Affinities}{26}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Introduction}{26}{section.4.1}%
+\contentsline {paragraph}{Contributions.}{26}{paragraph*.26}%
+\contentsline {section}{\numberline {4.2}Symmetric Entropic Affinities}{27}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Entropic Affinities as Entropic Optimal Transport}{27}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Symmetric Entropic Affinity Formulation}{28}{subsection.4.2.2}%
+\contentsline {paragraph}{Numerical optimization.}{30}{paragraph*.29}%
+\contentsline {section}{\numberline {4.3}Optimal Transport for Dimension Reduction with SNEkhorn}{31}{section.4.3}%
+\contentsline {paragraph}{SNEkhorn's objective.}{31}{paragraph*.30}%
+\contentsline {paragraph}{Heavy-tailed kernel in latent space.}{31}{paragraph*.31}%
+\contentsline {paragraph}{Inference.}{32}{paragraph*.32}%
+\contentsline {paragraph}{Related work.}{32}{paragraph*.33}%
+\contentsline {section}{\numberline {4.4}Numerical experiments}{32}{section.4.4}%
+\contentsline {paragraph}{Real-world datasets.}{34}{paragraph*.37}%
+\contentsline {paragraph}{Spectral Clustering.}{35}{paragraph*.39}%
+\contentsline {paragraph}{Dimension Reduction.}{36}{paragraph*.41}%
+\contentsline {section}{\numberline {4.5}Conclusion}{36}{section.4.5}%
+\contentsline {chapter}{\numberline {5}Distributional Reduction}{38}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Introduction}{38}{section.5.1}%
+\contentsline {paragraph}{A distributional perspective.}{38}{paragraph*.44}%
+\contentsline {paragraph}{Our contributions.}{39}{paragraph*.45}%
+\contentsline {section}{\numberline {5.2}Dimensionality Reduction as OT}{40}{section.5.2}%
+\contentsline {paragraph}{Gromov-Monge interpretation of DR.}{40}{paragraph*.46}%
+\contentsline {paragraph}{DR as GW Minimization.}{41}{paragraph*.47}%
+\contentsline {section}{\numberline {5.3}Distributional Reduction}{42}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Distributional Reduction Problem}{42}{subsection.5.3.1}%
+\contentsline {paragraph}{Clustering with DistR.}{43}{paragraph*.48}%
+\contentsline {paragraph}{A semi-relaxed objective.}{43}{paragraph*.49}%
+\contentsline {subsection}{\numberline {5.3.2}Clustering Properties }{43}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Computation}{45}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.4}Related Work}{45}{subsection.5.3.4}%
+\contentsline {chapter}{\numberline {6}Proofs and Additional Results}{47}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Appendix of \Cref {chapter:GraphCoupling}}{47}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Proof of \Cref {PCA_graph_coupling}}{47}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Proof of \Cref {prop:integrability_pairwise_MRF}}{49}{subsection.6.1.2}%
+\contentsline {subsection}{\numberline {6.1.3}Proof of \Cref {prop:posterior_W}}{51}{subsection.6.1.3}%
+\contentsline {paragraph}{$B$-Prior.}{51}{paragraph*.51}%
+\contentsline {paragraph}{$D$-Prior.}{52}{paragraph*.52}%
+\contentsline {paragraph}{$E$-Prior.}{52}{paragraph*.53}%
+\contentsline {chapter}{References}{53}{chapter*.54}%

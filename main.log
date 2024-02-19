@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.12.12)  17 FEB 2024 15:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.12.12)  19 FEB 2024 14:08
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -792,22 +792,85 @@ Package: thm-listof 2020/08/01 v0.72
 ) (/usr/local/texlive/2022/texmf-dist/tex/latex/thmtools/thm-amsthm.sty
 Package: thm-amsthm 2020/08/01 v0.72
 \thmt@style@headstyle=\toks51
-))) (/usr/local/texlive/2022/texmf-dist/tex/latex/tools/enumerate.sty
+))) (/usr/local/texlive/2022/texmf-dist/tex/latex/minitoc/minitoc.sty
+Package: minitoc 2018/07/12 v62 Package minitoc
+ (/usr/local/texlive/2022/texmf-dist/tex/latex/minitoc/mtcmess.sty
+Package: mtcmess 2006/03/14
+)
+Package minitoc Info: I0001
+(minitoc)             *** minitoc package, version 62 ***.
+\tf@mtc=\write4
+\mtcindent=\skip91
+\mtcskipamount=\skip92
+Package minitoc Info: I0005
+(minitoc)             compatible with hyperref.
+Package minitoc Info: I0023
+(minitoc)             part level macros available.
+Package minitoc Info: I0003
+(minitoc)             chapter level macros available.
+\mtc@toks=\toks52
+\mtc@strutbox=\box72
+\mtc@hstrutbox=\box73
+Package minitoc Info: I0002
+(minitoc)             Autoconfiguration of extensions.
+\openout4 = `main.mtc0'.
+
+\openout4 = `main.mtc'.
+
+ (./main.mtc0)
+Package minitoc Info: I0012
+(minitoc)             Long extensions (Unix-like) will be used.
+Package minitoc Info: I0031
+(minitoc)             ==> this version is configured for UNIX-like 
+(minitoc)                 (long extensions) file names.
+\openout4 = `main.mtc'.
+
+\openout4 = `main.mtc0'.
+
+\c@mtc=\count356
+\c@minitocdepth=\count357
+\c@ptc=\count358
+\c@parttocdepth=\count359
+\ptcindent=\skip93
+Package minitoc Info: I0010
+(minitoc)             The english language is selected.
+(minitoc)              on input line 4910.
+ (/usr/local/texlive/2022/texmf-dist/tex/latex/minitoc/english.mld
+File: english.mld 2006/01/13
+) (/usr/local/texlive/2022/texmf-dist/tex/latex/minitoc/english.mld
+File: english.mld 2006/01/13
+)) (/usr/local/texlive/2022/texmf-dist/tex/latex/tools/enumerate.sty
 Package: enumerate 2015/07/23 v3.00 enumerate extensions (DPC)
-\@enLab=\toks52
+\@enLab=\toks53
 ) (/usr/local/texlive/2022/texmf-dist/tex/latex/oberdiek/bmpsize.sty
 Package: bmpsize 2019/12/29 v1.8 Extract size/resolution from bitmap files (HO)
 Package bmpsize Info: Superseded by pdfTeX in PDF mode on input line 45.
+) (/usr/local/texlive/2022/texmf-dist/tex/latex/enumitem/enumitem.sty
+Package: enumitem 2019/06/20 v3.9 Customized lists
+\labelindent=\skip94
+\enit@outerparindent=\dimen345
+\enit@toks=\toks54
+\enit@inbox=\box74
+\enit@count@id=\count360
+\enitdp@description=\count361
 )
-\c@theorem=\count356
-\c@proposition=\count357
-\c@remark=\count358
-\c@definition=\count359
-\c@example=\count360
+\c@theorem=\count362
+\c@proposition=\count363
+\c@remark=\count364
+\c@definition=\count365
+\c@example=\count366
+LaTeX Font Info:    Overwriting math alphabet `\mathsfit' in version `bold'
+(Font)                  T1/lmss/m/sl --> T1/lmss/bx/n on input line 428.
 )
-\@float@every@boxfloat=\toks53
-\c@boxfloat=\count361
+\@float@every@boxfloat=\toks55
+\c@boxfloat=\count367
  (./main.aux
+
+LaTeX Warning: Label `eq:optim_eigenvalues_eigenvectors' multiply defined.
+
+
+LaTeX Warning: Label `eq:optim_eigenvalues_eigenvectors@cref' multiply defined.
+
 
 LaTeX Warning: Label `thmt@@posteriorW@data' multiply defined.
 
@@ -829,24 +892,24 @@ LaTeX Warning: Label `prop:posterior_W@cref' multiply defined.
 )
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
@@ -889,18 +952,22 @@ Package caption Info: End \AtBeginDocument code.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \microtypecontext on input line 13.
-Package microtype Info: Applying patch `item' on input line 13.
-Package microtype Info: Applying patch `toc' on input line 13.
-Package microtype Info: Applying patch `eqnum' on input line 13.
-Package microtype Info: Applying patch `footnote' on input line 13.
+LaTeX Info: Redefining \microtypecontext on input line 15.
+Package microtype Info: Applying patch `item' on input line 15.
+Package microtype Info: Applying patch `toc' on input line 15.
+Package microtype Info: The `eqnum' patch may not be effective because you are
+(microtype)             using the mathtools package. Make sure to insert
+(microtype)             `\leftprotrusion' and `\rightprotrusion' as
+(microtype)             appropriate in mathtools's `\newtagform' command.
+Package microtype Info: Applying patch `eqnum' on input line 15.
+Package microtype Info: Applying patch `footnote' on input line 15.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 13.
+LaTeX Info: Redefining \showhyphens on input line 15.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -908,24 +975,24 @@ Package microtype Info: No adjustment of character kerning.
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
 ) (/usr/local/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count362
-\scratchdimen=\dimen345
-\scratchbox=\box72
-\nofMPsegments=\count363
-\nofMParguments=\count364
-\everyMPshowfont=\toks54
-\MPscratchCnt=\count365
-\MPscratchDim=\dimen346
-\MPnumerator=\count366
-\makeMPintoPDFobject=\count367
-\everyMPtoPDFconversion=\toks55
+\scratchcounter=\count368
+\scratchdimen=\dimen346
+\scratchbox=\box75
+\nofMPsegments=\count369
+\nofMParguments=\count370
+\everyMPshowfont=\toks56
+\MPscratchCnt=\count371
+\MPscratchDim=\dimen347
+\MPnumerator=\count372
+\makeMPintoPDFobject=\count373
+\everyMPtoPDFconversion=\toks57
 ) (/usr/local/texlive/2022/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring ON on input line 13.
+Package hyperref Info: Link coloring ON on input line 15.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (/usr/local/texlive/2022/texmf-dist/tex/latex/refcount/refcount.sty
@@ -933,44 +1000,84 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (/usr/local/texlive/2022/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count368
+\c@section@level=\count374
 )
-LaTeX Info: Redefining \ref on input line 13.
-LaTeX Info: Redefining \pageref on input line 13.
-LaTeX Info: Redefining \nameref on input line 13.
+LaTeX Info: Redefining \ref on input line 15.
+LaTeX Info: Redefining \pageref on input line 15.
+LaTeX Info: Redefining \nameref on input line 15.
  (./main.out) (./main.out)
-\@outlinefile=\write4
-\openout4 = `main.out'.
+\@outlinefile=\write5
+\openout5 = `main.out'.
 
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 23.
- (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/ot1lmr.fd
+\c@tabularnotesi=\count375
+\enitdp@tabularnotes=\count376
+\c@tabularnotes*i=\count377
+\enitdp@tabularnotes*=\count378
+\c@minilofdepth=\count379
+\c@minilotdepth=\count380
+\c@partlofdepth=\count381
+\c@partlotdepth=\count382
+\c@sectlofdepth=\count383
+\c@sectlotdepth=\count384
+Package minitoc(hints) Info: I0049
+(minitoc(hints))             ==> You requested the hints option. 
+(minitoc(hints))             Some hints are eventually given below.
+
+
+Package minitoc(hints) Warning: W0099
+(minitoc(hints))                --- The titlesec package is loaded. 
+(minitoc(hints))                It is incompatible 
+(minitoc(hints))                with the minitoc package.
+
+
+Package minitoc(hints) Warning: W0030
+(minitoc(hints))                --- The \part command is altered 
+(minitoc(hints))                after minitoc.
+
+
+Package minitoc(hints) Warning: W0023
+(minitoc(hints))                --- It may be the consequence 
+(minitoc(hints))                of loading the ``hyperref'' package.
+
+
+Package minitoc(hints) Warning: W0028
+(minitoc(hints))                --- The \chapter command is altered 
+(minitoc(hints))                after minitoc.
+
+
+Package minitoc(hints) Warning: W0023
+(minitoc(hints))                --- It may be the consequence 
+(minitoc(hints))                of loading the ``hyperref'' package.
+
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 24.
+(/usr/local/texlive/2022/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 23.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 24.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 23.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 24.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 23.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 24.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 23.
+(Font)              <10.95> on input line 24.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 23.
+(Font)              <8> on input line 24.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 23.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 23.
+(Font)              <6> on input line 24.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 24.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 ) (/usr/local/texlive/2022/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 23.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 24.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (/usr/local/texlive/2022/texmf-dist/tex/latex/microtype/mt-msb.cfg
@@ -981,7 +1088,37 @@ Non-PDF special ignored!
 
 
 {/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Trying to load font information for T1+lmss on input line 24.
+Package minitoc Info: I0024
+(minitoc)             PREPARING MINITOCS FROM main.toc on input line 26.
+Package minitoc Info: I0033
+(minitoc)             Writing main.mtc1.
+\openout4 = `main.mtc1'.
+
+Package minitoc Info: I0033
+(minitoc)             Writing main.mtc2.
+\openout4 = `main.mtc2'.
+
+Package minitoc Info: I0033
+(minitoc)             Writing main.mtc3.
+\openout4 = `main.mtc3'.
+
+Package minitoc Info: I0033
+(minitoc)             Writing main.mtc4.
+\openout4 = `main.mtc4'.
+
+Package minitoc Info: I0033
+(minitoc)             Writing main.mtc5.
+\openout4 = `main.mtc5'.
+
+Package minitoc Info: I0033
+(minitoc)             Writing main.mtc6.
+\openout4 = `main.mtc6'.
+
+Package minitoc Info: I0033
+(minitoc)             Writing main.mtc7.
+\openout4 = `main.mtc7'.
+
+LaTeX Font Info:    Trying to load font information for T1+lmss on input line 26.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -990,57 +1127,113 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Underfull \vbox (badness 10000) detected at line 24
+Underfull \vbox (badness 10000) detected at line 26
  []
 
-(./main.toc)
-\tf@toc=\write5
-\openout5 = `main.toc'.
+(./main.toc [2
 
- [2
+])
+\tf@toc=\write6
+\openout6 = `main.toc'.
 
-] (./chapters/acknowledgements.tex
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[3] (./chapters/acknowledgements.tex
 Underfull \vbox (badness 10000) detected at line 1
  []
 
-) (./chapters/GraphCoupling/GraphCoupling.tex
+) (./chapters/Intro/Intro.tex
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.2 \chapter
-            {A Probabilistic Graph Coupling View of Dimension Reduction}\lab... [1
+l.1 \chapter
+            {Introduction} [1
 
 
 ]
 Chapter 1.
 
-Overfull \vbox (23.08354pt too high) detected at line 2
+Overfull \vbox (23.08354pt too high) detected at line 1
  []
 
-(./chapters/GraphCoupling/sections/intro.tex
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 63.
+(/usr/local/texlive/2022/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <9> on input line 104.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 104.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.7 
-     [2
+l.111 
+       [2
 
 ]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 19.
- (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/ts1lmr.fd
-File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+Underfull \hbox (badness 10000) in paragraph at lines 113--118
+[]\T1/lmr/m/n/10.95 (+20) We de-note by $\OMS/lmsy/m/n/10.95 U\OT1/lmr/m/n/10.95 (+20) (\OT1/lmr/bx/n/10.95 (+20) h\OT1/lmr/m/n/10.95 (+20) ) = []$ \T1/lmr/m/n/10.95 (+20) and $\OMS/lmsy/m/n/10.95 U\OT1/lmr/m/n/10.95 (+20) (\OT1/lmr/bx/n/10.95 (+20) h\OML/lmm/m/it/10.95 ; []\OT1/lmr/m/n/10.95 (+20) ) =
+ []
+
+) (./chapters/Background/Background.tex
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.1 \chapter
+            {Background on Dimensionality Reduction and Optimal Transport}\l... [3]
+Chapter 2.
+
+Overfull \vbox (42.08354pt too high) detected at line 1
+ []
+
+(./chapters/Background/sections/background_gc.tex) (./chapters/Background/sections/background_snekhorn.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [4
+
+]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[5]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[6]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 69.
+ (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `lmtt' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
 
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.39998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.39998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[3]) (./chapters/GraphCoupling/sections/model.tex
-Package hyperref Info: bookmark level for unknown definition defaults to 0 on input line 9.
+LaTeX Warning: Reference `sec:sym_proj' on page 7 undefined on input line 81.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1049,11 +1242,154 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[4]
-Package hyperref Info: bookmark level for unknown theorem defaults to 0 on input line 39.
-Package hyperref Info: bookmark level for unknown remark defaults to 0 on input line 48.
+[7]
 
-Underfull \hbox (badness 1286) in paragraph at lines 52--53
+LaTeX Warning: Reference `sec:proof_sinkhorn' on page 8 undefined on input line 114.
+
+
+pdfTeX warning (ext4): destination with the same identifier (name{equation.2.3.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.122 \begin{equation}
+                      
+pdfTeX warning (ext4): destination with the same identifier (name{equation.2.3.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.122 \begin{equation}
+                      
+pdfTeX warning (ext4): destination with the same identifier (name{equation.2.3.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.122 \begin{equation}
+                      
+pdfTeX warning (ext4): destination with the same identifier (name{equation.2.3.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.122 \begin{equation}
+                      
+
+LaTeX Warning: Reference `sec:proof_sinkhorn' on page 8 undefined on input line 127.
+
+) (./chapters/Background/sections/background_distr.tex
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[8]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[9]
+Underfull \vbox (badness 1939) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[10]
+Package hyperref Info: bookmark level for unknown remark defaults to 0 on input line 92.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[11
+pdfTeX warning (ext4): destination with the same identifier (name{equation.2.5.2}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.153 \begin{equation}
+                      ]
+pdfTeX warning (ext4): destination with the same identifier (name{equation.2.5.2}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.153 \begin{equation}
+                      
+pdfTeX warning (ext4): destination with the same identifier (name{equation.2.5.2}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.153 \begin{equation}
+                      
+pdfTeX warning (ext4): destination with the same identifier (name{equation.2.5.2}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.153 \begin{equation}
+                      
+pdfTeX warning (ext4): destination with the same identifier (name{equation.2.5.2}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.153 \begin{equation}
+                      
+
+LaTeX Warning: Reference `sec:srGW_divergence' on page 12 undefined on input line 169.
+
+)) (./chapters/GraphCoupling/GraphCoupling.tex
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[12]
+Chapter 3.
+
+Overfull \vbox (23.08354pt too high) detected at line 2
+ []
+
+\openout4 = `main.mtc'.
+
+\openout4 = `main.mtc'.
+
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 7.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 7.
+(./main.mtc3) (./chapters/GraphCoupling/sections/intro.tex [13
+
+]) (./chapters/GraphCoupling/sections/model.tex
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[14]
+Package hyperref Info: bookmark level for unknown theorem defaults to 0 on input line 18.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[15]
+Package hyperref Info: bookmark level for unknown definition defaults to 0 on input line 32.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[16]
+Underfull \hbox (badness 1286) in paragraph at lines 77--78
 [] []\T1/lmss/bx/n/10.95 (+20) Be-tween-Rows De-pen-dency Struc-ture.[] \T1/lmr/m/n/10.95 (+20) By sym-me-try of $\OML/lmm/m/it/10.95 k$\T1/lmr/m/n/10.95 (+20) , rein-dex-ing gives:
  []
 
@@ -1064,7 +1400,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[5]) (./chapters/GraphCoupling/sections/unifyingDR.tex
+[17]) (./chapters/GraphCoupling/sections/unifyingDR.tex
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.39998pt, for example:
@@ -1072,7 +1408,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[6]
+[18]
 Package hyperref Info: bookmark level for unknown proposition defaults to 0 on input line 28.
 
 
@@ -1082,11 +1418,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[7]
-Overfull \hbox (40.72289pt too wide) detected at line 59
-[]
- []
-
+[19]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.39998pt, for example:
@@ -1094,47 +1426,39 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[8]
+[20]
 
 LaTeX Warning: No positions in optional float specifier.
                Default added (so using `tbp') on input line 76.
 
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 77.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 77.
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/lmr/m/sc/10'.
 (microtype)             Ignoring protrusion settings for this character.
-\g__nicematrix_max_cell_width_dim=\dimen347
-\c@iRow=\count369
-\c@jCol=\count370
-\l__nicematrix_cell_box=\box73
-\l__nicematrix_the_array_box=\box74
-\l__nicematrix_left_delim_dim=\dimen348
-\l__nicematrix_right_delim_dim=\dimen349
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 84.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 84.
-\g__nicematrix_dp_row_zero_dim=\dimen350
-\g__nicematrix_ht_row_zero_dim=\dimen351
-\g__nicematrix_ht_row_one_dim=\dimen352
-\g__nicematrix_dp_ante_last_row_dim=\dimen353
-\g__nicematrix_ht_last_row_dim=\dimen354
-\g__nicematrix_dp_last_row_dim=\dimen355
-\g__nicematrix_ddots_int=\count371
-\g__nicematrix_iddots_int=\count372
-\g__nicematrix_delta_x_one_dim=\dimen356
-\g__nicematrix_delta_y_one_dim=\dimen357
-\g__nicematrix_delta_x_two_dim=\dimen358
-\g__nicematrix_delta_y_two_dim=\dimen359
-\l__nicematrix_initial_i_int=\count373
-\l__nicematrix_initial_j_int=\count374
-\l__nicematrix_final_i_int=\count375
-\l__nicematrix_final_j_int=\count376
-\l__nicematrix_local_start_int=\count377
-\l__nicematrix_local_end_int=\count378
+\g__nicematrix_max_cell_width_dim=\dimen348
+\c@iRow=\count385
+\c@jCol=\count386
+\l__nicematrix_cell_box=\box76
+\l__nicematrix_the_array_box=\box77
+\l__nicematrix_left_delim_dim=\dimen349
+\l__nicematrix_right_delim_dim=\dimen350
+\g__nicematrix_dp_row_zero_dim=\dimen351
+\g__nicematrix_ht_row_zero_dim=\dimen352
+\g__nicematrix_ht_row_one_dim=\dimen353
+\g__nicematrix_dp_ante_last_row_dim=\dimen354
+\g__nicematrix_ht_last_row_dim=\dimen355
+\g__nicematrix_dp_last_row_dim=\dimen356
+\g__nicematrix_ddots_int=\count387
+\g__nicematrix_iddots_int=\count388
+\g__nicematrix_delta_x_one_dim=\dimen357
+\g__nicematrix_delta_y_one_dim=\dimen358
+\g__nicematrix_delta_x_two_dim=\dimen359
+\g__nicematrix_delta_y_two_dim=\dimen360
+\l__nicematrix_initial_i_int=\count389
+\l__nicematrix_initial_j_int=\count390
+\l__nicematrix_final_i_int=\count391
+\l__nicematrix_final_j_int=\count392
+\l__nicematrix_local_start_int=\count393
+\l__nicematrix_local_end_int=\count394
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/lmr/m/sc/12'.
 (microtype)             Ignoring protrusion settings for this character.
@@ -1147,7 +1471,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[9]) (./chapters/GraphCoupling/sections/largescale.tex
+[21]) (./chapters/GraphCoupling/sections/largescale.tex
+Underfull \vbox (badness 5519) has occurred while \output is active []
+
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.39998pt, for example:
@@ -1155,7 +1482,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[10]
+[22]
+
+LaTeX Warning: Reference `fig:graphical_model_hierarchical' on page 1 undefined on input line 19.
+
+Package hyperref Info: bookmark level for unknown corollary defaults to 0 on input line 29.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.39998pt, for example:
@@ -1163,51 +1494,30 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[11]
-
-LaTeX Warning: Reference `fig:graphical_model_hierarchical' on page 1 undefined on input line 38.
-
-<figures/GraphCoupling/tSNE_truth.png, id=377, 5088.00874pt x 1591.9475pt>
-File: figures/GraphCoupling/tSNE_truth.png Graphic file (type png)
-<use figures/GraphCoupling/tSNE_truth.png>
-Package pdftex.def Info: figures/GraphCoupling/tSNE_truth.png  used on input line 42.
-(pdftex.def)             Requested size: 206.28247pt x 64.54153pt.
-Package hyperref Info: bookmark level for unknown corollary defaults to 0 on input line 48.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.39998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.39998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
-
-[12]
+[23]
 LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 60.
-<figures/GraphCoupling/cluster_positions.png, id=397, 9512.53876pt x 2956.04375pt>
-File: figures/GraphCoupling/cluster_positions.png Graphic file (type png)
-<use figures/GraphCoupling/cluster_positions.png>
-Package pdftex.def Info: figures/GraphCoupling/cluster_positions.png  used on input line 64.
-(pdftex.def)             Requested size: 412.56496pt x 128.18993pt.
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 41.
 
 
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.39998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.39998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
-
-[13 <./figures/GraphCoupling/cluster_positions.png> <./figures/GraphCoupling/tSNE_truth.png>]
-
-LaTeX Warning: Reference `sec:other_perp' on page 14 undefined on input line 74.
+LaTeX Warning: Reference `fig:tSNE-clusters-truth' on page 1 undefined on input line 52.
 
 
-LaTeX Warning: Reference `sec:setup_exp' on page 14 undefined on input line 74.
+LaTeX Warning: Reference `fig:methods_embeddings' on page 1 undefined on input line 54.
 
 
-LaTeX Warning: Reference `sec:quantitative_evaluation' on page 14 undefined on input line 74.
+LaTeX Warning: Reference `fig:tSNE-clusters-truth' on page 1 undefined on input line 55.
 
-) (./chapters/GraphCoupling/sections/conclusion.tex)) (./chapters/SNEkhorn/SNEkhorn.tex
-Underfull \vbox (badness 1132) has occurred while \output is active []
+
+LaTeX Warning: Reference `sec:other_perp' on page 24 undefined on input line 55.
+
+
+LaTeX Warning: Reference `sec:setup_exp' on page 24 undefined on input line 55.
+
+
+LaTeX Warning: Reference `sec:quantitative_evaluation' on page 24 undefined on input line 55.
+
+) (./chapters/GraphCoupling/sections/conclusion.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
@@ -1217,7 +1527,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[14]
+[24])) (./chapters/SNEkhorn/SNEkhorn.tex
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.39998pt, for example:
@@ -1225,64 +1535,27 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[15]
-Chapter 2.
+[25]
+Chapter 4.
 
 Overfull \vbox (42.08354pt too high) detected at line 1
  []
 
-(./chapters/SNEkhorn/sections/intro.tex
-Underfull \vbox (badness 10000) has occurred while \output is active []
+\openout4 = `main.mtc'.
 
- [16
+\openout4 = `main.mtc'.
 
-]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.39998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.39998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
-
-[17]) (./chapters/SNEkhorn/sections/background.tex
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.39998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.39998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
-
-[18]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 40.
- (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `lmtt' (encoding: T1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
-
-
-LaTeX Warning: Reference `sec:sym_proj' on page 19 undefined on input line 52.
-
-<figures/SNEkhorn/fig_coil.pdf, id=555, 618.36685pt x 409.43422pt>
+(./main.mtc4) (./chapters/SNEkhorn/sections/intro.tex
+<figures/SNEkhorn/fig_coil.pdf, id=838, 618.36685pt x 409.43422pt>
 File: figures/SNEkhorn/fig_coil.pdf Graphic file (type pdf)
 <use figures/SNEkhorn/fig_coil.pdf>
-Package pdftex.def Info: figures/SNEkhorn/fig_coil.pdf  used on input line 71.
-(pdftex.def)             Requested size: 218.65892pt x 144.77852pt.
+Package pdftex.def Info: figures/SNEkhorn/fig_coil.pdf  used on input line 7.
+(pdftex.def)             Requested size: 330.05322pt x 218.54222pt.
+) (./chapters/SNEkhorn/sections/background.tex [26
 
-Package caption Warning: The option `hypcap=true' will be ignored for this
-(caption)                particular \caption on input line 72.
-See the caption package documentation for explanation.
+]) (./chapters/SNEkhorn/sections/method.tex
 
-
-Overfull \hbox (0.73698pt too wide) in paragraph at lines 58--74
-$[]$   $[]$ 
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
+LaTeX Warning: Reference `sec:proofs' on page 27 undefined on input line 15.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1291,67 +1564,17 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[19]
-
-LaTeX Warning: Reference `sec:proof_sinkhorn' on page 20 undefined on input line 93.
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{equation.2.2.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.101 \begin{equation}
-                      
-pdfTeX warning (ext4): destination with the same identifier (name{equation.2.2.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.101 \begin{equation}
-                      
-pdfTeX warning (ext4): destination with the same identifier (name{equation.2.2.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.101 \begin{equation}
-                      
-pdfTeX warning (ext4): destination with the same identifier (name{equation.2.2.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.101 \begin{equation}
-                      
-
-LaTeX Warning: Reference `sec:proof_sinkhorn' on page 20 undefined on input line 106.
-
-) (./chapters/SNEkhorn/sections/method.tex
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.39998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.39998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
-
-[20 <./figures/SNEkhorn/fig_coil.pdf>]
-
-LaTeX Warning: Reference `sec:proofs' on page 21 undefined on input line 15.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.39998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.39998pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
-
-[21]
+[27 <./figures/SNEkhorn/fig_coil.pdf>]
 
 LaTeX Warning: Reference `sec:proj_KL' on page 1 undefined on input line 36.
 
-<figures/SNEkhorn/Ps_vs_Pse.pdf, id=662, 1004.553pt x 281.85298pt>
+<figures/SNEkhorn/Ps_vs_Pse.pdf, id=923, 1004.553pt x 281.85298pt>
 File: figures/SNEkhorn/Ps_vs_Pse.pdf Graphic file (type pdf)
 <use figures/SNEkhorn/Ps_vs_Pse.pdf>
 Package pdftex.def Info: figures/SNEkhorn/Ps_vs_Pse.pdf  used on input line 44.
 (pdftex.def)             Requested size: 412.56496pt x 115.754pt.
 
-LaTeX Warning: Reference `proof:main_props' on page 22 undefined on input line 56.
-
-
-LaTeX Warning: Reference `recap_properties_sym' on page 1 undefined on input line 63.
+LaTeX Warning: Reference `proof:main_props' on page 28 undefined on input line 56.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1360,8 +1583,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[22 <./figures/SNEkhorn/Ps_vs_Pse.pdf>]
-pdfTeX warning (ext4): destination with the same identifier (name{equation.2.3.2}) has been already used, duplicate ignored
+[28]
+
+LaTeX Warning: Reference `recap_properties_sym' on page 1 undefined on input line 63.
+
+
+pdfTeX warning (ext4): destination with the same identifier (name{equation.4.2.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.73 \end{restatable}
@@ -1373,7 +1600,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[23]
+[29 <./figures/SNEkhorn/Ps_vs_Pse.pdf>]
 
 LaTeX Warning: Reference `sec:proj_KL' on page 1 undefined on input line 179.
 
@@ -1388,7 +1615,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[24]
+[30]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.39998pt, for example:
@@ -1396,18 +1623,21 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[25]
-<figures/SNEkhorn/snekhorn_not_DS.pdf, id=792, 369.76361pt x 225.24101pt>
+[31]
+<figures/SNEkhorn/snekhorn_not_DS.pdf, id=1050, 369.76361pt x 225.24101pt>
 File: figures/SNEkhorn/snekhorn_not_DS.pdf Graphic file (type pdf)
 <use figures/SNEkhorn/snekhorn_not_DS.pdf>
 Package pdftex.def Info: figures/SNEkhorn/snekhorn_not_DS.pdf  used on input line 54.
 (pdftex.def)             Requested size: 247.54149pt x 150.79382pt.
 ) (./chapters/SNEkhorn/sections/experiments.tex
-<figures/SNEkhorn/heteroscedastic_noise.pdf, id=797, 1367.50902pt x 319.594pt>
+<figures/SNEkhorn/heteroscedastic_noise.pdf, id=1055, 1367.50902pt x 319.594pt>
 File: figures/SNEkhorn/heteroscedastic_noise.pdf Graphic file (type pdf)
 <use figures/SNEkhorn/heteroscedastic_noise.pdf>
 Package pdftex.def Info: figures/SNEkhorn/heteroscedastic_noise.pdf  used on input line 7.
 (pdftex.def)             Requested size: 412.56496pt x 96.41536pt.
+
+Underfull \vbox (badness 1406) has occurred while \output is active []
+
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1416,7 +1646,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[26 <./figures/SNEkhorn/snekhorn_not_DS.pdf> <./figures/SNEkhorn/heteroscedastic_noise.pdf>]
+[32]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[33 <./figures/SNEkhorn/snekhorn_not_DS.pdf> <./figures/SNEkhorn/heteroscedastic_noise.pdf>]
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/lmr/m/sc/5'.
 (microtype)             Ignoring protrusion settings for this character.
@@ -1447,8 +1685,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[27]
-<figures/SNEkhorn/spectral_clustering_sensitivity.pdf, id=911, 836.29149pt x 259.77269pt>
+[34]
+<figures/SNEkhorn/spectral_clustering_sensitivity.pdf, id=1184, 836.29149pt x 259.77269pt>
 File: figures/SNEkhorn/spectral_clustering_sensitivity.pdf Graphic file (type pdf)
 <use figures/SNEkhorn/spectral_clustering_sensitivity.pdf>
 Package pdftex.def Info: figures/SNEkhorn/spectral_clustering_sensitivity.pdf  used on input line 121.
@@ -1461,8 +1699,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[28 <./figures/SNEkhorn/spectral_clustering_sensitivity.pdf>]
-<figures/SNEkhorn/fig_sc.pdf, id=948, 431.32285pt x 213.75197pt>
+[35 <./figures/SNEkhorn/spectral_clustering_sensitivity.pdf>]
+<figures/SNEkhorn/fig_sc.pdf, id=1221, 431.32285pt x 213.75197pt>
 File: figures/SNEkhorn/fig_sc.pdf Graphic file (type pdf)
 <use figures/SNEkhorn/fig_sc.pdf>
 Package pdftex.def Info: figures/SNEkhorn/fig_sc.pdf  used on input line 159.
@@ -1472,7 +1710,7 @@ Overfull \hbox (12.63548pt too wide) in paragraph at lines 202--228
  [][] 
  []
 
-) (./chapters/SNEkhorn/sections/conclusion.tex))
+) (./chapters/SNEkhorn/sections/conclusion.tex
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.39998pt, for example:
@@ -1480,7 +1718,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[29 <./figures/SNEkhorn/fig_sc.pdf>] (./chapters/Appendix/Appendix.tex
+[36 <./figures/SNEkhorn/fig_sc.pdf>])) (./chapters/DistR/DistR.tex
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.39998pt, for example:
@@ -1488,21 +1726,161 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[30]
-Chapter 3.
+[37]
+Chapter 5.
 
 Overfull \vbox (23.08354pt too high) detected at line 1
  []
 
-(./chapters/Appendix/sections/appendix_graph_coupling.tex
+\openout4 = `main.mtc'.
+
+\openout4 = `main.mtc'.
+
+(./main.mtc5) (./chapters/DistR/sections/intro.tex
+<figures/DistR/fig_general.pdf, id=1283, 770.76758pt x 588.89174pt>
+File: figures/DistR/fig_general.pdf Graphic file (type pdf)
+<use figures/DistR/fig_general.pdf>
+Package pdftex.def Info: figures/DistR/fig_general.pdf  used on input line 8.
+(pdftex.def)             Requested size: 412.56496pt x 315.21121pt.
+ [38
+
+]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[39 <./figures/DistR/fig_general.pdf>]
+
+LaTeX Warning: Reference `sec:exps' on page 40 undefined on input line 54.
+
+) (./chapters/DistR/sections/background.tex) (./chapters/DistR/sections/DRasOT.tex
+Package hyperref Info: bookmark level for unknown lemma defaults to 0 on input line 31.
+
+
+LaTeX Warning: Reference `proof:GMproblemequiv' on page 1 undefined on input line 32.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[40]
+
+LaTeX Warning: Reference `proof:theo:main_theo' on page 1 undefined on input line 45.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 57--57
+[]\T1/lmss/bx/n/10.95 (+20) Theorem 5.2. []\T1/lmr/m/n/10.95 (+20) The min-i-mum eq. ([][]DR[][]) is equal to
+ []
+
+
+LaTeX Warning: Reference `sec:exps' on page 1 undefined on input line 68.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[41]
+
+LaTeX Warning: Reference `corr:equivCE' on page 1 undefined on input line 73.
+
+
+LaTeX Warning: Reference `sec:necessary_and_sufficient' on page 1 undefined on input line 73.
+
+) (./chapters/DistR/sections/DistR_model.tex
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[42]
+
+LaTeX Warning: Reference `sec:srGW_divergence' on page 43 undefined on input line 58.
+
+
+LaTeX Warning: Reference `fig:visu_fixedsupport' on page 1 undefined on input line 73.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[43]
+<figures/DistR/DistDR_embed.pdf, id=1445, 1134.63902pt x 315.3741pt>
+File: figures/DistR/DistDR_embed.pdf Graphic file (type pdf)
+<use figures/DistR/DistDR_embed.pdf>
+Package pdftex.def Info: figures/DistR/DistDR_embed.pdf  used on input line 108.
+(pdftex.def)             Requested size: 825.12991pt x 229.34535pt.
+
+
+LaTeX Warning: Reference `sec:srGW_concavity' on page 44 undefined on input line 118.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[44 <./figures/DistR/DistDR_embed.pdf>]
+
+LaTeX Warning: Reference `sec:algorithms' on page 45 undefined on input line 141.
+
+)
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[45]) (./chapters/Appendix/Appendix.tex
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[46]
+Chapter 6.
+
+Overfull \vbox (23.08354pt too high) detected at line 1
+ []
+
+\openout4 = `main.mtc'.
+
+\openout4 = `main.mtc'.
+
+(./main.mtc6) (./chapters/Appendix/sections/appendix_graph_coupling.tex
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\new@ifnextchar' on input line 3.
 
-[31
+[47
 
 ]
-Underfull \vbox (badness 1484) has occurred while \output is active []
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[48]
+Underfull \vbox (badness 2142) has occurred while \output is active []
 
 
 
@@ -1512,8 +1890,16 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[32]
-Overfull \hbox (4.51915pt too wide) detected at line 105
+[49]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[50]
+Overfull \hbox (4.51915pt too wide) detected at line 165
 []
  []
 
@@ -1524,7 +1910,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[33])) (./main.bbl
+[51])) (./main.bbl
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.39998pt, for example:
@@ -1532,14 +1918,14 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[34]
+[52]
 Underfull \vbox (badness 10000) detected at line 1
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [35
+ [53
 
 ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1552,8 +1938,19 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[36]
-Underfull \hbox (badness 1152) in paragraph at lines 201--207
+[54]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[55]
+Underfull \hbox (badness 1152) in paragraph at lines 353--359
 \T1/lmr/m/n/10 (+20) S. Thrun, and K. Ober-mayer, ed-i-tors, \T1/lmr/m/it/10 (+20) Ad-vances in Neu-ral In-for-ma-tion Pro-cess-ing
  []
 
@@ -1568,7 +1965,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[37]
+[56]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -1579,7 +1976,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[38]
+[57]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -1590,7 +1987,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[39])
+[58]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 14.39998pt, for example:
@@ -1598,7 +1998,42 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
 
-[40] (./main.aux)
+[59]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[60])
+Package minitoc Info: I0009
+(minitoc)             Listing minitoc auxiliary files. 
+(minitoc)             Creating the main.maf file.
+\openout4 = `main.maf'.
+
+Package minitoc(hints) Info: I0053
+(minitoc(hints))             You have loaded the float package; 
+(minitoc(hints))             please be aware that the minitoc package 
+(minitoc(hints))             facilities can not be used for new types 
+(minitoc(hints))             of floats defined by the float package.
+
+
+Package minitoc(hints) Warning: W0024
+(minitoc(hints))                Some hints have been written 
+(minitoc(hints))                in the main.log file.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.39998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.39998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.39998pt}.
+
+[61] (./main.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -1606,21 +2041,21 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 2263438AF56F5AA95F7E563356CD16E8;3948.
+(rerunfilecheck)             Checksum: 5145D6B0265927F05DD604F6211735A1;6044.
  ) 
 Here is how much of TeX's memory you used:
- 32822 strings out of 478268
- 649301 string characters out of 5846346
- 922025 words of memory out of 5000000
- 49583 multiletter control sequences out of 15000+600000
- 636835 words of font info for 395 fonts, out of 8000000 for 9000
+ 36221 strings out of 478268
+ 698847 string characters out of 5846346
+ 987121 words of memory out of 5000000
+ 52493 multiletter control sequences out of 15000+600000
+ 644070 words of font info for 439 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 99i,18n,103p,1711b,841s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmib10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmri9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmss10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmssbo10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsso10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (42 pages, 8742407 bytes).
+ 99i,18n,103p,2334b,843s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmib10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmri9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmss10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmssbo10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsso10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on main.pdf (64 pages, 2502933 bytes).
 PDF statistics:
- 1306 PDF objects out of 1440 (max. 8388607)
- 1119 compressed objects within 12 object streams
- 253 named destinations out of 1000 (max. 500000)
- 91317 words of extra memory for PDF output out of 106986 (max. 10000000)
+ 2184 PDF objects out of 2487 (max. 8388607)
+ 1814 compressed objects within 19 object streams
+ 385 named destinations out of 1000 (max. 500000)
+ 93453 words of extra memory for PDF output out of 106986 (max. 10000000)
 

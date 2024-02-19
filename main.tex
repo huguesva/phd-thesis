@@ -2,6 +2,8 @@
 \pdfoutput=1
 
 \usepackage{notations}
+\newcommand{\hva}[1]{{\color{purple} #1}}
+
 
 \floatstyle{ruled}
 \newfloat{boxfloat}{h}{boxfloat}[chapter]{
@@ -18,16 +20,19 @@
 \newcommand{\green}[1]{{\color{cadmiumgreen}#1}}
 \definecolor{OliveGreen}{rgb}{0.33, 0.62, 0.18}
 
-
 \maketitle
 
+\dominitoc% Initialization
 \tableofcontents
 
 \mainmatter
 
-\input{chapters/acknowledgements.tex}
-\input{chapters/GraphCoupling/GraphCoupling.tex}
-\input{chapters/SNEkhorn/SNEkhorn.tex}
+\input{chapters/acknowledgements}
+\input{chapters/Intro/Intro}
+\input{chapters/Background/Background}
+\input{chapters/GraphCoupling/GraphCoupling}
+\input{chapters/SNEkhorn/SNEkhorn}
+\input{chapters/DistR/DistR}
 
 \input{chapters/Appendix/Appendix}
 
