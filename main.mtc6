@@ -1,8 +1,11 @@
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {6.1}Appendix of \Cref {chapter:GraphCoupling}}{\reset@font\mtcSfont 49}{section.6.1}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {6.1.1}Proof of \Cref {PCA_graph_coupling}}{\reset@font\mtcSSfont 49}{subsection.6.1.1}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {6.1.2}Proof of \Cref {prop:integrability_pairwise_MRF}}{\reset@font\mtcSSfont 51}{subsection.6.1.2}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {6.1.3}Proof of \Cref {prop:posterior_W}}{\reset@font\mtcSSfont 53}{subsection.6.1.3}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode $B$-Prior.}{\reset@font\mtcPfont 53}{paragraph*.54}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode $D$-Prior.}{\reset@font\mtcPfont 54}{paragraph*.55}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode $E$-Prior.}{\reset@font\mtcPfont 54}{paragraph*.56}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {6.1}Appendix of \Cref {chapter:GraphCoupling}}{\reset@font\mtcSfont 47}{section.6.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {6.1.1}Proof of \Cref {PCA_graph_coupling}}{\reset@font\mtcSSfont 47}{subsection.6.1.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {6.1.2}Proof of \Cref {prop:integrability_pairwise_MRF}}{\reset@font\mtcSSfont 49}{subsection.6.1.2}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {6.1.3}Proof of \Cref {prop:posterior_W}}{\reset@font\mtcSSfont 51}{subsection.6.1.3}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode $B$-Prior.}{\reset@font\mtcPfont 51}{paragraph*.54}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode $D$-Prior.}{\reset@font\mtcPfont 52}{paragraph*.55}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode $E$-Prior.}{\reset@font\mtcPfont 52}{paragraph*.56}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {6.1.4}Towards Capturing Large-Scale Dependencies}{\reset@font\mtcSSfont 53}{subsection.6.1.4}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Hierarchical Graph Coupling}{\reset@font\mtcSSSfont 53}{subsubsection*.57}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Experiments with \textit {ccPCA}}{\reset@font\mtcSSSfont 54}{subsubsection*.58}}
 {\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {6.2}Appendix of \Cref {chapter:SNEkhorn}}{\reset@font\mtcSfont 55}{section.6.2}}

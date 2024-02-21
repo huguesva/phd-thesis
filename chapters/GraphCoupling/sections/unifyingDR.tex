@@ -33,7 +33,7 @@ For all $\Wb \in \mathcal{S}_{W}$, $\mathcal{C}^{\varepsilon}(\Wb)$ diverges as 
 
 \subsection{Retrieving Popular Dimension Reduction Methods}\label{sec:retrieving_DR_methods}
 
-We now provide a unified view of neighbor embedding objectives as a coupling between graph posterior distributions. To that extent we derive the cross entropy associated with the various graph priors at hand. In what follows, $k_x$ and $k_z$ satisfy the assumptions of \cref{prop:integrability_pairwise_MRF} and we denote by $\Kb_{X}$ and $\Kb_{Z}$ the associated kernel matrices on  $\Xb$ and $\Zb$ respectively. For both graph priors we consider the parameters $\bm{\pi}=\bm{1}$ and $\alpha=1$. For $(\mathcal{P}_{X}, \mathcal{P}_{Z}) \in \{B,D,E\}^2$, we introduce the 
+We now provide a unified view of neighbor embedding objectives as a coupling between graph posterior distributions. To that extent, we derive the cross entropy associated with the various graph priors at hand. In what follows, $k_x$ and $k_z$ satisfy the assumptions of \cref{prop:integrability_pairwise_MRF} and we denote by $\Kb_{X}$ and $\Kb_{Z}$ the associated kernel matrices on  $\Xb$ and $\Zb$ respectively. For both graph priors we consider the parameters $\bm{\pi}=\bm{1}$ and $\alpha=1$. For $(\mathcal{P}_{X}, \mathcal{P}_{Z}) \in \{B,D,E\}^2$, we introduce the 
 cross entropy between the limit posteriors at $\varepsilon \to 0$,
 \begin{align*}
     \mathcal{H}_{\mathcal{P}_X, \mathcal{P}_Z} = - \mathbb{E}_{\Wb_{X} \sim }\mathbb{P}_{\mathcal{P}_X}(\cdot;\Kb_X)[\log \mathbb{P}_{\mathcal{P}_{Z}}(\Wb_{Z} = \Wb_{X}; \Kb_{Z})]
@@ -41,7 +41,7 @@ cross entropy between the limit posteriors at $\varepsilon \to 0$,
 defining a coupling criterion to be optimized with respect to embedding coordinates $\Zb$. We now go through each couple $(\mathcal{P}_{X}, \mathcal{P}_{Z})$ such that $\operatorname{supp}\left(\mathbb{P}_{\mathcal{P}_X}\right) \subset \operatorname{supp}\left(\mathbb{P}_{\mathcal{P}_Z}\right)$ for the cross-entropy to be defined.
 
 \paragraph{SNE.}
-When $\mathcal{P}_{X} = \mathcal{P}_{Z} = D$, the probability of the limit posterior graphs factorizes over the nodes and the cross-entropy between limit posteriors takes the form of the objective of SNE \cite{hinton2002stochastic}, where for $i \in \integ{n},\Pb^{D}_{i:} = [\Kb_X]_{i:} / \sum_j [\Kb_X]_{ij}$ and $\Qb^{D}_{i:} = [\Kb_{Z}]_{i:} / \sum_j [\Kb_Z]_{ij}$,
+When $\mathcal{P}_{X} = \mathcal{P}_{Z} = D$, the probability of the limit posterior graphs factorizes over the nodes and the cross-entropy between limit posteriors takes the form of the objective of SNE \citep{hinton2002stochastic}, where for $i \in \integ{n},\Pb^{D}_{i:} = [\Kb_X]_{i:} / \sum_j [\Kb_X]_{ij}$ and $\Qb^{D}_{i:} = [\Kb_{Z}]_{i:} / \sum_j [\Kb_Z]_{ij}$,
 $$\mathcal{H}_{D,D}= - \sum_{i \neq j} P^{D}_{ij} \log Q^{D}_{ij} \:.$$
 
 \paragraph{Symmetric-SNE.}
@@ -49,7 +49,7 @@ Choosing $\mathcal{P}_{X} = D$ and $\mathcal{P}_{Z} = E$, we define for $(i,j) \
 \begin{align*}
     \mathcal{H}_{D,E} &= - \sum_{i \neq j} P^{D}_{ij} \log Q^{E}_{ij} = - \sum_{i < j} \overline{P}^{D}_{ij} \log Q^{E}_{ij}
 \end{align*}
-and the symmetrized objective of t-SNE \cite{maaten2008tSNE} is recovered. 
+and the symmetrized objective of t-SNE \citep{maaten2008tSNE} is recovered. 
 
 \paragraph{LargeVis.}
 Now choosing $\mathcal{P}_{X} = D$ and $\mathcal{P}_{Z} = B$, one can also notice that $\Qb^{B} = \left( [\Kb_Z]_{ij} / (1+[\Kb_Z]_{ij}) \right)_{(i,j) \in \integ{n}^2}$ is symmetric. With this at hand the limit cross-entropy reads

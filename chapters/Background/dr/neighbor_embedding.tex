@@ -80,7 +80,7 @@ normalization for the similarities in latent space $[\widetilde{\Qb}_\Z]_{ij} = 
 In other words, the affinity matrix $\overline{\Pb^{\mathrm{e}}}$ is the Euclidean projection of $\Pb^{\mathrm{e}}$ on the space of symmetric matrices $\mathcal{S}$.
 
 \begin{proposition}
-    $\overline{\Pb^{\mathrm{e}}} = \operatorname{Proj}^{\ell_2}_{\mathcal{S}}(\Pb^{\mathrm{e}}) = \argmin_{\Pb \in \mathcal{S}}\| \Pb - \Pb^{\mathrm{e}} \|_2$. 
+    $\operatorname{Proj}^{\ell_2}_{\mathcal{S}}(\Pb) = \argmin_{\overline{\Pb} \in \mathcal{S}} \big\| \overline{\Pb} - \Pb \big\|_2$. 
 \end{proposition}
 
 \begin{proof}
