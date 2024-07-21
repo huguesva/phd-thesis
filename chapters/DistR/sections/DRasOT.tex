@@ -25,7 +25,7 @@ samples to undergo the same rearrangement.
 Let $\simi$ be a permutation equivariant function and $L$ any loss. The minimum \cref{eq:DR_criterion} is equal to 
 \begin{equation}
 \label{eq:gm}
-\min_{\mZ \in \R^{N \times d}} \min_{\sigma \in S_N} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{\sigma(i) \sigma(j)}) \:.
+\min_{\mZ \in \R^{N \times d}} \min_{\sigma \in S_N} \: \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{\sigma(i) \sigma(j)}) \:.
 \end{equation}
 Also, any sol. $\mZ$ of \cref{eq:DR_criterion} is such that $(\mZ, \operatorname{id})$ is sol. of \cref{eq:gm} and conversely any $(\mZ, \sigma)$ sol. of \cref{eq:gm} is such that $\mZ$ is a sol of \cref{eq:DR_criterion} up to $\sigma$.
 \end{restatable}
@@ -46,7 +46,7 @@ We thus have the following theorem that extends \Cref{lemma:GMproblemequiv} to t
 \begin{restatable}{theorem}{maintheodistr}
 \label{theo:main_theo}
 The minimum \cref{eq:DR_criterion} is equal to $\min_{\mZ}\GW_L(\simiX(\mX), \simi(\mZ), \frac{1}{N}\one_N, \frac{1}{N}\one_N)$ in the following settings:
-\begin{enumerate}[label=(\roman*)]
+\begin{enumerate}[label=(\roman*), rightmargin=25pt]
 \item (spectral methods)  $\simiX(\mX)$ is any matrix, $L = L_2$ and $\simi(\mZ) = \mZ \mZ^\top$. 
 \item (neighbor embedding methods) $\im(\simiX) \subseteq \R_{>0}^{N \times N}$, $L = L_{\KL}$, the matrix $\simiX(\mX)$ is CPD and, for any $\mZ$,
 \begin{equation}

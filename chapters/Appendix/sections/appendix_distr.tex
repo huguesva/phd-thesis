@@ -1,0 +1,730 @@
+\chapter{Appendix of \Cref{chapter:DistR}}
+
+\minitoc 
+
+\textbf{Outline of the supplementary material:}
+\begin{itemize}
+	\item \Cref{sec:DR_as_OT_supp}: provide the proofs for the results stated in Section 3, namely the one for \cref{lemma:GMproblemequiv} in \Cref{proof:GMproblemequiv}; for \Cref{theo:main_theo} in  \Cref{proof:theo:main_theo} and additional necessary and sufficient conditions under different assumptions as discussed in Remark 3.3 developed in \Cref{sec:necessary_and_sufficient}
+	\item \Cref{sec:srGW_divergence_supp}: provide the definition of weak isomorphism in the GW framework, proofs regarding the characterization of the generalized srGW discrepancy as a divergence, mentioned in \Cref{sec:DDR_ob} of the main paper.
+	\item \Cref{sec:srGW_concavity_supp}: proof of \cref{theo:srgw_bary_concavity} on the clustering properties of srGW barycenters.
+	\item \Cref{sec:algorithms}: Algorithmic details for DistR under generic and low-rank settings.
+	\item \Cref{sec:appendix_exps}: Several additional information and results regarding the experiments detailed in \Cref{sec:exps} of the main paper. \ref{sec:implementation_details} provides details on methods' implementation, validation of hyperparameters, datasets and metrics. \Cref{sec:coot_exp} compares DistR with COOT clustering. \Cref{sec:full_sensitivity} reports complete scores on all datasets. \Cref{sec:supp_hom_vs_sil} and \ref{sec:supp_hom_vs_nmi} study homogeneity vs silhouette and homogeneity vs kmeans NMI scores for various numbers of prototypes. \Cref{sec:compute_time} compares computation time across methods. And finally, \Cref{sec:hyperbolic} detail our proofs of concepts with hyperbolic DR kernels.
+
+\end{itemize}
+
+\section{Proof of results in \Cref{sec:DR_as_OT}}\label{sec:DR_as_OT_supp}
+
+\subsection{Proof of \cref{lemma:GMproblemequiv} \label{proof:GMproblemequiv}}
+
+We recall the result.
+\GMproblemequiv*
+\begin{proof}
+	By suboptimality of $\sigma = \operatorname{id}$ we clearly have 
+	\begin{equation}
+		\min_{\mZ \in \R^{N \times d}} \min_{\sigma \in S_N} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{\sigma(i) \sigma(j)}) \leq \min_{\mZ \in \R^{N \times d}} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{i j}).
+	\end{equation}
+	For the other direction, take an optimal solution $(\mZ, \sigma)$ of \cref{eq:gm}. Using the permutation equivariance of $\simi$, $[\simi(\mZ)]_{\sigma(i) \sigma(j)} = [\mP \simi(\mZ)\mP^\top]_{ij} = [\simi(\mP \mZ)]_{ij}$ for some permutation matrix $\mP$. But $\mP \mZ$ is admissible for problem \cref{eq:DR_criterion}. Hence 
+	\begin{equation}
+		\min_{\mZ \in \R^{N \times d}} \min_{\sigma \in S_N} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{\sigma(i) \sigma(j)}) \geq \min_{\mZ \in \R^{N \times d}} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{i j}).
+	\end{equation}
+\end{proof}
+
+\subsection{Proof of \cref{theo:main_theo} \label{proof:theo:main_theo}}
+
+In the following $\operatorname{DS}$ is the space of $N \times N$ doubly stochastic matrices. We begin by proving the first point of \cref{theo:main_theo}. We will rely on the simple, but useful, result below.
+\begin{proposition}
+	\label{proposition:general_sufficient_condition}
+	Let $\Omega \subseteq \R$ and $\im(\simiX) \subseteq \Omega^{N \times N}$. Suppose that $L(a, \cdot)$ is convex for any $a \in \Omega$ and
+	\begin{equation}
+		\label{eq:the_general_sufficient_hypothesis}
+		\min_{\mZ \in \R^{N \times d}} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{ij}) \leq \min_{\mZ \in \R^{N \times d}, \mT \in \DS} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\mT \simi(\mZ) \mT^\top]_{ij})\,.
+	\end{equation}
+	Then the minimum \cref{eq:DR_criterion} is equal to $\min_{\mZ}\GW_L(\simiX(\mX), \simi(\mZ), \frac{1}{N}\one_N, \frac{1}{N}\one_N)$.
+\end{proposition}
+\begin{proof}
+	Consider any doubly stochastic matrix $\mT$ and note that $[\mT \simi(\mZ) \mT^\top]_{ij} = \sum_{kl} [\simi(\mZ)]_{kl} T_{ik} T_{jl}$. Using the convexity of $L(a, \cdot)$ for any $a \in \Omega$ and Jensen's inequality we have
+	\begin{equation}
+		\begin{split}
+			\label{eq:jensenagain}
+			\sum_{ij} L([\simiX(\mX)]_{ij}, [\mT \simi(\mZ) \mT^\top]_{ij}) &= \sum_{ij} L([\simiX(\mX)]_{ij}, \sum_{kl} [\simi(\mZ)]_{kl} T_{ik} T_{jl})\\
+			&\leq \sum_{ijkl} L([\mC_\mX]_{ij}, [\simi(\mZ)]_{kl}) T_{ik} T_{jl}\,.
+		\end{split}
+	\end{equation}
+	In particular
+	\begin{equation}
+		\min_{\mZ} \min_{\mT \in \DS} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\mT \simi(\mZ) \mT^\top]_{ij}) \leq \min_{\mZ} \ \min_{\mT \in \DS} \sum_{ijkl} L([\mC_\mX]_{ij}, [\simi(\mZ)]_{kl}) T_{ik} T_{jl} \,.
+	\end{equation}
+	Hence, using \cref{eq:the_general_sufficient_hypothesis},
+	\begin{equation}
+		\min_{\mZ} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{ij}) \leq \min_{\mZ} \ \min_{\mT \in \DS} \sum_{ijkl} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{kl}) T_{ik} T_{jl}\,.
+	\end{equation}
+	But the converse inequality is also true by sub-optimality of $\mT = \mI_N$ for the problem $\min_{\mZ} \ \min_{\mT \in \DS} \sum_{ijkl} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{kl}) T_{ik} T_{jl}$. Overall 
+	\begin{equation}
+		\min_{\mZ} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{ij}) = \min_{\mZ} \ \min_{\mT \in \DS} \sum_{ijkl} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{kl}) T_{ik} T_{jl}\,.
+	\end{equation}
+	Now we conclude by using that the RHS of this equation is equivalent to the minimization in $\mZ$ of $\GW_L(\simiX(\mX), \simi(\mZ), \frac{1}{N}\one_N, \frac{1}{N}\one_N)$ (both problems only differ from a constant scaling factor $N^2$).
+\end{proof}
+
+As a consequence we have the following result.
+\begin{proposition}
+	\label{proposition:thetwoconditions}
+	Let $\Omega \subseteq \R$ and $\im(\simiX) \subseteq \Omega^{N \times N}$. The minimum \cref{eq:DR_criterion} is equal to $\min_{\mZ} \GW_L(\simiX(\mX), \simi(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N)$ when:
+	\begin{enumerate}[label=(\roman*), rightmargin=25pt]
+		\item $L(a, \cdot)$ is convex for any $a \in \Omega$ and the image of $\simi$ is stable by \\
+        doubly-stochastic matrices, \ie, 
+		\begin{equation}
+			\label{eq:stability_ds}
+			\forall \mZ \in \R^{N \times d}, \forall \mT \in \DS, \exists \mY \in \R^{N \times d}, \ \simi(\mY) = \mT \simi(\mZ) \mT^\top\,.
+		\end{equation}
+		\item $L(a, \cdot)$ is convex \underline{and non-decreasing} for any $a \in \Omega$ and
+		\begin{equation}
+			\label{eq:another_condition_based_on_convexity}
+			\forall \mZ \in \R^{N \times d}, \forall \mT \in \DS, \exists \mY \in \R^{N \times d}, \ \simi(\mY) \leq \mT \simi(\mZ) \mT^\top\,,
+		\end{equation}
+		where $\leq$ is understood element-wise, \ie, $\bm{A} \leq \bm{B} \iff \forall (i,j), \ A_{ij} \leq B_{ij}$. 
+	\end{enumerate}
+\end{proposition}
+\begin{proof}
+	For the first point it suffices to see that the condition \cref{eq:stability_ds} implies that $\{\mT \simi(\mZ) \mT^\top: \mZ \in \R^{N \times d}, \mT \in \DS\} \subseteq \{\simi(\mZ): \mZ \in \R^{N \times d}\}$ (in fact we have equality by choosing $\mT = \mathbf{I}_N$) and thus \cref{eq:the_general_sufficient_hypothesis} holds and we apply \cref{proposition:general_sufficient_condition}.
+	
+	For the second point we will also show that \cref{eq:the_general_sufficient_hypothesis} holds. Consider $\mZ^\star, \mT^\star$ minimizers of $\min_{\mZ, \mT \in \DS} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\mT \simi(\mZ) \mT^\top]_{ij})$. By hypothesis there exists $\mY \in \R^{N \times d}$ such that 
+    \begin{align}
+        \forall (i,j) \in \integ{N}^2, \quad [\mT^\star \simi(\mZ^\star) {\mT^{\star}}^\top]_{ij} \geq [\simi(\mY)]_{ij} \:.
+    \end{align}
+    Since $L([\simiX(\mX)]_{ij}, \cdot)$ is non-decreasing for any $(i,j)$ then $\sum_{ij} L([\simiX(\mX)]_{ij}, [\mT^\star \simi(\mZ^\star) {\mT^{\star}}^\top]_{ij}) \geq \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mY)]_{ij})$ and thus $\sum_{ij} L([\simiX(\mX)]_{ij}, [\mT^\star \simi(\mZ^\star) {\mT^{\star}}^\top]_{ij}) \geq \min_{\mZ} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{ij})$ which gives the condition \cref{eq:the_general_sufficient_hypothesis} and we have the conclusion by \cref{proposition:general_sufficient_condition}. 
+\end{proof}
+
+We recall that a function $R: \R^{N \times d} \to \R$ is called permutation invariant if $R(\mP \mZ) = R(\mZ)$ for any $\mZ \in \R^{N \times d}$ and $N \times N$ permutation matrix $\mP$. From the previous results we have the following corollary, which proves, in particular, the first point of \cref{theo:main_theo}.
+\begin{corollary}
+	\label{corr:equivCE}
+	We have the following equivalences:
+	\begin{enumerate}[label=(\roman*), rightmargin=25pt]
+		\item Consider the spectral methods which correspond to $\simi(\mZ) = \mZ \mZ^\top$ and $L =L_2$. Then for any $\simiX$
+		\begin{equation}
+			\min_{\mZ \in \R^{N \times d}} \sum_{ij} L_2([\mC_\mX]_{ij}, \langle \vz_i, \vz_j\rangle)
+		\end{equation}
+		and 
+		\begin{equation}
+			\min_{\mZ \in \R^{N \times d}} \operatorname{GW}_{L_2}(\simiX(\mX), \mZ \mZ^\top, \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N)
+		\end{equation}
+		are equal.
+		\item Consider the cross-entropy loss $L(x,y) = x \log(x/y)$ and $\simiX$ such that $\im(\simiX)\subseteq \R_{+}^{N \times N}$. Suppose that the similarity in the output space can be written as 
+		\begin{equation}
+			\forall (i,j)\in \integ{N}^2, [\simi(\mZ)]_{ij} =  f(\vz_i -\vz_j)/ R(\mZ)\,,
+		\end{equation}
+		for some logarithmically concave function $f: \R^d \to \R_{+}$ and normalizing factor $R: \R^{N \times d} \to \R_{+}^{*}$ which is both convex and permutation invariant. Then,
+		\begin{equation}
+			\label{eq:neighbor_embedding_problem}
+			\min_{\mZ \in \R^{N \times d}} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{ij})
+		\end{equation}
+		and 
+		\begin{equation}
+			\min_{\mZ \in \R^{N \times d}} \GW_{L}(\simiX(\mX), \simi(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N)
+		\end{equation}
+		are equal. 
+	\end{enumerate}
+\end{corollary}
+\begin{proof}
+	For the first point we show that the condition \cref{eq:stability_ds} of \cref{proposition:thetwoconditions} is satisfied. Indeed take any $\mZ, \mT$ then $\mT \simi(\mZ) \mT^\top = \mT \mZ \mZ^\top \mT^\top = (\mT \mZ)(\mT \mZ)^\top = \simi(\mT \mZ)$.
+	
+	For the second point if we consider $\tilde L(a,b) = a\times b$ then we use that the neighbor embedding problem \cref{eq:neighbor_embedding_problem} is equivalent to $\min_{\mZ \in \R^{N \times d}} \sum_{ij} - [\simiX(\mX)]_{ij}\log([\simi(\mZ)]_{ij}) = \min_{\mZ \in \R^{N \times d}} \sum_{ij} \tilde{L}([\simiX(\mX)]_{ij}, [\widetilde{\simi}(\mZ)]_{ij})$ where $[\widetilde{\simi}(\mZ)]_{ij} = g(\vz_i-\vz_j) + \log(R(\mZ))$ with $g = -\log \circ f$. Since $f$ is logarithmically concave $g$ is convex. Moreover we have that $\tilde{L}(a, \cdot)$ is convex (it is linear) and non-decreasing since $a \in \R_+$ in this case ($\mC_\mX$ is non-negative). Also for any $\mZ \in \R^{N \times d}$ and $\mT \in \DS$ we have, using Jensen's inequality since $\mT$ is doubly-stochastic,
+	\begin{equation}
+		\begin{split}
+			[\mT \widetilde{\simi}(\mZ) \mT^\top]_{ij} &= \sum_{kl} g(\vz_k-\vz_l) T_{ik} T_{jl} + \log(R(\mZ)) \\
+			&\geq  g(\sum_{kl}(\vz_k-\vz_l) T_{ik} T_{jl}) + \log(R(\mZ))\\
+			&= g(\sum_{k} \vz_k T_{ik} - \sum_{l} \vz_l T_{jl})+ \log(R(\mZ))\,.
+		\end{split}
+	\end{equation}
+	Now we will prove that $\log(R(\mZ)) \geq \log(R(\mT \mZ))$. Using Birkhoff's theorem \citep{birkhoff1946tres} the matrix $\mT$ can be decomposed as a convex combination of permutation matrices, \ie,  $\mT = \sum_k \lambda_k \mP_k$ where $(\mP_k)_k$ are permutation matrices and $\lambda_k \in \R_{+}$ with $\sum_{k} \lambda_k = 1$. Hence by convexity and Jensen's inequality $R(\mT \mZ) = R(\sum_k \lambda_k \mP_k \mZ) \leq \sum_{k} \lambda_k R(\mP_k \mZ)$. Now using that $R$ is permutation invariant we get $R(\mP_k \mZ) = R(\mZ)$ and thus $R(\mT \mZ) \leq \sum_k \lambda_k R(\mZ) = R(\mZ)$. Since the logarithm is non-decreasing we have $\log(R(\mZ)) \geq \log(R(\mT \mZ))$ and, overall,
+	\begin{equation}
+		\begin{split}
+			[\mT \widetilde{\simi}(\mZ) \mT^\top]_{ij} \geq  g(\sum_{k} \vz_k T_{ik} - \sum_{l} \vz_l T_{jl}) + \log(R(\mT \mZ)) = [\widetilde{\simi}(\mT\mZ)]_{ij}\,.
+		\end{split}
+	\end{equation}
+	Thus if we introduce $\mY = \mT \mZ$ we have $[\mT \widetilde{\simi}(\mZ) \mT^\top]_{ij} \geq [\widetilde{\simi}(\mY)]_{ij}$ and \cref{eq:another_condition_based_on_convexity} is satisfied. Thus we can apply \cref{proposition:thetwoconditions} and state that $\min_{\mZ \in \R^{N \times d}} \sum_{ij} \tilde{L}([\simiX(\mX)]_{ij}, [\widetilde{\simi}(\mZ)]_{ij})$ and $\min_{\mZ \in \R^{N \times d}} \GW_{\tilde{L}}(\simiX(\mX), \widetilde{\simi}(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N)$ are equivalent which concludes as $\min_{\mZ \in \R^{N \times d}} \GW_{\tilde{L}}(\simiX(\mX), \widetilde{\simi}(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N) = \min_{\mZ \in \R^{N \times d}} \GW_{L}(\simiX(\mX), \simi(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N)$.
+\end{proof}
+
+It remains to prove the second point of \cref{theo:main_theo} as stated below.
+\begin{proposition}
+	\label{prop:second_point_theorem}
+	Consider $\im(\simiX) \subseteq \R_+^{N \times N}$, $L = L_{\KL}$. Suppose that for any $\mX$ the matrix $\simiX(\mX)$ is CPD and for any $\mZ$ 
+	\begin{equation}
+		\simi(\mZ) = \diag(\alphab_\mZ) \mK_\mZ \diag(\betab_\mZ)\,,
+	\end{equation}
+	where $\alphab_\mZ, \betab_\mZ \in \R^{N}_{> 0}$ and  $\mK_\mZ \in \R^{N \times N}_{> 0}$ is such that $\log(\mK_\mZ)$ is CPD. Then the minimum \cref{eq:DR_criterion} is equal to $\min_{\mZ} \GW_L(\simiX(\mX), \simi(\mZ), \frac{1}{N}\one_N, \frac{1}{N}\one_N)$. 
+\end{proposition}
+\begin{proof}
+	To prove this result we will show that, for any $\mZ$, the function
+	\begin{equation}
+		\label{eq:the_concave_we_have}
+		\mT \in \gU(\frac{1}{N}\one_N, \frac{1}{N}\one_N) \to E_{L}(\simiX(\mX), \simi(\mZ), \mT)\,,
+	\end{equation}
+	is actually concave. Indeed, in this case  there exists a minimizer which is an extremal point of $\gU(\frac{1}{N}\one_N, \frac{1}{N}\one_N)$. By Birkhoff’s theorem \citep{birkhoff1946tres} these extreme points are the matrices $\frac{1}{N} \mP$ where $\mP$ is a $N \times N$ permutation matrix. Consequently, when the function \cref{eq:the_concave_we_have} is concave minimizing $\GW_L(\simiX(\mX), \simi(\mZ), \frac{1}{N}\one_N, \frac{1}{N}\one_N)$ in $\mZ$ is equivalent to minimizing in $\mZ$
+	\begin{align}
+		&\min_{\mP \in \R^{N \times N} \text{ permutation}} \ \sum_{ijkl} L([\simiX(\mX)]_{ik}, [\simi(\mZ)]_{jl}) P_{ij} P_{kl} \\
+        &= \min_{\sigma \in S_N} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{\sigma(i)\sigma(j)})\,,
+	\end{align}
+	which is exactly the Gromov-Monge problem described in \cref{lemma:GMproblemequiv} and thus the problem is equivalent to \cref{eq:DR_criterion} by \cref{lemma:GMproblemequiv}.
+	
+	First note that $L(x,y) = x \log(x)-x - x \log(y) +y$ so for any $\mT \in \gU(\frac{1}{N}\one_N, \frac{1}{N}\one_N)$ the loss $E_{L}(\simiX(\mX), \simi(\mZ), \mT)$ is equal to
+	\begin{equation}
+		\begin{split}
+			\sum_{ijkl} L([\simiX(\mX)]_{ik}, [\simi(\mZ)]_{jl}) T_{ij} T_{kl} &= a_\mX+ b_\mZ - \sum_{ijkl} [\simiX(\mX)]_{ik}\log([\simi(\mZ)]_{jl}) T_{ij} T_{kl} \\
+			&=a_\mX+ b_\mZ - \sum_{ijkl} [\simiX(\mX)]_{ik}\log([\alphab_\mZ]_j [\betab_\mZ]_l [\mW]_{jl}) T_{ij} T_{kl} \\
+			&=a_\mX+ b_\mZ - \frac{1}{N}\sum_{ijk} [\simiX(\mX)]_{ik}\log([\alphab_\mZ]_j) T_{ij}  \\
+			&- \frac{1}{N} \sum_{ikl} [\simiX(\mX)]_{ik}\log([\betab_\mZ]_l) T_{kl}\\
+			&-\sum_{ijkl} [\simiX(\mX)]_{ik}\log([\mK_\mZ]_{jl}) T_{ij} T_{kl}\,,
+		\end{split}
+	\end{equation}
+	where $a_\mX, b_\mZ$ are terms that do not depend on $\mT$. Since the problem is quadratic the concavity only depends on the term $-\sum_{ijkl} [\simiX(\mX)]_{ik}\log([\mK_\mZ]_{jl}) T_{ij} T_{kl} = -\tr(\simiX(\mX) \mT^\top \log(\mK_\mZ) \mT)$. From \cite{maron2018probably} we know that the function $\mT \to -\tr(\simiX(\mX) \mT^\top \log(\mK_\mZ) \mT)$ is concave on $\gU(\frac{1}{N} \one_N, \frac{1}{N} \one_N)$ when $\simiX(\mX)$ is CPD and $\log(\mW_\mZ)$ is CPD. This concludes the proof.	
+\end{proof}
+
+\subsection{Necessary and sufficient condition \label{sec:necessary_and_sufficient}}
+
+We give a necessary and sufficient condition under which the DR problem is equivalent to a GW problem
+\begin{proposition}
+	\label{prop:bilinear_problem}
+	Let $\mC_1 \in \R^{N \times N}, L: \R \times \R \to \R$ and $\mathcal{C} \subseteq \R^{N \times N}$ a subspace of $N \times N$ matrices. We suppose that $\mathcal{C}$ is stable by permutations \ie, $\mC \in \mathcal{C}$ implies that $\mP \mC \mP^\top \in \mathcal{C}$ for any $N \times N$ permutation matrix $\mP$.
+	
+	Then
+	\begin{equation}
+		\label{eq:equality_between_both}
+		\min_{\mC_2 \in \mathcal{C}} \sum_{(i,j) \in \integ{N}^2} L([\mC_1]_{ij}, [ \mC_2]_{ij}) = \min_{\mC_2 \in \mathcal{C}} \min_{\begin{smallmatrix} \mT \in \R_{+}^{N \times N} \\ \mT \one_N = \one_N \\ \mT^\top \one_N = \one_N \end{smallmatrix}} \ \sum_{ijkl} L([\mC_1]_{ij}, [\mC_2]_{kl}) \ T_{ik} T_{jl}
+	\end{equation}
+	if and only if the optimal assignment problem
+	\begin{equation}
+		\min_{\sigma_1, \sigma_2 \in S_N} \ f(\sigma_1, \sigma_2) := \min_{\mC_2 \in \mathcal{C}} \sum_{ij} L([\mC_1]_{ij}, [\mC_2]_{\sigma_1(i)\sigma_2(j)})
+	\end{equation}
+	admits an optimal solution $(\sigma_1^\star, \sigma_2^\star)$ with $\sigma_1^\star=\sigma_2^\star$.
+\end{proposition}
+\begin{proof}
+	We note that the LHS of \cref{eq:equality_between_both} is always smaller than the RHS since $\mT = \mathbf{I}_{N}$ is admissible for the RHS problem. So both problems are equal if and only if
+	\begin{equation}
+		\min_{\mC_2 \in \mathcal{C}} \sum_{(i,j) \in \integ{N}^2} L([\mC_1]_{ij}, [\mC_2]_{ij}) \leq \min_{\mC_2 \in \mathcal{C}} \min_{\begin{smallmatrix} \mT \in \R_{+}^{N \times N} \\ \mT \one_N = \one_N \\ \mT^\top \one_N = \one_N \end{smallmatrix}} \ \sum_{ijkl} L([\mC_1]_{ij}, [\mC_2]_{kl}) \ T_{ik} T_{jl}\,.
+	\end{equation}
+	Now consider any $\mC_2$ fixed and observe that
+	\begin{equation}
+		\label{eq:lower_bound}
+		\min_{\mT \in \DS} \ \sum_{ijkl} L([\mC_1]_{ij}, [\mC_2]_{kl}) \ T_{ik} T_{jl} \geq \min_{\mT^{(1)}, \mT^{(2)} \in \DS} \ \sum_{ijkl} L([\mC_1]_{ij}, [\mC_2]_{kl}) \ T^{(1)}_{ik} T^{(2)}_{jl}\,.
+	\end{equation}
+	The latter problem is a co-optimal transport problem \citep{redko2020co}, and, since it is a bilinear problem, there is an optimal solution $(\mT^{(1)}, \mT^{(2)})$ such that both $\mT^{(1)}$ and $\mT^{(2)}$ are in an extremal point of $\DS$ which is the space of $N \times N$ permutation matrices by Birkhoff's theorem \citep{birkhoff1946tres}. This point was already noted by \citep{konno1976cutting} but we recall the proof for completeness. We note $L_{ijkl} = L([\mC_1]_{ij}, [\mC_2]_{kl})$ and consider an optimal solution $(\mT_\star^{(1)}, \mT_\star^{(2)})$ of $\min_{\mT^{(1)}, \mT^{(2)} \in \DS} \phi(\mT^{(1)}, \mT^{(2)}):=\sum_{ijkl} L_{ijkl} T^{(1)}_{ik} T^{(2)}_{jl}$. Consider the linear problem $\min_{\mT \in \DS} \phi(\mT, \mT_\star^{(2)})$. Since it is a linear over the space of doubly stochastic matrices it admits a permutation matrix $\mP^{(1)}$ as optimal solution. Also $\phi(\mP^{(1)}, \mT_\star^{(2)}) \leq \phi(\mT_\star^{(1)}, \mT_\star^{(2)})$ by optimality. Now consider the linear problem $\min_{\mT \in \DS} \phi(\mP^{(1)}, \mT)$, in the same it admits a permutation matrix $\mP^{(2)}$ as optimal solution and by optimality $\phi(\mP^{(1)}, \mP^{(2)}) \leq \phi(\mP^{(1)}, \mT_\star^{(2)})$ thus $\phi(\mP^{(1)}, \mP^{(2)}) \leq \phi(\mT_\star^{(1)}, \mT_\star^{(2)})$ which implies that $(\mP^{(1)}, \mP^{(2)})$ is an optimal solution. Combining with \cref{eq:lower_bound} we get
+	\begin{equation}
+		\label{eq:coot_relax}
+		\begin{split}
+			\min_{\mC_2 \in \mathcal{C}} \ \min_{\mT \in \DS} \ \sum_{ijkl} L([\mC_1]_{ij}, [\mC_2]_{kl}) \ T_{ik} T_{jl} &\geq \min_{\mC_2 \in \mathcal{C}} \min_{\sigma_1, \sigma_2 \in S_N}  \sum_{ij} L([\mC_1]_{ij}, [\mC_2]_{\sigma_1(i)\sigma_2(j)}) \\ & = \min_{\sigma_1, \sigma_2 \in S_N} f(\sigma_1, \sigma_2) \,.
+		\end{split}
+	\end{equation}
+	
+	Now suppose that the optimal assignment problem $\min_{\sigma_1, \sigma_2 \in S_N} \ f(\sigma_1, \sigma_2)$ admits an optimal solution $(\sigma_1^\star, \sigma_2^\star)$ with $\sigma_1^\star=\sigma_2^\star$. Then with \cref{eq:coot_relax}
+	\begin{equation}
+		\label{eq:onlyonepermut}
+		\begin{split}
+			\min_{\mC_2 \in \mathcal{C}} \ \min_{\mT \in \DS} \ \sum_{ijkl} L([\mC_1]_{ij}, [\mC_2]_{kl}) \ T_{ik} T_{jl} &\geq \min_{\mC_2 \in \mathcal{C}} \sum_{ij} L([\mC_1]_{ij}, [\mC_2]_{\sigma^\star_1(i)\sigma^\star_1(j)}) \\
+			&\geq \min_{\sigma \in S_N} \min_{\mC_2 \in \mathcal{C}} \sum_{ij} L([\mC_1]_{ij}, [\mC_2]_{\sigma(i)\sigma(j)})\,.
+		\end{split}
+	\end{equation}
+	Now since $\mathcal{C}$ is stable by permutation then $\{\left([\mC]_{\sigma(i)\sigma(j)}\right)_{(i,j) \in \integ{N}^2}: \mC \in \mathcal{C}, \sigma \in S_N\} = \mathcal{C}$ and consequently $\min_{\sigma \in S_N} \min_{\mC_2 \in \mathcal{C}} \sum_{ij} L([\mC_1]_{ij}, [\mC_2]_{\sigma(i)\sigma(j)}) = \min_{\mC_2 \in \mathcal{C}} \sum_{ij} L([\mC_1]_{ij}, [\mC_2]_{ij})$. Consequently, using \cref{eq:onlyonepermut},
+	\begin{equation}
+		\begin{split}
+			\min_{\mC_2 \in \mathcal{C}} \ \min_{\mT \in \DS} \ \sum_{ijkl} L([\mC_1]_{ij}, [\mC_2]_{kl}) \ T_{ik} T_{jl} &\geq \min_{\mC_2 \in \mathcal{C}} \sum_{ij} L([\mC_1]_{ij}, [\mC_2]_{ij})\,,
+		\end{split}
+	\end{equation}
+	and thus both are equal. 
+	
+	Conversely suppose that \cref{eq:equality_between_both} holds. Then, from \cref{eq:coot_relax} we have
+	\begin{equation}
+		\label{eq:coot_relax}
+		\begin{split}
+			\min_{\sigma_1, \sigma_2 \in S_N} f(\sigma_1, \sigma_2) &= \min_{\sigma_1, \sigma_2 \in S_N} \min_{\mC_2 \in \mathcal{C}} \sum_{ij} L([\mC_1]_{ij}, [\mC_2]_{\sigma_1(i)\sigma_2(j)}) \\
+			&\leq \min_{\mC_2 \in \mathcal{C}} \ \min_{\mT \in \DS} \ \sum_{ijkl} L([\mC_1]_{ij}, [\mC_2]_{kl}) \ T_{ik} T_{jl} \\
+			&=\min_{\mC_2 \in \mathcal{C}} \sum_{(i,j) \in \integ{N}^2} L([\mC_1]_{ij}, [ \mC_2]_{ij}) = f(\operatorname{id}, \operatorname{id})\,,
+		\end{split}
+	\end{equation}
+	which concludes the proof.
+\end{proof}
+\begin{remark}
+	The condition on the set of similarity matrices $\mathcal{C}$ is quite reasonable: it indicates that if $\mC$ is an admissible similarity matrix, then permuting the rows and columns of $\mC$ results in another admissible similarity matrix. For DR, the corresponding $\mathcal{C}$ is $\mathcal{C} = \{\simi(\mZ): \mZ \in \R^{N \times d}\}$. In this case, if $\simi(\mZ)$ is of the form
+	\begin{equation}
+		\label{forme_simi}
+		[\simi(\mZ)]_{ij} = h(f(\bm{z}_i, \bm{z}_j), g(\mZ))\,,
+	\end{equation} 
+	where $f: \R^d \times \R^d \to \R, \ h: \R \times \R \to \R$ and $g: \R^{N \times d} \to \R$ which is permutation invariant \citep{bronstein2021geometric}, then $\mathcal{C}$ is stable under permutation. Indeed, permuting the rows and columns of $\simi(\mZ)$ by $\sigma$ is equivalent to considering the similarity $\simi(\mY)$, where $\mY = (\bm{z}_{\sigma(1)}, \cdots, \bm{z}_{\sigma(n)})^\top$. Moreover, most similarities in the target space considered in DR take the form \cref{forme_simi}: $\langle \Phi(\bm{z}_i), \Phi(\bm{z}_j) \rangle_{\mathcal{H}}$ (kernels such as in spectral methods with $\Phi = \operatorname{id}$), $f(\bm{z}_i, \bm{z}_j)/ \sum_{nm} f(\bm{z}_n, \bm{z}_m)$ (normalized similarities such as in SNE and t-SNE). Also note that the condition on $\mathcal{C} = \{\simi(\mZ): \mZ \in \R^{N \times d}\}$ of \cref{prop:bilinear_problem} is met as soon as $\simi : \R^{N \times d} \to \R^{N \times N}$ is permutation equivariant. 
+\end{remark}
+
+\section{Generalized Semi-relaxed Gromov-Wasserstein is a divergence}\label{sec:srGW_divergence_supp}
+\begin{remark}[Weak isomorphism]
+	According to the notion of weak isomorphism in \citep{chowdhury2019gromov}, for a graph $(\mC, \vh)$ with corresponding discrete measure $\mu = \sum_i h_i \delta_{x_i}$, two nodes $x_i$ and $x_j$ are the ‘‘same'' if they have the same internal perception \emph{i.e} $C_{ii} = C_{jj} = C_{ij} = C_{ji}$ and external perception  $\forall k \neq (i, j), C_{ik} = C_{jk},  C_{ki} = C_{kj}$. So two graphs $(\mC_1, \vh_1)$ and $(\mC_2, \vh_2)$ are said to be weakly isomorphic, if there exist a canonical representation $(\mC_c, \vh_c)$ such that $\card(\supp(\vh_c)) = p \leq n, m$ and $M_1 \in \left\{0,1 \right\}^{n \times p}$ (resp. $M_2 \in \left\{0,1 \right\}^{m \times p}$) such that for $k \in \left\{1, 2\right\}$
+	\begin{equation}
+		\mC_c = \mM_k^\top \mC_c \mM_k \quad \text{and} \quad \vh_c = \mM_k^\top \vh_k
+	\end{equation}
+\end{remark}
+We first emphasize a simple result.
+\begin{proposition}\label{prop:GW_divergence}
+	Let any divergence $L: \Omega \times \Omega \rightarrow \R_+$ for $\Omega \subseteq \R$, then for any $(\mC, \vh)$ and $(\overline{\mC}, \overline{\vh})$, we have $\GW_L(\mC, \overline{\mC}, \vh, \overline{\vh}) = 0$ if and only if $\GW_{L_2}(\mC, \overline{\mC}, \vh, \overline{\vh}) = 0$. 
+\end{proposition}
+\begin{proof}
+	If $\GW_L(\mC, \overline{\mC}, \vh, \overline{\vh}) = 0$, then there exists $\mT \in \mathcal{U}(\vh, \overline{\vh})$ such that 
+	\begin{equation}
+		E_L(\mC, \overline{\mC}, \mT) = \sum_{ijkl} L(C_{ij}, \overline{C}_{kl})T_{ik}T_{jl} = 0
+	\end{equation}
+	so whenever $T_{ik}T_{jl} \neq 0$, we must have $L(C_{ij}, \overline{C}_{kl}) = 0$ \emph{i.e} $C_{ij}= \overline{C}_{kl}$ as $L$ is a divergence. Which implies that $E_{L'}(\mC, \overline{\mC}, \mT) = 0$ for any other divergence $L'$ well defined on any domain $\Omega \times \Omega$, necessarily including $L_2$.
+\end{proof}
+
+\begin{lemma}\label{lemma:srgw_divergence}
+	Let any divergence $L: \Omega \times \Omega \rightarrow \R_+$ for $\Omega \subseteq \R$. Let $(\mC, \vh) \in \Omega^{n \times n} \times \Sigma_n$  and $(\overline{\mC}, \overline{\vh}) \in \R^{m \times m} \times \Sigma_m$. Then $\srGW_L(\mC, \overline{\mC}, \vh, \overline{\vh}) = 0$ if and only if there exists $\overline{\vh} \in \Sigma_m$ such that $(\mC, \vh)$ and $(\overline{\mC}, \overline{\vh})$ are weakly isomorphic.
+\end{lemma}
+\begin{proof}
+	$(\Rightarrow)$ As $\srGW_L(\mC, \overline{\mC}, \vh, \overline{\vh}) = 0$ there exists $\mT \in \mathcal{U}(\vh, \overline{\vh})$ such that $E_L(\mC, \overline{\mC}, \mT) = 0$ hence $\GW_L(\mC, \overline{\mC}, \vh, \overline{\vh}) = 0$. Using proposition \ref{prop:GW_divergence}, $\GW_{L_2}=0$ hence using Theorem 18 in \citep{chowdhury2019gromov}, it implies that $(\mC, \vh)$ and $(\overline{\mC}, \overline{\vh})$ are weakly isomorphic.
+	
+	$(\Leftarrow)$ As mentioned, $(\mC, \vh)$ and $(\overline{\mC}, \overline{\vh})$ being weakly isomorphic implies that $\GW_{L_2}=0$. So there exists $\mT \in \mathcal{U}(\vh, \overline{\vh})$, such that $E_L(\mC, \overline{\mC}, \mT) = 0$. Moreover $\mT$ is admissible for the srGW problem as $\mT \in \mathcal{U}(\vh, \overline{\vh}) \subset \mathcal{U}_n(\vh)$, thus $\srGW_L(\mC, \overline{\mC}, \vh, \overline{\vh}) = 0$.
+\end{proof}
+
+\subsection{About trivial solutions of semi-relaxed GW when $L$ is not a proper divergence}
+
+We briefly describe here some trivial solutions of $\srGW_L$ when $L$ is not a proper divergence. We recall that
+\begin{equation}
+	\srGW_L(\mC, \overline{\mC}, \vh) = \min_{\mT \in \R_+^{N \times n}: \mT \one_n = \vh} E_{L}(\mC, \overline{\mC}, \mT) = \sum_{ijkl} L(C_{ij}, \overline{C}_{kl}) T_{ik} T_{jl}\,.
+\end{equation}
+Suppose that $\vh \in \Sigma_N^{*}$ and that $\overline{\mC}$ has a minimum value on its diagonal \ie\ $\min_{(i,j)} \overline{C}_{ij} = \min_{ii} \overline{C}_{ii}$. Suppose also that $\forall a, L(a, \cdot)$ is both convex \emph{and} non-decreasing. First we have $\sum_{j} \frac{T_{ij}}{h_i} = 1$ for any $i \in \integ{N}$. Hence using the convexity of $L$, Jensen inequality and the fact that $L(a, \cdot)$ is non-decreasing for any $a$ 
+\begin{equation}
+	\begin{split}
+		\sum_{ijkl} L(C_{ij}, \overline{C}_{kl}) T_{ik} T_{jl} &= \sum_{ijkl} L(C_{ij}, \overline{C}_{kl}) h_i h_j \frac{T_{ik}}{h_i} \frac{T_{jl}}{h_j} \\
+		&\geq \sum_{ij} L(C_{ij}, \sum_{kl} \overline{C}_{kl}\frac{T_{ik}}{h_i} \frac{T_{jl}}{h_j}) h_i h_j \\
+		&\geq \sum_{ij} L(C_{ij}, \sum_{kl} (\min_{nm} \overline{C}_{nm})\frac{T_{ik}}{h_i} \frac{T_{jl}}{h_j}) h_i h_j\\
+		&= \sum_{ij} L(C_{ij}, (\min_{nm} \overline{C}_{nm})) h_i h_j \\
+		&= \sum_{ij} L(C_{ij}, (\min_{nn} \overline{C}_{nn})) h_i h_j\,.
+	\end{split}
+\end{equation} 
+Now suppose without loss of generality that $\min_{ii} \overline{C}_{ii} = \overline{C}_{11}$ then this gives
+\begin{equation}
+	\min_{\mT \in \R_+^{N \times n}: \mT \one_n = \vh} \sum_{ijkl} L(C_{ij}, \overline{C}_{kl}) T_{ik} T_{jl} \geq \sum_{ij} L(C_{ij},  \overline{C}_{11}) h_i h_j\,.
+\end{equation}
+Now consider the coupling
+$\mT^\star = 
+\begin{pmatrix}
+	h_1 & 0 & 0 & 0 \\
+	h_2 & 0 & 0 & 0 \\
+	\vdots & \vdots & \vdots & \vdots \\
+	h_N & 0 & 0 & 0 \\
+\end{pmatrix}$. It is admissible and satisfies
+\begin{equation}
+	E_{L}(\mC, \overline{\mC}, \mT^\star) = \sum_{ij} L(C_{ij},  \overline{C}_{11}) h_i h_j \leq \min_{\mT \in \R_+^{N \times n}: \mT \one_n = \vh} E_{L}(\mC, \overline{\mC}, \mT)\,.
+\end{equation}
+Consequently the coupling $\mT^\star$ is optimal. However the solution given by this coupling is trivial: it consists in sending all the mass to one unique point. In another words, all the nodes in the input graph are sent to a unique node in the target graph. Note that this phenomena is impossible for standard GW because of the coupling constraints. 
+
+We emphasize that this hypothesis on $L$ \emph{cannot be satisfied} as soon as $L$ is a proper divergence. Indeed when $L$ is a divergence the constraint ‘‘$L(a, \cdot)$ is non-decreasing for any $a$'' is not possible as it would break the divergence constraints $\forall a,b \ L(a,b) \geq 0 \text{ and } L(a,b) = 0 \iff a = b$ (at some point $L$ must be decreasing).
+% \paragraph{Why semi-relaxed on any fixed grid is not working with SNE ?}
+% The problem is in this case exactly equivalent to 
+% \begin{equation}
+	% \min_{\mT \in \R_+^{N \times n}: \mT \one_n = \vh} \sum_{ijkl} [\mC_\mX]_{ij} \|\vz_k -\vz_l\|_2^2 T_{ik} T_{jl}
+	% \end{equation}
+% Say that $\vh = \frac{1}{N} \one_N$ (all the points in the input have the same mass). An admissible coupling is $\mT^\star = 
+% \begin{pmatrix}
+	%     1/N & 0 & 0 & 0 \\
+	%     1/N & 0 & 0 & 0 \\
+	%     \vdots & \vdots & \vdots & \vdots \\
+	%     1/N & 0 & 0 & 0 \\
+	% \end{pmatrix}
+% $. In this case 
+% \begin{equation}
+	% \sum_{ijkl} [\mC_\mX]_{ij} \|\vz_k -\vz_l\|_2^2 T^\star_{ik} T^\star_{jl} = \sum_{ij} \left([\mC_\mX]_{ij} (\sum_{kl}\|\vz_k -\vz_l\|_2^2 \frac{1}{N} \delta_{k=1} \frac{1}{N} \delta_{l=1})\right) = \sum_{ij}[\mC_\mX]_{ij}\|\vz_1-\vz_1\|_2^2 = 0\,.
+	% \end{equation}
+% So the coupling is optimal if $[\mC_\mX]_{ij} \geq 0$. It would also work for any problem $
+% \min_{\mT \in \R_+^{N \times n}: \mT \one_n = \vh} \sum_{ijkl} [\mC_\mX]_{ij} f(\vz_k - \vz_l) T_{ik} T_{jl}
+% $ with $f(0) = 0$ and any $\vh$ by considering $\mT^\star = 
+% \begin{pmatrix}
+	%     h_1 & 0 & 0 & 0 \\
+	%     h_2 & 0 & 0 & 0 \\
+	%     \vdots & \vdots & \vdots & \vdots \\
+	%     h_N & 0 & 0 & 0 \\
+	% \end{pmatrix}
+% $
+% Tu prends
+% \begin{equation}
+	% \min_{\mT \in \R_+^{N \times n}: \mT \one_n = \vh} \sum_{ijkl} L([\mC_\mX]_{ij}, \|\vz_k -\vz_l\|_2) T_{ik} T_{jl}
+	% \end{equation}
+% avec $L(a, \cdot)$ concave. Jensen
+% \begin{equation}
+	% \sum_{ijkl} L([\mC_\mX]_{ij}, \|\vz_k -\vz_l\|_2) T_{ik} T_{jl} \leq \sum_{ij} L([\mC_\mX]_{ij}, \sum_{kl} \|\vz_k -\vz_l\|_2 T_{ik} T_{jl}) = \sum_{ij} L([\mC_\mX]_{ij}, 0)
+	% \end{equation}
+% et donc tu prends le meme $\mT$ ça attendra le min si $L(a,\cdot)$ croissante. A l'inverse
+% \begin{equation}
+	% \sum_{ijkl} L([\mC_\mX]_{ij}, \|\vz_k -\vz_l\|_2) T_{ik} T_{jl} \geq \sum_{ijkl} L([\mC_\mX]_{ij}, 0) T_{ik} T_{jl}
+	% \end{equation}
+% With Jensen we have $\sum_{kl}\|\vz_k -\vz_l\|_2^2 T_{ik} T_{jl} \geq \|\sum_{kl}(\vz_k -\vz_l)T_{ik} T_{jl}\|_2^2 = \|\sum_{k} \vz_k T_{ik} - \sum_{l} \vz_l T_{jl}\|_2^2$. Suppose there is a $\vz$ that is equal to zero, say it is $\vz_n$.
+
+\section{Clustering properties: Proof of \cref{theo:srgw_bary_concavity} \label{sec:srGW_concavity_supp}}
+We recall that a matrix $\mC \in \R^{N \times N}$ is conditionally positive definite (CPD), \textit{resp.} negative definite (CND), if $\forall \vx \in \R^{N}, \vx^\top \mathbf{1}_N = 0 \text{ s.t. } \vx^\top \mC \vx \geq 0$, \textit{resp.} $\leq 0$. We also consider the Hadamard product of matrices as $\mA \odot \mB = (A_{ij} \times B_{ij})_{ij}$. The $i$-th column of a matrix $\mT$ is the vector denoted by $\mT_{:,i}$. For a vector $\vx\in \R^{n}$ we denote by $\diag(\vx)$ the diagonal $n \times n$ matrix whose elements are the $x_i$. 
+
+We state below the theorem that we prove in this section.
+\baryconcavity*
+In order to prove this result we introduce the space of semi-relaxed couplings whose columns are not zero
+\begin{equation}
+	\label{eq:guplus}
+	\gU_{n}^{+}(\vh_X) = \{\mT \in \gU_{n}(\vh_X) : \forall i \in \integ{n}, \mT_{:,i} \neq 0\}\,,
+\end{equation}
+and we will use the following lemma.
+
+% To prove the theorem we will prove first that the function $\mT \to \min_{\overline{\mC} \in \R^{n \times n}} E_{L}(\simiX(\mX), \overline{\mC}, \mT)$ is concave on $\gU_{n}^{+}(\vh_X)$ where
+
+
+
+% that is the space .
+
+% We also need the following lemma
+
+\begin{lemma}
+	\label{lemma:minimizers}
+	Let $\vh_X \in \Sigma_N$, $L=L_2$ and $\simiX(\mX)$ symmetric. For any $\mT \in \gU_n(\vh_X)$, the matrix $\overline{\mC}(\mT) \in \R^{n \times n}$ defined by
+	\begin{equation}
+		% \overline{\mC}(\mT) = \mT^\top \simiX(\mX) \mT \oslash (\mT^\top \one_N)(\mT^\top \one_N)^\top
+		\overline{\mC}(\mT) = \begin{cases} \mT_{:,i}^\top \simiX(\mX) \mT_{:,j} / (\mT_{:,i}^\top \one_N)(\mT_{:,j}^\top \one_N)& \text{ for } (i,j) \text{ such that } \mT_{:,i} \text{ and } \mT_{:,j} \neq 0 \\ 0 & \text{ otherwise} \end{cases}
+	\end{equation}
+	is a minimizer of $G: \overline{\mC} \in \R^{n \times n} \to E_L(\simiX(\mX), \overline{\mC}, \mT)$. For $\mT \in \gU_n(\vh_X)$ the expression of the minimum is
+	\begin{equation}
+		G(\mT) = \operatorname{cte} - \tr\left((\mT^\top \one_N) (\mT^\top \one_N)^\top(\overline{\mC}(\mT) \odot \overline{\mC}(\mT))\right)\,,
+	\end{equation}
+	which defines a continuous function on $\gU_{n}(\vh_X)$. If $\mT \in \gU_{n}^{+}(\vh_X)$ it becomes
+	\begin{equation}
+		G(\mT) = \operatorname{cte} - \sum_{ij} \frac{(\mT_{:,i}^\top \simiX(\mX) \mT_{:,j})^{2}}{(\mT_{:,i}^\top \one_N)(\mT_{:,j}^\top\one_N)} = \operatorname{cte} - \|\diag(\mT^\top \one_N)^{-\frac{1}{2}} \mT^\top \simiX(\mX) \mT\diag(\mT^\top \one_N)^{-\frac{1}{2}}\|_F^2\,.
+	\end{equation}
+\end{lemma}
+
+\begin{proof}
+	First see that $\overline{\mC}(\mT)$ is well defined since $\mT_{:,i} \neq 0 \iff \mT_{:,i}^\top \one_N \neq 0$ because $\mT$ is non-negative. Consider, for $\mT \in \gU_n(\vh_X)$, the function
+	\begin{equation}
+		F(\mT, \overline{\mC}):= E_{L}(\simiX(\mX), \overline{\mC}, \mT) = \sum_{ijkl} ([\simiX(\mX)]_{ik} - \overline{C}_{jl})^2 T_{ij} T_{kl}\,,
+	\end{equation}
+	% for the Bregman divergence $D_{\phi}(a,b) = \phi(a)-\phi(b)-\phi'(b)(a-b)$ for a $C^2$ convex function $\phi: \R \to \R$. We will use in the end of the proof $\phi(x) = \frac{1}{2} x^2$ to match with the hypothesis of the lemma. 
+	A development yields (using $\mT^\top \one_N = \vh_X$)
+	% \begin{equation}
+		% \begin{split}
+			% F(\mT, \overline{\mC}) &= \sum_{ijkl} [\phi([\simiX(\mX)]_{ik})-\phi([\overline{\mC}]_{jl})- \phi'([\overline{\mC}]_{jl})([\simiX(\mX)]_{ik}-[\overline{\mC}]_{jl})] T_{ij} T_{kl} \\
+			% &= \sum_{ik} \phi([\simiX(\mX)]_{ik}) (\sum_{j}T_{ij}) (\sum_{l} T_{kl}) +\sum_{jl} [\phi'([\overline{\mC}]_{jl})[\overline{\mC}]_{jl}-\phi([\overline{\mC}]_{jl})] (\sum_{i}T_{ij}) (\sum_{k}T_{kl}) \\
+			% &- \sum_{ijkl} \phi'([\overline{\mC}]_{jl})[\mC]_{ik} T_{ij} T_{kl}\,.
+			% \end{split}
+		% \end{equation}
+	% Since we have the constraint $\mT^\top \one_N = \vh_X$ then
+	\begin{equation}
+		\begin{split}
+			F(\mT, \overline{\mC}) &= \sum_{ik} [\simiX(\mX)]^2_{ik} [\vh_X]_i [\vh_X]_k + \sum_{jl} \overline{C}^2_{jl}(\sum_{i}T_{ij}) (\sum_{k}T_{kl}) - 2\sum_{ijkl} \overline{C}_{jl}[\simiX(\mX)]_{ik} T_{ij} T_{kl}\,.
+		\end{split}
+	\end{equation}
+	We can rewrite $\sum_{ijkl} \overline{C}_{jl}[\simiX(\mX)]_{ik} T_{ij} T_{kl} = \tr(\mT^\top \simiX(\mX) \mT \overline{\mC})$. Also we have
+	$(\sum_{i}T_{ij}) (\sum_{k}T_{kl})  = [(\mT^\top \one_N) (\mT^\top \one_N)^\top]_{jl}$
+	% \begin{equation}
+		% \begin{split}
+			%  \,.
+			% \end{split}
+		% \end{equation}
+	Thus 
+	\begin{equation}
+		\begin{split}
+			\sum_{jl} \overline{C}^2_{jl} (\sum_{i}T_{ij}) (\sum_{k}T_{kl}) & = \tr((\mT^\top \one_N) (\mT^\top \one_N)^\top (\overline{\mC} \odot \overline{\mC}))\,. \\
+		\end{split}
+	\end{equation}
+	Overall 
+	\begin{equation}
+		F(\mT, \overline{\mC}) = \operatorname{cte} + \tr((\mT^\top \one_N) (\mT^\top \one_N)^\top(\overline{\mC} \odot \overline{\mC}))-2\tr(\mT^\top \simiX(\mX) \mT \overline \mC)\,.
+	\end{equation}
+	Now taking the derivative with respect to $\overline \mC$, the first order conditions are
+	\begin{equation}
+		\label{eq:foc}
+		\partial_2 F(\mT, \overline{\mC}) = 2(\overline \mC \odot (\mT^\top \one_N) (\mT^\top \one_N)^\top - \mT^\top \simiX(\mX) \mT) = 0\,.
+	\end{equation}
+	For $(i,j)$ such that $\mT_{:,i} \text{ and } \mT_{:,j} \neq 0$ we have $[\partial_2 F(\mT, \overline{\mC}(\mT))]_{ij} = 0$. For $(i,j)$ such that $\mT_{:,i} \text{ or } \mT_{:,j} = 0$ we have $[\overline \mC \odot (\mT^\top \one_N) (\mT^\top \one_N)^\top]_{ij} = 0$ and also $[\mT^\top \simiX(\mX) \mT]_{ij} = \mT_{:,i}^\top \simiX(\mX) \mT_{:,j} = 0$. In particular the matrix $\overline{\mC}(\mT)$ satisfies the first order conditions. When $L = L_2$ the problem $\min_{\overline{\mC} \in \R^{n \times n}}  E_L(\simiX(\mX), \overline{\mC}, \mT) = \frac{1}{2}\sum_{ijkl}([\simiX(\mX)]_{ik}-\overline{C}_{jl})^2 T_{ij} T_{kl}$ is convex in $\overline{\mC}$. The first order conditions are sufficient hence $\overline{\mC}(\mT)$ is a minimizer.
+	
+	Also $\mT^\top \simiX(\mX) \mT = \overline{\mC}(\mT) \odot (\mT^\top \one_N) (\mT^\top \one_N)^\top$ by definition of $\overline{\mC}(\mT)$ thus 
+	\begin{equation}
+		\begin{split}
+			\tr(\mT^\top \simiX(\mX) \mT \overline \mC(\mT)) &= \tr([\overline{\mC}(\mT) \odot (\mT^\top \one_N) (\mT^\top \one_N)^\top] \overline \mC(\mT)) \\
+			&=\tr((\mT^\top \one_N) (\mT^\top \one_N)^\top [\overline{\mC}(\mT)\odot\overline{\mC}(\mT)])\,.
+		\end{split}
+	\end{equation}
+	Hence 
+	\begin{equation}
+		\begin{split}
+			F(\mT, \overline{\mC}(\mT)) &= \operatorname{cte} - \tr\left((\mT^\top \one_N) (\mT^\top \one_N)^\top(\overline{\mC}(\mT) \odot \overline{\mC}(\mT))\right)\,.
+		\end{split}
+	\end{equation}
+	Consequently for $\mT \in \gU_{n}(\vh_X)$ such that $\forall i \in \integ{n}, \mT_{:,i} \neq 0$ we have
+	\begin{equation}
+		\begin{split}
+			F(\mT, \overline{\mC}(\mT)) &= \operatorname{cte} - \sum_{ij} \frac{(\mT_{:,i}^\top \simiX(\mX) \mT_{:,j})^{2}}{(\mT_{:,i}^\top \one_N)(\mT_{:,j}^\top\one_N)} \\
+			&= \operatorname{cte} - \|\diag(\mT^\top \one_N)^{-\frac{1}{2}} \mT^\top \simiX(\mX) \mT\diag(\mT^\top \one_N)^{-\frac{1}{2}}\|_F^2\,.
+		\end{split}
+	\end{equation}
+	It just remains to demonstrate the continuity of $G$. We consider for $(\vx, \vy) \in \R_+^{N} \times \R_+^{N}$ the function 
+	\begin{equation}
+		g(\vx, \vy) = \begin{cases} \frac{(\vx^\top \simiX(\mX) \vy)^2}{\|\vx\|_1 \|\vy\|_1} &\text{ when } \vx \neq 0 \text{ and } \vy \neq 0 \\ 0 &\text{ otherwise}\end{cases}
+	\end{equation}
+	and we show that $g$ is continuous. For $(\vx, \vy) \neq (0, 0)$ this is clear. Now using that
+	\begin{align} 
+		0 &\leq g(\vx, \vy) \\
+        &= \frac{(\sum_{ij} [\simiX(\mX)]_{ij} x_i y_j)^2}{(\sum_{i} x_i)(\sum_{j} y_j)} \\
+        &\leq \|\simiX(\mX)\|^2_{\infty} \frac{(\sum_{i} x_i)^2(\sum_{j} y_j)^2}{(\sum_{i} x_i)(\sum_{j} y_j)} \\
+        &= \|\simiX(\mX)\|^2_{\infty} \|\vx\|_1 \|\vy\|_1\,,
+	\end{align}
+	this shows $\lim_{\vx \to 0} g(\vx, \vy) = 0 = g(0, \vy)$ and $\lim_{\vy \to 0} g(\vx, \vy) = 0 = g(\vx, 0)$. Now for $\mT \in \gU_{n}(\vh_X)$ we have $G(\mT) = \operatorname{cte} - \sum_{ij} g(\mT_{:,i}, \mT_{:,j})$ which defines a continuous function.
+	
+	% it is first clear on $\gU_{n}^{+}(\vh_X)$ due to its expression. Now let $\mT \in \gU_n(\vh_X)$ with $\mT_{:,k} = 0$ for some $k \in \integ{n}$.  We must show that $G$ is continuous at $\mT$.
+	% $G(\mT) = \operatorname{cte} - \sum_{ij} \frac{(\mT_{:,i}^\top \simiX(\mX) \mT_{:,j})^{2}}{(\mT_{:,i}^\top \one_N)(\mT_{:,j}^\top\one_N)}$ is continuous.
+\end{proof}
+
+To prove the theorem we will first prove that the function $G: \mT \to \min_{\overline{\mC} \in \R^{n \times n}}  E_L(\simiX(\mX), \overline{\mC}, \mT)$ is \emph{concave} on $\gU^{+}_n(\vh_X)$ and by a continuity argument it will be concave on $\gU_n(\vh_X)$. The concavity will allow us to prove that the minimum of $G$ is achieved in an extreme point of $\gU_n(\vh_X)$ which is a membership matrix.
+\begin{proposition}
+	\label{proposition:concavity}
+	Let $\vh_\mX \in \Sigma_N, L=L_2$ and suppose that $\simiX(\mX)$ is CPD or CND. Then the function $G: \mT \to \min_{\overline{\mC} \in \R^{n \times n}}  E_L(\simiX(\mX), \overline{\mC}, \mT)$ is concave on $\gU_n(\vh_X)$. Consequently \cref{theo:srgw_bary_concavity} holds.
+\end{proposition}
+\begin{proof}
+	We recall that $F(\mT, \overline{\mC}):= E_{L}(\simiX(\mX), \overline{\mC}, \mT)$ and $G(\mT) = F(\mT, \overline{\mC}(\mT))$.  From \cref{lemma:minimizers} we know that $\overline{\mC}(\mT)$ is a minimizer of $\overline{\mC} \to F(\mT, \overline{\mC})$ hence it satisfies the first order conditions $\partial_2 F(\mT, \overline{\mC}(\mT)) = 0$. Every quantity is differentiable on $\gU^{+}_n(\vh_X)$. Hence, taking the derivative of $G$ and using the first order conditions
+	\begin{equation}
+		\nabla G(\mT) = \partial_1 F(\mT, \overline{\mC}(\mT))+ \partial_2 F(\mT, \overline{\mC}(\mT)) [\nabla \overline{\mC}(\mT)] = \partial_1 F(\mT, \overline{\mC}(\mT))\,.
+	\end{equation}
+	We will found the expression of this gradient. In the proof of \cref{lemma:minimizers} we have seen that
+	\begin{equation}
+		\begin{split}
+			F(\mT, \overline{\mC}) &= \operatorname{cte} + \tr((\mT^\top \one_N) (\mT^\top \one_N)^\top(\overline{\mC} \odot \overline{\mC}))-2\tr(\mT^\top \simiX(\mX) \mT \overline \mC) \\
+			&=\operatorname{cte} + \tr(\mT^\top \one_N \one_N^\top \mT(\overline{\mC} \odot \overline{\mC}))-2\tr(\mT^\top \simiX(\mX) \mT \overline \mC)\,.
+		\end{split}
+	\end{equation}
+	Using that the derivative of $\mT \to \tr(\mT^\top \mA \mT \mB)$ is $\mA^\top \mT \mB^\top + \mA \mT \mB$ and that $\simiX(\mX)$ is symmetric we get
+	\begin{equation}
+		\partial_1 F(\mT, \overline{\mC}) = \one_N \one_N^\top \mT (\overline{\mC} \odot \overline{\mC})^\top + \one_N \one_N^\top \mT (\overline{\mC} \odot \overline{\mC})-2 \simiX(\mX) \mT \overline{\mC}^\top - 2 \simiX(\mX) \mT \overline{\mC}\,.
+	\end{equation}
+	Finally, applying to the symmetric matrix $\overline{\mC} = \overline{\mC}(\mT)$
+	\begin{equation}
+		\label{eq:gradient_expression}
+		\nabla G(\mT) = \partial_1 F(\mT, \overline{\mC}(\mT)) = 2\left(\one_N \one_N^\top \mT (\overline{\mC}(\mT) \odot \overline{\mC}(\mT))- 2 \simiX(\mX) \mT \overline{\mC}(\mT)\right)\,.
+	\end{equation}
+	In what follows we define
+	\begin{equation}
+		D(\mT) := \diag(\mT^\top \one_N)^{-1} \in \R^{n \times n}\,,
+	\end{equation}
+	when applicable. Using the expression of the gradient we will show that $G$ is concave on $\gU^{+}_n(\vh_X)$ and we will conclude by a continuity argument on $\gU_n(\vh_X)$. Take $(\mP, \mQ) \in \gU^{+}_n(\vh_X) \times \gU^{+}_n(\vh_X)$ we will prove
+	\begin{equation}
+		G(\mP) - G(\mQ) - \langle \nabla G(\mQ), \mP -\mQ \rangle \leq 0\,.
+	\end{equation}
+	From \cref{lemma:minimizers} we have the expression (since $\mP \in \gU^{+}_n(\vh_X)$)
+	\begin{equation}
+		G(\mP) = \operatorname{cte} - \|D(\mP)^{\frac{1}{2}} \mP^\top \simiX(\mX) \mP D(\mP)^{\frac{1}{2}}\|_F^2\,,
+	\end{equation}
+	(same for $G(\mQ)$) and
+	\begin{equation}
+		\overline{\mC}(\mQ) = D(\mQ) \mQ^\top \simiX(\mX)\mQ D(\mQ)\,.
+	\end{equation}
+	We will now calculate $\langle \nabla G(\mQ), \mP \rangle$ which involves $\langle \one_N \one_N^\top \mQ (\overline{\mC}(\mQ) \odot \overline{\mC}(\mQ),\mP \rangle$ and $\langle \simiX(\mX) \mQ \overline{\mC}(\mQ),\mP \rangle$. For the first term we have
+	\begin{equation}
+		\begin{split}
+			&\langle \one_N \one_N^\top \mQ (\overline{\mC}(\mQ) \odot \overline{\mC}(\mQ)),\mP \rangle \\
+			&=
+			\tr(\mP^\top \one_N \one_N^\top \mQ \overline{\mC}(\mQ)^{\odot 2})  =  \tr(\one_N^\top \mQ \overline{\mC}(\mQ)^{\odot 2} \mP^\top \one_N)  \\
+			&= (\mQ^\top\one_N)^\top (\overline{\mC}(\mQ) \odot \overline{\mC}(\mQ)) \mP^\top \one_N\\
+			&= \tr(\overline{\mC}(\mQ) \diag(\mQ^\top \one_N) \overline{\mC}(\mQ) \diag(\mP^\top \one_N)) \\
+			&= \tr\left([D(\mQ) \mQ^\top \simiX(\mX) \mQ D(\mQ)] D(\mQ)^{-1} [D(\mQ) \mQ^\top \simiX(\mX) \mQ D(\mQ)] D(\mP)^{-1}\right) \\
+			&=\tr(D(\mQ) \mQ^\top \simiX(\mX) \mQ D(\mQ) \mQ^\top \simiX(\mX) \mQ D(\mQ) D(\mP)^{-1}) \\
+			&=\tr(D(\mP)^{-\frac{1}{2}} [D(\mQ) \mQ^\top \simiX(\mX) \mQ D(\mQ) \mQ^\top \simiX(\mX) \mQ D(\mQ)] D(\mP)^{-\frac{1}{2}}) \\
+			&=\tr(D(\mP)^{-\frac{1}{2}} D(\mQ) \mQ^\top \simiX(\mX) \mQ D(\mQ)^{\frac{1}{2}} D(\mQ)^{\frac{1}{2}} \mQ^\top \simiX(\mX) \mQ D(\mQ) D(\mP)^{-\frac{1}{2}}) \\
+			&= \langle D(\mP)^{-\frac{1}{2}} D(\mQ) \mQ^\top \simiX(\mX) \mQ D(\mQ)^{\frac{1}{2}}, D(\mP)^{-\frac{1}{2}} D(\mQ) \mQ^\top \simiX(\mX) \mQ D(\mQ)^{\frac{1}{2}} \rangle \\
+			&= \|D(\mP)^{-\frac{1}{2}} D(\mQ) \mQ^\top \simiX(\mX) \mQ D(\mQ)^{\frac{1}{2}}\|_F^2\,.
+		\end{split}
+	\end{equation}
+	For the second term 
+	\begin{equation}
+		\begin{split}
+			&\langle \simiX(\mX) \mQ \overline{\mC}(\mQ),\mP \rangle \\
+			 &=  \tr(\mP^\top\simiX(\mX) \mQ  D(\mQ)\mQ^\top \simiX(\mX) \mQ D(\mQ)) \\
+			&= \tr(D(\mQ)^{\frac{1}{2}}\mP^\top\simiX(\mX) \mQ  D(\mQ)^{\frac{1}{2}}D(\mQ)^{\frac{1}{2}}\mQ^\top \simiX(\mX) \mQ D(\mQ)^{\frac{1}{2}}) \\
+			&= \langle D(\mQ)^{\frac{1}{2}}\mP^\top\simiX(\mX) \mQ  D(\mQ)^{\frac{1}{2}},  D(\mQ)^{\frac{1}{2}}\mQ^\top \simiX(\mX) \mQ D(\mQ)^{\frac{1}{2}} \rangle \\
+			&=\langle D(\mQ)^{\frac{1}{2}}\mP^\top\simiX(\mX) \mQ  D(\mQ)^{\frac{1}{2}},  D(\mP)^{\frac{1}{2}} D(\mQ)^{-\frac{1}{2}} D(\mP)^{-\frac{1}{2}} D(\mQ)\mQ^\top \simiX(\mX) \mQ D(\mQ)^{\frac{1}{2}} \rangle \\
+			&=\langle  D(\mP)^{\frac{1}{2}} \mP^\top\simiX(\mX) \mQ  D(\mQ)^{\frac{1}{2}},  D(\mP)^{-\frac{1}{2}} D(\mQ)\mQ^\top \simiX(\mX) \mQ D(\mQ)^{\frac{1}{2}} \rangle\,.
+		\end{split}
+	\end{equation}
+	This gives
+	\begin{equation}
+		\begin{split}
+			\langle \nabla G(\mQ), \mP \rangle &=  2 \|D(\mP)^{-\frac{1}{2}} D(\mQ) \mQ^\top \simiX(\mX) \mQ D(\mQ)^{\frac{1}{2}}\|_F^2 \\
+			&- 4\langle  D(\mP)^{\frac{1}{2}} \mP^\top\simiX(\mX) \mQ  D(\mQ)^{\frac{1}{2}},  D(\mP)^{-\frac{1}{2}} D(\mQ)\mQ^\top \simiX(\mX) \mQ D(\mQ)^{\frac{1}{2}} \rangle  \\
+			&=2 \|D(\mP)^{-\frac{1}{2}} D(\mQ)\mQ^\top \simiX(\mX) \mQ D(\mQ)^{\frac{1}{2}}-D(\mP)^{\frac{1}{2}} \mP^\top\simiX(\mX) \mQ  D(\mQ)^{\frac{1}{2}}\|_F^2 \\
+			&-2\|D(\mP)^{\frac{1}{2}} \mP^\top\simiX(\mX) \mQ  D(\mQ)^{\frac{1}{2}}\|_F^2 \,. \\
+			% &\geq ,.
+		\end{split}
+	\end{equation}
+	From this equation we get directly that 
+	\begin{equation}
+		\label{eq:conclusion_gradient}
+		\begin{split}
+			\langle \nabla G(\mQ), \mQ \rangle &= -2 \|D(\mQ)^{\frac{1}{2}} \mQ^\top\simiX(\mX) \mQ  D(\mQ)^{\frac{1}{2}}\|_F^2 \\ 
+			\text{ and } \langle \nabla G(\mQ), \mP \rangle  & \geq -2 \|D(\mP)^{\frac{1}{2}} \mP^\top\simiX(\mX) \mQ  D(\mQ)^{\frac{1}{2}}\|_F^2\,.\
+		\end{split}
+	\end{equation}
+	Hence
+	\begin{equation}
+		\begin{split}
+			&G(\mP) - G(\mQ) - \langle \nabla G(\mQ), \mP -\mQ \rangle\\
+			 &=- \|D(\mP)^{\frac{1}{2}} \mP^\top \simiX(\mX) \mP D(\mP)^{\frac{1}{2}}\|_F^2+\|D(\mQ)^{\frac{1}{2}} \mQ^\top \simiX(\mX) \mQ D(\mQ)^{\frac{1}{2}}\|_F^2 \\
+			&- \langle \nabla G(\mQ), \mP \rangle + \langle \nabla G(\mQ), \mQ \rangle \\
+			&\stackrel{\cref{eq:conclusion_gradient}}{=}- \|D(\mP)^{\frac{1}{2}} \mP^\top \simiX(\mX) \mP D(\mP)^{\frac{1}{2}}\|_F^2-\|D(\mQ)^{\frac{1}{2}} \mQ^\top \simiX(\mX) \mQ D(\mQ)^{\frac{1}{2}}\|_F^2 - \langle \nabla G(\mQ), \mP \rangle \\
+			&\stackrel{\cref{eq:conclusion_gradient}}{\leq} - \|D(\mP)^{\frac{1}{2}} \mP^\top \simiX(\mX) \mP D(\mP)^{\frac{1}{2}}\|_F^2-\|D(\mQ)^{\frac{1}{2}} \mQ^\top \simiX(\mX) \mQ D(\mQ)^{\frac{1}{2}}\|_F^2 \\
+			&+2 \|D(\mP)^{\frac{1}{2}} \mP^\top\simiX(\mX) \mQ  D(\mQ)^{\frac{1}{2}}\|_F^2\,. \\
+		\end{split}
+	\end{equation}
+	We note $\mU = \mP D(\mP)\mP^\top \in \R^{N \times N}, \mV = \mQ D(\mQ)\mQ^\top \in \R^{N \times N}$, the previous calculus shows that
+	\begin{equation}
+		\begin{split}
+			G(\mP) - G(\mQ) - \langle \nabla G(\mQ), \mP -\mQ \rangle &\leq - \tr(\mU \simiX(\mX) \mU \simiX(\mX))- \tr(\mV \simiX(\mX) \mV \simiX(\mX))\\
+			&+2 \tr(\mV \simiX(\mX) \mU \simiX(\mX))\,,
+		\end{split}
+	\end{equation}
+	Now note that
+	\begin{equation}
+		\mU^\top \one_N = \mP D(\mP) \mP^\top \one_N = \mP \diag(\mP^\top \one_N)^{-1} \mP^\top \one_N = \mP \one_N = \vh_X\,.
+	\end{equation}
+	Since $\mU$ is symmetric we also have $\mU \one_N = \vh_X$ and similarly we have the same result for $\mV$. Overall $\mV^\top \one_N = \mU^\top \one_N$ and $\mV \one_N = \mU \one_N$. Since $\simiX(\mX)$ is CPD or CND we can apply \cref{ineq:lemma} below which proves that $- \tr(\mU \simiX(\mX) \mU \simiX(\mX))- \tr(\mV \simiX(\mX) \mV \simiX(\mX))+2 \tr(\mV \simiX(\mX) \mU \simiX(\mX)) \leq 0$ and consequently that $G$ is concave on $\gU^{+}_n(\vh_X)$. We now use the continuity of $G$ to prove that it is concave on $\gU_n(\vh_X)$.
+	
+	
+	Take $\mP \in \gU^{+}_n(\vh_X)$ and $\mQ \in \gU_n(\vh_X)\setminus\gU^{+}_n(\vh_X)$ \ie\ there exists $k \in \integ{n}$ such that $\mQ_{:,k} = 0$. Without loss of generality we suppose $k=1$. Consider for $m \in \mathbb{N}^{*}$ the matrix $\mQ^{(m)} = (\frac{1}{m} \one_{N}, \mQ_{:,2}, \cdots, \mQ_{:,n})$. Then $\mQ^{(m)} \to \mQ$ as $m \to +\infty$. Also since $\mQ^{(m)} \in \gU^{+}_n(\vh_X)$ we have by concavity of $G$
+	\begin{equation}
+		G((1-\lambda) \mP + \lambda \mQ^{(m)}) \geq (1-\lambda) G(\mP) + \lambda G(\mQ^{(m)})\,,
+	\end{equation}
+	for any $\lambda \in [0,1]$. Taking the limit as $m \to \infty$ gives, by continuity of $G$,
+	\begin{equation}
+		G((1-\lambda) \mP + \lambda \mQ) \geq (1-\lambda) G(\mP) + \lambda G(\mQ)\,,
+	\end{equation}
+	and hence $G$ is concave on $\gU_n(\vh_X)$. This proves \cref{theo:srgw_bary_concavity}. Indeed the minimization of $\mT \in \gU_n(\vh_X) \to \min_{\overline{\mC}} E_{L}(\simiX(\mX), \overline{\mC}, \mT)$ is a minimization of a concave function over a polytope, hence admits an extremity of $\gU_n(\vh_X)$ as minimizer. But these extremities are membership matrices as they can be described as $\{\diag(\vh_X) \mP: \mP \in \{0,1\}^{N \times n}, \mP^\top \one_n = \one_N\}$ \cite{cao2022centrosymmetric}.
+\end{proof}
+
+
+
+
+
+
+\begin{lemma}
+	\label{ineq:lemma}
+	Let $\mC \in \R^{N \times N}$ be a CPD or CND matrix. Then for any  $(\mP, \mQ) \in \R^{N \times N} \times \R^{N \times N}$ such that $\mP^\top \one_N = \mQ^\top \one_N$ and $\mP \one_N = \mQ \one_N$ we have
+	\begin{equation}
+		% \|\mP^\top \mC \mQ\|_F^2 \leq \frac{1}{2}(\|\mP^\top \mC \mP\|_F^2+\|\mQ^\top \mC \mQ\|_F^2)\,.
+		\tr(\mP^\top \mC \mQ \mC) \leq \frac{1}{2}(\tr(\mP^\top \mC \mP \mC)+\tr(\mQ^\top \mC \mQ \mC))\,.
+	\end{equation}
+\end{lemma}
+\begin{proof}
+	First, since $\mC$ is symmetric,
+	\begin{equation}
+		\begin{split}
+			\tr\left((\mP-\mQ)^\top \mC (\mP-\mQ)\mC\right) &= \tr(\mP^\top \mC \mP \mC- \mP^\top \mC \mQ \mC- \mQ^\top \mC \mP \mC +\mQ^\top \mC \mQ \mC ) \\
+			&=\tr(\mP^\top \mC \mP \mC) + \tr(\mQ^\top \mC \mQ \mC) -2 \tr(\mP^\top \mC \mQ \mC)\,.
+		\end{split}
+	\end{equation}
+	We note $\mU = \mP- \mQ$. Since $\mP^\top \one_N = \mQ^\top \one_N$ we have $\mU^\top \one_N = 0$. In the same way $\mU \one_N = 0$. We introduce $\mH = \mI_N - \frac{1}{N} \one_N \one_N^\top$ the  centering matrix. Note that 
+	\begin{equation}
+		\label{eq:stabitlity}
+		\mH \mU \mH = (\mU - \frac{1}{N} \one_N (\one_N^\top\mU))\mH = \mU \mH = \mU -\frac{1}{N} (\mU \one_N) \one_N^\top = \mU\,.
+	\end{equation}
+	Also $\mC$ is CPD if and only if $\mH \mC \mH$ is positive semi-definite (PSD). Indeed if $\mH \mC \mH$ is PSD then take $\vx$ such that $\vx^\top \one_N = 0$. We then have $\mH \vx = \vx$ and thus $\vx^\top \mC \vx = \vx^\top (\mH \mC \mH) \vx \geq 0$. On the other hand when $\mC$ is CPD then take any $\vx$ and see that $\vx^\top \mH \mC \mH \vx = (\mH \vx)^\top \mC (\mH \vx)$. But $(\mH \vx)^\top \one_N= \vx^\top (\mH^\top \one_N) = 0$. So $(\mH \vx)^\top \mC (\mH \vx) \geq 0$.
+	
+	By hypothesis $\mC$ is CPD so $\mH \mC \mH$ is PSD and symmetric, so it has a square root. But using \cref{eq:stabitlity} we get
+	\begin{equation}
+		\begin{split}
+			\tr\left((\mP-\mQ)^\top \mC (\mP-\mQ)\mC\right) & = \tr(\mU^\top \mC \mU \mC) = \tr(\mH\mU^\top \mH \mC \mH \mU \mH \mC) \\
+			&=\tr(\mU^\top (\mH \mC \mH) \mU (\mH \mC \mH))\\
+			&=\|(\mH \mC \mH)^{\frac{1}{2}} \mU (\mH \mC \mH)^{\frac{1}{2}}\|_F^2 \geq 0\,,
+		\end{split}
+	\end{equation}
+	For the CND case is suffices to use that $\mC$ is CND if and only if $-\mC$ is CPD and that $\tr\left((\mP-\mQ)^\top \mC (\mP-\mQ)\mC\right)= \tr\left((\mP-\mQ)^\top (-\mC) (\mP-\mQ)(-\mC)\right)$ which concludes the proof. 
+\end{proof}
+
+
+\section{Algorithmic details}\label{sec:algorithms}
+
+We detail in the following the algorithms mentioned in Section \ref{sec:DDR} to address the semi-relaxed GW divergence computation in our Block Coordinate Descent algorithm for the DistR problem. We begin with details on the computation of an equivalent objective function and its gradient, potentially under low-rank assumptions over structures $\mC$ and $\overline{\mC}$.
+
+\subsection{Objective function and gradient computation.}\label{subsec:GWloss} 
+
+\paragraph{Problem statement.} Let consider any matrices $\mC \in \R^{n \times n}$, $\overline{\mC} \in \R^{m \times m}$, and a probability vector $\vh \in \Sigma_n$. In all our use cases,  we considered inner losses $L: \R \times \R \rightarrow \R_+$ which can be decomposed following Proposition 1 in \cite{peyre2016gromov}. Namely we assume the existence of functions $f_1, f_2, h_1, h_2$ such that 
+\begin{equation}\label{eq:loss_decomposition}
+\forall a, b \in \Omega^2, \quad L(a, b) = f_1(a) + f_2(b) - h_1(a) h_2(b)
+\end{equation}
+More specifically we considered
+\begin{equation} \tag{L2}\label{eq:L2_loss}
+\begin{split}
+	L_2(a,b) = (a-b)^2 &\implies f_1(a) = a^2, \: f_2(b) = b^2, \: h_1(a) = a, \: h_2(b) = 2b \\
+	L_{KL}(a,b ) = a \log \frac{a}{b} - a +b &\implies f_1(a) = a \log a -a, \: f_2(b) = b, \: h_1(a) = a, \: h_2(b) = \log b \\
+\end{split}
+\end{equation}
+In this setting, we proposed to solve for the equivalent problem to $\srGW_L$ :
+\begin{equation}\label{eq:srgw_eqpb}\tag{srGW-2}
+\min_{\mT \in \mathcal{U}_n(\vh)} F(\mT)
+\end{equation}
+where the objective function reads as 
+\begin{equation}\label{eq:expressionF}
+\begin{split}
+	F(\mT) &:= \scalar{F_1(\overline{\mC}, \mT) - F_2(\mC, \overline{\mC}, \mT)}{\mT} \\ 
+	&= \scalar{\bm{1}_N \bm{1}_N^\top \mT f_2(\overline{\mC})}{ \mT} - \scalar{h_1(\mC) \mT h_2(\overline{\mC})^\top}{\mT}
+\end{split}
+\end{equation}
+
+Problem \ref{eq:srgw_eqpb} is usually a non-convex QP with Hessian $\mathcal{H} = f_2(\overline{\mC}) \otimes \bm{1}\bm{1}^\top - h_2(\overline{\mC}) \otimes_K h_1(\mC)$. In all cases this equivalent form is interesting as it avoids computing the constant term $\scalar{f_1(\mC)}{\vh \vh^\top} $ that requires $O(N^2)$ operations in all cases.
+
+The gradient of $F$ w.r.t $\mT$ then reads as 
+\begin{equation}\label{eq:srgw_gradient}
+\nabla_{\mT} F(\mC, \overline{\mC}, \mT) = F_1(\overline{\mC}, \mT) +  F_1(\overline{\mC}^\top, \mT) - F_2(\mC, \overline{\mC}, \mT) -F_2(\mC^\top, \overline{\mC}^\top, \mT) 
+\end{equation}
+When $C_X(\mX)$ and $C_Z(\mZ)$ are symmetric, which is the case in all our experiments,  this gradient reduces to $\nabla_{\mT} F = 2(F_1 - F_2)$.
+
+\paragraph{Low-rank factorization.} Inspired from the work of \cite{scetbon2022linear}, we propose implementations of $\srGW$ that can leverage the low-rank nature of $\mC_X(\mX)$ and $\mC_Z(\mZ)$. Let us assume that both structures can be exactly decomposed as follows, $\mC_X(\mX) = \mA_1 \mA_2^\top$ where $\mA_1, \mA_2 \in \R^{N \times r}$ and $\mC_Z(\mZ) = \mB_1 \mB_2^\top$ with $\mB_1, \mB_2 \in \R^{n \times s}$, such that $r << N$ and $s << n$, can differ respectively from respective dimensions $p$ and $d$ (\eg for used squared Euclidean distance matrices $r=p+2$ and $s=d +2$ ). For both inner losses $L$ we make use of the following factorization:
+
+\underline{$L=L_2$}: Computing the first term $F_1$ coming for the optimized second marginal can benefit from being factored if $d^2 << n$. Indeed, as $f_2(\mC_Z(\mZ)) = \mC_Z(\mZ)^2 = (\mB_1 \mB_2^\top) \odot (\mB_1 \mB_2^\top)$, one can use the flattened out product operator described in \cite[Section 5]{scetbon2022linear}, to compute $\mC_Z(\mZ)^2 \mT^\top \bm{1}_N = \vx$ in $O(min(n^2, ns^2))$. This way $F_1(\mT)$ results from stacking $N$ times $\vx$ in $O(1)$ operations for a total number of computions of $N + O(min(n^2, ns^2))$.%Hence computing $F_2(\cdot, \cdot, \mT)$,  following this paranthesis $\bm{1}_N (( \mT \bm{1}_n)^\top) f_2(\overline{\mC})^\top)$ in $O(Nn + n^2)$ operation.
+And its scalar product with $\mT$ to compute the loss comes down to $O(Nn)$ additional operations. \\
+Then computing $F_2(\mT)$ and its scalar product with $\mT$ can be done following the development of \cite[Section 3]{scetbon2022linear} for the corresponding GW problem, in $O(Nn(r + s) + rs(N+n))$ operations. So the overall complexity at is $O(Nn(r + s) + rs(N+n) + min(n^2, ns^2))$.
+
+
+\underline{$L=L_{KL}$}: In this setting $f_2(\mC_Z(\mZ)) = \mC_Z(\mZ)$ and $h_1(\mC_X(\mX)) = \mC_X(\mX)$ naturally preserves the low-rank nature of input matrices, but $h_2(\mC_Z(\mZ)) = \log(\mC_Z(\mZ))$ does not. So computing the first term $F_1$, can be performed following this paranthesis order $\bm{1}_N ((  \bm{1}_N^\top \mT) \mA_1)) \mA_2^\top) $ in $O(N(n + s))$ operations. While the second term $F_2$ should be computed following this order $\mA_1 ((\mA_2^\top \mT)  \log(\mC_Z(\mZ)))$ in $O(Nnr + rn^2)$ operations. While their respective scalar product can be computed in $O(Nn)$. So the overall complexity is $O(Nnr + n^2r)$.\\
+Notice that in the gaussian kernel case for neighbor embedding methods, where $[\mC_Z(\mZ)]_{ij} = \exp(-\|\vz_i-\vz_j\|_2^2)$ up to some normalization. We have $[h_2(\mC_Z(\mZ))]_{ij} = -\|\vz_i-\vz_j\|_2^2$ which admits a low-rank factorization such that we can recover the complexity illustrated above for $L=L_2$.
+
+\subsection{Solvers.}
+We develop next our extension of both the Mirror Descent and Conditional Gradient solvers first introduced in \cite{vincent2021semi}, for any inner loss $L$ that decomposes as in \eqref{eq:loss_decomposition} .
+
+\paragraph{Mirror Descent algorithm.} This solver comes down to solve for the \emph{exact} srGW problem using mirror-descent scheme w.r.t the KL geometry. At each iteration $(i)$, the solver comes down to, first computing the gradient $\nabla_{\mT}F(\mT^{(i)})$ given in \eqref{eq:srgw_gradient} evaluated in $\mT^{(i)}$, then updating the transport plan using the following closed-form solution to a KL projection:
+
+\begin{equation}
+\mT^{(i+1)} \leftarrow \diag\left( \frac{\vh}{\mK^{(i)}\bm{1}_n} \right) \mK^{(i)}
+\end{equation}
+where $\mK^{(i)} = \exp \left(\ \nabla_{\mT}F(\mT^{(i)}) - \varepsilon \log(\mT^{(i)})  \right)$ and $\varepsilon > 0$ is an hyperparameter to tune. Proposition 3 and Lemma 7 in \cite[Chapter 6]{vincent2023optimal} provides that the Mirror-Descent algorithm converges to a stationary point non-asymptotically when $L=L_2$. A quick inspection of the proof suffices to see that this convergence holds for any losses $L$ satisfying \eqref{eq:loss_decomposition}, up to adaptation of constants involved in the Lemma.
+
+\paragraph{Conditional Gradient algorithm.} This algorithm, known to converge to local optimum \cite{lacoste2016convergence}, iterates over the 3 steps summarized in Algorithm \ref{alg:CGsolver}:
+.\begin{algorithm}[H]
+\caption{CG solver for $\srGW_L$\label{alg:CGsolver}}
+\begin{algorithmic}[1]
+	\REPEAT
+	\STATE $\mF^{(i)}\leftarrow $  Compute gradient  w.r.t $\mT$ of \eqref{eq:srgw_gradient}.
+	\STATE $\mX^{(i)}\leftarrow \min_{\substack{\mX\bm{1}_m =\vh\\ \mX \geq 0}} \scalar{\mX}{\mF^{(i)}} $%: Solve independent subproblems on rows of $\mG^{(t)}$. 
+	\STATE $\mT^{(i+1)} \leftarrow (1-\gamma^\star)\mT^{(i)} + \gamma^\star \mX^{(i)}$   with $\gamma^\star \in [0,1]$ from exact-line search.
+	\UNTIL{convergence.}
+\end{algorithmic}
+\end{algorithm}
+
+This algorithm consists in solving at each
+iteration $(i)$ a linearization $\scalar{\mX}{\mF^{(i)}}$ of the problem \eqref{eq:srgw_eqpb}
+where $\mF(\mT^{(i)})$ is the gradient of the objective in \eqref{eq:srgw_gradient}.  The solution of the linearized problem provides a \emph{descent direction} $\mX^{(i) }-\mT^{(i)}$, and a line-search whose optimal step can be found in closed form to
+update the current solution $\mT^{(i)}$. We detail in the following this line-search step for any loss that can be decomposed as in \eqref{eq:loss_decomposition}. It comes down for any $\mT \in \mathcal{U}_n(\vh)$, to solve the following problem:
+\begin{equation}
+\gamma = \argmin_{\gamma \in [0,1]} g(\gamma) := F(\mT + \gamma (\mX - \mT))
+\end{equation}
+Observe that this objective function can be developed as a second order polynom $g(\gamma) = a \gamma^2 + b \gamma +c$. To find an optimal $\gamma$ it suffices to express coefficients $a$ and $b$ to conclude using Algorithm 2 in \cite{vayer2018optimal}.
+
+
+Denoting $\mX^\top \bm{1}_n = \vq_X$ and $\mT^\top \bm{1}_n = \vq_T$ and following \eqref{eq:expressionF}, we have
+\begin{equation}
+\begin{split}
+	a &= \scalar{ \bm{1}_{n} (\vq_X - \vq_T)^\top f_2(\overline{\mC})^\top - h_1(\mC) (\mX- \mT) h_2(\overline{\mC})^\top}{\mX - \mT} \\
+	&= \scalar{F_1(\mX) - F_1(\mT) - F_2(\mX) + \mF(\mT)}{\mX - \mT} 
+\end{split}
+\end{equation}
+
+Finally the coefficient $b$ of the linear term is
+\begin{equation}
+\begin{split}
+	b &=  \langle  F_1(\mT) - F_2(\mT) , \mX-\mT \rangle + \langle  F_1(\mX - \mT) - F_2(\mX- \mT), \mT  \rangle \\
+\end{split}
+\end{equation}
+

@@ -33,12 +33,12 @@
 \citation{cantini2021benchmarking,ventre2023one}
 \citation{agrawal2021minimum,van2009dimensionality}
 \citation{saxena2017review,ezugwu2022comprehensive}
-\@writefile{toc}{\contentsline {chapter}{\numberline {2}Background on Dimensionality Reduction and Optimal Transport}{4}{chapter.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {2}Background on Dimensionality Reduction}{4}{chapter.2}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{lof}{\contentsline {xchapter}{Background on Dimensionality Reduction and Optimal Transport}{4}{chapter.2}\protected@file@percent }
-\@writefile{lot}{\contentsline {xchapter}{Background on Dimensionality Reduction and Optimal Transport}{4}{chapter.2}\protected@file@percent }
-\newlabel{chapter:Background}{{2}{4}{Background on Dimensionality Reduction and Optimal Transport}{chapter.2}{}}
+\@writefile{lof}{\contentsline {xchapter}{Background on Dimensionality Reduction}{4}{chapter.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {xchapter}{Background on Dimensionality Reduction}{4}{chapter.2}\protected@file@percent }
+\newlabel{chapter:Background}{{2}{4}{Background on Dimensionality Reduction}{chapter.2}{}}
 \newlabel{chapter:Background@cref}{{[chapter][2][]2}{[1][4][]4}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.1}Affinity-Based Unsupervised Learning}{4}{section.2.1}\protected@file@percent }
 \newlabel{sec:affinity_unsupervised_learning}{{2.1}{4}{Affinity-Based Unsupervised Learning}{section.2.1}{}}
@@ -145,8 +145,8 @@
 \@writefile{toc}{\contentsline {paragraph}{Symmetric Entropy-Constrained Optimal Transport.}{11}{paragraph*.14}\protected@file@percent }
 \newlabel{eq:plan_sym_sinkhorn}{{{DS}}{11}{Symmetric Entropy-Constrained Optimal Transport}{paragraph*.14}{}}
 \newlabel{eq:plan_sym_sinkhorn@cref}{{[equation][2147483647][]{DS}}{[1][11][]11}}
-\newlabel{eq:entropy_constrained_OT}{{{EOT}}{11}{Symmetric Entropy-Constrained Optimal Transport}{equation.2.3.5}{}}
-\newlabel{eq:entropy_constrained_OT@cref}{{[equation][2147483647][]{EOT}}{[1][11][]11}}
+\newlabel{eq:entropy_constrained_OT}{{{SEOT}}{11}{Symmetric Entropy-Constrained Optimal Transport}{equation.2.3.5}{}}
+\newlabel{eq:entropy_constrained_OT@cref}{{[equation][2147483647][]{SEOT}}{[1][11][]11}}
 \citation{memoli2011gromov,sturm2012space}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.4}Optimal Transport Across Spaces : Gromov-Wasserstein Formulation}{12}{subsection.2.3.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Gromov-Wasserstein (GW).}{12}{paragraph*.15}\protected@file@percent }
@@ -182,238 +182,100 @@
 \@writefile{toc}{\contentsline {paragraph}{Spectral methods.}{14}{paragraph*.16}\protected@file@percent }
 \newlabel{eq:spectral_method}{{2.5.1}{14}{Spectral methods}{paragraph*.16}{}}
 \newlabel{eq:spectral_method@cref}{{[subsection][1][2,5]2.5.1}{[1][14][]14}}
-\citation{nene1996columbia}
-\citation{nene1996columbia}
-\citation{lu2019doubly}
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}SNEkhorn: Dimension Reduction with Symmetric Entropic Affinities}{15}{chapter.3}\protected@file@percent }
-\@writefile{lof}{\addvspace {10\p@ }}
-\@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{lof}{\contentsline {xchapter}{SNEkhorn: Dimension Reduction with Symmetric Entropic Affinities}{15}{chapter.3}\protected@file@percent }
-\@writefile{lot}{\contentsline {xchapter}{SNEkhorn: Dimension Reduction with Symmetric Entropic Affinities}{15}{chapter.3}\protected@file@percent }
-\newlabel{chapter:SNEkhorn}{{3}{15}{SNEkhorn: Dimension Reduction with Symmetric Entropic Affinities}{chapter.3}{}}
-\newlabel{chapter:SNEkhorn@cref}{{[chapter][3][]3}{[1][15][]15}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.1}Introduction}{15}{section.3.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Top: COIL \cite  {nene1996columbia} embeddings with silhouette scores produced by Symmetric-SNE and SNEkhorn (our method introduced in \cref  {sec:DR_with_OT}) for $\xi =30$. Bottom: $e^{\operatorname  {H}(\mathbf  {P}_{i:})-1}$ (\emph  {perplexity}) for each point $i$.\relax }}{16}{figure.caption.17}\protected@file@percent }
-\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:coil}{{3.1}{16}{Top: COIL \cite {nene1996columbia} embeddings with silhouette scores produced by Symmetric-SNE and SNEkhorn (our method introduced in \cref {sec:DR_with_OT}) for $\xi =30$. Bottom: $e^{\operatorname {H}(\Pb _{i:})-1}$ (\emph {perplexity}) for each point $i$.\relax }{figure.caption.17}{}}
-\newlabel{fig:coil@cref}{{[figure][1][3]3.1}{[1][15][]16}}
-\@writefile{toc}{\contentsline {paragraph}{Contributions.}{16}{paragraph*.18}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}Symmetric Entropic Affinities}{16}{section.3.2}\protected@file@percent }
-\newlabel{sec:sym_entropic_affinity}{{3.2}{16}{Symmetric Entropic Affinities}{section.3.2}{}}
-\newlabel{sec:sym_entropic_affinity@cref}{{[section][2][3]3.2}{[1][16][]16}}
-\citation{rabin2014adaptive,flamary2016optimal}
-\citation{benamou2015iterative}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Entropic Affinities as Entropic Optimal Transport}{17}{subsection.3.2.1}\protected@file@percent }
-\newlabel{sec:entropic_affinity_semi_relaxed}{{3.2.1}{17}{Entropic Affinities as Entropic Optimal Transport}{subsection.3.2.1}{}}
-\newlabel{sec:entropic_affinity_semi_relaxed@cref}{{[subsection][1][3,2]3.2.1}{[1][17][]17}}
-\newlabel{thmt@@entropicaffinityaslinearprogram@data}{{\def \theequation {3.\@arabic {\c@equation }}\def \theHequation {(restate \theHthmt@dummyctr )3.2.\@arabic {\c@equation }}\setcounter {equation}{1}}{17}{Entropic Affinities as Entropic Optimal Transport}{equation.3.2.1}{}}
-\newlabel{thmt@@entropicaffinityaslinearprogram@data@cref}{{[subsection][1][3,2]3.2.1}{[1][17][]17}}
-\@writefile{loe}{\addvspace {10\p@ }}
-\@writefile{loe}{\contentsline {proposition}{\ifthmt@listswap Proposition\nobreakspace  {}3.1\else \numberline {3.1}Proposition\fi }{17}{proposition.3.1}\protected@file@percent }
-\newlabel{thmt@@entropicaffinityaslinearprogram}{{3.1}{17}{}{proposition.3.1}{}}
-\newlabel{thmt@@entropicaffinityaslinearprogram@cref}{{[proposition][1][3]3.1}{[1][17][]17}}
-\newlabel{prop:entropic_affinity_as_linear_program}{{3.1}{17}{}{proposition.3.1}{}}
-\newlabel{prop:entropic_affinity_as_linear_program@cref}{{[proposition][1][3]3.1}{[1][17][]17}}
-\newlabel{eq:entropic_affinity_semi_relaxed}{{{EA as OT}}{17}{}{equation.3.2.2}{}}
-\newlabel{eq:entropic_affinity_semi_relaxed@cref}{{[equation][2147483647][]{EA as OT}}{[1][17][]17}}
-\@writefile{loe}{\contentsline {remark}{\ifthmt@listswap Remark\nobreakspace  {}3.1\else \numberline {3.1}Remark\fi }{17}{remark.3.1}\protected@file@percent }
-\@writefile{loe}{\contentsline {remark}{\ifthmt@listswap Remark\nobreakspace  {}3.2\else \numberline {3.2}Remark\fi }{17}{remark.3.2}\protected@file@percent }
-\newlabel{Pe_proj}{{3.2}{17}{}{remark.3.2}{}}
-\newlabel{Pe_proj@cref}{{[remark][2][3]3.2}{[1][17][]17}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Samples from a mixture of three Gaussians with varying standard deviations. The edges' strength is proportional to the weights in the affinities $\mathbf  {P}^{\mathrm  {ds}}$ equation\nobreakspace  {}\ref  {eq:plan_sym_sinkhorn} and $\mathbf  {P}^{\mathrm  {se}}$ equation\nobreakspace  {}\ref  {eq:sym_entropic_affinity} computed with $\xi =5$ (for $\mathbf  {P}^{\mathrm  {ds}}$, $\xi $ is the average perplexity such that $\DOTSB \sum@ \slimits@ _i \operatorname  {H}(\mathbf  {P}^{\mathrm  {ds}}_{i:})=\DOTSB \sum@ \slimits@ _i \operatorname  {H}(\mathbf  {P}^{\mathrm  {se}}_{i:})$). Points' color represents the perplexity $e^{\operatorname  {H}(\mathbf  {P}_{i:})-1}$. Right plot: smallest eigenvalues of the Laplacian for the two affinities.\relax }}{18}{figure.caption.19}\protected@file@percent }
-\newlabel{fig:Ps_vs_Pse}{{3.2}{18}{Samples from a mixture of three Gaussians with varying standard deviations. The edges' strength is proportional to the weights in the affinities $\Pb ^{\mathrm {ds}}$ \eqref {eq:plan_sym_sinkhorn} and $\Pb ^{\mathrm {se}}$ \eqref {eq:sym_entropic_affinity} computed with $\xi =5$ (for $\Pb ^{\mathrm {ds}}$, $\xi $ is the average perplexity such that $\sum _i \operatorname {H}(\Pb ^{\mathrm {ds}}_{i:})=\sum _i \operatorname {H}(\Pb ^{\mathrm {se}}_{i:})$). Points' color represents the perplexity $e^{\operatorname {H}(\Pb _{i:})-1}$. Right plot: smallest eigenvalues of the Laplacian for the two affinities.\relax }{figure.caption.19}{}}
-\newlabel{fig:Ps_vs_Pse@cref}{{[figure][2][3]3.2}{[1][17][]18}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Symmetric Entropic Affinity Formulation}{18}{subsection.3.2.2}\protected@file@percent }
-\newlabel{subsec:sea}{{3.2.2}{18}{Symmetric Entropic Affinity Formulation}{subsection.3.2.2}{}}
-\newlabel{subsec:sea@cref}{{[subsection][2][3,2]3.2.2}{[1][17][]18}}
-\newlabel{eq:sym_entropic_affinity}{{{SEA}}{18}{Symmetric Entropic Affinity Formulation}{figure.caption.19}{}}
-\newlabel{eq:sym_entropic_affinity@cref}{{[equation][2147483647][]{SEA}}{[1][18][]18}}
-\newlabel{thmt@@saturation@data}{{\def \theequation {3.\@arabic {\c@equation }}\def \theHequation {(restate \theHthmt@dummyctr )3.2.\@arabic {\c@equation }}\setcounter {equation}{1}}{18}{Symmetric Entropic Affinity Formulation}{figure.caption.19}{}}
-\newlabel{thmt@@saturation@data@cref}{{[subsection][2][3,2]3.2.2}{[1][18][]18}}
-\@writefile{loe}{\contentsline {proposition}{\ifthmt@listswap Proposition\nobreakspace  {}3.2\else \numberline {3.2}Proposition\fi \thmtformatoptarg {Saturation of the entropies}}{18}{proposition.3.2}\protected@file@percent }
-\newlabel{thmt@@saturation}{{3.2}{18}{Saturation of the entropies}{proposition.3.2}{}}
-\newlabel{thmt@@saturation@cref}{{[proposition][2][3]3.2}{[1][18][]18}}
-\newlabel{prop:saturation_entropies}{{3.2}{18}{Saturation of the entropies}{proposition.3.2}{}}
-\newlabel{prop:saturation_entropies@cref}{{[proposition][2][3]3.2}{[1][18][]18}}
-\citation{liu1989limited}
-\citation{kingma2014adam}
-\citation{bertsekas1997nonlinear}
-\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces Properties of $\mathbf  {P}^{\mathrm  {e}}$, $\overline  {\mathbf  {P}^{\mathrm  {e}}}$, $\mathbf  {P}^{\mathrm  {ds}}$ and $\mathbf  {P}^{\mathrm  {se}}$.\relax }}{19}{table.caption.20}\protected@file@percent }
-\newlabel{thmt@@solvingsea@data}{{\def \theequation {3.\@arabic {\c@equation }}\def \theHequation {(restate \theHthmt@dummyctr )3.2.\@arabic {\c@equation }}\setcounter {equation}{1}}{19}{Symmetric Entropic Affinity Formulation}{proposition.3.2}{}}
-\newlabel{thmt@@solvingsea@data@cref}{{[subsection][2][3,2]3.2.2}{[1][18][]19}}
-\@writefile{loe}{\contentsline {proposition}{\ifthmt@listswap Proposition\nobreakspace  {}3.3\else \numberline {3.3}Proposition\fi \thmtformatoptarg {Solving for \ref  {eq:sym_entropic_affinity}}}{19}{proposition.3.3}\protected@file@percent }
-\newlabel{thmt@@solvingsea}{{3.3}{19}{Solving for \ref {eq:sym_entropic_affinity}}{proposition.3.3}{}}
-\newlabel{thmt@@solvingsea@cref}{{[proposition][3][3]3.3}{[1][19][]19}}
-\newlabel{prop:sol_gamma_non_null}{{3.3}{19}{Solving for \ref {eq:sym_entropic_affinity}}{proposition.3.3}{}}
-\newlabel{prop:sol_gamma_non_null@cref}{{[proposition][3][3]3.3}{[1][19][]19}}
-\newlabel{eq:dual_problem}{{{Dual-SEA}}{19}{Symmetric Entropic Affinity Formulation}{equation.3.2.3}{}}
-\newlabel{eq:dual_problem@cref}{{[equation][2147483647][]{Dual-SEA}}{[1][19][]19}}
-\@writefile{toc}{\contentsline {paragraph}{Numerical optimization.}{19}{paragraph*.21}\protected@file@percent }
-\citation{chung1997spectral}
-\citation{van2022probabilistic}
-\citation{van2008visualizing}
-\@writefile{loe}{\contentsline {remark}{\ifthmt@listswap Remark\nobreakspace  {}3.3\else \numberline {3.3}Remark\fi }{20}{remark.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Optimal Transport for Dimension Reduction with SNEkhorn}{20}{section.3.3}\protected@file@percent }
-\newlabel{sec:DR_with_OT}{{3.3}{20}{Optimal Transport for Dimension Reduction with SNEkhorn}{section.3.3}{}}
-\newlabel{sec:DR_with_OT@cref}{{[section][3][3]3.3}{[1][20][]20}}
-\@writefile{toc}{\contentsline {paragraph}{SNEkhorn's objective.}{20}{paragraph*.22}\protected@file@percent }
-\newlabel{coupling_pb}{{{SNEkhorn}}{20}{SNEkhorn's objective}{paragraph*.22}{}}
-\newlabel{coupling_pb@cref}{{[equation][2147483647][]{SNEkhorn}}{[1][20][]20}}
-\citation{kobak2020heavy}
-\citation{knight2014symmetry,feydy2019interpolating}
-\citation{lu2019doubly}
-\citation{mcinnes2018umap}
-\@writefile{toc}{\contentsline {paragraph}{Heavy-tailed kernel in latent space.}{21}{paragraph*.23}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Inference.}{21}{paragraph*.24}\protected@file@percent }
-\newlabel{eq:sinkhorn_iterations_log_sym_accelerated}{{{Sinkhorn}}{21}{Inference}{equation.3.3.3}{}}
-\newlabel{eq:sinkhorn_iterations_log_sym_accelerated@cref}{{[equation][2147483647][]{Sinkhorn}}{[1][21][]21}}
-\@writefile{toc}{\contentsline {paragraph}{Related work.}{21}{paragraph*.25}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.4}Numerical experiments}{21}{section.3.4}\protected@file@percent }
-\newlabel{sec:DR_experiments}{{3.4}{21}{Numerical experiments}{section.3.4}{}}
-\newlabel{sec:DR_experiments@cref}{{[section][4][3]3.4}{[1][21][]21}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Left: SNEkhorn embedding on the simulated data of \cref  {sec:DR_experiments} using $\setbox \z@ \hbox {\mathsurround \z@ $\textstyle \mathbf  {Q}$}\mathaccent "0365{\mathbf  {Q}}_{\mathbf  {Z}}$ instead of $\mathbf  {Q}^{\mathrm  {ds}}_{\mathbf  {Z}}$ with $\xi =30$. Right: number of iterations needed to achieve $\| \mathbf  {Q}^{\mathrm  {ds}}_{\mathbf  {Z}} \bm  {1} - \bm  {1} \|_{\infty } \leq \text  {tol}$ with equation\nobreakspace  {}\ref  {eq:sinkhorn_iterations_log_sym_accelerated}.\relax }}{22}{figure.caption.26}\protected@file@percent }
-\newlabel{fig:snekhorn_not_DS}{{3.3}{22}{Left: SNEkhorn embedding on the simulated data of \cref {sec:DR_experiments} using $\widetilde {\Qb }_{\Zb }$ instead of $\Qb ^{\mathrm {ds}}_{\Zb }$ with $\xi =30$. Right: number of iterations needed to achieve $\| \Qb ^{\mathrm {ds}}_{\Zb } \bm {1} - \bm {1} \|_{\infty } \leq \text {tol}$ with \eqref {eq:sinkhorn_iterations_log_sym_accelerated}.\relax }{figure.caption.26}{}}
-\newlabel{fig:snekhorn_not_DS@cref}{{[figure][3][3]3.3}{[1][21][]22}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces From left to right: entries of $\overline  {\mathbf  {P}^{\mathrm  {e}}}$ equation\nobreakspace  {}\ref  {symmetrization_tsne} and associated embeddings generated using $\overline  {\mathbf  {P}^{\mathrm  {e}}}$. Then $\mathbf  {P}^{\mathrm  {se}}$ equation\nobreakspace  {}\ref  {eq:sym_entropic_affinity} matrix and associated SNEkhorn embeddings. Perplexity $\xi = 30$.\relax }}{22}{figure.caption.27}\protected@file@percent }
-\newlabel{fig:simulated_data_multinomial}{{3.4}{22}{From left to right: entries of $\overline {\Pb ^{\mathrm {e}}}$ \eqref {symmetrization_tsne} and associated embeddings generated using $\overline {\Pb ^{\mathrm {e}}}$. Then $\Pb ^{\mathrm {se}}$ \eqref {eq:sym_entropic_affinity} matrix and associated SNEkhorn embeddings. Perplexity $\xi = 30$.\relax }{figure.caption.27}{}}
-\newlabel{fig:simulated_data_multinomial@cref}{{[figure][4][3]3.4}{[1][21][]22}}
-\citation{landa2021doubly}
-\citation{kobak2019art}
-\citation{tran2020benchmark}
-\citation{nene1996columbia}
-\citation{olivetti}
-\citation{graham1998characterising}
-\citation{krizhevsky2009learning}
-\citation{huyresnet}
-\citation{Feltes2019}
-\citation{SCOT2020}
-\citation{van2008visualizing}
-\citation{zelnik2004self}
-\@writefile{toc}{\contentsline {paragraph}{Real-world datasets.}{23}{paragraph*.29}\protected@file@percent }
-\citation{van2022probabilistic,linderman2019clustering}
-\citation{zelnik2004self}
-\citation{scikit-learn}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces ARI spectral clustering score as a function of the perplexity parameter for image datasets.\relax }}{24}{figure.caption.30}\protected@file@percent }
-\newlabel{fig:spectral_clustering_sensibility}{{3.5}{24}{ARI spectral clustering score as a function of the perplexity parameter for image datasets.\relax }{figure.caption.30}{}}
-\newlabel{fig:spectral_clustering_sensibility@cref}{{[figure][5][3]3.5}{[1][24][]24}}
-\@writefile{toc}{\contentsline {paragraph}{Spectral Clustering.}{24}{paragraph*.31}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {3.2}{\ignorespaces ARI ($\times 100$) clustering scores on genomics data.\relax }}{24}{table.caption.28}\protected@file@percent }
-\newlabel{table_spectral_microaray}{{3.2}{24}{ARI ($\times 100$) clustering scores on genomics data.\relax }{table.caption.28}{}}
-\newlabel{table_spectral_microaray@cref}{{[table][2][3]3.2}{[1][23][]24}}
-\citation{paszke2017automatic}
-\citation{kingma2014adam}
-\citation{rousseeuw1987silhouettes}
-\citation{venna2001neighborhood}
-\citation{scikit-learn}
-\@writefile{toc}{\contentsline {paragraph}{Dimension Reduction.}{25}{paragraph*.33}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3.6}{\ignorespaces SNAREseq embeddings produced by t-SNE and t-SNEkhorn with $\xi =50$.\relax }}{25}{figure.caption.32}\protected@file@percent }
-\newlabel{fig:sc}{{3.6}{25}{SNAREseq embeddings produced by t-SNE and t-SNEkhorn with $\xi =50$.\relax }{figure.caption.32}{}}
-\newlabel{fig:sc@cref}{{[figure][6][3]3.6}{[1][25][]25}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.5}Conclusion}{25}{section.3.5}\protected@file@percent }
-\newlabel{sec:conclusion}{{3.5}{25}{Conclusion}{section.3.5}{}}
-\newlabel{sec:conclusion@cref}{{[section][5][3]3.5}{[1][25][]25}}
-\citation{van2022probabilistic}
-\citation{lee2015multi}
-\citation{van2013barnes}
-\citation{linderman2019fast}
-\citation{zhai2023sigmareparam}
-\@writefile{lot}{\contentsline {table}{\numberline {3.3}{\ignorespaces Scores for the UMAP, t-SNE and t-SNEkhorn embeddings.\relax }}{26}{table.caption.34}\protected@file@percent }
-\newlabel{tab:DR_genomics_data}{{3.3}{26}{Scores for the UMAP, t-SNE and t-SNEkhorn embeddings.\relax }{table.caption.34}{}}
-\newlabel{tab:DR_genomics_data@cref}{{[table][3][3]3.3}{[1][25][]26}}
 \citation{van2022probabilistic}
 \citation{chan2018t,pezzotti2019gpgpu,linderman2019fast}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}A Probabilistic Graph Coupling View of Dimension Reduction}{27}{chapter.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}A Probabilistic Graph Coupling View of Dimension Reduction}{15}{chapter.3}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{lof}{\contentsline {xchapter}{A Probabilistic Graph Coupling View of Dimension Reduction}{27}{chapter.4}\protected@file@percent }
-\@writefile{lot}{\contentsline {xchapter}{A Probabilistic Graph Coupling View of Dimension Reduction}{27}{chapter.4}\protected@file@percent }
-\newlabel{chapter:GraphCoupling}{{4}{27}{A Probabilistic Graph Coupling View of Dimension Reduction}{chapter.4}{}}
-\newlabel{chapter:GraphCoupling@cref}{{[chapter][4][]4}{[1][27][]27}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}Introduction}{27}{section.4.1}\protected@file@percent }
-\newlabel{intro}{{4.1}{27}{Introduction}{section.4.1}{}}
-\newlabel{intro@cref}{{[section][1][4]4.1}{[1][27][]27}}
-\@writefile{toc}{\contentsline {paragraph}{Outline.}{28}{paragraph*.35}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}PCA as Graph Coupling}{28}{section.4.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {xchapter}{A Probabilistic Graph Coupling View of Dimension Reduction}{15}{chapter.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {xchapter}{A Probabilistic Graph Coupling View of Dimension Reduction}{15}{chapter.3}\protected@file@percent }
+\newlabel{chapter:GraphCoupling}{{3}{15}{A Probabilistic Graph Coupling View of Dimension Reduction}{chapter.3}{}}
+\newlabel{chapter:GraphCoupling@cref}{{[chapter][3][]3}{[1][15][]15}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Introduction}{15}{section.3.1}\protected@file@percent }
+\newlabel{intro}{{3.1}{15}{Introduction}{section.3.1}{}}
+\newlabel{intro@cref}{{[section][1][3]3.1}{[1][15][]15}}
+\@writefile{toc}{\contentsline {paragraph}{Outline.}{16}{paragraph*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}PCA as Graph Coupling}{16}{section.3.2}\protected@file@percent }
 \citation{rue2005gaussian}
 \citation{tipping1999probabilistic}
 \citation{anowar2021conceptual}
-\newlabel{thmt@@PCAgraphcoupling@data}{{\def \theequation {4.\@arabic {\c@equation }}\def \theHequation {(restate \theHthmt@dummyctr )4.2.\@arabic {\c@equation }}\setcounter {equation}{0}}{29}{PCA as Graph Coupling}{section.4.2}{}}
-\newlabel{thmt@@PCAgraphcoupling@data@cref}{{[section][2][4]4.2}{[1][29][]29}}
+\newlabel{thmt@@PCAgraphcoupling@data}{{\def \theequation {3.\@arabic {\c@equation }}\def \theHequation {(restate \theHthmt@dummyctr )3.2.\@arabic {\c@equation }}\setcounter {equation}{0}}{17}{PCA as Graph Coupling}{section.3.2}{}}
+\newlabel{thmt@@PCAgraphcoupling@data@cref}{{[section][2][3]3.2}{[1][17][]17}}
 \@writefile{loe}{\addvspace {10\p@ }}
-\@writefile{loe}{\contentsline {theorem}{\ifthmt@listswap Theorem\nobreakspace  {}4.1\else \numberline {4.1}Theorem\fi }{29}{theorem.4.1}\protected@file@percent }
-\newlabel{thmt@@PCAgraphcoupling}{{4.1}{29}{}{theorem.4.1}{}}
-\newlabel{thmt@@PCAgraphcoupling@cref}{{[theorem][1][4]4.1}{[1][29][]29}}
-\newlabel{PCA_graph_coupling}{{4.1}{29}{}{theorem.4.1}{}}
-\newlabel{PCA_graph_coupling@cref}{{[theorem][1][4]4.1}{[1][29][]29}}
-\newlabel{eq:X_given_theta}{{4.1}{29}{}{equation.4.2.1}{}}
-\newlabel{eq:X_given_theta@cref}{{[equation][1][4]4.1}{[1][29][]29}}
-\newlabel{eq:Z_given_theta}{{4.2}{29}{}{equation.4.2.2}{}}
-\newlabel{eq:Z_given_theta@cref}{{[equation][2][4]4.2}{[1][29][]29}}
+\@writefile{loe}{\contentsline {theorem}{\ifthmt@listswap Theorem\nobreakspace  {}3.1\else \numberline {3.1}Theorem\fi }{17}{theorem.3.1}\protected@file@percent }
+\newlabel{thmt@@PCAgraphcoupling}{{3.1}{17}{}{theorem.3.1}{}}
+\newlabel{thmt@@PCAgraphcoupling@cref}{{[theorem][1][3]3.1}{[1][17][]17}}
+\newlabel{PCA_graph_coupling}{{3.1}{17}{}{theorem.3.1}{}}
+\newlabel{PCA_graph_coupling@cref}{{[theorem][1][3]3.1}{[1][17][]17}}
+\newlabel{eq:X_given_theta}{{3.1}{17}{}{equation.3.2.1}{}}
+\newlabel{eq:X_given_theta@cref}{{[equation][1][3]3.1}{[1][17][]17}}
+\newlabel{eq:Z_given_theta}{{3.2}{17}{}{equation.3.2.2}{}}
+\newlabel{eq:Z_given_theta@cref}{{[equation][2][3]3.2}{[1][17][]17}}
 \citation{Chung97}
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Shift-Invariant Pairwise MRF to Model Row Dependencies}{30}{section.4.3}\protected@file@percent }
-\newlabel{sec:graph_structure}{{4.3}{30}{Shift-Invariant Pairwise MRF to Model Row Dependencies}{section.4.3}{}}
-\newlabel{sec:graph_structure@cref}{{[section][3][4]4.3}{[1][29][]30}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Graph Laplacian Null Space}{30}{subsection.4.3.1}\protected@file@percent }
-\newlabel{sec:laplacian_prop}{{4.3.1}{30}{Graph Laplacian Null Space}{subsection.4.3.1}{}}
-\newlabel{sec:laplacian_prop@cref}{{[subsection][1][4,3]4.3.1}{[1][30][]30}}
-\@writefile{loe}{\contentsline {definition}{\ifthmt@listswap Definition\nobreakspace  {}4.1\else \numberline {4.1}Definition\fi }{30}{definition.4.1}\protected@file@percent }
-\newlabel{graph_laplacian}{{4.1}{30}{}{definition.4.1}{}}
-\newlabel{graph_laplacian@cref}{{[definition][1][4]4.1}{[1][30][]30}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Pairwise MRF and Shift-Invariances}{30}{subsection.4.3.2}\protected@file@percent }
-\newlabel{sec:within_CC}{{4.3.2}{30}{Pairwise MRF and Shift-Invariances}{subsection.4.3.2}{}}
-\newlabel{sec:within_CC@cref}{{[subsection][2][4,3]4.3.2}{[1][30][]30}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Shift-Invariant Pairwise MRF to Model Row Dependencies}{18}{section.3.3}\protected@file@percent }
+\newlabel{sec:graph_structure}{{3.3}{18}{Shift-Invariant Pairwise MRF to Model Row Dependencies}{section.3.3}{}}
+\newlabel{sec:graph_structure@cref}{{[section][3][3]3.3}{[1][17][]18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Graph Laplacian Null Space}{18}{subsection.3.3.1}\protected@file@percent }
+\newlabel{sec:laplacian_prop}{{3.3.1}{18}{Graph Laplacian Null Space}{subsection.3.3.1}{}}
+\newlabel{sec:laplacian_prop@cref}{{[subsection][1][3,3]3.3.1}{[1][18][]18}}
+\@writefile{loe}{\contentsline {definition}{\ifthmt@listswap Definition\nobreakspace  {}3.1\else \numberline {3.1}Definition\fi }{18}{definition.3.1}\protected@file@percent }
+\newlabel{graph_laplacian}{{3.1}{18}{}{definition.3.1}{}}
+\newlabel{graph_laplacian@cref}{{[definition][1][3]3.1}{[1][18][]18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Pairwise MRF and Shift-Invariances}{18}{subsection.3.3.2}\protected@file@percent }
+\newlabel{sec:within_CC}{{3.3.2}{18}{Pairwise MRF and Shift-Invariances}{subsection.3.3.2}{}}
+\newlabel{sec:within_CC@cref}{{[subsection][2][3,3]3.3.2}{[1][18][]18}}
 \citation{maaten2008tSNE}
 \citation{kobak2019heavy}
 \citation{clifford1990markov}
 \citation{rue2005gaussian}
-\newlabel{eq:unnormalized_MRF}{{4.3}{31}{Pairwise MRF and Shift-Invariances}{equation.4.3.3}{}}
-\newlabel{eq:unnormalized_MRF@cref}{{[equation][3][4]4.3}{[1][30][]31}}
-\@writefile{toc}{\contentsline {paragraph}{Gaussian kernel.}{31}{paragraph*.36}\protected@file@percent }
-\newlabel{eq:gaussian_kernel}{{4.4}{31}{Gaussian kernel}{equation.4.3.4}{}}
-\newlabel{eq:gaussian_kernel@cref}{{[equation][4][4]4.4}{[1][31][]31}}
-\newlabel{thmt@@integrabilitypairwiseMRF@data}{{\def \theequation {4.\@arabic {\c@equation }}\def \theHequation {(restate \theHthmt@dummyctr )4.3.\@arabic {\c@equation }}\setcounter {equation}{4}}{31}{Gaussian kernel}{equation.4.3.4}{}}
-\newlabel{thmt@@integrabilitypairwiseMRF@data@cref}{{[subsection][2][4,3]4.3.2}{[1][31][]31}}
-\@writefile{loe}{\contentsline {theorem}{\ifthmt@listswap Theorem\nobreakspace  {}4.2\else \numberline {4.2}Theorem\fi }{31}{theorem.4.2}\protected@file@percent }
-\newlabel{thmt@@integrabilitypairwiseMRF}{{4.2}{31}{}{theorem.4.2}{}}
-\newlabel{thmt@@integrabilitypairwiseMRF@cref}{{[theorem][2][4]4.2}{[1][31][]31}}
-\newlabel{prop:integrability_pairwise_MRF}{{4.2}{31}{}{theorem.4.2}{}}
-\newlabel{prop:integrability_pairwise_MRF@cref}{{[theorem][2][4]4.2}{[1][31][]31}}
-\newlabel{eq:proba_perp}{{4.5}{31}{Gaussian kernel}{equation.4.3.5}{}}
-\newlabel{eq:proba_perp@cref}{{[equation][5][4]4.5}{[1][31][]31}}
-\@writefile{loe}{\contentsline {remark}{\ifthmt@listswap Remark\nobreakspace  {}4.1\else \numberline {4.1}Remark\fi }{31}{remark.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Between-Rows Dependency Structure.}{31}{paragraph*.37}\protected@file@percent }
+\newlabel{eq:unnormalized_MRF}{{3.3}{19}{Pairwise MRF and Shift-Invariances}{equation.3.3.3}{}}
+\newlabel{eq:unnormalized_MRF@cref}{{[equation][3][3]3.3}{[1][18][]19}}
+\@writefile{toc}{\contentsline {paragraph}{Gaussian kernel.}{19}{paragraph*.18}\protected@file@percent }
+\newlabel{eq:gaussian_kernel}{{3.4}{19}{Gaussian kernel}{equation.3.3.4}{}}
+\newlabel{eq:gaussian_kernel@cref}{{[equation][4][3]3.4}{[1][19][]19}}
+\newlabel{thmt@@integrabilitypairwiseMRF@data}{{\def \theequation {3.\@arabic {\c@equation }}\def \theHequation {(restate \theHthmt@dummyctr )3.3.\@arabic {\c@equation }}\setcounter {equation}{4}}{19}{Gaussian kernel}{equation.3.3.4}{}}
+\newlabel{thmt@@integrabilitypairwiseMRF@data@cref}{{[subsection][2][3,3]3.3.2}{[1][19][]19}}
+\@writefile{loe}{\contentsline {theorem}{\ifthmt@listswap Theorem\nobreakspace  {}3.2\else \numberline {3.2}Theorem\fi }{19}{theorem.3.2}\protected@file@percent }
+\newlabel{thmt@@integrabilitypairwiseMRF}{{3.2}{19}{}{theorem.3.2}{}}
+\newlabel{thmt@@integrabilitypairwiseMRF@cref}{{[theorem][2][3]3.2}{[1][19][]19}}
+\newlabel{prop:integrability_pairwise_MRF}{{3.2}{19}{}{theorem.3.2}{}}
+\newlabel{prop:integrability_pairwise_MRF@cref}{{[theorem][2][3]3.2}{[1][19][]19}}
+\newlabel{eq:proba_perp}{{3.5}{19}{Gaussian kernel}{equation.3.3.5}{}}
+\newlabel{eq:proba_perp@cref}{{[equation][5][3]3.5}{[1][19][]19}}
+\@writefile{loe}{\contentsline {remark}{\ifthmt@listswap Remark\nobreakspace  {}3.1\else \numberline {3.1}Remark\fi }{19}{remark.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Between-Rows Dependency Structure.}{19}{paragraph*.19}\protected@file@percent }
 \citation{wainwright2008graphical}
 \citation{li2020high}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}Uninformative Model for CC-wise Means}{32}{subsection.4.3.3}\protected@file@percent }
-\newlabel{eq:proba_parallel}{{4.6}{32}{Uninformative Model for CC-wise Means}{equation.4.3.6}{}}
-\newlabel{eq:proba_parallel@cref}{{[equation][6][4]4.6}{[1][32][]32}}
-\@writefile{loe}{\contentsline {remark}{\ifthmt@listswap Remark\nobreakspace  {}4.2\else \numberline {4.2}Remark\fi }{32}{remark.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.4}Graph Coupling as a Unified Objective for Pairwise Similarity Methods}{32}{section.4.4}\protected@file@percent }
-\newlabel{sec:GC_unified}{{4.4}{32}{Graph Coupling as a Unified Objective for Pairwise Similarity Methods}{section.4.4}{}}
-\newlabel{sec:GC_unified@cref}{{[section][4][4]4.4}{[1][32][]32}}
-\@writefile{loe}{\contentsline {definition}{\ifthmt@listswap Definition\nobreakspace  {}4.2\else \numberline {4.2}Definition\fi }{33}{definition.4.2}\protected@file@percent }
-\newlabel{def:prior_W}{{4.2}{33}{}{definition.4.2}{}}
-\newlabel{def:prior_W@cref}{{[definition][2][4]4.2}{[1][32][]33}}
-\newlabel{thmt@@posteriorW@data}{{\def \theequation {4.\@arabic {\c@equation }}\def \theHequation {(restate \theHthmt@dummyctr )4.4.\@arabic {\c@equation }}\setcounter {equation}{6}}{33}{Graph Coupling as a Unified Objective for Pairwise Similarity Methods}{definition.4.2}{}}
-\newlabel{thmt@@posteriorW@data@cref}{{[section][4][4]4.4}{[1][33][]33}}
-\@writefile{loe}{\contentsline {proposition}{\ifthmt@listswap Proposition\nobreakspace  {}4.1\else \numberline {4.1}Proposition\fi }{33}{proposition.4.1}\protected@file@percent }
-\newlabel{thmt@@posteriorW}{{4.1}{33}{}{proposition.4.1}{}}
-\newlabel{thmt@@posteriorW@cref}{{[proposition][1][4]4.1}{[1][33][]33}}
-\newlabel{prop:posterior_W}{{4.1}{33}{}{proposition.4.1}{}}
-\newlabel{prop:posterior_W@cref}{{[proposition][1][4]4.1}{[1][33][]33}}
-\@writefile{loe}{\contentsline {remark}{\ifthmt@listswap Remark\nobreakspace  {}4.3\else \numberline {4.3}Remark\fi }{33}{remark.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}Retrieving Popular Dimension Reduction Methods}{33}{subsection.4.4.1}\protected@file@percent }
-\newlabel{sec:retrieving_DR_methods}{{4.4.1}{33}{Retrieving Popular Dimension Reduction Methods}{subsection.4.4.1}{}}
-\newlabel{sec:retrieving_DR_methods@cref}{{[subsection][1][4,4]4.4.1}{[1][33][]33}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}Uninformative Model for CC-wise Means}{20}{subsection.3.3.3}\protected@file@percent }
+\newlabel{eq:proba_parallel}{{3.6}{20}{Uninformative Model for CC-wise Means}{equation.3.3.6}{}}
+\newlabel{eq:proba_parallel@cref}{{[equation][6][3]3.6}{[1][20][]20}}
+\@writefile{loe}{\contentsline {remark}{\ifthmt@listswap Remark\nobreakspace  {}3.2\else \numberline {3.2}Remark\fi }{20}{remark.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Graph Coupling as a Unified Objective for Pairwise Similarity Methods}{20}{section.3.4}\protected@file@percent }
+\newlabel{sec:GC_unified}{{3.4}{20}{Graph Coupling as a Unified Objective for Pairwise Similarity Methods}{section.3.4}{}}
+\newlabel{sec:GC_unified@cref}{{[section][4][3]3.4}{[1][20][]20}}
+\@writefile{loe}{\contentsline {definition}{\ifthmt@listswap Definition\nobreakspace  {}3.2\else \numberline {3.2}Definition\fi }{21}{definition.3.2}\protected@file@percent }
+\newlabel{def:prior_W}{{3.2}{21}{}{definition.3.2}{}}
+\newlabel{def:prior_W@cref}{{[definition][2][3]3.2}{[1][20][]21}}
+\newlabel{thmt@@posteriorW@data}{{\def \theequation {3.\@arabic {\c@equation }}\def \theHequation {(restate \theHthmt@dummyctr )3.4.\@arabic {\c@equation }}\setcounter {equation}{6}}{21}{Graph Coupling as a Unified Objective for Pairwise Similarity Methods}{definition.3.2}{}}
+\newlabel{thmt@@posteriorW@data@cref}{{[section][4][3]3.4}{[1][21][]21}}
+\@writefile{loe}{\contentsline {proposition}{\ifthmt@listswap Proposition\nobreakspace  {}3.1\else \numberline {3.1}Proposition\fi }{21}{proposition.3.1}\protected@file@percent }
+\newlabel{thmt@@posteriorW}{{3.1}{21}{}{proposition.3.1}{}}
+\newlabel{thmt@@posteriorW@cref}{{[proposition][1][3]3.1}{[1][21][]21}}
+\newlabel{prop:posterior_W}{{3.1}{21}{}{proposition.3.1}{}}
+\newlabel{prop:posterior_W@cref}{{[proposition][1][3]3.1}{[1][21][]21}}
+\@writefile{loe}{\contentsline {remark}{\ifthmt@listswap Remark\nobreakspace  {}3.3\else \numberline {3.3}Remark\fi }{21}{remark.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}Retrieving Popular Dimension Reduction Methods}{21}{subsection.3.4.1}\protected@file@percent }
+\newlabel{sec:retrieving_DR_methods}{{3.4.1}{21}{Retrieving Popular Dimension Reduction Methods}{subsection.3.4.1}{}}
+\newlabel{sec:retrieving_DR_methods@cref}{{[subsection][1][3,4]3.4.1}{[1][21][]21}}
 \citation{hinton2002stochastic}
 \citation{maaten2008tSNE}
 \citation{tang2016visualizing}
 \citation{mcinnes2018umap}
 \citation{maaten2008tSNE}
-\@writefile{toc}{\contentsline {paragraph}{SNE.}{34}{paragraph*.38}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Symmetric-SNE.}{34}{paragraph*.39}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{LargeVis.}{34}{paragraph*.40}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{UMAP.}{34}{paragraph*.41}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{SNE.}{22}{paragraph*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Symmetric-SNE.}{22}{paragraph*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{LargeVis.}{22}{paragraph*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{UMAP.}{22}{paragraph*.23}\protected@file@percent }
 \ExplSyntaxOn \cs_if_free:NT \pgfsyspdfmark {\cs_set_eq:NN \pgfsyspdfmark \@gobblethree }\ExplSyntaxOff 
 \ExplSyntaxOn 
 \char_set_catcode_space:n {32}
@@ -422,7 +284,7 @@
 \citation{belkin2003laplacian}
 \citation{carreira2010elastic}
 \citation{bohm2020unifying}
-\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Prior distributions for $\mathbf  {W}_{X}$ and $\mathbf  {W}_{Z}$ associated with the pairwise similarity coupling DR algorithms. Grey-colored boxes are such that the cross-entropy is undefined.\relax }}{35}{table.caption.42}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces Prior distributions for $\mathbf  {W}_{X}$ and $\mathbf  {W}_{Z}$ associated with the pairwise similarity coupling DR algorithms. Grey-colored boxes are such that the cross-entropy is undefined.\relax }}{23}{table.caption.24}\protected@file@percent }
 \pgfsyspdfmark {pgfid1}{12613262}{41021833}
 \pgfsyspdfmark {pgfid2}{13965032}{39894619}
 \pgfsyspdfmark {pgfid3}{17388232}{39894619}
@@ -452,21 +314,159 @@
 \pgfsyspdfmark {pgfid28}{27824026}{38446269}
 \pgfsyspdfmark {pgfid29}{27824026}{38446269}
 \pgfsyspdfmark {pgfid30}{27824026}{38446269}
-\newlabel{tableau_priors}{{4.1}{35}{Prior distributions for $\Wb _{X}$ and $\Wb _{Z}$ associated with the pairwise similarity coupling DR algorithms. Grey-colored boxes are such that the cross-entropy is undefined.\relax }{table.caption.42}{}}
-\newlabel{tableau_priors@cref}{{[table][1][4]4.1}{[1][35][]35}}
-\newlabel{priors_methods}{{4.1}{35}{Prior distributions for $\Wb _{X}$ and $\Wb _{Z}$ associated with the pairwise similarity coupling DR algorithms. Grey-colored boxes are such that the cross-entropy is undefined.\relax }{table.caption.42}{}}
-\newlabel{priors_methods@cref}{{[table][1][4]4.1}{[1][35][]35}}
-\@writefile{loe}{\contentsline {remark}{\ifthmt@listswap Remark\nobreakspace  {}4.4\else \numberline {4.4}Remark\fi }{35}{remark.4.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}Interpretations}{35}{subsection.4.4.2}\protected@file@percent }
-\newlabel{sec:interpretations}{{4.4.2}{35}{Interpretations}{subsection.4.4.2}{}}
-\newlabel{sec:interpretations@cref}{{[subsection][2][4,4]4.4.2}{[1][35][]35}}
-\@writefile{toc}{\contentsline {paragraph}{Repulsion \& Attraction.}{35}{paragraph*.43}\protected@file@percent }
-\newlabel{eq:optim_H_Z}{{4.7}{35}{Repulsion \& Attraction}{equation.4.4.7}{}}
-\newlabel{eq:optim_H_Z@cref}{{[equation][7][4]4.7}{[1][35][]35}}
-\@writefile{toc}{\contentsline {paragraph}{Global Structure Preservation. }{36}{paragraph*.44}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.5}Conclusion and Perspectives}{36}{section.4.5}\protected@file@percent }
-\newlabel{Perspectives}{{4.5}{36}{Conclusion and Perspectives}{section.4.5}{}}
-\newlabel{Perspectives@cref}{{[section][5][4]4.5}{[1][36][]36}}
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{tableau_priors}{{3.1}{23}{Prior distributions for $\Wb _{X}$ and $\Wb _{Z}$ associated with the pairwise similarity coupling DR algorithms. Grey-colored boxes are such that the cross-entropy is undefined.\relax }{table.caption.24}{}}
+\newlabel{tableau_priors@cref}{{[table][1][3]3.1}{[1][23][]23}}
+\newlabel{priors_methods}{{3.1}{23}{Prior distributions for $\Wb _{X}$ and $\Wb _{Z}$ associated with the pairwise similarity coupling DR algorithms. Grey-colored boxes are such that the cross-entropy is undefined.\relax }{table.caption.24}{}}
+\newlabel{priors_methods@cref}{{[table][1][3]3.1}{[1][23][]23}}
+\@writefile{loe}{\contentsline {remark}{\ifthmt@listswap Remark\nobreakspace  {}3.4\else \numberline {3.4}Remark\fi }{23}{remark.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Interpretations}{23}{subsection.3.4.2}\protected@file@percent }
+\newlabel{sec:interpretations}{{3.4.2}{23}{Interpretations}{subsection.3.4.2}{}}
+\newlabel{sec:interpretations@cref}{{[subsection][2][3,4]3.4.2}{[1][23][]23}}
+\@writefile{toc}{\contentsline {paragraph}{Repulsion \& Attraction.}{23}{paragraph*.25}\protected@file@percent }
+\newlabel{eq:optim_H_Z}{{3.7}{23}{Repulsion \& Attraction}{equation.3.4.7}{}}
+\newlabel{eq:optim_H_Z@cref}{{[equation][7][3]3.7}{[1][23][]23}}
+\@writefile{toc}{\contentsline {paragraph}{Global Structure Preservation. }{24}{paragraph*.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}Conclusion and Perspectives}{24}{section.3.5}\protected@file@percent }
+\newlabel{Perspectives}{{3.5}{24}{Conclusion and Perspectives}{section.3.5}{}}
+\newlabel{Perspectives@cref}{{[section][5][3]3.5}{[1][24][]24}}
+\citation{nene1996columbia}
+\citation{nene1996columbia}
+\citation{lu2019doubly}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}SNEkhorn: Dimension Reduction with Symmetric Entropic Affinities}{26}{chapter.4}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{lof}{\contentsline {xchapter}{SNEkhorn: Dimension Reduction with Symmetric Entropic Affinities}{26}{chapter.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {xchapter}{SNEkhorn: Dimension Reduction with Symmetric Entropic Affinities}{26}{chapter.4}\protected@file@percent }
+\newlabel{chapter:SNEkhorn}{{4}{26}{SNEkhorn: Dimension Reduction with Symmetric Entropic Affinities}{chapter.4}{}}
+\newlabel{chapter:SNEkhorn@cref}{{[chapter][4][]4}{[1][26][]26}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Introduction}{26}{section.4.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Top: COIL \cite  {nene1996columbia} embeddings with silhouette scores produced by Symmetric-SNE and SNEkhorn (our method introduced in \cref  {sec:DR_with_OT}) for $\xi =30$. Bottom: $e^{\operatorname  {H}(\mathbf  {P}_{i:})-1}$ (\emph  {perplexity}) for each point $i$.\relax }}{27}{figure.caption.27}\protected@file@percent }
+\newlabel{fig:coil}{{4.1}{27}{Top: COIL \cite {nene1996columbia} embeddings with silhouette scores produced by Symmetric-SNE and SNEkhorn (our method introduced in \cref {sec:DR_with_OT}) for $\xi =30$. Bottom: $e^{\operatorname {H}(\Pb _{i:})-1}$ (\emph {perplexity}) for each point $i$.\relax }{figure.caption.27}{}}
+\newlabel{fig:coil@cref}{{[figure][1][4]4.1}{[1][26][]27}}
+\@writefile{toc}{\contentsline {paragraph}{Contributions.}{27}{paragraph*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Symmetric Entropic Affinities}{27}{section.4.2}\protected@file@percent }
+\newlabel{sec:sym_entropic_affinity}{{4.2}{27}{Symmetric Entropic Affinities}{section.4.2}{}}
+\newlabel{sec:sym_entropic_affinity@cref}{{[section][2][4]4.2}{[1][27][]27}}
+\citation{rabin2014adaptive,flamary2016optimal}
+\citation{benamou2015iterative}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Entropic Affinities as Entropic Optimal Transport}{28}{subsection.4.2.1}\protected@file@percent }
+\newlabel{sec:entropic_affinity_semi_relaxed}{{4.2.1}{28}{Entropic Affinities as Entropic Optimal Transport}{subsection.4.2.1}{}}
+\newlabel{sec:entropic_affinity_semi_relaxed@cref}{{[subsection][1][4,2]4.2.1}{[1][28][]28}}
+\newlabel{thmt@@entropicaffinityaslinearprogram@data}{{\def \theequation {4.\@arabic {\c@equation }}\def \theHequation {(restate \theHthmt@dummyctr )4.2.\@arabic {\c@equation }}\setcounter {equation}{1}}{28}{Entropic Affinities as Entropic Optimal Transport}{equation.4.2.1}{}}
+\newlabel{thmt@@entropicaffinityaslinearprogram@data@cref}{{[subsection][1][4,2]4.2.1}{[1][28][]28}}
+\@writefile{loe}{\addvspace {10\p@ }}
+\@writefile{loe}{\contentsline {proposition}{\ifthmt@listswap Proposition\nobreakspace  {}4.1\else \numberline {4.1}Proposition\fi }{28}{proposition.4.1}\protected@file@percent }
+\newlabel{thmt@@entropicaffinityaslinearprogram}{{4.1}{28}{}{proposition.4.1}{}}
+\newlabel{thmt@@entropicaffinityaslinearprogram@cref}{{[proposition][1][4]4.1}{[1][28][]28}}
+\newlabel{prop:entropic_affinity_as_linear_program}{{4.1}{28}{}{proposition.4.1}{}}
+\newlabel{prop:entropic_affinity_as_linear_program@cref}{{[proposition][1][4]4.1}{[1][28][]28}}
+\newlabel{eq:entropic_affinity_semi_relaxed}{{{EA as OT}}{28}{}{equation.4.2.2}{}}
+\newlabel{eq:entropic_affinity_semi_relaxed@cref}{{[equation][2147483647][]{EA as OT}}{[1][28][]28}}
+\@writefile{loe}{\contentsline {remark}{\ifthmt@listswap Remark\nobreakspace  {}4.1\else \numberline {4.1}Remark\fi }{28}{remark.4.1}\protected@file@percent }
+\@writefile{loe}{\contentsline {remark}{\ifthmt@listswap Remark\nobreakspace  {}4.2\else \numberline {4.2}Remark\fi }{28}{remark.4.2}\protected@file@percent }
+\newlabel{Pe_proj}{{4.2}{28}{}{remark.4.2}{}}
+\newlabel{Pe_proj@cref}{{[remark][2][4]4.2}{[1][28][]28}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Samples from a mixture of three Gaussians with varying standard deviations. The edges' strength is proportional to the weights in the affinities $\mathbf  {P}^{\mathrm  {ds}}$ equation\nobreakspace  {}\ref  {eq:plan_sym_sinkhorn} and $\mathbf  {P}^{\mathrm  {se}}$ equation\nobreakspace  {}\ref  {eq:sym_entropic_affinity} computed with $\xi =5$ (for $\mathbf  {P}^{\mathrm  {ds}}$, $\xi $ is the average perplexity such that $\DOTSB \sum@ \slimits@ _i \operatorname  {H}(\mathbf  {P}^{\mathrm  {ds}}_{i:})=\DOTSB \sum@ \slimits@ _i \operatorname  {H}(\mathbf  {P}^{\mathrm  {se}}_{i:})$). Points' color represents the perplexity $e^{\operatorname  {H}(\mathbf  {P}_{i:})-1}$. Right plot: smallest eigenvalues of the Laplacian for the two affinities.\relax }}{29}{figure.caption.29}\protected@file@percent }
+\newlabel{fig:Ps_vs_Pse}{{4.2}{29}{Samples from a mixture of three Gaussians with varying standard deviations. The edges' strength is proportional to the weights in the affinities $\Pb ^{\mathrm {ds}}$ \eqref {eq:plan_sym_sinkhorn} and $\Pb ^{\mathrm {se}}$ \eqref {eq:sym_entropic_affinity} computed with $\xi =5$ (for $\Pb ^{\mathrm {ds}}$, $\xi $ is the average perplexity such that $\sum _i \operatorname {H}(\Pb ^{\mathrm {ds}}_{i:})=\sum _i \operatorname {H}(\Pb ^{\mathrm {se}}_{i:})$). Points' color represents the perplexity $e^{\operatorname {H}(\Pb _{i:})-1}$. Right plot: smallest eigenvalues of the Laplacian for the two affinities.\relax }{figure.caption.29}{}}
+\newlabel{fig:Ps_vs_Pse@cref}{{[figure][2][4]4.2}{[1][28][]29}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Symmetric Entropic Affinity Formulation}{29}{subsection.4.2.2}\protected@file@percent }
+\newlabel{subsec:sea}{{4.2.2}{29}{Symmetric Entropic Affinity Formulation}{subsection.4.2.2}{}}
+\newlabel{subsec:sea@cref}{{[subsection][2][4,2]4.2.2}{[1][28][]29}}
+\newlabel{eq:sym_entropic_affinity}{{{SEA}}{29}{Symmetric Entropic Affinity Formulation}{figure.caption.29}{}}
+\newlabel{eq:sym_entropic_affinity@cref}{{[equation][2147483647][]{SEA}}{[1][29][]29}}
+\newlabel{thmt@@saturation@data}{{\def \theequation {4.\@arabic {\c@equation }}\def \theHequation {(restate \theHthmt@dummyctr )4.2.\@arabic {\c@equation }}\setcounter {equation}{1}}{29}{Symmetric Entropic Affinity Formulation}{figure.caption.29}{}}
+\newlabel{thmt@@saturation@data@cref}{{[subsection][2][4,2]4.2.2}{[1][29][]29}}
+\@writefile{loe}{\contentsline {proposition}{\ifthmt@listswap Proposition\nobreakspace  {}4.2\else \numberline {4.2}Proposition\fi \thmtformatoptarg {Saturation of the entropies}}{29}{proposition.4.2}\protected@file@percent }
+\newlabel{thmt@@saturation}{{4.2}{29}{Saturation of the entropies}{proposition.4.2}{}}
+\newlabel{thmt@@saturation@cref}{{[proposition][2][4]4.2}{[1][29][]29}}
+\newlabel{prop:saturation_entropies}{{4.2}{29}{Saturation of the entropies}{proposition.4.2}{}}
+\newlabel{prop:saturation_entropies@cref}{{[proposition][2][4]4.2}{[1][29][]29}}
+\citation{liu1989limited}
+\citation{kingma2014adam}
+\citation{bertsekas1997nonlinear}
+\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Properties of $\mathbf  {P}^{\mathrm  {e}}$, $\overline  {\mathbf  {P}^{\mathrm  {e}}}$, $\mathbf  {P}^{\mathrm  {ds}}$ and $\mathbf  {P}^{\mathrm  {se}}$.\relax }}{30}{table.caption.30}\protected@file@percent }
+\newlabel{thmt@@solvingsea@data}{{\def \theequation {4.\@arabic {\c@equation }}\def \theHequation {(restate \theHthmt@dummyctr )4.2.\@arabic {\c@equation }}\setcounter {equation}{1}}{30}{Symmetric Entropic Affinity Formulation}{proposition.4.2}{}}
+\newlabel{thmt@@solvingsea@data@cref}{{[subsection][2][4,2]4.2.2}{[1][29][]30}}
+\@writefile{loe}{\contentsline {proposition}{\ifthmt@listswap Proposition\nobreakspace  {}4.3\else \numberline {4.3}Proposition\fi \thmtformatoptarg {Solving for \ref  {eq:sym_entropic_affinity}}}{30}{proposition.4.3}\protected@file@percent }
+\newlabel{thmt@@solvingsea}{{4.3}{30}{Solving for \ref {eq:sym_entropic_affinity}}{proposition.4.3}{}}
+\newlabel{thmt@@solvingsea@cref}{{[proposition][3][4]4.3}{[1][30][]30}}
+\newlabel{prop:sol_gamma_non_null}{{4.3}{30}{Solving for \ref {eq:sym_entropic_affinity}}{proposition.4.3}{}}
+\newlabel{prop:sol_gamma_non_null@cref}{{[proposition][3][4]4.3}{[1][30][]30}}
+\newlabel{eq:dual_problem}{{{Dual-SEA}}{30}{Symmetric Entropic Affinity Formulation}{equation.4.2.3}{}}
+\newlabel{eq:dual_problem@cref}{{[equation][2147483647][]{Dual-SEA}}{[1][30][]30}}
+\@writefile{toc}{\contentsline {paragraph}{Numerical optimization.}{30}{paragraph*.31}\protected@file@percent }
+\citation{chung1997spectral}
+\citation{van2022probabilistic}
+\citation{van2008visualizing}
+\@writefile{loe}{\contentsline {remark}{\ifthmt@listswap Remark\nobreakspace  {}4.3\else \numberline {4.3}Remark\fi }{31}{remark.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Optimal Transport for Dimension Reduction with SNEkhorn}{31}{section.4.3}\protected@file@percent }
+\newlabel{sec:DR_with_OT}{{4.3}{31}{Optimal Transport for Dimension Reduction with SNEkhorn}{section.4.3}{}}
+\newlabel{sec:DR_with_OT@cref}{{[section][3][4]4.3}{[1][31][]31}}
+\@writefile{toc}{\contentsline {paragraph}{SNEkhorn's objective.}{31}{paragraph*.32}\protected@file@percent }
+\newlabel{coupling_pb}{{{SNEkhorn}}{31}{SNEkhorn's objective}{paragraph*.32}{}}
+\newlabel{coupling_pb@cref}{{[equation][2147483647][]{SNEkhorn}}{[1][31][]31}}
+\citation{kobak2020heavy}
+\citation{knight2014symmetry,feydy2019interpolating}
+\citation{lu2019doubly}
+\citation{mcinnes2018umap}
+\@writefile{toc}{\contentsline {paragraph}{Heavy-tailed kernel in latent space.}{32}{paragraph*.33}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Inference.}{32}{paragraph*.34}\protected@file@percent }
+\newlabel{eq:sinkhorn_iterations_log_sym_accelerated}{{{Sinkhorn}}{32}{Inference}{equation.4.3.3}{}}
+\newlabel{eq:sinkhorn_iterations_log_sym_accelerated@cref}{{[equation][2147483647][]{Sinkhorn}}{[1][32][]32}}
+\@writefile{toc}{\contentsline {paragraph}{Related work.}{32}{paragraph*.35}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}Numerical experiments}{32}{section.4.4}\protected@file@percent }
+\newlabel{sec:DR_experiments}{{4.4}{32}{Numerical experiments}{section.4.4}{}}
+\newlabel{sec:DR_experiments@cref}{{[section][4][4]4.4}{[1][32][]32}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Left: SNEkhorn embedding on the simulated data of \cref  {sec:DR_experiments} using $\setbox \z@ \hbox {\mathsurround \z@ $\textstyle \mathbf  {Q}$}\mathaccent "0365{\mathbf  {Q}}_{\mathbf  {Z}}$ instead of $\mathbf  {Q}^{\mathrm  {ds}}_{\mathbf  {Z}}$ with $\xi =30$. Right: number of iterations needed to achieve $\| \mathbf  {Q}^{\mathrm  {ds}}_{\mathbf  {Z}} \bm  {1} - \bm  {1} \|_{\infty } \leq \text  {tol}$ with equation\nobreakspace  {}\ref  {eq:sinkhorn_iterations_log_sym_accelerated}.\relax }}{33}{figure.caption.36}\protected@file@percent }
+\newlabel{fig:snekhorn_not_DS}{{4.3}{33}{Left: SNEkhorn embedding on the simulated data of \cref {sec:DR_experiments} using $\widetilde {\Qb }_{\Zb }$ instead of $\Qb ^{\mathrm {ds}}_{\Zb }$ with $\xi =30$. Right: number of iterations needed to achieve $\| \Qb ^{\mathrm {ds}}_{\Zb } \bm {1} - \bm {1} \|_{\infty } \leq \text {tol}$ with \eqref {eq:sinkhorn_iterations_log_sym_accelerated}.\relax }{figure.caption.36}{}}
+\newlabel{fig:snekhorn_not_DS@cref}{{[figure][3][4]4.3}{[1][32][]33}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces From left to right: entries of $\overline  {\mathbf  {P}^{\mathrm  {e}}}$ equation\nobreakspace  {}\ref  {symmetrization_tsne} and associated embeddings generated using $\overline  {\mathbf  {P}^{\mathrm  {e}}}$. Then $\mathbf  {P}^{\mathrm  {se}}$ equation\nobreakspace  {}\ref  {eq:sym_entropic_affinity} matrix and associated SNEkhorn embeddings. Perplexity $\xi = 30$.\relax }}{33}{figure.caption.37}\protected@file@percent }
+\newlabel{fig:simulated_data_multinomial}{{4.4}{33}{From left to right: entries of $\overline {\Pb ^{\mathrm {e}}}$ \eqref {symmetrization_tsne} and associated embeddings generated using $\overline {\Pb ^{\mathrm {e}}}$. Then $\Pb ^{\mathrm {se}}$ \eqref {eq:sym_entropic_affinity} matrix and associated SNEkhorn embeddings. Perplexity $\xi = 30$.\relax }{figure.caption.37}{}}
+\newlabel{fig:simulated_data_multinomial@cref}{{[figure][4][4]4.4}{[1][32][]33}}
+\citation{landa2021doubly}
+\citation{kobak2019art}
+\citation{tran2020benchmark}
+\citation{nene1996columbia}
+\citation{olivetti}
+\citation{graham1998characterising}
+\citation{krizhevsky2009learning}
+\citation{huyresnet}
+\citation{Feltes2019}
+\citation{SCOT2020}
+\citation{van2008visualizing}
+\citation{zelnik2004self}
+\@writefile{toc}{\contentsline {paragraph}{Real-world datasets.}{34}{paragraph*.39}\protected@file@percent }
+\citation{van2022probabilistic,linderman2019clustering}
+\citation{zelnik2004self}
+\citation{scikit-learn}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces ARI spectral clustering score as a function of the perplexity parameter for image datasets.\relax }}{35}{figure.caption.40}\protected@file@percent }
+\newlabel{fig:spectral_clustering_sensibility}{{4.5}{35}{ARI spectral clustering score as a function of the perplexity parameter for image datasets.\relax }{figure.caption.40}{}}
+\newlabel{fig:spectral_clustering_sensibility@cref}{{[figure][5][4]4.5}{[1][35][]35}}
+\@writefile{toc}{\contentsline {paragraph}{Spectral Clustering.}{35}{paragraph*.41}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces ARI ($\times 100$) clustering scores on genomics data.\relax }}{35}{table.caption.38}\protected@file@percent }
+\newlabel{table_spectral_microaray}{{4.2}{35}{ARI ($\times 100$) clustering scores on genomics data.\relax }{table.caption.38}{}}
+\newlabel{table_spectral_microaray@cref}{{[table][2][4]4.2}{[1][34][]35}}
+\citation{paszke2017automatic}
+\citation{kingma2014adam}
+\citation{rousseeuw1987silhouettes}
+\citation{venna2001neighborhood}
+\citation{scikit-learn}
+\@writefile{toc}{\contentsline {paragraph}{Dimension Reduction.}{36}{paragraph*.43}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces SNAREseq embeddings produced by t-SNE and t-SNEkhorn with $\xi =50$.\relax }}{36}{figure.caption.42}\protected@file@percent }
+\newlabel{fig:sc}{{4.6}{36}{SNAREseq embeddings produced by t-SNE and t-SNEkhorn with $\xi =50$.\relax }{figure.caption.42}{}}
+\newlabel{fig:sc@cref}{{[figure][6][4]4.6}{[1][36][]36}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.5}Conclusion}{36}{section.4.5}\protected@file@percent }
+\newlabel{sec:conclusion}{{4.5}{36}{Conclusion}{section.4.5}{}}
+\newlabel{sec:conclusion@cref}{{[section][5][4]4.5}{[1][36][]36}}
+\citation{van2022probabilistic}
+\citation{lee2015multi}
+\citation{van2013barnes}
+\citation{linderman2019fast}
+\citation{zhai2023sigmareparam}
+\@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces Scores for the UMAP, t-SNE and t-SNEkhorn embeddings.\relax }}{37}{table.caption.44}\protected@file@percent }
+\newlabel{tab:DR_genomics_data}{{4.3}{37}{Scores for the UMAP, t-SNE and t-SNEkhorn embeddings.\relax }{table.caption.44}{}}
+\newlabel{tab:DR_genomics_data@cref}{{[table][3][4]4.3}{[1][36][]37}}
 \citation{von2007tutorial,schaeffer2007graph}
 \citation{ham2004kernel,hinton2002stochastic}
 \citation{Canas12}
@@ -568,15 +568,14 @@
 \citation{liu2022joint}
 \newlabel{eq:coot_pb}{{{COOT}}{46}{Related Work}{subsection.5.3.4}{}}
 \newlabel{eq:coot_pb@cref}{{[equation][2147483647][]{COOT}}{[1][45][]46}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {6}Proofs and Additional Results}{47}{chapter.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}Appendix of \Cref  {chapter:GraphCoupling}}{47}{chapter.6}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{lof}{\contentsline {xchapter}{Proofs and Additional Results}{47}{chapter.6}\protected@file@percent }
-\@writefile{lot}{\contentsline {xchapter}{Proofs and Additional Results}{47}{chapter.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6.1}Appendix of \Cref  {chapter:GraphCoupling}}{47}{section.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.1}Proof of \Cref  {PCA_graph_coupling}}{47}{subsection.6.1.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {xchapter}{Appendix of \Cref  {chapter:GraphCoupling}}{47}{chapter.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {xchapter}{Appendix of \Cref  {chapter:GraphCoupling}}{47}{chapter.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.1}Proof of \Cref  {PCA_graph_coupling}}{47}{section.6.1}\protected@file@percent }
 \@writefile{loe}{\addvspace {10\p@ }}
-\@writefile{loe}{\contentsline {theorem}{\ifthmt@listswap Theorem\nobreakspace  {}4.1\else \numberline {4.1}Theorem\fi }{47}{theorem.dummy.32}\protected@file@percent }
+\@writefile{loe}{\contentsline {theorem}{\ifthmt@listswap Theorem\nobreakspace  {}3.1\else \numberline {3.1}Theorem\fi }{47}{theorem.dummy.32}\protected@file@percent }
 \newlabel{eq:optim_eigenvalues_eigenvectors}{{6.1}{48}{Proof of \Cref {PCA_graph_coupling}}{equation.6.1.1}{}}
 \newlabel{eq:optim_eigenvalues_eigenvectors@cref}{{[equation][1][6]6.1}{[1][48][]48}}
 \newlabel{eq:positive_definite_constraint}{{6.2}{48}{Proof of \Cref {PCA_graph_coupling}}{equation.6.1.2}{}}
@@ -589,37 +588,37 @@
 \newlabel{eq:objective_lambda@cref}{{[equation][5][6]6.5}{[1][49][]49}}
 \newlabel{eq:feasibility_lambda}{{6.6}{49}{Proof of \Cref {PCA_graph_coupling}}{equation.6.1.6}{}}
 \newlabel{eq:feasibility_lambda@cref}{{[equation][6][6]6.6}{[1][49][]49}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.2}Proof of \Cref  {prop:integrability_pairwise_MRF}}{49}{subsection.6.1.2}\protected@file@percent }
-\newlabel{proof:lambda_perp_integrability}{{6.1.2}{49}{Proof of \Cref {prop:integrability_pairwise_MRF}}{subsection.6.1.2}{}}
-\newlabel{proof:lambda_perp_integrability@cref}{{[subsection][2][6,1]6.1.2}{[1][49][]49}}
-\@writefile{loe}{\contentsline {theorem}{\ifthmt@listswap Theorem\nobreakspace  {}4.2\else \numberline {4.2}Theorem\fi }{49}{theorem.dummy.34}\protected@file@percent }
-\newlabel{bound_MRF_product_CC}{{6.7}{50}{Proof of \Cref {prop:integrability_pairwise_MRF}}{equation.6.1.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.2}Proof of \Cref  {prop:integrability_pairwise_MRF}}{49}{section.6.2}\protected@file@percent }
+\newlabel{proof:lambda_perp_integrability}{{6.2}{49}{Proof of \Cref {prop:integrability_pairwise_MRF}}{section.6.2}{}}
+\newlabel{proof:lambda_perp_integrability@cref}{{[section][2][6]6.2}{[1][49][]49}}
+\@writefile{loe}{\contentsline {theorem}{\ifthmt@listswap Theorem\nobreakspace  {}3.2\else \numberline {3.2}Theorem\fi }{49}{theorem.dummy.34}\protected@file@percent }
+\newlabel{bound_MRF_product_CC}{{6.7}{50}{Proof of \Cref {prop:integrability_pairwise_MRF}}{equation.6.2.7}{}}
 \newlabel{bound_MRF_product_CC@cref}{{[equation][7][6]6.7}{[1][49][]50}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.3}Proof of \Cref  {prop:posterior_W}}{51}{subsection.6.1.3}\protected@file@percent }
-\newlabel{proof:posterior_limit}{{6.1.3}{51}{Proof of \Cref {prop:posterior_W}}{subsection.6.1.3}{}}
-\newlabel{proof:posterior_limit@cref}{{[subsection][3][6,1]6.1.3}{[1][51][]51}}
-\newlabel{thmt@@posteriorW@data}{{\def \theequation {6.\@arabic {\c@equation }}\def \theHequation {(restate \theHthmt@dummyctr )6.1.\@arabic {\c@equation }}\setcounter {equation}{7}}{51}{Proof of \Cref {prop:posterior_W}}{subsection.6.1.3}{}}
-\newlabel{thmt@@posteriorW@data@cref}{{[subsection][3][6,1]6.1.3}{[1][51][]51}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.3}Proof of \Cref  {prop:posterior_W}}{51}{section.6.3}\protected@file@percent }
+\newlabel{proof:posterior_limit}{{6.3}{51}{Proof of \Cref {prop:posterior_W}}{section.6.3}{}}
+\newlabel{proof:posterior_limit@cref}{{[section][3][6]6.3}{[1][51][]51}}
+\newlabel{thmt@@posteriorW@data}{{\def \theequation {6.\@arabic {\c@equation }}\def \theHequation {(restate \theHthmt@dummyctr )6.3.\@arabic {\c@equation }}\setcounter {equation}{7}}{51}{Proof of \Cref {prop:posterior_W}}{section.6.3}{}}
+\newlabel{thmt@@posteriorW@data@cref}{{[section][3][6]6.3}{[1][51][]51}}
 \@writefile{loe}{\contentsline {proposition}{\ifthmt@listswap Proposition\nobreakspace  {}6.1\else \numberline {6.1}Proposition\fi }{51}{proposition.6.1}\protected@file@percent }
 \newlabel{thmt@@posteriorW}{{6.1}{51}{}{proposition.6.1}{}}
 \newlabel{thmt@@posteriorW@cref}{{[proposition][1][6]6.1}{[1][51][]51}}
 \newlabel{prop:posterior_W}{{6.1}{51}{}{proposition.6.1}{}}
 \newlabel{prop:posterior_W@cref}{{[proposition][1][6]6.1}{[1][51][]51}}
-\newlabel{inversion_Conditional}{{6.8}{51}{Proof of \Cref {prop:posterior_W}}{equation.6.1.8}{}}
+\newlabel{inversion_Conditional}{{6.8}{51}{Proof of \Cref {prop:posterior_W}}{equation.6.3.8}{}}
 \newlabel{inversion_Conditional@cref}{{[equation][8][6]6.8}{[1][51][]51}}
 \@writefile{toc}{\contentsline {paragraph}{$B$-Prior.}{51}{paragraph*.54}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{$D$-Prior.}{52}{paragraph*.55}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{$E$-Prior.}{52}{paragraph*.56}\protected@file@percent }
 \citation{kobak2021initialization}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.4}Towards Capturing Large-Scale Dependencies}{53}{subsection.6.1.4}\protected@file@percent }
-\newlabel{sec:towards_large_scale}{{6.1.4}{53}{Towards Capturing Large-Scale Dependencies}{subsection.6.1.4}{}}
-\newlabel{sec:towards_large_scale@cref}{{[subsection][4][6,1]6.1.4}{[1][52][]53}}
-\@writefile{toc}{\contentsline {subsubsection}{Hierarchical Graph Coupling}{53}{subsubsection*.57}\protected@file@percent }
-\newlabel{sec:hierarchical_modelling}{{6.1.4}{53}{Hierarchical Graph Coupling}{subsubsection*.57}{}}
-\newlabel{sec:hierarchical_modelling@cref}{{[subsection][4][6,1]6.1.4}{[1][53][]53}}
-\newlabel{eq:loss_LW}{{6.12}{53}{Hierarchical Graph Coupling}{equation.6.1.12}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.4}Towards Capturing Large-Scale Dependencies}{53}{section.6.4}\protected@file@percent }
+\newlabel{sec:towards_large_scale}{{6.4}{53}{Towards Capturing Large-Scale Dependencies}{section.6.4}{}}
+\newlabel{sec:towards_large_scale@cref}{{[section][4][6]6.4}{[1][52][]53}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4.1}Hierarchical Graph Coupling}{53}{subsection.6.4.1}\protected@file@percent }
+\newlabel{sec:hierarchical_modelling}{{6.4.1}{53}{Hierarchical Graph Coupling}{subsection.6.4.1}{}}
+\newlabel{sec:hierarchical_modelling@cref}{{[subsection][1][6,4]6.4.1}{[1][53][]53}}
+\newlabel{eq:loss_LW}{{6.12}{53}{Hierarchical Graph Coupling}{equation.6.4.12}{}}
 \newlabel{eq:loss_LW@cref}{{[equation][12][6]6.12}{[1][53][]53}}
-\newlabel{eq:add_term_Coupling}{{6.13}{53}{Hierarchical Graph Coupling}{equation.6.1.13}{}}
+\newlabel{eq:add_term_Coupling}{{6.13}{53}{Hierarchical Graph Coupling}{equation.6.4.13}{}}
 \newlabel{eq:add_term_Coupling@cref}{{[equation][13][6]6.13}{[1][53][]53}}
 \@writefile{loe}{\contentsline {corollary}{\ifthmt@listswap Corollary\nobreakspace  {}6.1\else \numberline {6.1}Corollary\fi }{53}{corollary.6.1}\protected@file@percent }
 \newlabel{corollary_ccPCA}{{6.1}{53}{}{corollary.6.1}{}}
@@ -628,12 +627,190 @@
 \citation{maaten2008tSNE}
 \citation{kobak2021initialization}
 \@writefile{loe}{\contentsline {remark}{\ifthmt@listswap Remark\nobreakspace  {}6.1\else \numberline {6.1}Remark\fi }{54}{remark.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Experiments with \textit  {ccPCA}}{54}{subsubsection*.58}\protected@file@percent }
-\newlabel{sec:ccPCA}{{6.1.4}{54}{Experiments with \textit {ccPCA}}{subsubsection*.58}{}}
-\newlabel{sec:ccPCA@cref}{{[subsection][4][6,1]6.1.4}{[1][54][]54}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4.2}Experiments with \textit  {ccPCA}}{54}{subsection.6.4.2}\protected@file@percent }
+\newlabel{sec:ccPCA}{{6.4.2}{54}{Experiments with \textit {ccPCA}}{subsection.6.4.2}{}}
+\newlabel{sec:ccPCA@cref}{{[subsection][2][6,4]6.4.2}{[1][54][]54}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {7}Appendix of \Cref  {chapter:SNEkhorn}}{56}{chapter.7}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{lof}{\contentsline {xchapter}{Appendix of \Cref  {chapter:SNEkhorn}}{56}{chapter.7}\protected@file@percent }
+\@writefile{lot}{\contentsline {xchapter}{Appendix of \Cref  {chapter:SNEkhorn}}{56}{chapter.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7.1}Proofs}{56}{section.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1.1}Euclidean Projection onto $\mathcal  {S}$}{56}{subsection.7.1.1}\protected@file@percent }
+\newlabel{sec:sym_proj}{{7.1.1}{56}{Euclidean Projection onto $\mathcal {S}$}{subsection.7.1.1}{}}
+\newlabel{sec:sym_proj@cref}{{[subsection][1][7,1]7.1.1}{[1][56][]56}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1.2}From Symmetric Entropy-Constrained OT to Sinkhorn Iterations}{57}{subsection.7.1.2}\protected@file@percent }
+\newlabel{sec:proof_sinkhorn}{{7.1.2}{57}{From Symmetric Entropy-Constrained OT to Sinkhorn Iterations}{subsection.7.1.2}{}}
+\newlabel{sec:proof_sinkhorn@cref}{{[subsection][2][7,1]7.1.2}{[1][56][]57}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1.3}Proof of \cref  {prop:entropic_affinity_as_linear_program}}{57}{subsection.7.1.3}\protected@file@percent }
+\@writefile{loe}{\addvspace {10\p@ }}
+\@writefile{loe}{\contentsline {proposition}{\ifthmt@listswap Proposition\nobreakspace  {}4.1\else \numberline {4.1}Proposition\fi }{57}{proposition.dummy.39}\protected@file@percent }
+\newlabel{kkt_ea}{{{first-order}}{58}{Proof of \cref {prop:entropic_affinity_as_linear_program}}{equation.7.1.11}{}}
+\newlabel{kkt_ea@cref}{{[equation][2147483647][]{first-order}}{[1][58][]58}}
+\newlabel{proof:main_props}{{7.1.4}{58}{Proof of \cref {prop:saturation_entropies} and \cref {prop:sol_gamma_non_null} \label {proof:main_props}}{subsection.7.1.4}{}}
+\newlabel{proof:main_props@cref}{{[subsection][4][7,1]7.1.4}{[1][58][]58}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1.4}Proof of \cref  {prop:saturation_entropies} and \cref  {prop:sol_gamma_non_null} }{58}{subsection.7.1.4}\protected@file@percent }
+\@writefile{loe}{\contentsline {proposition}{\ifthmt@listswap Proposition\nobreakspace  {}4.2\else \numberline {4.2}Proposition\fi \thmtformatoptarg {Saturation of the entropies}}{59}{proposition.dummy.41}\protected@file@percent }
+\@writefile{loe}{\contentsline {proposition}{\ifthmt@listswap Proposition\nobreakspace  {}4.3\else \numberline {4.3}Proposition\fi \thmtformatoptarg {Solving for \ref  {eq:sym_entropic_affinity}}}{59}{proposition.dummy.43}\protected@file@percent }
+\@writefile{loe}{\contentsline {lemma}{\ifthmt@listswap Lemma\nobreakspace  {}7.1\else \numberline {7.1}Lemma\fi }{59}{lemma.7.1}\protected@file@percent }
+\newlabel{lemma:unicity}{{7.1}{59}{}{lemma.7.1}{}}
+\newlabel{lemma:unicity@cref}{{[lemma][1][]7.1}{[1][59][]59}}
+\newlabel{opt-sym_P}{{{SEA}}{59}{Proof of \cref {prop:saturation_entropies} and \cref {prop:sol_gamma_non_null} \label {proof:main_props}}{equation.7.1.13}{}}
+\newlabel{opt-sym_P@cref}{{[equation][2147483647][]{SEA}}{[1][59][]59}}
+\newlabel{KKT-sym_P}{{{KKT-SEA}}{60}{Proof of \cref {prop:saturation_entropies} and \cref {prop:sol_gamma_non_null} \label {proof:main_props}}{equation.7.1.14}{}}
+\newlabel{KKT-sym_P@cref}{{[equation][2147483647][]{KKT-SEA}}{[1][60][]60}}
+\newlabel{sec:proj_KL}{{7.1.5}{61}{EA and SEA as a KL projection \label {sec:proj_KL}}{subsection.7.1.5}{}}
+\newlabel{sec:proj_KL@cref}{{[subsection][5][7,1]7.1.5}{[1][61][]61}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1.5}EA and SEA as a KL projection }{61}{subsection.7.1.5}\protected@file@percent }
+\@writefile{loe}{\contentsline {lemma}{\ifthmt@listswap Lemma\nobreakspace  {}7.2\else \numberline {7.2}Lemma\fi }{61}{lemma.7.2}\protected@file@percent }
+\newlabel{lemma_ea_proj}{{7.2}{61}{}{lemma.7.2}{}}
+\newlabel{lemma_ea_proj@cref}{{[lemma][2][]7.2}{[1][61][]61}}
+\@writefile{loe}{\contentsline {lemma}{\ifthmt@listswap Lemma\nobreakspace  {}7.3\else \numberline {7.3}Lemma\fi }{62}{lemma.7.3}\protected@file@percent }
+\newlabel{lemma_sea_proj}{{7.3}{62}{}{lemma.7.3}{}}
+\newlabel{lemma_sea_proj@cref}{{[lemma][3][]7.3}{[1][62][]62}}
+\newlabel{projkl}{{{SEA-Proj}}{62}{EA and SEA as a KL projection \label {sec:proj_KL}}{equation.7.1.25}{}}
+\newlabel{projkl@cref}{{[equation][2147483647][]{SEA-Proj}}{[1][62][]62}}
+\newlabel{kkt1}{{{KKT-Proj}}{62}{EA and SEA as a KL projection \label {sec:proj_KL}}{equation.7.1.25}{}}
+\newlabel{kkt1@cref}{{[equation][2147483647][]{KKT-Proj}}{[1][62][]62}}
+\newlabel{eq:kkt2}{{{KKT-SEA}}{63}{EA and SEA as a KL projection \label {sec:proj_KL}}{equation.7.1.27}{}}
+\newlabel{eq:kkt2@cref}{{[equation][2147483647][]{KKT-SEA}}{[1][63][]63}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {8}Appendix of \Cref  {chapter:DistR}}{64}{chapter.8}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{lof}{\contentsline {xchapter}{Appendix of \Cref  {chapter:DistR}}{64}{chapter.8}\protected@file@percent }
+\@writefile{lot}{\contentsline {xchapter}{Appendix of \Cref  {chapter:DistR}}{64}{chapter.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8.1}Proof of results in \Cref  {sec:DR_as_OT}}{65}{section.8.1}\protected@file@percent }
+\newlabel{sec:DR_as_OT_supp}{{8.1}{65}{Proof of results in \Cref {sec:DR_as_OT}}{section.8.1}{}}
+\newlabel{sec:DR_as_OT_supp@cref}{{[section][1][8]8.1}{[1][65][]65}}
+\newlabel{proof:GMproblemequiv}{{8.1.1}{65}{Proof of \cref {lemma:GMproblemequiv} \label {proof:GMproblemequiv}}{subsection.8.1.1}{}}
+\newlabel{proof:GMproblemequiv@cref}{{[subsection][1][8,1]8.1.1}{[1][65][]65}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1.1}Proof of \cref  {lemma:GMproblemequiv} }{65}{subsection.8.1.1}\protected@file@percent }
+\@writefile{loe}{\addvspace {10\p@ }}
+\@writefile{loe}{\contentsline {lemma}{\ifthmt@listswap Lemma\nobreakspace  {}5.1\else \numberline {5.1}Lemma\fi }{65}{lemma.dummy.48}\protected@file@percent }
+\newlabel{proof:theo:main_theo}{{8.1.2}{65}{Proof of \cref {theo:main_theo} \label {proof:theo:main_theo}}{subsection.8.1.2}{}}
+\newlabel{proof:theo:main_theo@cref}{{[subsection][2][8,1]8.1.2}{[1][65][]65}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1.2}Proof of \cref  {theo:main_theo} }{65}{subsection.8.1.2}\protected@file@percent }
+\@writefile{loe}{\contentsline {proposition}{\ifthmt@listswap Proposition\nobreakspace  {}8.1\else \numberline {8.1}Proposition\fi }{66}{proposition.8.1}\protected@file@percent }
+\newlabel{proposition:general_sufficient_condition}{{8.1}{66}{}{proposition.8.1}{}}
+\newlabel{proposition:general_sufficient_condition@cref}{{[proposition][1][8]8.1}{[1][65][]66}}
+\newlabel{eq:the_general_sufficient_hypothesis}{{8.3}{66}{}{equation.8.1.3}{}}
+\newlabel{eq:the_general_sufficient_hypothesis@cref}{{[equation][3][8]8.3}{[1][65][]66}}
+\newlabel{eq:jensenagain}{{8.4}{66}{Proof of \cref {theo:main_theo} \label {proof:theo:main_theo}}{equation.8.1.4}{}}
+\newlabel{eq:jensenagain@cref}{{[equation][4][8]8.4}{[1][66][]66}}
+\@writefile{loe}{\contentsline {proposition}{\ifthmt@listswap Proposition\nobreakspace  {}8.2\else \numberline {8.2}Proposition\fi }{66}{proposition.8.2}\protected@file@percent }
+\newlabel{proposition:thetwoconditions}{{8.2}{66}{}{proposition.8.2}{}}
+\newlabel{proposition:thetwoconditions@cref}{{[proposition][2][8]8.2}{[1][66][]66}}
+\newlabel{eq:stability_ds}{{8.8}{66}{}{equation.8.1.8}{}}
+\newlabel{eq:stability_ds@cref}{{[equation][8][8]8.8}{[1][66][]66}}
+\newlabel{eq:another_condition_based_on_convexity}{{8.9}{67}{}{equation.8.1.9}{}}
+\newlabel{eq:another_condition_based_on_convexity@cref}{{[equation][9][8]8.9}{[1][66][]67}}
+\@writefile{loe}{\contentsline {corollary}{\ifthmt@listswap Corollary\nobreakspace  {}8.1\else \numberline {8.1}Corollary\fi }{67}{corollary.8.1}\protected@file@percent }
+\newlabel{corr:equivCE}{{8.1}{67}{}{corollary.8.1}{}}
+\newlabel{corr:equivCE@cref}{{[corollary][1][]8.1}{[1][67][]67}}
+\newlabel{eq:neighbor_embedding_problem}{{8.14}{67}{}{equation.8.1.14}{}}
+\newlabel{eq:neighbor_embedding_problem@cref}{{[equation][14][8]8.14}{[1][67][]67}}
+\citation{birkhoff1946tres}
+\@writefile{loe}{\contentsline {proposition}{\ifthmt@listswap Proposition\nobreakspace  {}8.3\else \numberline {8.3}Proposition\fi }{68}{proposition.8.3}\protected@file@percent }
+\newlabel{prop:second_point_theorem}{{8.3}{68}{}{proposition.8.3}{}}
+\newlabel{prop:second_point_theorem@cref}{{[proposition][3][8]8.3}{[1][68][]68}}
+\citation{birkhoff1946tres}
+\citation{maron2018probably}
+\newlabel{eq:the_concave_we_have}{{8.19}{69}{Proof of \cref {theo:main_theo} \label {proof:theo:main_theo}}{equation.8.1.19}{}}
+\newlabel{eq:the_concave_we_have@cref}{{[equation][19][8]8.19}{[1][69][]69}}
+\citation{redko2020co}
+\citation{birkhoff1946tres}
+\citation{konno1976cutting}
+\newlabel{sec:necessary_and_sufficient}{{8.1.3}{70}{Necessary and sufficient condition \label {sec:necessary_and_sufficient}}{subsection.8.1.3}{}}
+\newlabel{sec:necessary_and_sufficient@cref}{{[subsection][3][8,1]8.1.3}{[1][69][]70}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1.3}Necessary and sufficient condition }{70}{subsection.8.1.3}\protected@file@percent }
+\@writefile{loe}{\contentsline {proposition}{\ifthmt@listswap Proposition\nobreakspace  {}8.4\else \numberline {8.4}Proposition\fi }{70}{proposition.8.4}\protected@file@percent }
+\newlabel{prop:bilinear_problem}{{8.4}{70}{}{proposition.8.4}{}}
+\newlabel{prop:bilinear_problem@cref}{{[proposition][4][8]8.4}{[1][70][]70}}
+\newlabel{eq:equality_between_both}{{8.23}{70}{}{equation.8.1.23}{}}
+\newlabel{eq:equality_between_both@cref}{{[equation][23][8]8.23}{[1][70][]70}}
+\newlabel{eq:lower_bound}{{8.26}{70}{Necessary and sufficient condition \label {sec:necessary_and_sufficient}}{equation.8.1.26}{}}
+\newlabel{eq:lower_bound@cref}{{[equation][26][8]8.26}{[1][70][]70}}
+\citation{bronstein2021geometric}
+\newlabel{eq:coot_relax}{{8.27}{71}{Necessary and sufficient condition \label {sec:necessary_and_sufficient}}{equation.8.1.27}{}}
+\newlabel{eq:coot_relax@cref}{{[equation][27][8]8.27}{[1][70][]71}}
+\newlabel{eq:onlyonepermut}{{8.28}{71}{Necessary and sufficient condition \label {sec:necessary_and_sufficient}}{equation.8.1.28}{}}
+\newlabel{eq:onlyonepermut@cref}{{[equation][28][8]8.28}{[1][71][]71}}
+\newlabel{eq:coot_relax}{{8.30}{71}{Necessary and sufficient condition \label {sec:necessary_and_sufficient}}{equation.8.1.30}{}}
+\newlabel{eq:coot_relax@cref}{{[equation][30][8]8.30}{[1][71][]71}}
+\@writefile{loe}{\contentsline {remark}{\ifthmt@listswap Remark\nobreakspace  {}8.1\else \numberline {8.1}Remark\fi }{71}{remark.8.1}\protected@file@percent }
+\newlabel{forme_simi}{{8.31}{71}{}{equation.8.1.31}{}}
+\newlabel{forme_simi@cref}{{[equation][31][8]8.31}{[1][71][]71}}
+\citation{chowdhury2019gromov}
+\citation{chowdhury2019gromov}
+\@writefile{toc}{\contentsline {section}{\numberline {8.2}Generalized Semi-relaxed Gromov-Wasserstein is a divergence}{72}{section.8.2}\protected@file@percent }
+\newlabel{sec:srGW_divergence_supp}{{8.2}{72}{Generalized Semi-relaxed Gromov-Wasserstein is a divergence}{section.8.2}{}}
+\newlabel{sec:srGW_divergence_supp@cref}{{[section][2][8]8.2}{[1][72][]72}}
+\@writefile{loe}{\contentsline {remark}{\ifthmt@listswap Remark\nobreakspace  {}8.2\else \numberline {8.2}Remark\fi \thmtformatoptarg {Weak isomorphism}}{72}{remark.8.2}\protected@file@percent }
+\@writefile{loe}{\contentsline {proposition}{\ifthmt@listswap Proposition\nobreakspace  {}8.5\else \numberline {8.5}Proposition\fi }{72}{proposition.8.5}\protected@file@percent }
+\newlabel{prop:GW_divergence}{{8.5}{72}{}{proposition.8.5}{}}
+\newlabel{prop:GW_divergence@cref}{{[proposition][5][8]8.5}{[1][72][]72}}
+\@writefile{loe}{\contentsline {lemma}{\ifthmt@listswap Lemma\nobreakspace  {}8.2\else \numberline {8.2}Lemma\fi }{72}{lemma.8.2}\protected@file@percent }
+\newlabel{lemma:srgw_divergence}{{8.2}{72}{}{lemma.8.2}{}}
+\newlabel{lemma:srgw_divergence@cref}{{[lemma][2][]8.2}{[1][72][]72}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2.1}About trivial solutions of semi-relaxed GW when $L$ is not a proper divergence}{73}{subsection.8.2.1}\protected@file@percent }
+\newlabel{sec:srGW_concavity_supp}{{8.3}{74}{Clustering properties: Proof of \cref {theo:srgw_bary_concavity} \label {sec:srGW_concavity_supp}}{section.8.3}{}}
+\newlabel{sec:srGW_concavity_supp@cref}{{[section][3][8]8.3}{[1][73][]74}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.3}Clustering properties: Proof of \cref  {theo:srgw_bary_concavity} }{74}{section.8.3}\protected@file@percent }
+\@writefile{loe}{\contentsline {theorem}{\ifthmt@listswap Theorem\nobreakspace  {}5.3\else \numberline {5.3}Theorem\fi }{74}{theorem.dummy.59}\protected@file@percent }
+\newlabel{eq:guplus}{{8.38}{74}{Clustering properties: Proof of \cref {theo:srgw_bary_concavity} \label {sec:srGW_concavity_supp}}{equation.8.3.38}{}}
+\newlabel{eq:guplus@cref}{{[equation][38][8]8.38}{[1][74][]74}}
+\@writefile{loe}{\contentsline {lemma}{\ifthmt@listswap Lemma\nobreakspace  {}8.3\else \numberline {8.3}Lemma\fi }{74}{lemma.8.3}\protected@file@percent }
+\newlabel{lemma:minimizers}{{8.3}{74}{}{lemma.8.3}{}}
+\newlabel{lemma:minimizers@cref}{{[lemma][3][]8.3}{[1][74][]74}}
+\newlabel{eq:foc}{{8.46}{75}{Clustering properties: Proof of \cref {theo:srgw_bary_concavity} \label {sec:srGW_concavity_supp}}{equation.8.3.46}{}}
+\newlabel{eq:foc@cref}{{[equation][46][8]8.46}{[1][75][]75}}
+\@writefile{loe}{\contentsline {proposition}{\ifthmt@listswap Proposition\nobreakspace  {}8.6\else \numberline {8.6}Proposition\fi }{76}{proposition.8.6}\protected@file@percent }
+\newlabel{proposition:concavity}{{8.6}{76}{}{proposition.8.6}{}}
+\newlabel{proposition:concavity@cref}{{[proposition][6][8]8.6}{[1][76][]76}}
+\newlabel{eq:gradient_expression}{{8.58}{76}{Clustering properties: Proof of \cref {theo:srgw_bary_concavity} \label {sec:srGW_concavity_supp}}{equation.8.3.58}{}}
+\newlabel{eq:gradient_expression@cref}{{[equation][58][8]8.58}{[1][76][]76}}
+\newlabel{eq:conclusion_gradient}{{8.66}{78}{Clustering properties: Proof of \cref {theo:srgw_bary_concavity} \label {sec:srGW_concavity_supp}}{equation.8.3.66}{}}
+\newlabel{eq:conclusion_gradient@cref}{{[equation][66][8]8.66}{[1][78][]78}}
+\citation{cao2022centrosymmetric}
+\@writefile{loe}{\contentsline {lemma}{\ifthmt@listswap Lemma\nobreakspace  {}8.4\else \numberline {8.4}Lemma\fi }{79}{lemma.8.4}\protected@file@percent }
+\newlabel{ineq:lemma}{{8.4}{79}{}{lemma.8.4}{}}
+\newlabel{ineq:lemma@cref}{{[lemma][4][]8.4}{[1][79][]79}}
+\newlabel{eq:stabitlity}{{8.74}{79}{Clustering properties: Proof of \cref {theo:srgw_bary_concavity} \label {sec:srGW_concavity_supp}}{equation.8.3.74}{}}
+\newlabel{eq:stabitlity@cref}{{[equation][74][8]8.74}{[1][79][]79}}
+\citation{peyre2016gromov}
+\citation{scetbon2022linear}
+\@writefile{toc}{\contentsline {section}{\numberline {8.4}Algorithmic details}{80}{section.8.4}\protected@file@percent }
+\newlabel{sec:algorithms}{{8.4}{80}{Algorithmic details}{section.8.4}{}}
+\newlabel{sec:algorithms@cref}{{[section][4][8]8.4}{[1][79][]80}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.4.1}Objective function and gradient computation.}{80}{subsection.8.4.1}\protected@file@percent }
+\newlabel{subsec:GWloss}{{8.4.1}{80}{Objective function and gradient computation}{subsection.8.4.1}{}}
+\newlabel{subsec:GWloss@cref}{{[subsection][1][8,4]8.4.1}{[1][80][]80}}
+\@writefile{toc}{\contentsline {paragraph}{Problem statement.}{80}{paragraph*.57}\protected@file@percent }
+\newlabel{eq:loss_decomposition}{{8.76}{80}{Problem statement}{equation.8.4.76}{}}
+\newlabel{eq:loss_decomposition@cref}{{[equation][76][8]8.76}{[1][80][]80}}
+\newlabel{eq:L2_loss}{{{L2}}{80}{Problem statement}{equation.8.4.77}{}}
+\newlabel{eq:L2_loss@cref}{{[equation][2147483647][]{L2}}{[1][80][]80}}
+\newlabel{eq:srgw_eqpb}{{{srGW-2}}{80}{Problem statement}{equation.8.4.77}{}}
+\newlabel{eq:srgw_eqpb@cref}{{[equation][2147483647][]{srGW-2}}{[1][80][]80}}
+\newlabel{eq:expressionF}{{8.77}{80}{Problem statement}{equation.8.4.77}{}}
+\newlabel{eq:expressionF@cref}{{[equation][77][8]8.77}{[1][80][]80}}
+\newlabel{eq:srgw_gradient}{{8.78}{80}{Problem statement}{equation.8.4.78}{}}
+\newlabel{eq:srgw_gradient@cref}{{[equation][78][8]8.78}{[1][80][]80}}
+\citation{scetbon2022linear}
+\citation{scetbon2022linear}
+\citation{vincent2021semi}
+\@writefile{toc}{\contentsline {paragraph}{Low-rank factorization.}{81}{paragraph*.58}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.4.2}Solvers.}{81}{subsection.8.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Mirror Descent algorithm.}{81}{paragraph*.59}\protected@file@percent }
+\citation{vincent2023optimal}
+\citation{lacoste2016convergence}
+\citation{vayer2018optimal}
 \bibstyle{plainnat}
 \bibdata{biblio}
-\@writefile{toc}{\contentsline {section}{\numberline {6.2}Appendix of \Cref  {chapter:SNEkhorn}}{55}{section.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Conditional Gradient algorithm.}{82}{paragraph*.60}\protected@file@percent }
+\newlabel{alg:CGsolver}{{1}{82}{CG solver for $\srGW _L$\relax }{algorithm.1}{}}
+\newlabel{alg:CGsolver@cref}{{[algorithm][1][]1}{[1][82][]82}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces CG solver for $\operatorname  {srGW}_L$\relax }}{82}{algorithm.1}\protected@file@percent }
 \bibcite{agrawal2021minimum}{{1}{2021}{{Agrawal et~al.}}{{Agrawal, Ali, Boyd, et~al.}}}
 \bibcite{alvarez2018gromov}{{2}{2018}{{Alvarez-Melis and Jaakkola}}{{}}}
 \bibcite{anders2018dissecting}{{3}{2018}{{Anders et~al.}}{{Anders, Chiappini, Santiago, Matijevi{\v {c}}, Queiroz, Steinmetz, and Guiglion}}}
@@ -646,137 +823,143 @@
 \bibcite{bertsekas1997nonlinear}{{10}{1997}{{Bertsekas}}{{}}}
 \bibcite{bertsimas1997introduction}{{11}{1997}{{Bertsimas and Tsitsiklis}}{{}}}
 \bibcite{bhatia2006infinitely}{{12}{2006}{{Bhatia}}{{}}}
-\bibcite{bohm2020unifying}{{13}{2020}{{B{\"o}hm et~al.}}{{B{\"o}hm, Berens, and Kobak}}}
+\bibcite{birkhoff1946tres}{{13}{1946}{{Birkhoff}}{{}}}
 \@writefile{@@@}{\chapterbegin }
-\@writefile{toc}{\contentsline {chapter}{References}{56}{chapter*.59}\protected@file@percent }
-\bibcite{borg2005modern}{{14}{2005}{{Borg and Groenen}}{{}}}
-\bibcite{bronstein2021geometric}{{15}{2021}{{Bronstein et~al.}}{{Bronstein, Bruna, Cohen, and Veli{\v {c}}kovi{\'c}}}}
-\bibcite{JMLR:v23:21-0524}{{16}{2022}{{Cai and Ma}}{{}}}
-\bibcite{Canas12}{{17}{2012}{{Canas and Rosasco}}{{}}}
-\bibcite{cantini2021benchmarking}{{18}{2021}{{Cantini et~al.}}{{Cantini, Zakeri, Hernandez, Naldi, Thieffry, Remy, and Baudot}}}
-\bibcite{carreira2010elastic}{{19}{2010}{{Carreira-Perpin{\'a}n}}{{}}}
-\bibcite{cela2013quadratic}{{20}{2013}{{Cela}}{{}}}
-\bibcite{Chami21}{{21}{2021}{{Chami et~al.}}{{Chami, Gu, Nguyen, and R{\'{e}}}}}
-\bibcite{chan2018t}{{22}{2018}{{Chan et~al.}}{{Chan, Rao, Huang, and Canny}}}
-\bibcite{chen2023gromov}{{23}{2023}{{Chen et~al.}}{{Chen, Yao, Yang, and Chen}}}
-\bibcite{chowdhury2019gromov}{{24}{2019}{{Chowdhury and M{\'e}moli}}{{}}}
-\bibcite{chowdhury2021generalized}{{25}{2021}{{Chowdhury and Needham}}{{}}}
-\bibcite{Chung97}{{26}{1997{a}}{{Chung}}{{}}}
-\bibcite{chung1997spectral}{{27}{1997{b}}{{Chung}}{{}}}
-\bibcite{clifford1990markov}{{28}{1990}{{Clifford}}{{}}}
-\bibcite{coenen2019understanding}{{29}{2019}{{Coenen and Pearce}}{{}}}
-\bibcite{coifman2006diffusion}{{30}{2006}{{Coifman and Lafon}}{{}}}
-\bibcite{cuturi2013sinkhorn}{{31}{2013}{{Cuturi}}{{}}}
-\bibcite{SCOT2020}{{32}{2020{a}}{{Demetci et~al.}}{{Demetci, Santorella, Sandstede, Noble, and Singh}}}
-\bibcite{demetci2020gromov}{{33}{2020{b}}{{Demetci et~al.}}{{Demetci, Santorella, Sandstede, Noble, and Singh}}}
-\bibcite{deng2012mnist}{{34}{2012}{{Deng}}{{}}}
-\bibcite{dhillon2004kernel}{{35}{2004}{{Dhillon et~al.}}{{Dhillon, Guan, and Kulis}}}
-\bibcite{dhillon2007weighted}{{36}{2007}{{Dhillon et~al.}}{{Dhillon, Guan, and Kulis}}}
-\bibcite{Ding_understand}{{37}{2022}{{Ding et~al.}}{{Ding, Lim, Vidal, and Haeffele}}}
-\bibcite{donoho2000high}{{38}{2000}{{Donoho}}{{}}}
-\bibcite{eckart1936approximation}{{39}{1936}{{Eckart and Young}}{{}}}
-\bibcite{ezugwu2022comprehensive}{{40}{2022}{{Ezugwu et~al.}}{{Ezugwu, Ikotun, Oyelade, Abualigah, Agushaka, Eke, and Akinyelu}}}
-\bibcite{ezuz2017gwcnn}{{41}{2017}{{Ezuz et~al.}}{{Ezuz, Solomon, Kim, and Ben-Chen}}}
-\bibcite{Fan_2022_CVPR}{{42}{2022}{{Fan et~al.}}{{Fan, Yang, and Vemuri}}}
-\bibcite{Feltes2019}{{43}{2019}{{Feltes et~al.}}{{Feltes, Chandelier, Grisci, and Dorn}}}
-\bibcite{olivetti}{{44}{1994}{{Ferdinando and Andy}}{{}}}
-\bibcite{feydy2019interpolating}{{45}{2019}{{Feydy et~al.}}{{Feydy, S{\'e}journ{\'e}, Vialard, Amari, Trouv{\'e}, and Peyr{\'e}}}}
-\bibcite{flamary2016optimal}{{46}{2016}{{Flamary et~al.}}{{Flamary, F{\'e}votte, Courty, and Emiya}}}
-\bibcite{gangbo1996geometry}{{47}{1996}{{Gangbo and McCann}}{{}}}
-\bibcite{ghojogh2021unified}{{48}{2021}{{Ghojogh et~al.}}{{Ghojogh, Ghodsi, Karray, and Crowley}}}
-\bibcite{graham1998characterising}{{49}{1998}{{Graham and Allinson}}{{}}}
-\bibcite{grippo2000convergence}{{50}{2000}{{Grippo and Sciandrone}}{{}}}
-\bibcite{Guo22}{{51}{2022}{{Guo et~al.}}{{Guo, Guo, and Yu}}}
-\bibcite{ham2004kernel}{{52}{2004}{{Ham et~al.}}{{Ham, Lee, Mika, and Sch{\"o}lkopf}}}
-\bibcite{Hastie2009}{{53}{2009}{{Hastie et~al.}}{{Hastie, Tibshirani, and Friedman}}}
-\bibcite{hinton2002stochastic}{{54}{2002}{{Hinton and Roweis}}{{}}}
-\bibcite{NIPS2002SNE}{{55}{2003}{{Hinton and Roweis}}{{}}}
-\bibcite{idel2016review}{{56}{2016}{{Idel}}{{}}}
-\bibcite{kantorovich1942translocation}{{57}{1942}{{Kantorovich}}{{}}}
-\bibcite{kingma2014adam}{{58}{2014}{{Kingma and Ba}}{{}}}
-\bibcite{knight2014symmetry}{{59}{2014}{{Knight et~al.}}{{Knight, Ruiz, and U{\c {c}}ar}}}
-\bibcite{kobak2019art}{{60}{2019}{{Kobak and Berens}}{{}}}
-\bibcite{kobak2021initialization}{{61}{2021}{{Kobak and Linderman}}{{}}}
-\bibcite{kobak2019heavy}{{62}{2019}{{Kobak et~al.}}{{Kobak, Linderman, Steinerberger, Kluger, and Berens}}}
-\bibcite{kobak2020heavy}{{63}{2020}{{Kobak et~al.}}{{Kobak, Linderman, Steinerberger, Kluger, and Berens}}}
-\bibcite{krizhevsky2009learning}{{64}{2009}{{Krizhevsky et~al.}}{{Krizhevsky, Hinton, et~al.}}}
-\bibcite{kruskal1978multidimensional}{{65}{1978}{{Kruskal}}{{}}}
-\bibcite{landa2021doubly}{{66}{2021}{{Landa et~al.}}{{Landa, Coifman, and Kluger}}}
-\bibcite{lee2015multi}{{67}{2015}{{Lee et~al.}}{{Lee, Peluffo-Ord{\'o}{\~n}ez, and Verleysen}}}
-\bibcite{li2020high}{{68}{2020}{{Li et~al.}}{{Li, Qian, Levina, and Zhu}}}
-\bibcite{li2017application}{{69}{2017}{{Li et~al.}}{{Li, Cerise, Yang, and Han}}}
-\bibcite{lim2020doubly}{{70}{2020}{{Lim et~al.}}{{Lim, Vidal, and Haeffele}}}
-\bibcite{Lin23}{{71}{2023}{{Lin et~al.}}{{Lin, Coifman, Mishne, and Talmon}}}
-\bibcite{linderman2019clustering}{{72}{2019}{{Linderman and Steinerberger}}{{}}}
-\bibcite{linderman2019fast}{{73}{2019}{{Linderman et~al.}}{{Linderman, Rachh, Hoskins, Steinerberger, and Kluger}}}
-\bibcite{liu1989limited}{{74}{1989}{{Liu and Nocedal}}{{}}}
-\bibcite{liu2022joint}{{75}{2022{a}}{{Liu et~al.}}{{Liu, Liao, Yang, Lin, Yeong, Zhou, Shi, and Liu}}}
-\bibcite{liu2022robust}{{76}{2022{b}}{{Liu et~al.}}{{Liu, Xie, Zhang, Yamada, Zheng, and Qian}}}
-\bibcite{lu2019doubly}{{77}{2019}{{Lu et~al.}}{{Lu, Corander, and Yang}}}
-\bibcite{Lyu2023bmm}{{78}{2023}{{Lyu and Li}}{{}}}
-\bibcite{maron2018probably}{{79}{2018}{{Maron and Lipman}}{{}}}
-\bibcite{marshall2019manifold}{{80}{2019}{{Marshall and Coifman}}{{}}}
-\bibcite{mcinnes2018umap}{{81}{2018}{{McInnes et~al.}}{{McInnes, Healy, and Melville}}}
-\bibcite{melit2020unsupervised}{{82}{2020}{{Melit~Devassy et~al.}}{{Melit~Devassy, George, and Nussbaum}}}
-\bibcite{memoli2011gromov}{{83}{2011}{{M{\'e}moli}}{{}}}
-\bibcite{memoli2018gromov}{{84}{2018}{{M{\'e}moli and Needham}}{{}}}
-\bibcite{memoli2022comparison}{{85}{2022}{{M{\'e}moli and Needham}}{{}}}
-\bibcite{Milanfar}{{86}{2013}{{Milanfar}}{{}}}
-\bibcite{monge1781memoire}{{87}{1781}{{Monge}}{{}}}
-\bibcite{nene1996columbia}{{88}{1996}{{Nene et~al.}}{{Nene, Nayar, Murase, et~al.}}}
-\bibcite{paszke2017automatic}{{89}{2017}{{Paszke et~al.}}{{Paszke, Gross, Chintala, Chanan, Yang, DeVito, Lin, Desmaison, Antiga, and Lerer}}}
-\bibcite{pearson1901liii}{{90}{1901}{{Pearson}}{{}}}
-\bibcite{scikit-learn}{{91}{2011}{{Pedregosa et~al.}}{{Pedregosa, Varoquaux, Gramfort, Michel, Thirion, Grisel, Blondel, Prettenhofer, Weiss, Dubourg, Vanderplas, Passos, Cournapeau, Brucher, Perrot, and Duchesnay}}}
-\bibcite{peyre2016gromov}{{92}{2016}{{Peyr{\'e} et~al.}}{{Peyr{\'e}, Cuturi, and Solomon}}}
-\bibcite{peyre2019computational}{{93}{2019}{{Peyr{\'e} et~al.}}{{Peyr{\'e}, Cuturi, et~al.}}}
-\bibcite{pezzotti2019gpgpu}{{94}{2019}{{Pezzotti et~al.}}{{Pezzotti, Thijssen, Mordvintsev, H{\"o}llt, Van~Lew, Lelieveldt, Eisemann, and Vilanova}}}
-\bibcite{huyresnet}{{95}{2021}{{Phan}}{{}}}
-\bibcite{rabin2014adaptive}{{96}{2014}{{Rabin et~al.}}{{Rabin, Ferradans, and Papadakis}}}
-\bibcite{redko2020co}{{97}{2020}{{Redko et~al.}}{{Redko, Vayer, Flamary, and Courty}}}
-\bibcite{rousseeuw1987silhouettes}{{98}{1987}{{Rousseeuw}}{{}}}
-\bibcite{roweis2000nonlinear}{{99}{2000}{{Roweis and Saul}}{{}}}
-\bibcite{rue2005gaussian}{{100}{2005}{{Rue and Held}}{{}}}
-\bibcite{sander2022sinkformers}{{101}{2022}{{Sander et~al.}}{{Sander, Ablin, Blondel, and Peyr{\'e}}}}
-\bibcite{santambrogio2015optimal}{{102}{2015}{{Santambrogio}}{{}}}
-\bibcite{saxena2017review}{{103}{2017}{{Saxena et~al.}}{{Saxena, Prasad, Gupta, Bharill, Patel, Tiwari, Er, Ding, and Lin}}}
-\bibcite{scetbon2022linear}{{104}{2022}{{Scetbon et~al.}}{{Scetbon, Peyr{\'e}, and Cuturi}}}
-\bibcite{schaeffer2007graph}{{105}{2007}{{Schaeffer}}{{}}}
-\bibcite{scholkopf1997kernel}{{106}{1997}{{Sch{\"o}lkopf et~al.}}{{Sch{\"o}lkopf, Smola, and M{\"u}ller}}}
-\bibcite{sinkhorn1964relationship}{{107}{1964}{{Sinkhorn}}{{}}}
-\bibcite{sinkhorn1967concerning}{{108}{1967}{{Sinkhorn and Knopp}}{{}}}
-\bibcite{solomon2016entropic}{{109}{2016}{{Solomon et~al.}}{{Solomon, Peyr{\'e}, Kim, and Sra}}}
-\bibcite{sturm2012space}{{110}{2012}{{Sturm}}{{}}}
-\bibcite{tang2016visualizing}{{111}{2016}{{Tang et~al.}}{{Tang, Liu, Zhang, and Mei}}}
-\bibcite{tenenbaum2000global}{{112}{2000}{{Tenenbaum et~al.}}{{Tenenbaum, Silva, and Langford}}}
-\bibcite{thual2022aligning}{{113}{2022}{{Thual et~al.}}{{Thual, TRAN, Zemskova, Courty, Flamary, Dehaene, and Thirion}}}
-\bibcite{tipping1999probabilistic}{{114}{1999}{{Tipping and Bishop}}{{}}}
-\bibcite{tran2020benchmark}{{115}{2020}{{Tran et~al.}}{{Tran, Ang, Chevrier, Zhang, Lee, Goh, and Chen}}}
-\bibcite{tseng2001convergence}{{116}{2001}{{Tseng}}{{}}}
-\bibcite{van2022probabilistic}{{117}{2022}{{Van~Assel et~al.}}{{Van~Assel, Espinasse, Chiquet, and Picard}}}
-\bibcite{van2023snekhorn}{{118}{2023}{{Van~Assel et~al.}}{{Van~Assel, Vayer, Flamary, and Courty}}}
-\bibcite{van2013barnes}{{119}{2013}{{Van Der~Maaten}}{{}}}
-\bibcite{van2008visualizing}{{120}{2008}{{Van~der Maaten and Hinton}}{{}}}
-\bibcite{van2009dimensionality}{{121}{2009}{{Van Der~Maaten et~al.}}{{Van Der~Maaten, Postma, Van~den Herik, et~al.}}}
-\bibcite{maaten2008tSNE}{{122}{2008}{{{van der Maaten} and Hinton}}{{}}}
-\bibcite{van2018recovering}{{123}{2018}{{Van~Dijk et~al.}}{{Van~Dijk, Sharma, Nainys, Yim, Kathail, Carr, Burdziak, Moon, Chaffer, Pattabiraman, et~al.}}}
-\bibcite{venna2001neighborhood}{{124}{2001}{{Venna and Kaski}}{{}}}
-\bibcite{ventre2023one}{{125}{2023}{{Ventre et~al.}}{{Ventre, Herbach, Espinasse, Benoit, and Gandrillon}}}
-\bibcite{villani2009optimal}{{126}{2009}{{Villani et~al.}}{{}}}
-\bibcite{vincent2021online}{{127}{2021}{{Vincent-Cuaz et~al.}}{{Vincent-Cuaz, Vayer, Flamary, Corneli, and Courty}}}
-\bibcite{vincent2021semi}{{128}{2022{a}}{{Vincent-Cuaz et~al.}}{{Vincent-Cuaz, Flamary, Corneli, Vayer, and Courty}}}
-\bibcite{vincent2022template}{{129}{2022{b}}{{Vincent-Cuaz et~al.}}{{Vincent-Cuaz, Flamary, Corneli, Vayer, and Courty}}}
-\bibcite{vladymyrov2013entropic}{{130}{2013}{{Vladymyrov and Carreira-Perpinan}}{{}}}
-\bibcite{von2007tutorial}{{131}{2007}{{Von~Luxburg}}{{}}}
-\bibcite{wainwright2008graphical}{{132}{2008}{{Wainwright and Jordan}}{{}}}
-\bibcite{wang2021understanding}{{133}{2021}{{Wang et~al.}}{{Wang, Huang, Rudin, and Shaposhnik}}}
-\bibcite{wattenberg2016use}{{134}{2016}{{Wattenberg et~al.}}{{Wattenberg, Vi{\'e}gas, and Johnson}}}
-\bibcite{xu2019scalable}{{135}{2019}{{Xu et~al.}}{{Xu, Luo, and Carin}}}
-\bibcite{xu2020gromov}{{136}{2020}{{Xu}}{{}}}
-\bibcite{zass2005unifying}{{137}{2005}{{Zass and Shashua}}{{}}}
-\bibcite{Zass}{{138}{2006}{{Zass and Shashua}}{{}}}
-\bibcite{zelnik2004self}{{139}{2004}{{Zelnik-Manor and Perona}}{{}}}
-\bibcite{pmlr-v202-zeng23c}{{140}{2023}{{Zeng et~al.}}{{Zeng, Zhu, Xia, Zeng, and Tong}}}
-\bibcite{zhai2023sigmareparam}{{141}{2023}{{Zhai et~al.}}{{Zhai, Likhomanenko, Littwin, Ramapuram, Busbridge, Zhang, Gu, and Susskind}}}
-\bibcite{zhou2003learning}{{142}{2003}{{Zhou et~al.}}{{Zhou, Bousquet, Lal, Weston, and Sch{\"o}lkopf}}}
+\@writefile{toc}{\contentsline {chapter}{References}{83}{chapter*.61}\protected@file@percent }
+\bibcite{bohm2020unifying}{{14}{2020}{{B{\"o}hm et~al.}}{{B{\"o}hm, Berens, and Kobak}}}
+\bibcite{borg2005modern}{{15}{2005}{{Borg and Groenen}}{{}}}
+\bibcite{bronstein2021geometric}{{16}{2021}{{Bronstein et~al.}}{{Bronstein, Bruna, Cohen, and Veli{\v {c}}kovi{\'c}}}}
+\bibcite{JMLR:v23:21-0524}{{17}{2022}{{Cai and Ma}}{{}}}
+\bibcite{Canas12}{{18}{2012}{{Canas and Rosasco}}{{}}}
+\bibcite{cantini2021benchmarking}{{19}{2021}{{Cantini et~al.}}{{Cantini, Zakeri, Hernandez, Naldi, Thieffry, Remy, and Baudot}}}
+\bibcite{cao2022centrosymmetric}{{20}{2022}{{Cao et~al.}}{{Cao, McLaren, and Plosker}}}
+\bibcite{carreira2010elastic}{{21}{2010}{{Carreira-Perpin{\'a}n}}{{}}}
+\bibcite{cela2013quadratic}{{22}{2013}{{Cela}}{{}}}
+\bibcite{Chami21}{{23}{2021}{{Chami et~al.}}{{Chami, Gu, Nguyen, and R{\'{e}}}}}
+\bibcite{chan2018t}{{24}{2018}{{Chan et~al.}}{{Chan, Rao, Huang, and Canny}}}
+\bibcite{chen2023gromov}{{25}{2023}{{Chen et~al.}}{{Chen, Yao, Yang, and Chen}}}
+\bibcite{chowdhury2019gromov}{{26}{2019}{{Chowdhury and M{\'e}moli}}{{}}}
+\bibcite{chowdhury2021generalized}{{27}{2021}{{Chowdhury and Needham}}{{}}}
+\bibcite{Chung97}{{28}{1997{a}}{{Chung}}{{}}}
+\bibcite{chung1997spectral}{{29}{1997{b}}{{Chung}}{{}}}
+\bibcite{clifford1990markov}{{30}{1990}{{Clifford}}{{}}}
+\bibcite{coenen2019understanding}{{31}{2019}{{Coenen and Pearce}}{{}}}
+\bibcite{coifman2006diffusion}{{32}{2006}{{Coifman and Lafon}}{{}}}
+\bibcite{cuturi2013sinkhorn}{{33}{2013}{{Cuturi}}{{}}}
+\bibcite{SCOT2020}{{34}{2020{a}}{{Demetci et~al.}}{{Demetci, Santorella, Sandstede, Noble, and Singh}}}
+\bibcite{demetci2020gromov}{{35}{2020{b}}{{Demetci et~al.}}{{Demetci, Santorella, Sandstede, Noble, and Singh}}}
+\bibcite{deng2012mnist}{{36}{2012}{{Deng}}{{}}}
+\bibcite{dhillon2004kernel}{{37}{2004}{{Dhillon et~al.}}{{Dhillon, Guan, and Kulis}}}
+\bibcite{dhillon2007weighted}{{38}{2007}{{Dhillon et~al.}}{{Dhillon, Guan, and Kulis}}}
+\bibcite{Ding_understand}{{39}{2022}{{Ding et~al.}}{{Ding, Lim, Vidal, and Haeffele}}}
+\bibcite{donoho2000high}{{40}{2000}{{Donoho}}{{}}}
+\bibcite{eckart1936approximation}{{41}{1936}{{Eckart and Young}}{{}}}
+\bibcite{ezugwu2022comprehensive}{{42}{2022}{{Ezugwu et~al.}}{{Ezugwu, Ikotun, Oyelade, Abualigah, Agushaka, Eke, and Akinyelu}}}
+\bibcite{ezuz2017gwcnn}{{43}{2017}{{Ezuz et~al.}}{{Ezuz, Solomon, Kim, and Ben-Chen}}}
+\bibcite{Fan_2022_CVPR}{{44}{2022}{{Fan et~al.}}{{Fan, Yang, and Vemuri}}}
+\bibcite{Feltes2019}{{45}{2019}{{Feltes et~al.}}{{Feltes, Chandelier, Grisci, and Dorn}}}
+\bibcite{olivetti}{{46}{1994}{{Ferdinando and Andy}}{{}}}
+\bibcite{feydy2019interpolating}{{47}{2019}{{Feydy et~al.}}{{Feydy, S{\'e}journ{\'e}, Vialard, Amari, Trouv{\'e}, and Peyr{\'e}}}}
+\bibcite{flamary2016optimal}{{48}{2016}{{Flamary et~al.}}{{Flamary, F{\'e}votte, Courty, and Emiya}}}
+\bibcite{gangbo1996geometry}{{49}{1996}{{Gangbo and McCann}}{{}}}
+\bibcite{ghojogh2021unified}{{50}{2021}{{Ghojogh et~al.}}{{Ghojogh, Ghodsi, Karray, and Crowley}}}
+\bibcite{graham1998characterising}{{51}{1998}{{Graham and Allinson}}{{}}}
+\bibcite{grippo2000convergence}{{52}{2000}{{Grippo and Sciandrone}}{{}}}
+\bibcite{Guo22}{{53}{2022}{{Guo et~al.}}{{Guo, Guo, and Yu}}}
+\bibcite{ham2004kernel}{{54}{2004}{{Ham et~al.}}{{Ham, Lee, Mika, and Sch{\"o}lkopf}}}
+\bibcite{Hastie2009}{{55}{2009}{{Hastie et~al.}}{{Hastie, Tibshirani, and Friedman}}}
+\bibcite{hinton2002stochastic}{{56}{2002}{{Hinton and Roweis}}{{}}}
+\bibcite{NIPS2002SNE}{{57}{2003}{{Hinton and Roweis}}{{}}}
+\bibcite{idel2016review}{{58}{2016}{{Idel}}{{}}}
+\bibcite{kantorovich1942translocation}{{59}{1942}{{Kantorovich}}{{}}}
+\bibcite{kingma2014adam}{{60}{2014}{{Kingma and Ba}}{{}}}
+\bibcite{knight2014symmetry}{{61}{2014}{{Knight et~al.}}{{Knight, Ruiz, and U{\c {c}}ar}}}
+\bibcite{kobak2019art}{{62}{2019}{{Kobak and Berens}}{{}}}
+\bibcite{kobak2021initialization}{{63}{2021}{{Kobak and Linderman}}{{}}}
+\bibcite{kobak2019heavy}{{64}{2019}{{Kobak et~al.}}{{Kobak, Linderman, Steinerberger, Kluger, and Berens}}}
+\bibcite{kobak2020heavy}{{65}{2020}{{Kobak et~al.}}{{Kobak, Linderman, Steinerberger, Kluger, and Berens}}}
+\bibcite{konno1976cutting}{{66}{1976}{{Konno}}{{}}}
+\bibcite{krizhevsky2009learning}{{67}{2009}{{Krizhevsky et~al.}}{{Krizhevsky, Hinton, et~al.}}}
+\bibcite{kruskal1978multidimensional}{{68}{1978}{{Kruskal}}{{}}}
+\bibcite{lacoste2016convergence}{{69}{2016}{{Lacoste-Julien}}{{}}}
+\bibcite{landa2021doubly}{{70}{2021}{{Landa et~al.}}{{Landa, Coifman, and Kluger}}}
+\bibcite{lee2015multi}{{71}{2015}{{Lee et~al.}}{{Lee, Peluffo-Ord{\'o}{\~n}ez, and Verleysen}}}
+\bibcite{li2020high}{{72}{2020}{{Li et~al.}}{{Li, Qian, Levina, and Zhu}}}
+\bibcite{li2017application}{{73}{2017}{{Li et~al.}}{{Li, Cerise, Yang, and Han}}}
+\bibcite{lim2020doubly}{{74}{2020}{{Lim et~al.}}{{Lim, Vidal, and Haeffele}}}
+\bibcite{Lin23}{{75}{2023}{{Lin et~al.}}{{Lin, Coifman, Mishne, and Talmon}}}
+\bibcite{linderman2019clustering}{{76}{2019}{{Linderman and Steinerberger}}{{}}}
+\bibcite{linderman2019fast}{{77}{2019}{{Linderman et~al.}}{{Linderman, Rachh, Hoskins, Steinerberger, and Kluger}}}
+\bibcite{liu1989limited}{{78}{1989}{{Liu and Nocedal}}{{}}}
+\bibcite{liu2022joint}{{79}{2022{a}}{{Liu et~al.}}{{Liu, Liao, Yang, Lin, Yeong, Zhou, Shi, and Liu}}}
+\bibcite{liu2022robust}{{80}{2022{b}}{{Liu et~al.}}{{Liu, Xie, Zhang, Yamada, Zheng, and Qian}}}
+\bibcite{lu2019doubly}{{81}{2019}{{Lu et~al.}}{{Lu, Corander, and Yang}}}
+\bibcite{Lyu2023bmm}{{82}{2023}{{Lyu and Li}}{{}}}
+\bibcite{maron2018probably}{{83}{2018}{{Maron and Lipman}}{{}}}
+\bibcite{marshall2019manifold}{{84}{2019}{{Marshall and Coifman}}{{}}}
+\bibcite{mcinnes2018umap}{{85}{2018}{{McInnes et~al.}}{{McInnes, Healy, and Melville}}}
+\bibcite{melit2020unsupervised}{{86}{2020}{{Melit~Devassy et~al.}}{{Melit~Devassy, George, and Nussbaum}}}
+\bibcite{memoli2011gromov}{{87}{2011}{{M{\'e}moli}}{{}}}
+\bibcite{memoli2018gromov}{{88}{2018}{{M{\'e}moli and Needham}}{{}}}
+\bibcite{memoli2022comparison}{{89}{2022}{{M{\'e}moli and Needham}}{{}}}
+\bibcite{Milanfar}{{90}{2013}{{Milanfar}}{{}}}
+\bibcite{monge1781memoire}{{91}{1781}{{Monge}}{{}}}
+\bibcite{nene1996columbia}{{92}{1996}{{Nene et~al.}}{{Nene, Nayar, Murase, et~al.}}}
+\bibcite{paszke2017automatic}{{93}{2017}{{Paszke et~al.}}{{Paszke, Gross, Chintala, Chanan, Yang, DeVito, Lin, Desmaison, Antiga, and Lerer}}}
+\bibcite{pearson1901liii}{{94}{1901}{{Pearson}}{{}}}
+\bibcite{scikit-learn}{{95}{2011}{{Pedregosa et~al.}}{{Pedregosa, Varoquaux, Gramfort, Michel, Thirion, Grisel, Blondel, Prettenhofer, Weiss, Dubourg, Vanderplas, Passos, Cournapeau, Brucher, Perrot, and Duchesnay}}}
+\bibcite{peyre2016gromov}{{96}{2016}{{Peyr{\'e} et~al.}}{{Peyr{\'e}, Cuturi, and Solomon}}}
+\bibcite{peyre2019computational}{{97}{2019}{{Peyr{\'e} et~al.}}{{Peyr{\'e}, Cuturi, et~al.}}}
+\bibcite{pezzotti2019gpgpu}{{98}{2019}{{Pezzotti et~al.}}{{Pezzotti, Thijssen, Mordvintsev, H{\"o}llt, Van~Lew, Lelieveldt, Eisemann, and Vilanova}}}
+\bibcite{huyresnet}{{99}{2021}{{Phan}}{{}}}
+\bibcite{rabin2014adaptive}{{100}{2014}{{Rabin et~al.}}{{Rabin, Ferradans, and Papadakis}}}
+\bibcite{redko2020co}{{101}{2020}{{Redko et~al.}}{{Redko, Vayer, Flamary, and Courty}}}
+\bibcite{rousseeuw1987silhouettes}{{102}{1987}{{Rousseeuw}}{{}}}
+\bibcite{roweis2000nonlinear}{{103}{2000}{{Roweis and Saul}}{{}}}
+\bibcite{rue2005gaussian}{{104}{2005}{{Rue and Held}}{{}}}
+\bibcite{sander2022sinkformers}{{105}{2022}{{Sander et~al.}}{{Sander, Ablin, Blondel, and Peyr{\'e}}}}
+\bibcite{santambrogio2015optimal}{{106}{2015}{{Santambrogio}}{{}}}
+\bibcite{saxena2017review}{{107}{2017}{{Saxena et~al.}}{{Saxena, Prasad, Gupta, Bharill, Patel, Tiwari, Er, Ding, and Lin}}}
+\bibcite{scetbon2022linear}{{108}{2022}{{Scetbon et~al.}}{{Scetbon, Peyr{\'e}, and Cuturi}}}
+\bibcite{schaeffer2007graph}{{109}{2007}{{Schaeffer}}{{}}}
+\bibcite{scholkopf1997kernel}{{110}{1997}{{Sch{\"o}lkopf et~al.}}{{Sch{\"o}lkopf, Smola, and M{\"u}ller}}}
+\bibcite{sinkhorn1964relationship}{{111}{1964}{{Sinkhorn}}{{}}}
+\bibcite{sinkhorn1967concerning}{{112}{1967}{{Sinkhorn and Knopp}}{{}}}
+\bibcite{solomon2016entropic}{{113}{2016}{{Solomon et~al.}}{{Solomon, Peyr{\'e}, Kim, and Sra}}}
+\bibcite{sturm2012space}{{114}{2012}{{Sturm}}{{}}}
+\bibcite{tang2016visualizing}{{115}{2016}{{Tang et~al.}}{{Tang, Liu, Zhang, and Mei}}}
+\bibcite{tenenbaum2000global}{{116}{2000}{{Tenenbaum et~al.}}{{Tenenbaum, Silva, and Langford}}}
+\bibcite{thual2022aligning}{{117}{2022}{{Thual et~al.}}{{Thual, TRAN, Zemskova, Courty, Flamary, Dehaene, and Thirion}}}
+\bibcite{tipping1999probabilistic}{{118}{1999}{{Tipping and Bishop}}{{}}}
+\bibcite{tran2020benchmark}{{119}{2020}{{Tran et~al.}}{{Tran, Ang, Chevrier, Zhang, Lee, Goh, and Chen}}}
+\bibcite{tseng2001convergence}{{120}{2001}{{Tseng}}{{}}}
+\bibcite{van2022probabilistic}{{121}{2022}{{Van~Assel et~al.}}{{Van~Assel, Espinasse, Chiquet, and Picard}}}
+\bibcite{van2023snekhorn}{{122}{2023}{{Van~Assel et~al.}}{{Van~Assel, Vayer, Flamary, and Courty}}}
+\bibcite{van2013barnes}{{123}{2013}{{Van Der~Maaten}}{{}}}
+\bibcite{van2008visualizing}{{124}{2008}{{Van~der Maaten and Hinton}}{{}}}
+\bibcite{van2009dimensionality}{{125}{2009}{{Van Der~Maaten et~al.}}{{Van Der~Maaten, Postma, Van~den Herik, et~al.}}}
+\bibcite{maaten2008tSNE}{{126}{2008}{{{van der Maaten} and Hinton}}{{}}}
+\bibcite{van2018recovering}{{127}{2018}{{Van~Dijk et~al.}}{{Van~Dijk, Sharma, Nainys, Yim, Kathail, Carr, Burdziak, Moon, Chaffer, Pattabiraman, et~al.}}}
+\bibcite{vayer2018optimal}{{128}{2018}{{Vayer et~al.}}{{Vayer, Chapel, Flamary, Tavenard, and Courty}}}
+\bibcite{venna2001neighborhood}{{129}{2001}{{Venna and Kaski}}{{}}}
+\bibcite{ventre2023one}{{130}{2023}{{Ventre et~al.}}{{Ventre, Herbach, Espinasse, Benoit, and Gandrillon}}}
+\bibcite{villani2009optimal}{{131}{2009}{{Villani et~al.}}{{}}}
+\bibcite{vincent2023optimal}{{132}{2023}{{Vincent-Cuaz}}{{}}}
+\bibcite{vincent2021online}{{133}{2021}{{Vincent-Cuaz et~al.}}{{Vincent-Cuaz, Vayer, Flamary, Corneli, and Courty}}}
+\bibcite{vincent2021semi}{{134}{2022{a}}{{Vincent-Cuaz et~al.}}{{Vincent-Cuaz, Flamary, Corneli, Vayer, and Courty}}}
+\bibcite{vincent2022template}{{135}{2022{b}}{{Vincent-Cuaz et~al.}}{{Vincent-Cuaz, Flamary, Corneli, Vayer, and Courty}}}
+\bibcite{vladymyrov2013entropic}{{136}{2013}{{Vladymyrov and Carreira-Perpinan}}{{}}}
+\bibcite{von2007tutorial}{{137}{2007}{{Von~Luxburg}}{{}}}
+\bibcite{wainwright2008graphical}{{138}{2008}{{Wainwright and Jordan}}{{}}}
+\bibcite{wang2021understanding}{{139}{2021}{{Wang et~al.}}{{Wang, Huang, Rudin, and Shaposhnik}}}
+\bibcite{wattenberg2016use}{{140}{2016}{{Wattenberg et~al.}}{{Wattenberg, Vi{\'e}gas, and Johnson}}}
+\bibcite{xu2019scalable}{{141}{2019}{{Xu et~al.}}{{Xu, Luo, and Carin}}}
+\bibcite{xu2020gromov}{{142}{2020}{{Xu}}{{}}}
+\bibcite{zass2005unifying}{{143}{2005}{{Zass and Shashua}}{{}}}
+\bibcite{Zass}{{144}{2006}{{Zass and Shashua}}{{}}}
+\bibcite{zelnik2004self}{{145}{2004}{{Zelnik-Manor and Perona}}{{}}}
+\bibcite{pmlr-v202-zeng23c}{{146}{2023}{{Zeng et~al.}}{{Zeng, Zhu, Xia, Zeng, and Tong}}}
+\bibcite{zhai2023sigmareparam}{{147}{2023}{{Zhai et~al.}}{{Zhai, Likhomanenko, Littwin, Ramapuram, Busbridge, Zhang, Gu, and Susskind}}}
+\bibcite{zhou2003learning}{{148}{2003}{{Zhou et~al.}}{{Zhou, Bousquet, Lal, Weston, and Sch{\"o}lkopf}}}
 \global\mtcsecondpartfalse
-\gdef \@abspage@last{68}
+\gdef \@abspage@last{95}

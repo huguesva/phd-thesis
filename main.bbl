@@ -1,4 +1,4 @@
-\begin{thebibliography}{142}
+\begin{thebibliography}{148}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -81,6 +81,11 @@ Rajendra Bhatia.
 \newblock \emph{The American Mathematical Monthly}, 113\penalty0 (3):\penalty0
   221--235, 2006.
 
+\bibitem[Birkhoff(1946)]{birkhoff1946tres}
+Garrett Birkhoff.
+\newblock Tres observaciones sobre el algebra lineal.
+\newblock \emph{Univ. Nac. Tucuman, Ser. A}, 5:\penalty0 147--154, 1946.
+
 \bibitem[B{\"o}hm et~al.(2020)B{\"o}hm, Berens, and Kobak]{bohm2020unifying}
 Jan~Niklas B{\"o}hm, Philipp Berens, and Dmitry Kobak.
 \newblock A unifying perspective on neighbor embeddings along the
@@ -121,6 +126,12 @@ Laura Cantini, Pooya Zakeri, Celine Hernandez, Aurelien Naldi, Denis Thieffry,
 \newblock Benchmarking joint multi-omics dimensionality reduction approaches
   for the study of cancer.
 \newblock \emph{Nature communications}, 12\penalty0 (1):\penalty0 124, 2021.
+
+\bibitem[Cao et~al.(2022)Cao, McLaren, and Plosker]{cao2022centrosymmetric}
+Lei Cao, Darian McLaren, and Sarah Plosker.
+\newblock Centrosymmetric stochastic matrices.
+\newblock \emph{Linear and Multilinear Algebra}, 70\penalty0 (3):\penalty0
+  449--464, 2022.
 
 \bibitem[Carreira-Perpin{\'a}n(2010)]{carreira2010elastic}
 Miguel~A Carreira-Perpin{\'a}n.
@@ -420,6 +431,12 @@ Dmitry Kobak, George Linderman, Stefan Steinerberger, Yuval Kluger, and Philipp
 \newblock In \emph{Joint European Conference on Machine Learning and Knowledge
   Discovery in Databases}, pages 124--139. Springer, 2020.
 
+\bibitem[Konno(1976)]{konno1976cutting}
+Hiroshi Konno.
+\newblock A cutting plane algorithm for solving bilinear programs.
+\newblock \emph{Mathematical Programming}, 11\penalty0 (1):\penalty0 14--27,
+  1976.
+
 \bibitem[Krizhevsky et~al.(2009)Krizhevsky, Hinton,
   et~al.]{krizhevsky2009learning}
 Alex Krizhevsky, Geoffrey Hinton, et~al.
@@ -430,6 +447,11 @@ Alex Krizhevsky, Geoffrey Hinton, et~al.
 Joseph~B Kruskal.
 \newblock \emph{Multidimensional scaling}.
 \newblock Number~11. Sage, 1978.
+
+\bibitem[Lacoste-Julien(2016)]{lacoste2016convergence}
+Simon Lacoste-Julien.
+\newblock Convergence rate of frank-wolfe for non-convex objectives.
+\newblock \emph{arXiv preprint arXiv:1607.00345}, 2016.
 
 \bibitem[Landa et~al.(2021)Landa, Coifman, and Kluger]{landa2021doubly}
 Boris Landa, Ronald~R Coifman, and Yuval Kluger.
@@ -803,6 +825,13 @@ David Van~Dijk, Roshan Sharma, Juozas Nainys, Kristina Yim, Pooja Kathail,
   diffusion.
 \newblock \emph{Cell}, 174\penalty0 (3):\penalty0 716--729, 2018.
 
+\bibitem[Vayer et~al.(2018)Vayer, Chapel, Flamary, Tavenard, and
+  Courty]{vayer2018optimal}
+Titouan Vayer, Laetitia Chapel, R{\'e}mi Flamary, Romain Tavenard, and Nicolas
+  Courty.
+\newblock Optimal transport for structured data with application on graphs.
+\newblock \emph{arXiv preprint arXiv:1805.09114}, 2018.
+
 \bibitem[Venna and Kaski(2001)]{venna2001neighborhood}
 Jarkko Venna and Samuel Kaski.
 \newblock Neighborhood preservation in nonlinear projection methods: An
@@ -824,6 +853,11 @@ Elias Ventre, Ulysse Herbach, Thibault Espinasse, G{\'e}rard Benoit, and
 C{\'e}dric Villani et~al.
 \newblock \emph{Optimal transport: old and new}, volume 338.
 \newblock Springer, 2009.
+
+\bibitem[Vincent-Cuaz(2023)]{vincent2023optimal}
+C{\'e}dric Vincent-Cuaz.
+\newblock \emph{Optimal transport for graph representation learning}.
+\newblock PhD thesis, Universit{\'e} C{\^o}te d'Azur, 2023.
 
 \bibitem[Vincent-Cuaz et~al.(2021)Vincent-Cuaz, Vayer, Flamary, Corneli, and
   Courty]{vincent2021online}
