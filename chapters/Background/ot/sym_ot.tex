@@ -1,10 +1,6 @@
 \section{Enhancing the Ground Metric with Affinities}
 
-We call \emph{affinity} the weight matrix of a graph that encodes this similarity. It has positive entries and the higher the weight in position $(i,j)$, the
-higher the similarity or proximity between samples $i$ and $j$.
-Seminal approaches relying on affinities include Laplacian
-eigenmaps \citep{belkin2003laplacian}, spectral clustering
-\citep{von2007tutorial} and semi-supervised learning \citep{zhou2003learning}. Numerous methods can be employed to construct such affinities. A common choice is to use a kernel (\eg Gaussian) derived from a distance matrix normalized by a bandwidth parameter that usually has a large influence on the outcome of the algorithm. 
+A common choice is to use a kernel (\eg Gaussian) derived from a distance matrix normalized by a bandwidth parameter that usually has a large influence on the outcome of the algorithm. 
 Indeed, excessively small kernel bandwidth can result in %points \nc{points ?} 
 solely capturing the positions of closest neighbors, at the expense of large-scale dependencies. Inversely, setting too large a bandwidth blurs information about close-range pairwise relations. 
 

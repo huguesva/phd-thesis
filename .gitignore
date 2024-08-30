@@ -60,5 +60,8 @@ kilepr
 *.mtc1
 *.mtc2
 *.mtc3
+*.mtc4
+*.mtc5
+*.mtc6
 
-.DS_Store
+*.DS_Store

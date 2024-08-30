@@ -15,13 +15,13 @@ clusters in low dimensions. First, we showcase the relevance of our approach on 
 % \ref{sec:simulated_data}). 
 Then, we evaluate the spectral clustering
 performances of symmetric entropic affinities before benchmarking
-t-SNEkhorn with t-SNE and UMAP \cite{mcinnes2018umap} on real-world images and genomics datasets.
+t-SNEkhorn with t-SNE and UMAP \citep{mcinnes2018umap} on real-world images and genomics datasets.
 % (Section \ref{sec:exp_real_data}).
 
 % \subsection{Simulated data}\label{sec:simulated_data}
 % \begin{minipage}{0.48\linewidth} 
 % \textbf{Simulated data.}
-% We take inspiration from \cite{landa2021doubly} and consider the task of discriminating between samples from two multinomial distributions. We first sample uniformly two vectors $\p_1$ and $\p_2$ in the $10^4$-dimensional probability simplex. We then generate $n=10^3$ samples as $\x_i =\tilde{\x}_i / (\sum_j \tilde{x}_{ij})$ such that:
+% We take inspiration from \citep{landa2021doubly} and consider the task of discriminating between samples from two multinomial distributions. We first sample uniformly two vectors $\p_1$ and $\p_2$ in the $10^4$-dimensional probability simplex. We then generate $n=10^3$ samples as $\x_i =\tilde{\x}_i / (\sum_j \tilde{x}_{ij})$ such that:
 % \begin{align*}
 %     \tilde{\x}_i \sim 
 %     \left\{
@@ -33,7 +33,7 @@ t-SNEkhorn with t-SNE and UMAP \cite{mcinnes2018umap} on real-world images and g
 %     \right.
 % \end{align*}
 % where $\mathcal{M}$ stands for the multinomial distribution. 
-% The goal of the task is to test the robustness to heteroscedastic noise. Indeed, points generated using $\p_2$ exhibit different levels of noise due to various numbers of multinomial trials ($10^3$ and $10^4$) to form an estimation of $\p_2$. This typically occurs in real-world scenarios when the same entity is measured using different experimental setups thus creating heterogeneous technical noise levels (\eg in single-cell sequencing \cite{kobak2019art}). This phenomenon is known as \emph{batch effect} \cite{tran2020benchmark}.
+% The goal of the task is to test the robustness to heteroscedastic noise. Indeed, points generated using $\p_2$ exhibit different levels of noise due to various numbers of multinomial trials ($10^3$ and $10^4$) to form an estimation of $\p_2$. This typically occurs in real-world scenarios when the same entity is measured using different experimental setups thus creating heterogeneous technical noise levels (\eg in single-cell sequencing \citep{kobak2019art}). This phenomenon is known as \emph{batch effect} \citep{tran2020benchmark}.
 % \end{minipage}
 % \hspace{0.005\linewidth}
 % \begin{minipage}{0.5\linewidth}
@@ -45,7 +45,7 @@ t-SNEkhorn with t-SNE and UMAP \cite{mcinnes2018umap} on real-world images and g
 % \end{minipage}
 
 \textbf{Simulated data.}
-We take inspiration from \cite{landa2021doubly} and consider the task of discriminating between samples from two multinomial distributions. We first sample uniformly two vectors $\pb_1$ and $\pb_2$ in the $10^4$-dimensional probability simplex. We then generate $n=10^3$ samples as $\xb_i =\tilde{\xb}_i / (\sum_j \tilde{x}_{ij})$ such that:
+We take inspiration from \citep{landa2021doubly} and consider the task of discriminating between samples from two multinomial distributions. We first sample uniformly two vectors $\pb_1$ and $\pb_2$ in the $10^4$-dimensional probability simplex. We then generate $n=10^3$ samples as $\xb_i =\tilde{\xb}_i / (\sum_j \tilde{x}_{ij})$ such that:
 \begin{align*}
     \tilde{\xb}_i \sim 
     \left\{
@@ -57,9 +57,9 @@ We take inspiration from \cite{landa2021doubly} and consider the task of discrim
     \right.
 \end{align*}
 where $\mathcal{M}$ stands for the multinomial distribution. 
-The goal of the task is to test the robustness to heteroscedastic noise. Indeed, points generated using $\mathbf{p}_2$ exhibit different levels of noise due to various numbers of multinomial trials ($10^3$ and $10^4$) to form an estimation of $\mathbf{p}_2$. This typically occurs in real-world scenarios when the same entity is measured using different experimental setups thus creating heterogeneous technical noise levels (\eg in single-cell sequencing \cite{kobak2019art}). This phenomenon is known as \emph{batch effect} \cite{tran2020benchmark}.
+The goal of the task is to test the robustness to heteroscedastic noise. Indeed, points generated using $\mathbf{p}_2$ exhibit different levels of noise due to various numbers of multinomial trials ($10^3$ and $10^4$) to form an estimation of $\mathbf{p}_2$. This typically occurs in real-world scenarios when the same entity is measured using different experimental setups thus creating heterogeneous technical noise levels (\eg in single-cell sequencing \citep{kobak2019art}). This phenomenon is known as \emph{batch effect} \citep{tran2020benchmark}.
 % In single-cell sequencing, $\p_1$ and $\p_2$ can represent the probability of expressing genes in two different cells (these data are prone to suffer from high variability in technical noise.)
-% As suspected in \cite{landa2021doubly}, the usual stochastic affinity used in t-SNE performs poorly when there is variability in the noise level.
+% As suspected in \citep{landa2021doubly}, the usual stochastic affinity used in t-SNE performs poorly when there is variability in the noise level.
 In \cref{fig:simulated_data_multinomial}, we show that, unlike $\overline{\Pb^{\mathrm{e}}}$ \eqref{symmetrization_tsne}, $\Pb^{\mathrm{se}}$ \eqref{eq:sym_entropic_affinity} manages to properly filter the noise (top row) to discriminate between samples generated by $\mathbf{p}_1$ and $\mathbf{p}_2$, and represent these two clusters separately in the embedding space (bottom row). In contrast, $\overline{\Pb^{\mathrm{e}}}$ and SNE are misled by the batch effect. This shows that $\overline{\Pb^{\mathrm{e}}}$ doesn't fully benefit from the adaptivity of EAs due to poor normalization and symmetrization. This phenomenon partly explains the superiority of SNEkhorn and t-SNEkhorn over current approaches on real-world datasets as illustrated below. 
 
 % \subsection{Real data}\label{sec:exp_real_data}
@@ -96,23 +96,23 @@ In \cref{fig:simulated_data_multinomial}, we show that, unlike $\overline{\Pb^{\
 
 \paragraph{Real-world datasets.} We then experiment with various labeled
 classification datasets including images and genomic data. For images, we use
-COIL 20 \cite{nene1996columbia}, OLIVETTI faces \cite{olivetti}, UMNIST
-\cite{graham1998characterising} and CIFAR 10 \cite{krizhevsky2009learning}. For
+COIL 20 \citep{nene1996columbia}, OLIVETTI faces \citep{olivetti}, UMNIST
+\citep{graham1998characterising} and CIFAR 10 \citep{krizhevsky2009learning}. For
 CIFAR, we experiment with features obtained from the last hidden layer of a
-pre-trained ResNet \cite{huyresnet} while for the other three datasets, we take
+pre-trained ResNet \citep{huyresnet} while for the other three datasets, we take
 as input the raw pixel data. Regarding genomics data, we consider the Curated
-Microarray Database (CuMiDa) \cite{Feltes2019} made of microarray datasets for
+Microarray Database (CuMiDa) \citep{Feltes2019} made of microarray datasets for
 various types of cancer, as well as the pre-processed SNAREseq (chromatin
 accessibility) and scGEM (gene expression) datasets used in
-\cite{SCOT2020}. For CuMiDa, we retain the datasets with most samples. For all
+\citep{SCOT2020}. For CuMiDa, we retain the datasets with most samples. For all
 the datasets, when the data dimension exceeds $50$ we apply a pre-processing
 step of PCA in dimension $50$, as usually done in practice
-\cite{van2008visualizing}. In the following experiments, when not specified the
+\citep{van2008visualizing}. In the following experiments, when not specified the
 hyperparameters are set to the value leading to the best average score on five
 different seeds with grid-search. For perplexity parameters, we test all
 multiples of $10$ in the interval $[10,\min(n,300)]$ where $n$ is the number of
 samples in the dataset. We use the same grid for the $k$ of the self-tuning
-affinity $\Pb^{\mathrm{st}}$ \cite{zelnik2004self} and for the
+affinity $\Pb^{\mathrm{st}}$ \citep{zelnik2004self} and for the
 \texttt{n\textunderscore neighbors} parameter of UMAP. For scalar bandwidths, we
 consider powers of $10$ such that the corresponding affinities' average perplexity belongs to the perplexity range. 
 
@@ -127,7 +127,7 @@ consider powers of $10$ such that the corresponding affinities' average perplexi
 
 \paragraph{Spectral Clustering.}
 Building on the strong connections between spectral clustering mechanisms and t-SNE
-\cite{van2022probabilistic,linderman2019clustering} we first consider spectral
+\citep{van2022probabilistic,linderman2019clustering} we first consider spectral
 clustering tasks to evaluate the affinity matrix $\Pb^{\mathrm{se}}$
 \eqref{eq:sym_entropic_affinity} and compare it against
 $\overline{\Pb^{\mathrm{e}}}$ \eqref{symmetrization_tsne}. We also consider two
@@ -136,10 +136,10 @@ the symmetrized row-stochastic $\overline{\Pb^{\mathrm{rs}}} =
 \operatorname{Proj}^{\ell_2}_{\mathcal{S}}(\Pb^{\mathrm{rs}})$ where
 $\Pb^{\mathrm{rs}}$ is $\K$ normalized by row and $\Pb^{\mathrm{ds}}$
 \eqref{eq:plan_sym_sinkhorn}. We also consider the adaptive Self-Tuning
-$\Pb^{\mathrm{st}}$ affinity from \cite{zelnik2004self} which relies on an
+$\Pb^{\mathrm{st}}$ affinity from \citep{zelnik2004self} which relies on an
 adaptive bandwidth corresponding to the distance from the $k$-th nearest
 neighbor of each point. We use the spectral clustering implementation of
-\texttt{scikit-learn} \cite{scikit-learn} with default parameters which uses the
+\texttt{scikit-learn} \citep{scikit-learn} with default parameters which uses the
 unnormalized graph Laplacian. We measure the quality of clustering using the
 Adjusted Rand Index (ARI). Looking at both \cref{table_spectral_microaray} and
 \cref{fig:spectral_clustering_sensibility}, one can notice that, in general,
@@ -162,10 +162,10 @@ SNEkhorn.
 \end{wrapfigure}
 
 \paragraph{Dimension Reduction.}
-To guarantee a fair comparison, we implemented not only SNEkhorn, but also t-SNE and UMAP in \texttt{PyTorch} \cite{paszke2017automatic}. 
+To guarantee a fair comparison, we implemented not only SNEkhorn, but also t-SNE and UMAP in \texttt{PyTorch} \citep{paszke2017automatic}. 
 % Note that UMAP also relies on adaptive affinities but sets the degree of each node (related to the hyperparameter \texttt{n\textunderscore neighbors} which plays a similar role to the perplexity) rather than the entropy.
 % Our code is made available with this submission. 
-All models were optimized using \texttt{ADAM} \cite{kingma2014adam} with default parameters and the same stopping criterion: the algorithm stops whenever the relative variation of the loss becomes smaller than $10^{-5}$. For each run, we draw independent $\mathcal{N}(0,1)$ coordinates and use this same matrix to initialize all the methods that we wish to compare. To evaluate the embeddings' quality, we make use of the silhouette \cite{rousseeuw1987silhouettes} and trustworthiness \cite{venna2001neighborhood} scores from \texttt{scikit-learn} \cite{scikit-learn} with default parameters.  While the former relies on class labels, the latter measures the agreement between the neighborhoods in input and output spaces, thus giving two complementary metrics to properly evaluate the embeddings. 
+All models were optimized using \texttt{ADAM} \citep{kingma2014adam} with default parameters and the same stopping criterion: the algorithm stops whenever the relative variation of the loss becomes smaller than $10^{-5}$. For each run, we draw independent $\mathcal{N}(0,1)$ coordinates and use this same matrix to initialize all the methods that we wish to compare. To evaluate the embeddings' quality, we make use of the silhouette \citep{rousseeuw1987silhouettes} and trustworthiness \citep{venna2001neighborhood} scores from \texttt{scikit-learn} \citep{scikit-learn} with default parameters.  While the former relies on class labels, the latter measures the agreement between the neighborhoods in input and output spaces, thus giving two complementary metrics to properly evaluate the embeddings. 
 The results, presented in \cref{tab:DR_genomics_data}, demonstrate the notable superiority of t-SNEkhorn compared to the commonly used t-SNE and UMAP algorithms. Across the $16$ datasets examined, t-SNEkhorn almost consistently outperformed the others, achieving the highest silhouette score on $15$ datasets and the highest trustworthiness score on $12$ datasets. To visually assess the quality of the embeddings, we provide SNAREseq embeddings in \cref{fig:sc}. Notably, one can notice that the use of t-SNEkhorn results in improved class separation compared to t-SNE.
  
 % \begin{table}[h]

@@ -1,9 +1,9 @@
-\section{The Distributional Perspective}\label{sec:background_ot}
+\section{The Distributional Perspective}\label{sec:dist_perspective_dr}
 
 Optimal Transport (OT) \citep{villani2009optimal,peyre2019computational} is a popular
 framework for comparing probability distributions and is at the core of \Cref{chapter:SNEkhorn} and \Cref{chapter:DistR} of this thesis.
 
-\subsection{Comparing Distributions with Optimal Transport}
+\subsection{Comparing Distributions with Optimal Transport}\label{sec:background_ot}
 
 \hva{
 Lien DR et OT:
@@ -20,29 +20,29 @@ This is however difficult in the context of dimensionality reduction where the t
 
 \paragraph{Monge formulation.}
 We consider two Polish spaces $\mathcal{X}$ and $\mathcal{Y}$ such that we can define a cost function $c_{\mathcal{X} \mathcal{Y}} : \mathcal{X} \times \mathcal{Y} \to \R_+$. Let $\mu \in \mathcal{P}(\mathcal{X})$ and $\nu \in \mathcal{P}(\mathcal{Y})$ be two probability measures that we aim to compare.
-The original formulation \cite{monge1781memoire} of OT seeks the map $T$ satisfying $T_{\#}\mu = \nu$ that minimizes the transportation cost given by
+The original formulation \citep{monge1781memoire} of OT seeks the map $T$ satisfying $T_{\#}\mu = \nu$ that minimizes the transportation cost given by
 \begin{align}\label{eq:monge_pb}
 	M(\mu, \nu) \coloneqq \inf_{T_{\#}\mu = \nu} \int_{\mathcal{X}} c_{\mathcal{X} \mathcal{Y}}(\bm{x}, T(\bm{x})) \mathrm{d}\mu(\bm{x}) \:.
 \end{align}
 The above formulation is highly non-linear in $T$ and the set of admissible maps $T$ is not convex hindering an easy analysis. Moreover, the existence of an optimal map $T$ is not guaranteed in general.
 
-\paragraph{Kantorovich relaxation.} To resolve this, a popular relaxation by \cite{kantorovich1942translocation} consists of optimizing instead over the space of probabilistic couplings with marginals $\mu$ and $\nu$
+\paragraph{Kantorovich relaxation.} To resolve this, a popular relaxation by \citep{kantorovich1942translocation} consists of optimizing instead over the space of probabilistic couplings with marginals $\mu$ and $\nu$
 \begin{align}\label{eq:Wasserstein}
 	W(\mu, \nu) \coloneqq \inf_{\pi \in \Pi(\mu, \nu)} \int_{\mathcal{X} \times \mathcal{Y}} c_{\mathcal{X} \mathcal{Y}}(\bm{x}, \bm{y}) \mathrm{d}\pi(\bm{x}, \bm{y}) \:.
 \end{align}
 This formulation is a convex optimization problem and the infimum is well
-defined under mild assumptions \cite{santambrogio2015optimal}. If the optimal
+defined under mild assumptions \citep{santambrogio2015optimal}. If the optimal
 coupling $\pi^\star$ is supported on a \emph{deterministic} function, \ie
 $\pi^\star$ is of the form $(\mathrm{id} \times T^\star)\# \mu$, then
 $T^\star$ solves \eqref{eq:monge_pb}. This holds under the assumption that one
 of the inputs is absolutely continuous with respect to the Lebesgue measure
 for $c_{\mathcal{X} \mathcal{Y}}(\bm{x}, \bm{y}) = h(\bm{x} - \bm{y})$ with
-$h$ strictly convex \cite{gangbo1996geometry}. In the case of discrete
+$h$ strictly convex \citep{gangbo1996geometry}. In the case of discrete
 measures, the equivalence holds if $\mu = \frac{1}{N} \sum_{i \in \integ{N}}
 \delta_{\bm{x}_i}$ and $\nu = \frac{1}{N} \sum_{i \in \integ{N}}
 \delta_{\bm{y}_i}$ as the solution of \eqref{eq:Wasserstein} is reached at an
 extremal point of the polytope of doubly stochastic matrices
-\cite{bertsimas1997introduction}.
+\citep{bertsimas1997introduction}.
 
 \subsection{Optimal Transport Across Spaces : Gromov-Wasserstein Formulation}
 
@@ -52,7 +52,7 @@ It is usually impossible to define a meaningful transportation cost from two spa
 This occurs when considering ambient Euclidean spaces of different dimensions \ie $\mathcal{X} \subseteq \R^p$ and $\mathcal{Z} \subseteq \R^d$ with $p \neq d$ which is precisely the context of dimensionality reduction.
 We first introduce the general GW problem before highlighting its utility to compare distributions in incomparable spaces.
 
-\paragraph{Gromov-Wasserstein (GW).} The GW framework \cite{memoli2011gromov,sturm2012space} comprises a collection of OT methods designed to compare distributions by examining the pairwise relations \emph{within each domain}. For two matrices $\mC \in \R^{N \times N}$, $\overline{\mC} \in \R^{n \times n}$, and weights $\vh \in \Sigma_N, \overline{\vh} \in \Sigma_n$, the GW discrepancy is defined as
+\paragraph{Gromov-Wasserstein (GW).} The GW framework \citep{memoli2011gromov,sturm2012space} comprises a collection of OT methods designed to compare distributions by examining the pairwise relations \emph{within each domain}. For two matrices $\mC \in \R^{N \times N}$, $\overline{\mC} \in \R^{n \times n}$, and weights $\vh \in \Sigma_N, \overline{\vh} \in \Sigma_n$, the GW discrepancy is defined as
 \begin{equation}
 \label{eq:gw_pb} 
 \tag{GW}
@@ -65,12 +65,12 @@ We first introduce the general GW problem before highlighting its utility to com
 % \begin{align*}
 %\sum_{\substack{(i,j) \in \integ{N}^2 \\ (k,l) \in \integ{n}^2}}
 %where  $L:\R \times \R \rightarrow \R_+$ is a loss 
-% \footnote[1]{our definition of $L_{\mathrm{KL}}$ differs from \cite{peyre2016gromov} where the generalized Kullback-Leibler divergence is considered.}
+% \footnote[1]{our definition of $L_{\mathrm{KL}}$ differs from \citep{peyre2016gromov} where the generalized Kullback-Leibler divergence is considered.}
 and $\gU(\vh, \overline{\vh}) = \left\{ \mT \in \R_+^{N \times n} : \mT \bm{1}_n = \vh, \mT^\top \bm{1}_N = \overline{\vh} \right\}$ is the set of couplings between $\vh$ and $\overline{\vh}$.
 In this formulation, both pairs $(\mC, \vh)$ and $(\overline{\mC}, \overline{\vh})$ can be interpreted as graphs with corresponding connectivity matrices $\mC, \overline \mC$, and where nodes are weighted by histograms $\vh, \overline \vh$. \Cref{eq:gw_pb} is thus a \emph{quadratic problem} (in $\mT$) which consists in finding a soft-assignment matrix $\mT$ that aligns the nodes of the two graphs in a way that preserves their pairwise connectivities. 
 
-From a distributional perspective, GW can also be viewed as a distance between distributions that do not belong to the same metric space. For two discrete probability distributions $\mu_X = \sum_{i=1}^N [\vh_X]_i \delta_{\vx_i} \in \gP_N(\R^{p}), \mu_Z =\sum_{i=1}^n [\vh_Z]_i \delta_{\vz_i} \in \gP_n(\R^d)$ and pairwise similarity matrices $\simiX(\mX)$ and $\simi(\mZ)$ associated with the supports $\mX = (\vx_1, \cdots, \vx_n)^\top$ and $\mZ = (\vz_1, \cdots, \vz_n)^\top$, the quantity $\GW_L (\simiX(\mX), \simi(\mZ), \vh_X, \vh_Z)$ is a measure of dissimilarity or discrepancy between $\mu_X, \mu_Z$. Specifically, when $L=L_2$, and $\simiX(\mX), \simi(\mZ)$ are pairwise distance matrices, GW defines a proper distance between $\mu_X$ and $\mu_Z$ with respect to measure preserving isometries\footnote{With weaker assumptions on $\simiX, \simi$, GW defines a pseudo-metric \textit{w.r.t.} a different notion of isomorphism \cite{chowdhury2019gromov}. See Appendix \ref{sec:srGW_divergence} for more details.} \cite{memoli2011gromov}. 
+From a distributional perspective, GW can also be viewed as a distance between distributions that do not belong to the same metric space. For two discrete probability distributions $\mu_X = \sum_{i=1}^N [\vh_X]_i \delta_{\vx_i} \in \gP_N(\R^{p}), \mu_Z =\sum_{i=1}^n [\vh_Z]_i \delta_{\vz_i} \in \gP_n(\R^d)$ and pairwise similarity matrices $\simiX(\mX)$ and $\simi(\mZ)$ associated with the supports $\mX = (\vx_1, \cdots, \vx_n)^\top$ and $\mZ = (\vz_1, \cdots, \vz_n)^\top$, the quantity $\GW_L (\simiX(\mX), \simi(\mZ), \vh_X, \vh_Z)$ is a measure of dissimilarity or discrepancy between $\mu_X, \mu_Z$. Specifically, when $L=L_2$, and $\simiX(\mX), \simi(\mZ)$ are pairwise distance matrices, GW defines a proper distance between $\mu_X$ and $\mu_Z$ with respect to measure preserving isometries\footnote{With weaker assumptions on $\simiX, \simi$, GW defines a pseudo-metric \textit{w.r.t.} a different notion of isomorphism \citep{chowdhury2019gromov}. See Appendix \ref{sec:srGW_divergence} for more details.} \citep{memoli2011gromov}. 
 
-Due to its versatile properties, notably in comparing distributions over different domains,  the GW problem has found many applications in machine learning, \textit{e.g.,} for 3D meshes alignment \cite{solomon2016entropic,ezuz2017gwcnn}, NLP \cite{alvarez2018gromov}, (co-)clustering  \cite{peyre2016gromov, redko2020co}, single-cell analysis \cite{demetci2020gromov}, neuroimaging \cite{thual2022aligning}, graph representation learning \cite{xu2020gromov, vincent2021online, liu2022robust, vincent2022template, pmlr-v202-zeng23c} and partitioning \cite{xu2019scalable, chowdhury2021generalized}.
+Due to its versatile properties, notably in comparing distributions over different domains,  the GW problem has found many applications in machine learning, \textit{e.g.,} for 3D meshes alignment \citep{solomon2016entropic,ezuz2017gwcnn}, NLP \citep{alvarez2018gromov}, (co-)clustering  \citep{peyre2016gromov, redko2020co}, single-cell analysis \citep{demetci2020gromov}, neuroimaging \citep{thual2022aligning}, graph representation learning \citep{xu2020gromov, vincent2021online, liu2022robust, vincent2022template, pmlr-v202-zeng23c} and partitioning \citep{xu2019scalable, chowdhury2021generalized}.
 
 In this work, we leverage the GW discrepancy to extend classical DR approaches, framing them as the projection of a distribution onto a space of lower dimensionality. 

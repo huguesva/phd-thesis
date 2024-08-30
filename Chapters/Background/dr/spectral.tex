@@ -1,0 +1,48 @@
+\subsection{Spectral methods}
+
+
+Let $\mC_{\mX}$ denote the affinity matrix constructed from $\mX$. It is positive definite iif for any $\va \in \R^N$, $\va^\top \mC_{\mX} \va \geq 0$.
+Interestingly, any positive definite kernels can be seen as an inner product in a suitable space, as detailed in \Cref{rem:kernels}.
+
+\begin{rem1}{Kernels and Reproducing Kernel Hilbert Spaces}\label{rem:kernels}
+	A kernel $\kappa(\cdot, \cdot)$ is positive definite if for an arbitrary number of points $(\vx_1, ..., \vx_n) \in \mathcal{X}^n$, the kernel matrix $\bm{K} = (\kappa(\vx_i, \vx_j))_{(i,j) \in [n]^2}$ is positive definite. The Aronszajn's theorem \citep{aronszajn1950theory} states that an equivalent condition to $\kappa$ being positive definite is the existence of a Hilbert space $\mathcal{H}$ and a mapping $\phi : \mathcal{X} \to \mathcal{H}$ such that for any $(\vx, \vx') \in \mathcal{X}^2$,
+\begin{align}\label{eq:kernel_inner_product}
+    \kappa(\vx, \vx') = \langle \phi(\vx), \phi(\vx') \rangle_{\mathcal{H}} \:.
+\end{align}
+Of particular interest is the Hilbert space $\mathcal{H}$ associated to $\kappa$ called reproducing kernel Hilbert space (RKHS) which is a space of functions from $\mathcal{X}$ to $\mathbb{R}$ such that for any $\vx \in \mathcal{X}$, the function $\kappa_{\vx} : \bm{t} \to \kappa(\vx, \bm{t})$ is in $\mathcal{H}$ and for any $f \in \mathcal{H}$, $f(\vx) = \langle f, \kappa_{\vx} \rangle_{\mathcal{H}}$. $\kappa$ is then called the reproducing kernel of $\mathcal{H}$. An important result is that if $\mathcal{H}$ is a RKHS, then it has a unique reproducing kernel. Conversely, a positive definite kernel $\kappa$ can be the reproducing kernel of at most one RKHS.
+
+
+An equivalent definition of a RKHS on $\mathcal{X}$ is a Hilbert
+space $\mathcal{H} \subset \mathbb{R}^{\mathcal{X}}$ (functions from $\mathcal{X}$ to $\mathbb{R}$) where all evaluation functionals $\delta_x : \mathcal{H} \to \mathbb{R}$,
+defined by $\delta_x(f) = f(x)$, are continuous.
+
+Equation \ref{eq:kernel_inner_product} tells us that the inner product between two feature vectors is given by the kernel $\kappa$. Hence we can evaluate the inner product of any two feature vectors efficiently without knowing an explicit form of either $\phi$ or $\mathcal{H}$. With this computation of inner product, many linear methods of classical data analysis can be extended to nonlinear ones using the kernel matrix which computation does not depend on the dimensionality of the feature space. Such strategy is known as the \textit{kernel trick} in the literature.
+\end{rem1}
+
+
+%\footnote{\ie\ for any $(\vx_1, ..., \vx_N) \in \mathcal{X}^N$ and $(a_1, ..., a_N) \in \R^N, \sum_{ij} a_i a_j k_{\mathcal{X}}(\vx_i, \vx_j) \geq 0$.} 
+When $\simiX(\mX)$ is a positive semi-definite matrix, \cref{eq:DR_criterion}
+recovers spectral methods by choosing the quadratic loss $L = L_2$ and $\simi(\mZ) = (\langle \vz_i, \vz_j \rangle)_{(i,j) \in \integ{N}^2}$ the matrix of inner
+products in the embedding space. Indeed, in this case, the objective value of \cref{eq:DR_criterion}
+reduces to
+\begin{equation*}
+\label{eq:spectral_method}
+	\sum_{(i,j) \in \integ{N}^2} \!\!\!\!\! L_2([\simiX(\mX)]_{ij}, \langle \vz_i, \vz_j \rangle) = \| \simiX(\mX) - \mZ\mZ^\top \|^2_F\,
+\end{equation*}
+where $\|\cdot\|_F$ is the Frobenius norm. This problem is commonly known as kernel Principal Component Analysis (PCA)~\citep{scholkopf1997kernel}
+ and an optimal solution is given by
+$\mZ^\star = (\sqrt{\lambda_1} \vv_{1}, ..., \sqrt{\lambda_d} \vv_{d})^\top$ where $\lambda_i$ is the $i$-th
+largest eigenvalue of $\simiX(\mX)$ with corresponding eigenvector $\vv_{i}$ 
+\citep{eckart1936approximation}.  
+
+
+\begin{rem1}{Principal Component Analysis (PCA)}
+detailed treatment given in 
+\end{rem1}
+
+
+
+As shown by \citet{ham2004kernel, ghojogh2021unified}, numerous dimension reduction methods can be categorized in this manner.
+This includes PCA when $\simiX(\mX) = \mX\mX^\top$ is the matrix of inner products in the input space; (classical) multidimensional scaling \citep{borg2005modern}, when $\simiX(\mX) = -\frac{1}{2} \mH \mD_\mX \mH$ with $\mD_\mX$ the matrix of squared euclidean distance between the points in $\R^{p}$ and $\mH = \mI_N - \frac{1}{N} \one_N \one_N^\top$ is the centering matrix; Isomap \citep{tenenbaum2000global}, with $\simiX(\mX) = -\frac{1}{2} \mH \mD_\mX^{(g)} \mH$ with $\mD_\mX^{(g)}$ the geodesic distance matrix; Laplacian Eigenmap
+\citep{belkin2003laplacian}, with $\simiX(\mX) = \mL_\mX^{\dagger}$ the pseudo-inverse of the Laplacian associated to some adjacency matrix $\mW_\mX$; but also Locally Linear Embedding \citep{roweis2000nonlinear}, and Diffusion Map \citep{coifman2006diffusion} (for all of these examples we refer to \citealt[Table 1]{ghojogh2021unified}).
+

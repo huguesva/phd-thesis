@@ -107,7 +107,7 @@ By defining the symmetric matrix $\Pb(\bm{\gamma}, \bm{\lambda}) =
 %   \toprule[1.5pt]
 % Affinity matrix& $\Pb^{\mathrm{e}}$& $\overline{\Pb^{\mathrm{e}}}$
 %   & $\Pb^{\mathrm{ds}}$& $\Pb^{\mathrm{se}}$ \\
-%   Reference & \cite{hinton2002stochastic} & \citep{van2008visualizing} & \cite{lu2019doubly} & \eqref{eq:sym_entropic_affinity} \\
+%   Reference & \citep{hinton2002stochastic} & \citep{van2008visualizing} & \citep{lu2019doubly} & \eqref{eq:sym_entropic_affinity} \\
 %   \midrule
 %   $\Pb=\Pb^\top$ & $\red{\boldsymbol\times}$ & $\green{\Cbheckmark}$ & $\green{\Cbheckmark}$ & $\green{\Cbheckmark}$ \\
 %   $\Pb \bm{1} = \Pb^\top \bm{1} = \bm{1}$ & $\red{\boldsymbol\times}$ & $\red{\boldsymbol\times}$ & $\green{\Cbheckmark}$ & $\green{\Cbheckmark}$ \\
@@ -140,7 +140,7 @@ Consequently, to find $\Pb^{\mathrm{se}}$ we solve the problem \eqref{eq:dual_pr
   \toprule[1.5pt]
   Affinity matrix& $\Pb^{\mathrm{e}}$& $\overline{\Pb^{\mathrm{e}}}$
   & $\Pb^{\mathrm{ds}}$& $\Pb^{\mathrm{se}}$ \\
-  % Reference & \cite{hinton2002stochastic} & \citep{van2008visualizing} & \cite{lu2019doubly} & \eqref{eq:sym_entropic_affinity} \\
+  % Reference & \citep{hinton2002stochastic} & \citep{van2008visualizing} & \citep{lu2019doubly} & \eqref{eq:sym_entropic_affinity} \\
   \midrule
   $\Pb=\Pb^\top$ & $\red{\boldsymbol\times}$ & $\green{\checkmark}$ & $\green{\checkmark}$ & $\green{\checkmark}$ \\
   $\Pb \bm{1} = \Pb^\top \bm{1} = \bm{1}$ & $\red{\boldsymbol\times}$ & $\red{\boldsymbol\times}$ & $\green{\checkmark}$ & $\green{\checkmark}$ \\
@@ -151,7 +151,7 @@ Consequently, to find $\Pb^{\mathrm{se}}$ we solve the problem \eqref{eq:dual_pr
 \end{table}
 
 
-\paragraph{Numerical optimization.} The dual problem \eqref{eq:dual_problem} is concave and can be solved with guarantees through a dual ascent approach with closed-form gradients (using \eg \texttt{SGD}, \texttt{BFGS} \cite{liu1989limited} or \texttt{ADAM} \cite{kingma2014adam}).
+\paragraph{Numerical optimization.} The dual problem \eqref{eq:dual_problem} is concave and can be solved with guarantees through a dual ascent approach with closed-form gradients (using \eg \texttt{SGD}, \texttt{BFGS} \citep{liu1989limited} or \texttt{ADAM} \citep{kingma2014adam}).
 % (as depicted in algorithm \ref{algo:dual_ascent})
 % \begin{align*}
 %     \nabla_{\bm{\gamma}} \mathcal{G}(\bm{\gamma}, \bm{\lambda}) &= (\log \xi + 1 )\bm{1} - \operatorname{H}_{\mathrm{r}}(\Pb^\star(\bm{\gamma}, \bm{\lambda})) \\
@@ -184,4 +184,4 @@ operations. From a practical perspective, we found that using a change of variab
 (OT problem with global entropy constraint \eqref{eq:entropy_constrained_OT})
 , the samples do not spread their mass evenly depending on the density around them. On the contrary, the per-row entropy constraints of $\Pb^{\mathrm{se}}$ force equal spreading among samples.
 % thereby adapting to the variance of each cluster. 
-This can have benefits, particularly for clustering, as illustrated in the rightmost plot, which shows the eigenvalues of the associated Laplacian matrices (recall that the number of connected components equals the dimension of the null space of its Laplacian \cite{chung1997spectral}). As can be seen, $\Pb^{\mathrm{ds}}$ results in many unwanted clusters, unlike $\Pb^{\mathrm{se}}$, which is robust to varying noise levels (its Laplacian matrix has only $3$ vanishing eigenvalues). 
+This can have benefits, particularly for clustering, as illustrated in the rightmost plot, which shows the eigenvalues of the associated Laplacian matrices (recall that the number of connected components equals the dimension of the null space of its Laplacian \citep{chung1997spectral}). As can be seen, $\Pb^{\mathrm{ds}}$ results in many unwanted clusters, unlike $\Pb^{\mathrm{se}}$, which is robust to varying noise levels (its Laplacian matrix has only $3$ vanishing eigenvalues). 

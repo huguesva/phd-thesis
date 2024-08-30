@@ -1,3 +1,23 @@
+\subsection{Neighbor Embedding Methods}
+
+An alternative group of methods relies on neighbor embedding techniques which consists in minimizing in $\mZ$ the quantity
+% \begin{equation}
+% \label{eq:neighbor_techniques}
+% 	- \sum_{(i,j) \in \integ{N}^2} [\mC_{\mX}]_{ij} \log [\simi(\mZ)]_{ij}\,.
+% \end{equation}
+\begin{equation}\tag{NE}
+	\label{eq:neighbor_techniques}
+	\sum_{(i,j) \in \integ{N}^2} L_{\KL}([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{ij}) \:.
+\end{equation}
+Within our framework, this corresponds to \cref{eq:DR_criterion} with $L = L_{\KL}$. The objective function of popular methods such as stochastic neighbor embedding (SNE) \citep{hinton2002stochastic} or t-SNE \citep{van2008visualizing} can be derived from \cref{eq:neighbor_techniques} with a particular choice of $\mC_{X}, \mC_{Z}$. For instance SNE and t-SNE both consider in the input space a symmetrized version of the entropic affinity \citep{vladymyrov2013entropic,van2023snekhorn}. In the embedding space, $\mC_Z(\mZ)$ is usually constructed from a ‘‘kernel'' matrix $\mK_\mZ$ which undergoes a scalar \citep{van2008visualizing}, row-stochastic \citep{hinton2002stochastic} or doubly stochastic \citep{lu2019doubly,van2023snekhorn} normalization. Gaussian kernel $[\mK_\mZ]_{ij} = \exp(-\|\vz_i-\vz_j\|_2^2)$, or heavy-tailed Student-t kernel $[\mK_\mZ]_{ij} = (1+\|\vz_i-\vz_j\|_2^2)^{-1}$, are typical choices \citep{van2008visualizing}. We also emphasize that one can retrieve the UMAP objective \citep{mcinnes2018umap} from \cref{eq:DR_criterion} using the binary cross-entropy loss. As described in \citep{van2022probabilistic} from a probabilistic point of view, all these objectives can be derived from a common Markov random field model with various graph priors.
+\begin{remark}
+The usual formulations of neighbor embedding methods rely on the loss $L(x,y) = x \log(x/y)$. However, due to the normalization, the total mass $\sum_{ij} [\mC_Z(\mZ)]_{ij}$ is constant (often equal to $1$) in all of the cases mentioned above. Thus the minimization in $\mZ$ with the $L_{\KL}$ formulation is equivalent.
+\end{remark}
+
+\paragraph{Hyperbolic geometry.} The presented DR methods can also be extended to incorporate non-Euclidean geometries. Hyperbolic spaces \citep{Chami21, Fan_2022_CVPR, Guo22, Lin23} are of particular interest as they can capture hierarchical structures more effectively than Euclidean spaces and mitigate the curse of dimensionality by producing representations with lower distortion rates. 
+For instance, \citet{Guo22} adapted t-SNE by using the Poincaré distance and by changing the Student's t-distribution with a more general hyperbolic Cauchy distribution.  Notions of projection subspaces can also be adapted, \eg \citet{Chami21} use horospheres as one-dimensional subspaces. 
+
+
 \paragraph{Dimension Reduction with SNE/t-SNE.} One of the main applications of EAs
 is the DR algorithm \texttt{SNE} \citep{hinton2002stochastic}. We
 denote by $\C_\X = \left(\|\X_{i:}-\X_{j:}\|_2^2\right)_{ij}$ and $\C_\Z =
@@ -35,3 +55,15 @@ Instead of the Gaussian kernel, the popular extension t-SNE \citep{van2008visual
 Student $t$-distribution that accounts for crowding effects: a relatively small
 distance in a high-dimensional space can be accurately represented by a
 significantly greater distance in the low-dimensional space.  
+
+\begin{rem2}{Handling the quadratic memory and computational cost}
+    aa
+\end{rem2}
+
+\begin{rem2}{Avoiding local minima with early exaggeration}
+    aa
+\end{rem2}
+
+\begin{rem2}{Negative sampling}
+    aa
+\end{rem2}
