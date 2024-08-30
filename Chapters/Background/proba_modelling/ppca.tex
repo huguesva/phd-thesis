@@ -1,0 +1,29 @@
+\section{The Latent Variable Perspective}\label{sec:ppca}
+
+Our journey into dimensionality reduction theory begins with the probabilistic modeling perspective.
+
+More specifically, we focus on latent variable models which aim to relate the observed data $\mX$ to some latent (or unobersed) variables $\mZ$. In this context, the latent space refers to the embedding space.
+
+\subsection{Probabilistic PCA : the two dual views}
+
+\subsubsection{Standard Probabilistic PCA}
+
+The key modelling assumption made in probabilistic PCA (PPCA) is that the data is generated through a linear transformation of the latent variables, to which Gaussian noise is added. This model is defined by the following generative process:
+\begin{align}
+    \mX = \mW \mZ + \mE,
+\end{align}
+where $\mX \in \R^{N \times p}$ is the data matrix, $\mZ \in \R^{N \times d}$ is the embedding matrix, $\mW \in \R^{p \times d}$ is the linear transformation matrix, and $\mE \in \R^{N \times p}$ is the noise matrix. 
+
+The noise is assumed to be Gaussian, i.e., $\mE \sim \mathcal{N}(0, \sigma^2 \mI)$, where $\sigma^2$ is the noise variance. 
+
+Importantly, the latent space is assumed to be Gaussian as well: $\mZ \sim \mathcal{N}(0, \mI)$, where $\mI$ is the identity matrix. The model is fully specified by the parameters $\theta = (\mW, \sigma^2)$.
+
+A standard approach to fitting latent variable models involves marginalizing over the latent variables and optimizing the parameters using maximum likelihood estimation.
+
+The negative log-likelihood is as follows:
+\begin{align}
+    \mathcal{L}(\theta) = \frac{1}{2\sigma^2} \| \mX - \mW \mZ \|_F^2 + \frac{Np}{2} \log(2\pi\sigma^2),
+\end{align}
+where $\| \cdot \|_F$ denotes the Frobenius norm.
+
+\subsubsection{The Bayesian Dual View}

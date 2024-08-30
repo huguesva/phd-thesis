@@ -1,9 +1,22 @@
+\section{Enhancing the Ground Metric with Affinities}
+
+We call \emph{affinity} the weight matrix of a graph that encodes this similarity. It has positive entries and the higher the weight in position $(i,j)$, the
+higher the similarity or proximity between samples $i$ and $j$.
+Seminal approaches relying on affinities include Laplacian
+eigenmaps \citep{belkin2003laplacian}, spectral clustering
+\citep{von2007tutorial} and semi-supervised learning \citep{zhou2003learning}. Numerous methods can be employed to construct such affinities. A common choice is to use a kernel (\eg Gaussian) derived from a distance matrix normalized by a bandwidth parameter that usually has a large influence on the outcome of the algorithm. 
+Indeed, excessively small kernel bandwidth can result in %points \nc{points ?} 
+solely capturing the positions of closest neighbors, at the expense of large-scale dependencies. Inversely, setting too large a bandwidth blurs information about close-range pairwise relations. 
+
+Ideally, one should select a different bandwidth for each point to accommodate varying sampling densities and noise levels. One approach is to compute the bandwidth of a point based on the distance from its $k$-th nearest neighbor \citep{zelnik2004self}. However, this method fails to consider the entire distribution of distances.
+In general, selecting appropriate kernel bandwidths can be a laborious task, and many practitioners resort to greedy search methods. This can be limiting in some settings, particularly when dealing with large sample sizes.
+
 \subsection{Affinity via Symmetric OT}\label{sec:affinity_sym_ot}
 
 \paragraph{Doubly Stochastic Affinities.}
 Doubly stochastic (DS) affinities are non-negative matrices whose rows and columns have unit $\ell_1$ norm. 
-In many applications, it has been demonstrated that DS affinity normalization (\ie determining the nearest DS matrix to a given affinity matrix) offers numerous benefits. First, it can be seen as a relaxation of k-means \cite{zass2005unifying} and it is well-established that it enhances spectral clustering performances \cite{Ding_understand,Zass,beauchemin2015affinity}. Additionally, DS matrices present the benefit of being invariant to the various Laplacian normalizations \cite{von2007tutorial}. Recent observations indicate that the DS projection of the Gaussian kernel under the $\KL$ geometry is more resilient to heteroscedastic noise compared to its stochastic counterpart \cite{landa2021doubly}. It also offers a more natural analog to the heat kernel \cite{marshall2019manifold}.
-These properties have led to a growing interest in DS affinities, with their use expanding to various applications such as smoothing filters \cite{Milanfar}, subspace clustering \cite{lim2020doubly} and transformers \cite{sander2022sinkformers}.
+In many applications, it has been demonstrated that DS affinity normalization (\ie determining the nearest DS matrix to a given affinity matrix) offers numerous benefits. First, it can be seen as a relaxation of k-means \citep{zass2005unifying} and it is well-established that it enhances spectral clustering performances \citep{Ding_understand,Zass,beauchemin2015affinity}. Additionally, DS matrices present the benefit of being invariant to the various Laplacian normalizations \citep{von2007tutorial}. Recent observations indicate that the DS projection of the Gaussian kernel under the $\KL$ geometry is more resilient to heteroscedastic noise compared to its stochastic counterpart \citep{landa2021doubly}. It also offers a more natural analog to the heat kernel \citep{marshall2019manifold}.
+These properties have led to a growing interest in DS affinities, with their use expanding to various applications such as smoothing filters \citep{Milanfar}, subspace clustering \citep{lim2020doubly} and transformers \citep{sander2022sinkformers}.
 %attention mechanisms 
 
 \subsection{From Symmetric Entropy-Constrained OT to Sinkhorn Iterations}\label{sec:proof_sinkhorn}
@@ -42,8 +55,8 @@ In this case, by relying on convex duality as detailed in Appendix \ref{sec:proo
 where $0 \leq \eta \leq n (\log n + 1)$ is a constraint on the global entropy $\sum_i \operatorname{H}(\Pb_{i:})$ of the OT plan $\Pb$ which happens to be saturated at optimum (Appendix \ref{sec:proof_sinkhorn}). This constrained formulation of symmetric entropic OT will provide new insights into entropic affinities, as detailed in the next sections.
 
 % \begin{remark}\label{rem:sink_proj}
-%     For a set $\mathcal{E}$, we denote $\operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{E}}(\K) = \argmin_{\Pb \in \mathcal{E}}\KL(\Pb | \K)$ the projection on $\mathcal{E}$ under the $\KL$ geometry. Then \cite{benamou2015iterative} shows that $\Pb^s = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{P} \cap \mathcal{S}}(\K)$ is another way of characterizing the solution of problem (\ref{eq:entropy_constrained_OT}), which thus consists in projecting a Gaussian kernel onto the set of doubly stochastic matrices under the $\KL$ geometry. As shown in \cite{Zass}, finding this closest doubly stochastic matrix can be linked to solving a relaxed cluster assignment problem. \titouan{vraiment pas sûr de 'intéret de cette remarque ici, + c'est pas vraiment proj sur P et S, c'est proj sur P, S et entropie globale geq than $\eta$}
-%     %In this framework, the KL is linked to normalized cut clustering \cite{shi2000normalized}.
+%     For a set $\mathcal{E}$, we denote $\operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{E}}(\K) = \argmin_{\Pb \in \mathcal{E}}\KL(\Pb | \K)$ the projection on $\mathcal{E}$ under the $\KL$ geometry. Then \citep{benamou2015iterative} shows that $\Pb^s = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{P} \cap \mathcal{S}}(\K)$ is another way of characterizing the solution of problem (\ref{eq:entropy_constrained_OT}), which thus consists in projecting a Gaussian kernel onto the set of doubly stochastic matrices under the $\KL$ geometry. As shown in \citep{Zass}, finding this closest doubly stochastic matrix can be linked to solving a relaxed cluster assignment problem. \titouan{vraiment pas sûr de 'intéret de cette remarque ici, + c'est pas vraiment proj sur P et S, c'est proj sur P, S et entropie globale geq than $\eta$}
+%     %In this framework, the KL is linked to normalized cut clustering \citep{shi2000normalized}.
 % \end{remark}
 
 %In practice, we fix $\nu$ which is equivalent to setting the entropy lower bound $\eta$ while $\f$ can be computed by solving the dual of (\ref{eq:entropy_constrained_OT}).
@@ -82,10 +95,10 @@ where $0 \leq \eta \leq n (\log n + 1)$ is a constraint on the global entropy $\
 
 %As derived in appendix \ref{sec:proof_sinkhorn}, $\f$ must obey the following fixed point relation:$f_k
 % = - \nu \operatorname{LSE}\big((\f - \C_{:k}) / \nu \big)$  where $\operatorname{LSE}$ stands for \texttt{logsumexp}. Iterating this
-% fixed point relation to compute $\f$ yields the celebrated Sinkhorn algorithm (in log domain) \cite{sinkhorn1967concerning}. The latter is very popular in OT, especially thanks to its quadratic complexity \cite{cuturi2013sinkhorn}.
+% fixed point relation to compute $\f$ yields the celebrated Sinkhorn algorithm (in log domain) \citep{sinkhorn1967concerning}. The latter is very popular in OT, especially thanks to its quadratic complexity \citep{cuturi2013sinkhorn}.
 
 %\begin{remark}\label{rem:sink_proj}
-%    For a set $\mathcal{E}$, we denote $\operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{E}}(\K) =    \argmin_{\Pb \in \mathcal{E}}\KL(\Pb | \K)$. Denoting $\K = \exp(-\C/\nu)$, another characterization of this solution can be obtained with a Bregman KL projection: $\Pb^s = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{P} \cap \mathcal{S}}(\K)$ \cite{darroch1972generalized}. Hence solving (\ref{eq:entropy_constrained_OT}) is equivalent to projecting a Gaussian kernel $\K$ onto the set of doubly stochastic matrices under the $\KL$ geometry. As shown in \cite{Zass}, finding the closest doubly stochastic matrix to  $\K$ can be linked to solving a relaxed cluster assignment problem. In this framework, the KL is linked to normalized cut clustering \cite{shi2000normalized}.
+%    For a set $\mathcal{E}$, we denote $\operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{E}}(\K) =    \argmin_{\Pb \in \mathcal{E}}\KL(\Pb | \K)$. Denoting $\K = \exp(-\C/\nu)$, another characterization of this solution can be obtained with a Bregman KL projection: $\Pb^s = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{P} \cap \mathcal{S}}(\K)$ \citep{darroch1972generalized}. Hence solving (\ref{eq:entropy_constrained_OT}) is equivalent to projecting a Gaussian kernel $\K$ onto the set of doubly stochastic matrices under the $\KL$ geometry. As shown in \citep{Zass}, finding the closest doubly stochastic matrix to  $\K$ can be linked to solving a relaxed cluster assignment problem. In this framework, the KL is linked to normalized cut clustering \citep{shi2000normalized}.
 %\end{remark}
 
 
@@ -121,3 +134,31 @@ $\Pb^\star$ must be primal feasible in particular $\Pb^\star \bm{1} = \bm{1}$. T
 where for a vector $\bm{\alpha}$, we use the notation
 $\operatorname{LSE}(\bm{\alpha}) = \log \sum_{k} \exp (\alpha_k)$.
 \end{proof}
+
+
+\subsection{Entropic Affinities}
+
+\paragraph{Entropic Affinities and SNE/t-SNE.}
+Entropic affinities (EAs) were first introduced in the
+seminal paper \emph{Stochastic Neighbor Embedding} (SNE) 
+\citep{hinton2002stochastic}. It consists in normalizing each row $i$ of a distance matrix by a
+bandwidth parameter $\varepsilon_i$ such that the distribution associated with each row of the corresponding stochastic (\ie row-normalized) Gaussian affinity has a fixed entropy. The value of this entropy, whose exponential is called
+the \emph{perplexity}, is then the only hyperparameter left to tune and has
+an intuitive interpretation as the number of effective neighbors of each point \citep{vladymyrov2013entropic}.
+EAs are notoriously used to encode pairwise relations in a high-dimensional space for the DR algorithm t-SNE \citep{van2008visualizing}, among other DR methods including \citep{carreira2010elastic}. t-SNE is increasingly popular in many applied fields \citep{kobak2019art,
+melit2020unsupervised} mostly due to its ability to represent clusters in the data \citep{linderman2019clustering, JMLR:v23:21-0524}. Nonetheless, one major flaw of EAs is that they are inherently directed and often require post-processing symmetrization.
+
+\paragraph{Entropic Affinities (EAs).} Another frequently used approach to generate affinities from $\mathbf{C} \in \mathcal{D}$ is to employ \emph{entropic affinities}  \citep{hinton2002stochastic}. The main idea is to consider \emph{adaptive} kernel bandwidths $(\varepsilon^\star_i)_{i \in \integ{n}}$ to capture finer structures in the data compared to constant bandwidths \citep{van2018recovering}. Indeed, EAs rescale distances to account for the varying density across regions of the dataset.
+
+Given $\xi \in \integ{n-1}$, the goal of EAs is to build a Gaussian Markov chain transition matrix $\Pb^{\mathrm{e}}$ with prescribed entropy as
+\begin{equation}
+\begin{split}
+    \forall i, \: &\forall j, \: P^{\mathrm{e}}_{ij} = \frac{\exp{(-C_{ij}/\varepsilon^\star_i)}}{\sum_\ell \exp{(-C_{i\ell}/\varepsilon^\star_i)}} \\
+    &\text{with} \:\: \varepsilon^\star_i \in \mathbb{R}^*_+ \:\: \text{s.t.} \: \operatorname{H}(\Pb^{\mathrm{e}}_{i:}) = \log{\xi} + 1\,. \label{eq:entropic_affinity_pb}
+\end{split}\tag{EA}
+\end{equation}
+The hyperparameter $\xi$, which is also known as \emph{perplexity}, can be interpreted as the effective number of neighbors for each data point \citep{vladymyrov2013entropic}. Indeed, a perplexity of $\xi$ means that each row of $\Pb^{\mathrm{e}}$ (which is a discrete probability since $\Pb^{\mathrm{e}}$ is row-wise stochastic) has the same entropy as a uniform distribution over $\xi$ neighbors. Therefore, it provides the practitioner with an interpretable parameter specifying which scale of dependencies the affinity matrix should faithfully capture. In practice, a root-finding algorithm is used to find the bandwidth parameters $(\varepsilon_i^\star)_{i \in \integ{n}}$ that satisfy the constraints \citep{vladymyrov2013entropic}. Hereafter, with a slight abuse of language, we call $e^{\operatorname{H}(\Pb_{i:})-1}$ the perplexity of the point $i$.
+
+\begin{prob}{Construction of adaptive affinities}
+    aa
+\end{prob}
