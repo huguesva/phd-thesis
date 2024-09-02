@@ -144,16 +144,6 @@ an intuitive interpretation as the number of effective neighbors of each point \
 EAs are notoriously used to encode pairwise relations in a high-dimensional space for the DR algorithm t-SNE \citep{van2008visualizing}, among other DR methods including \citep{carreira2010elastic}. t-SNE is increasingly popular in many applied fields \citep{kobak2019art,
 melit2020unsupervised} mostly due to its ability to represent clusters in the data \citep{linderman2019clustering, JMLR:v23:21-0524}. Nonetheless, one major flaw of EAs is that they are inherently directed and often require post-processing symmetrization.
 
-\paragraph{Entropic Affinities (EAs).} Another frequently used approach to generate affinities from $\mathbf{C} \in \mathcal{D}$ is to employ \emph{entropic affinities}  \citep{hinton2002stochastic}. The main idea is to consider \emph{adaptive} kernel bandwidths $(\varepsilon^\star_i)_{i \in \integ{n}}$ to capture finer structures in the data compared to constant bandwidths \citep{van2018recovering}. Indeed, EAs rescale distances to account for the varying density across regions of the dataset.
-
-Given $\xi \in \integ{n-1}$, the goal of EAs is to build a Gaussian Markov chain transition matrix $\Pb^{\mathrm{e}}$ with prescribed entropy as
-\begin{equation}
-\begin{split}
-    \forall i, \: &\forall j, \: P^{\mathrm{e}}_{ij} = \frac{\exp{(-C_{ij}/\varepsilon^\star_i)}}{\sum_\ell \exp{(-C_{i\ell}/\varepsilon^\star_i)}} \\
-    &\text{with} \:\: \varepsilon^\star_i \in \mathbb{R}^*_+ \:\: \text{s.t.} \: \operatorname{H}(\Pb^{\mathrm{e}}_{i:}) = \log{\xi} + 1\,. \label{eq:entropic_affinity_pb}
-\end{split}\tag{EA}
-\end{equation}
-The hyperparameter $\xi$, which is also known as \emph{perplexity}, can be interpreted as the effective number of neighbors for each data point \citep{vladymyrov2013entropic}. Indeed, a perplexity of $\xi$ means that each row of $\Pb^{\mathrm{e}}$ (which is a discrete probability since $\Pb^{\mathrm{e}}$ is row-wise stochastic) has the same entropy as a uniform distribution over $\xi$ neighbors. Therefore, it provides the practitioner with an interpretable parameter specifying which scale of dependencies the affinity matrix should faithfully capture. In practice, a root-finding algorithm is used to find the bandwidth parameters $(\varepsilon_i^\star)_{i \in \integ{n}}$ that satisfy the constraints \citep{vladymyrov2013entropic}. Hereafter, with a slight abuse of language, we call $e^{\operatorname{H}(\Pb_{i:})-1}$ the perplexity of the point $i$.
 
 \begin{prob}{Construction of adaptive affinities}
     aa

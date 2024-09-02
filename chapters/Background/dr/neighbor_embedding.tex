@@ -1,5 +1,38 @@
 \subsection{Neighbor Embedding Methods}
 
+NE objectives share a common structure: they aim to \textbf{minimize} the \textbf{weighted sum} of an \textbf{attractive term} and a \textbf{repulsive term}. Interestingly, the \textbf{attractive term} is often the \textbf{cross-entropy} between the input and output affinities. Additionally, the \textbf{repulsive term} is typically a \textbf{function of the output affinities only}. Thus, the NE problem can be formulated as the following minimization problem:
+
+\[
+\min_{\mathbf{Z}} \: - \sum_{ij} P_{ij} \log Q_{ij} + \gamma \mathcal{L}_{\mathrm{rep}}(\mathbf{Q}) \:.
+\]
+
+In the above, \(\mathcal{L}_{\mathrm{rep}}(\mathbf{Q})\) represents the repulsive part of the loss function while \(\gamma\) is a hyperparameter that controls the balance between attraction and repulsion. The latter is called \texttt{coeff\_repulsion} in TorchDR.
+
+Many NE methods can be represented within this framework. The following table summarizes the ones implemented in TorchDR, detailing their respective repulsive loss function, as well as their input and output affinities.
+
+\begin{tabular}{|l|l|}
+    \hline
+    \textbf{Method} & \textbf{Repulsive term} \(\mathcal{L}_{\mathrm{rep}}\) \\
+    \hline
+    \texttt{SNE} & \(\sum_{i} \log(\sum_j Q_{ij})\) \\
+    \hline
+    \texttt{TSNE} & \(\log(\sum_{ij} Q_{ij})\) \\
+    \hline
+    \texttt{TSNEkhorn} & \(\sum_{ij} Q_{ij}\) \\
+    \hline
+    \texttt{InfoTSNE} & \(\sum_i \log(\sum_{j \in N(i)} Q_{ij})\) \\
+    \hline
+    \texttt{UMAP} & \(- \sum_{i, j \in N(i)} \log (1 - Q_{ij})\) \\
+    \hline
+    \texttt{LargeVis} & \(- \sum_{i, j \in N(i)} \log (1 - Q_{ij})\) \\
+    \hline
+\end{tabular}
+    
+
+In the above table, \(N(i)\) denotes the set of negative samples for point \(i\).
+
+
+
 An alternative group of methods relies on neighbor embedding techniques which consists in minimizing in $\mZ$ the quantity
 % \begin{equation}
 % \label{eq:neighbor_techniques}
@@ -10,12 +43,26 @@ An alternative group of methods relies on neighbor embedding techniques which co
 	\sum_{(i,j) \in \integ{N}^2} L_{\KL}([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{ij}) \:.
 \end{equation}
 Within our framework, this corresponds to \cref{eq:DR_criterion} with $L = L_{\KL}$. The objective function of popular methods such as stochastic neighbor embedding (SNE) \citep{hinton2002stochastic} or t-SNE \citep{van2008visualizing} can be derived from \cref{eq:neighbor_techniques} with a particular choice of $\mC_{X}, \mC_{Z}$. For instance SNE and t-SNE both consider in the input space a symmetrized version of the entropic affinity \citep{vladymyrov2013entropic,van2023snekhorn}. In the embedding space, $\mC_Z(\mZ)$ is usually constructed from a ‘‘kernel'' matrix $\mK_\mZ$ which undergoes a scalar \citep{van2008visualizing}, row-stochastic \citep{hinton2002stochastic} or doubly stochastic \citep{lu2019doubly,van2023snekhorn} normalization. Gaussian kernel $[\mK_\mZ]_{ij} = \exp(-\|\vz_i-\vz_j\|_2^2)$, or heavy-tailed Student-t kernel $[\mK_\mZ]_{ij} = (1+\|\vz_i-\vz_j\|_2^2)^{-1}$, are typical choices \citep{van2008visualizing}. We also emphasize that one can retrieve the UMAP objective \citep{mcinnes2018umap} from \cref{eq:DR_criterion} using the binary cross-entropy loss. As described in \citep{van2022probabilistic} from a probabilistic point of view, all these objectives can be derived from a common Markov random field model with various graph priors.
-\begin{remark}
-The usual formulations of neighbor embedding methods rely on the loss $L(x,y) = x \log(x/y)$. However, due to the normalization, the total mass $\sum_{ij} [\mC_Z(\mZ)]_{ij}$ is constant (often equal to $1$) in all of the cases mentioned above. Thus the minimization in $\mZ$ with the $L_{\KL}$ formulation is equivalent.
-\end{remark}
 
-\paragraph{Hyperbolic geometry.} The presented DR methods can also be extended to incorporate non-Euclidean geometries. Hyperbolic spaces \citep{Chami21, Fan_2022_CVPR, Guo22, Lin23} are of particular interest as they can capture hierarchical structures more effectively than Euclidean spaces and mitigate the curse of dimensionality by producing representations with lower distortion rates. 
+\begin{mem1}{Entropic Affinities or EAs} 
+Another frequently used approach to generate affinities from $\mathbf{C} \in \mathcal{D}$ is to employ \emph{entropic affinities}  \citep{hinton2002stochastic}. The main idea is to consider \emph{adaptive} kernel bandwidths $(\varepsilon^\star_i)_{i \in \integ{n}}$ to capture finer structures in the data compared to constant bandwidths \citep{van2018recovering}. Indeed, EAs rescale distances to account for the varying density across regions of the dataset.
+
+Given $\xi \in \integ{n-1}$, the goal of EAs is to build a Gaussian Markov chain transition matrix $\Pb^{\mathrm{e}}$ with prescribed entropy as
+\begin{equation}
+\begin{split}
+    \forall i, \: &\forall j, \: P^{\mathrm{e}}_{ij} = \frac{\exp{(-C_{ij}/\varepsilon^\star_i)}}{\sum_\ell \exp{(-C_{i\ell}/\varepsilon^\star_i)}} \\
+    &\text{with} \:\: \varepsilon^\star_i \in \mathbb{R}^*_+ \:\: \text{s.t.} \: \operatorname{H}(\Pb^{\mathrm{e}}_{i:}) = \log{\xi} + 1\,. \label{eq:entropic_affinity_pb}
+\end{split}\tag{EA}
+\end{equation}
+The hyperparameter $\xi$, which is also known as \emph{perplexity}, can be interpreted as the effective number of neighbors for each data point \citep{vladymyrov2013entropic}. Indeed, a perplexity of $\xi$ means that each row of $\Pb^{\mathrm{e}}$ (which is a discrete probability since $\Pb^{\mathrm{e}}$ is row-wise stochastic) has the same entropy as a uniform distribution over $\xi$ neighbors. Therefore, it provides the practitioner with an interpretable parameter specifying which scale of dependencies the affinity matrix should faithfully capture. In practice, a root-finding algorithm is used to find the bandwidth parameters $(\varepsilon_i^\star)_{i \in \integ{n}}$ that satisfy the constraints \citep{vladymyrov2013entropic}. Hereafter, with a slight abuse of language, we call $e^{\operatorname{H}(\Pb_{i:})-1}$ the perplexity of the point $i$.
+\end{mem1}
+
+The usual formulations of neighbor embedding methods rely on the loss $L(x,y) = x \log(x/y)$. However, due to the normalization, the total mass $\sum_{ij} [\mC_Z(\mZ)]_{ij}$ is constant (often equal to $1$) in all of the cases mentioned above. Thus the minimization in $\mZ$ with the $L_{\KL}$ formulation is equivalent.
+
+\begin{remark}{(Hyperbolic geometry)} 
+The presented DR methods can also be extended to incorporate non-Euclidean geometries. Hyperbolic spaces \citep{Chami21, Fan_2022_CVPR, Guo22, Lin23} are of particular interest as they can capture hierarchical structures more effectively than Euclidean spaces and mitigate the curse of dimensionality by producing representations with lower distortion rates. 
 For instance, \citet{Guo22} adapted t-SNE by using the Poincaré distance and by changing the Student's t-distribution with a more general hyperbolic Cauchy distribution.  Notions of projection subspaces can also be adapted, \eg \citet{Chami21} use horospheres as one-dimensional subspaces. 
+\end{remark}
 
 
 \paragraph{Dimension Reduction with SNE/t-SNE.} One of the main applications of EAs
@@ -55,6 +102,8 @@ Instead of the Gaussian kernel, the popular extension t-SNE \citep{van2008visual
 Student $t$-distribution that accounts for crowding effects: a relatively small
 distance in a high-dimensional space can be accurately represented by a
 significantly greater distance in the low-dimensional space.  
+
+\subsection{UMAP and LargeVis}
 
 \begin{rem2}{Handling the quadratic memory and computational cost}
     aa

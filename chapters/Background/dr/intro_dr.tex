@@ -5,7 +5,6 @@ This chapter reviews the existing literature on DR methods. In \Cref{sec:backgro
 Then, we revisit DR approaches through two different perspectives:
 latent variable models in \Cref{sec:dr_proba_modelling} and optimal transport in \Cref{sec:dist_perspective_dr}. These perspectives open the door to a wide range of future extensions by allowing for the adaptation of underlying assumptions. However they are currently limited to a narrow class of DR methods.
 
-Finally, 
 
 \paragraph{Dimensionality reduction context.}
 Throughout, we consider an input dataset with $N$ vectorial data points with dimensionality $p$ \ie $\mX = (\vx_1, ..., \vx_N) ^\top$ where for all i, $\vx_i \in \mathcal{X} \subset \R^{p}$. Dimensionality reduction focuses on constructing a low-dimensional representation or \emph{embedding} $\mZ = (\vz_1, ..., \vz_N)^\top \in \R^{N \times d}$, where $d< p$.
@@ -15,7 +14,7 @@ Throughout, we consider an input dataset with $N$ vectorial data points with dim
 In this section we review the most popular DR methods. These algorithm construct a low-dimensional representation of the data that best preserve a notion of geometric structure among the input samples. 
 
 This structure is generally encoded via a symmetric pairwise similarity matrix obtained from the input data $\mX$. Throughout, we call \emph{affinity} the weight matrix of a graph that encodes this similarity. The higher the weight in position $(i,j)$, the
-higher the similarity or proximity between samples $i$ and $j$. Thus simple usual affinities include the inner product $\left( \langle \vx_i, \vx_j \rangle \right)_{ij}$ or the Gaussian kernel $\left( \exp(-\|\vx_i - \vx_j\|_2^2) \right)_{ij}$.
+higher the similarity or proximity between samples $i$ and $j$. Simple usual affinities include the inner product $\left( \langle \vx_i, \vx_j \rangle \right)_{ij}$ or the Gaussian kernel $\left( \exp(-\|\vx_i - \vx_j\|_2^2) \right)_{ij}$.
 
 
 % Seminal approaches relying on affinities include Laplacian
@@ -46,10 +45,10 @@ Therefore they essentially revolve around two key steps:
 \label{eq:DR_criterion}\tag{DR}
 \min_{\mZ \in \R^{N \times d}} \: \sum_{(i,j) \in \integ{N}^2}  L\big([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{ij}\big) \,. %+ R(\mZ)\,.
 \end{equation}
-where $L:\R \times \R \rightarrow \R$ is a loss that quantifies how similar are two points in the input space $\R^{p}$ compared to two points in the output space $\R^{d}$. Various losses are used, such as the quadratic loss $L_2(x,y) \coloneqq (x - y)^2$
+where $L:\R \times \R \rightarrow \R$ is a loss that quantifies how similar are two points in the input space $\R^{p}$ compared to two points in the output space $\R^{d}$. Various losses can be used, such as the quadratic loss $L_2(x,y) \coloneqq (x - y)^2$
 %  the cross-entropy $L_{\CE}(x,y) \coloneqq - x \log(y)$  
 or the Kullback-Leibler divergence $L_{\KL}(x,y) \coloneqq x \log (x/y) - x +y$.
-Below, we recall several popular methods that can be placed within this framework.
+In what follows, we recall several popular methods that can be placed within this framework.
 %$R: \R^{N \times d} \to \R$ is a regularizer term on the embeddings $\mZ$.  
 
 
