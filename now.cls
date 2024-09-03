@@ -16,7 +16,9 @@
 \LoadClass{book}
 
 % only list chapters and sections in contents
-\setcounter{tocdepth}{1}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
 
 % override some font size options
 \renewcommand\normalsize{%
@@ -138,13 +140,14 @@
 % section title fonts
 \RequirePackage{titlesec}
 
-\def\sectionfont{\fontsize{12}{14}\selectfont\sffamily\bfseries\boldmath}
-\def\subsectionfont{\sffamily\large\bfseries\boldmath}
+\def\sectionfont{\LARGE\selectfont\sffamily\bfseries\boldmath}
+\def\subsectionfont{\sffamily\Large\bfseries\boldmath}
+\def\subsubsectionfont{\sffamily\large\bfseries\boldmath}
 \def\paragraphfont{\sffamily\normalsize\bfseries\boldmath}
 
 \titleformat*{\section}{\sectionfont}
 \titleformat*{\subsection}{\subsectionfont}
-\titleformat*{\subsubsection}{\paragraphfont}
+\titleformat*{\subsubsection}{\subsubsectionfont}
 \titleformat*{\paragraph}{\paragraphfont}
 \titleformat*{\subparagraph}{\paragraphfont}
 

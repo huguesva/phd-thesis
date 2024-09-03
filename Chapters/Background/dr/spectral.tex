@@ -1,25 +1,24 @@
-\subsection{Spectral methods}
+\subsection{Spectral methods}\label{sec:spectral_methods}
 
-In this first part, we focus on dimensionality reduction methods that have closed form solutions. We call them \emph{spectral methods} as they rely on the spectral decomposition of the input affinity matrix.
+In this first part, we focus on dimensionality reduction methods that have closed form solutions. We call them \emph{spectral methods} as they rely on the spectral decomposition of the input affinity matrix. We are going to see that these methods are special instances of \Cref{eq:DR_criterion} with the element-wise loss $L_2$ and $[\mA_{Z}(\mZ)]_{ij} = \langle \vz_i, \vz_j \rangle$.
 
-We are going to see that these methods are special instances of \Cref{eq:DR_criterion} with the element-wise loss $L_2$ and $[\mC_Z(\mZ)]_{ij} = \langle \vz_i, \vz_j \rangle$.
 Closed form solutions are based on the following celebrated result from \cite{eckart1936approximation}.
 
 \begin{theorem}{\cite{eckart1936approximation}}\label{thm:eckart}
-	Let $\mA \in \R^{m \times n}$ be a real matrix with singular value decomposition (SVD) given by $\mA = \sum_{i=1}^{r} \sigma_i u_i v_i^\top$. Let $k \in \N$ with $k \leq r$ and define 
+	Let $\mM \in \R^{m \times n}$ be a real matrix with singular value decomposition (SVD) given by $\mM = \sum_{i=1}^{r} \sigma_i u_i v_i^\top$. Let $k \in \N$ with $k \leq r$ and define 
 	\begin{align}
-		\mP_k = \sum_{i=1}^{k} u_i u_i^\top \quad \text{and} \quad \mA_k = \mP_k \mA = \sum_{i=1}^{k} \sigma_i u_i v_i^\top
+		\mP_k = \sum_{i=1}^{k} u_i u_i^\top \quad \text{and} \quad \mM_k = \mP_k \mM = \sum_{i=1}^{k} \sigma_i u_i v_i^\top
 	\end{align}
-	which are respectively the orthogonal projection matrix onto the subspace spanned by the top $k$ left singular vectors of $\mA$ and the rank-$k$ matrix obtained by truncating the SVD of $\mA$ after the first $k$ terms. It holds that
+	which are respectively the orthogonal projection matrix onto the subspace spanned by the top $k$ left singular vectors of $\mM$ and the rank-$k$ matrix obtained by truncating the SVD of $\mM$ after the first $k$ terms. It holds that
 	\begin{enumerate}[label=(\alph*)]
-        \item for any $\mB$ of rank at most $k$ we have $\| \mA - \mA_k \|_F \leq \| \mA - \mB \|_F$,
-        \item for any $m \times m$ orthogonal projection matrix $\mP$ of rank $k$, we have $$\| \mA - \mP_k \mA \|_F \leq \| \mA - \mP \mA \|_F \: .$$
+        \item for any $\mB$ of rank at most $k$ we have $\| \mM - \mM_k \|_F \leq \| \mM - \mB \|_F$,
+        \item for any $m \times m$ orthogonal projection matrix $\mP$ of rank $k$, we have $$\| \mM - \mP_k \mM \|_F \leq \| \mM - \mP \mM \|_F \: .$$
     \end{enumerate} 
 \end{theorem}
 
 \subsubsection{Principal Component Analysis}
 
-We start by considering the most canonical instance of \Cref{eq:DR_criterion} with the $L_2$ loss and the inner product affinity on both sides: $\mC_X(\mX) = \mX \mX^\top$ and $\mC_Z(\mZ) = \mZ \mZ^\top$. It amounts to minimizing in $\mZ \in \R^{N \times d}$ the following objective
+We start by considering the most canonical instance of \Cref{eq:DR_criterion} with the $L_2$ loss and the inner product affinity on both sides: $\mA_X(\mX) = \mX \mX^\top$ and $\mA_Z(\mZ) = \mZ \mZ^\top$. It amounts to minimizing in $\mZ \in \R^{N \times d}$ the following objective
 \begin{equation*}\label{eq:DR_IP}\tag{DR-IP}
 	\sum_{(i,j) \in \integ{N}^2} (\langle \vx_i, \vx_j \rangle - \langle \vz_i, \vz_j \rangle)^2 = \| \mX \mX^\top - \mZ \mZ^\top \|_F^2 \:.
 \end{equation*}
@@ -31,12 +30,16 @@ We start by considering the most canonical instance of \Cref{eq:DR_criterion} wi
 We now give a formal defintion of a Principal Component Analysis (PCA) embedding.
 
 \begin{definition}{(PCA embedding)}\label{def:PCA_embedding}
-	Let $\mX \in \R^{N \times p}$ of rank $r$ such that $\one_N \mX = \bm{0}_p$ (centered) and consider its SVD $\mX = \mU \mS \mV^\top$ with $\mS = \diag(s_1, ..., s_r)$ such that $s_1 \geq ... \geq s_r > 0$. A matrix
-	$\mZ \in \R^{N \times d}$ is called a PCA embedding of $\mX$ if there exists an orthogonal matrix $\mR$ such that $\mZ = \mU_{[:,:d]} \mS_{[:d,:d]} \mR$.
+	Let $\mX \in \R^{N \times p}$ of rank $r$ such that $\one_N \mX = \bm{0}_p$ (centered) and consider its compact SVD $\mX = \mU \mS \mV^\top$ with $\mS = \diag(s_1, ..., s_r)$ such that $s_1 \geq ... \geq s_r > 0$. A matrix
+	$\mZ \in \R^{N \times d}$ is called a PCA embedding of $\mX$ of dimension $d \leq r$ if there exists an orthogonal matrix $\mR$ such that $\mZ = \mU_{[:,:d]} \mS_{[:d,:d]} \mR$.
 \end{definition}
 
-\begin{proposition}
-	Solutions of \Cref{eq:DR_IP} are PCA embeddings of $\mX$.
+\begin{remark}
+	Note that PCA embeddings are defined up to rotation of the features in the latent space via the orthogonal matrix $\mR$ that can be chosen arbitrarily. This is a direct consequence of the invariance of the inner product under orthogonal transformations.
+\end{remark}
+
+\begin{proposition}\label{prop:PCA_embedding}
+	The embeddings $\mZ \in \R^{N \times d}$ that minimize \ref{eq:DR_IP} are PCA embeddings of $\mX$.
 \end{proposition}
 
 \begin{proof}
@@ -44,7 +47,7 @@ We now give a formal defintion of a Principal Component Analysis (PCA) embedding
 	The result follows by observing that any PCA embedding $\mZ$ yields $\mZ \mZ^\top = \mU_{[:,:d]} \mS_{[:d,:d]}^2 \mU_{[:,:d]}^\top$.
 \end{proof}
 
-PCA is a widely-used method with interpretations that extend beyond its formulation as a preservation of inner product affinities, as seen in \Cref{eq:DR_IP}. In \Cref{memo:PCA}, we provide a brief overview of its most common formulations. Throughout this thesis, we will explore PCA embeddings from multiple perspectives. Beyond offering a fresh understanding of the method, these alternative viewpoints will reveal intriguing possibilities for extending PCA in various ways.
+PCA is a widely-used method with interpretations that extend beyond its formulation as a preservation of inner product affinities, as seen in \Cref{eq:DR_IP}. In \Cref{memo:PCA}, we provide a brief overview of its most common formulations.
 
 \begin{mem1}{A primer on PCA}\label{memo:PCA}
 	We recall two common intuitive formulations that give rise to PCA embeddings as defined in \Cref{def:PCA_embedding}. We keep the same notations with $\mX = \mU \mS \mV^\top$ the ordered SVD of $\mX$ which is already centered.
@@ -63,25 +66,18 @@ PCA is a widely-used method with interpretations that extend beyond its formulat
 	By part (b) of \Cref{thm:eckart}, the above directly leads to a PCA embedding.
 \end{mem1}
 	
+Throughout this thesis, we will explore PCA embeddings from multiple perspectives. Beyond offering a fresh understanding of the method, these alternative viewpoints will reveal intriguing possibilities for extending PCA in various ways. We now focus on the generalization of PCA to nonlinear embeddings applicable when $\simiX$ is a positive definite kernel.
 
 \subsubsection{Kernel Principal Component Analysis}
 
-Let $\mC_{\mX}$ denote the affinity matrix constructed from $\mX$. It is positive definite iif for any $\va \in \R^N$, $\va^\top \mC_{\mX} \va \geq 0$.
-Interestingly, any positive definite kernels can be seen as an inner product in a suitable space, as detailed in \Cref{rem:kernels}.
+The presented PCA problem presented above can be extended to a more general setting by considering positive definite affinities or kernels. 
 
-When $\simiX(\mX)$ is a positive semi-definite matrix, \cref{eq:DR_criterion}
-recovers spectral methods by choosing the quadratic loss $L = L_2$ and $\simi(\mZ) = (\langle \vz_i, \vz_j \rangle)_{(i,j) \in \integ{N}^2}$ the matrix of inner
-products in the embedding space. Indeed, in this case, the objective value of \cref{eq:DR_criterion}
-reduces to
-\begin{equation*}
-\label{eq:spectral_method}
-	\sum_{(i,j) \in \integ{N}^2} \!\!\!\!\! ([\simiX(\mX)]_{ij}, \langle \vz_i, \vz_j \rangle)^2 = \| \simiX(\mX) - \mZ\mZ^\top \|^2_F\,
-\end{equation*}
-where $\|\cdot\|_F$ is the Frobenius norm. This problem is commonly known as kernel Principal Component Analysis (PCA)~\citep{scholkopf1997kernel}
- and an optimal solution is given by
-$\mZ^\star = (\sqrt{\lambda_1} \vv_{1}, ..., \sqrt{\lambda_d} \vv_{d})^\top$ where $\lambda_i$ is the $i$-th
-largest eigenvalue of $\simiX(\mX)$ with corresponding eigenvector $\vv_{i}$ 
-\citep{eckart1936approximation}.
+In what follows, we define $\simiX$ as a positive definite kernel if for any $\mX \in \R^{N \times p}$, $\simiX(\mX)$ is positive semidefinite (or equivalently $\simiX(\mX) \in \mathcal{S}^N_{+}$), meaning that for any $\va \in \R^N$, $\va^\top \simiX(\mX) \va \geq 0$. For a positive definite kernel $\simiX$, we can define the following criterion that generalizes PCA:
+\begin{align}\label{eq:DR_kIP}\tag{DR-kIP}
+	\sum_{(i,j) \in \integ{N}^2} \!\!\!\!\! ([\simiX(\mX)]_{ij}, \langle \vz_i, \vz_j \rangle)^2 = \| \simiX(\mX) - \mZ\mZ^\top \|^2_F\ \:.
+\end{align}
+
+Interestingly, any positive definite kernels can be seen as an inner product in a suitable space accessible through a nonlinear transformation often called the \emph{feature map}. Thus the above \Cref{eq:DR_kIP} can be seen as a nonlinear generalization of \Cref{eq:DR_IP}. We provide more details in the following \Cref{rem:kernels}.
 
 \begin{mem1}{Kernels and Reproducing Kernel Hilbert Spaces}\label{rem:kernels}
 	A kernel $\kappa(\cdot, \cdot)$ is positive definite if for an arbitrary number of points $(\vx_1, ..., \vx_n) \in \mathcal{X}^n$, the kernel matrix $\bm{K} = (\kappa(\vx_i, \vx_j))_{(i,j) \in [n]^2}$ is positive definite. The Aronszajn's theorem \citep{aronszajn1950theory} states that an equivalent condition to $\kappa$ being positive definite is the existence of a Hilbert space $\mathcal{H}$ and a mapping $\phi : \mathcal{X} \to \mathcal{H}$ such that for any $(\vx, \vx') \in \mathcal{X}^2$,
@@ -97,10 +93,24 @@ defined by $\delta_x(f) = f(x)$, are continuous.
 Equation \ref{eq:kernel_inner_product} tells us that the inner product between two feature vectors is given by the kernel $\kappa$. Hence we can evaluate the inner product of any two feature vectors efficiently without knowing an explicit form of either $\phi$ or $\mathcal{H}$. With this computation of inner product, many linear methods of classical data analysis can be extended to nonlinear ones using the kernel matrix which computation does not depend on the dimensionality of the feature space. Such strategy is known as the \textit{kernel trick} in the literature.
 \end{mem1}
 
+Similarly to PCA, we can compute kernel PCA embeddings via the spectral decomposition of the affinity matrix.
 
+\begin{definition}{(kernel PCA embedding)}
+	Let $\mA_{\mX} \in \mathcal{S}^N_{+}$ of rank $r$ and consider its compact eigendecomposition $\mA_{\mX} = \mU \mS^2 \mU^\top$ with $\mS = \diag(s_1, ..., s_r)$ such that $s_1 \geq ... \geq s_r > 0$. A matrix
+	$\mZ \in \R^{N \times d}$ is called a kernel PCA embedding of $\mA_{\mX}$ of dimension $d \leq r$ if there exists an orthogonal matrix $\mR$ such that $\mZ = \mU_{[:,:d]} \mS_{[:d,:d]} \mR$.
+\end{definition}
+
+\begin{proposition}
+	The embeddings $\mZ \in \R^{N \times d}$ that minimize \ref{eq:DR_kIP} are kernel PCA embeddings of $\mA_{\mX}$.
+\end{proposition}
+
+\begin{proof}
+	It follows the same principles as the proof of \Cref{prop:PCA_embedding}. The result is obtained by replacing $\mX \mX^\top$ by any $\mA_{\mX} \in \mathcal{S}^N_{+}$.
+\end{proof}
+
+\paragraph{Generality of the kernel PCA problem.}
 As shown by \citet{ham2004kernel, ghojogh2021unified}, numerous dimension reduction methods can be categorized in this manner.
 This includes 
 % PCA when $\simiX(\mX) = \mX\mX^\top$ is the matrix of inner products in the input space; 
 (classical) multidimensional scaling \citep{borg2005modern}, when $\simiX(\mX) = -\frac{1}{2} \mH \mD_\mX \mH$ with $\mD_\mX$ the matrix of squared euclidean distance between the points in $\R^{p}$ and $\mH = \mI_N - \frac{1}{N} \one_N \one_N^\top$ is the centering matrix; Isomap \citep{tenenbaum2000global}, with $\simiX(\mX) = -\frac{1}{2} \mH \mD_\mX^{(g)} \mH$ with $\mD_\mX^{(g)}$ the geodesic distance matrix; Laplacian Eigenmap
 \citep{belkin2003laplacian}, with $\simiX(\mX) = \mL_\mX^{\dagger}$ the pseudo-inverse of the Laplacian associated to some adjacency matrix $\mW_\mX$; but also Locally Linear Embedding \citep{roweis2000nonlinear}, and Diffusion Map \citep{coifman2006diffusion} (for all of these examples we refer to the work by \citealt[Table 1]{ghojogh2021unified}).
-
