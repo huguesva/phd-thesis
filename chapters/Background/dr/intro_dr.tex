@@ -15,21 +15,21 @@ In this section we review the most popular DR methods. These algorithm construct
 This structure is generally encoded via a symmetric pairwise similarity matrix obtained from the input data $\mX$. Throughout, we call \emph{affinity} the weight matrix of a graph that encodes this similarity. The higher the weight in position $(i,j)$, the
 higher the similarity or proximity between samples $i$ and $j$. Simple usual affinities include the inner product $\left( \langle \vx_i, \vx_j \rangle \right)_{ij}$ or the Gaussian kernel $\left( \exp(-\|\vx_i - \vx_j\|_2^2) \right)_{ij}$.
 
-Therefore affinity-based DR methods essentially revolve around two key steps:
+Affinity-based DR methods essentially revolve around two key steps:
 
 \begin{enumerate}
-	\item Capturing the geometry of the data $\mX$ : Defining a notion of similarity between samples in the input space and encode it into a $N \times N$ matrix $\mA_{\mX}$.
-	\item Constructing a low-dimensional representation $\mZ$ that reproduces this dependency structure in the latent space. This step involves constructing an affinity matrix $\mA_{\mZ}$ from $\mZ$ and optimizing $\mZ$ such that $\mA_{\mZ}$ matches $\mA_{\mX}$.
+    \item Capture the geometry of the data $\mX$ by defining a measure of similarity between samples in the input space, which is encoded into an $N \times N$ matrix $\mA_{\mX}$.
+    \item Construct a low-dimensional representation $\mZ$ that preserves this structure in the latent space. This step involves creating an affinity matrix $\mA_{\mZ}$ from $\mZ$ and optimizing $\mZ$ so that $\mA_{\mZ}$ aligns with $\mA_{\mX}$.
 \end{enumerate}
 
-While the above general description of DR methods is intuitive, it brings up a critical question: how should one design effective affinity matrices $\mA_{\mX}$ and $\mA_{\mZ}$? As we will explore in this chapter, the choice of affinity is essential and significantly influences the characteristics of the final embedding. It also raises the question of which criterion to use to compare two affinity matrices, which also has important practical implications.
+Although the above general description of DR methods is intuitive, it brings up a critical question: how should one design effective affinity matrices $\mA_{\mX}$ and $\mA_{\mZ}$? As we will explore in this chapter, the choice of affinity is essential and significantly influences the characteristics of the final embedding. It also raises the question of which criterion to use to compare two affinity matrices, which also has important practical implications.
 
 We subsequently introduce the functions
 \begin{equation}
 \label{eq:sim_function}
 \simiX: \R^{N \times p} \to \R^{N \times N}, \simi: \R^{N \times d} \to \R^{N \times N}\,,
 \end{equation}
-which define pairwise similarity matrices in the input and output space from embeddings $\mX$ and $\mZ$. As done above, we also slightly abuse notations by denoting $\mA_\mX = \simiX(\mX)$ and $\mA_\mZ = \simi(\mZ)$ the similarity matrices obtained from the data and the embedding.
+which construct pairwise similarity matrices in the input and output space from embeddings $\mX$ and $\mZ$. As done above, we also slightly abuse notations by denoting $\mA_\mX = \simiX(\mX)$ and $\mA_\mZ = \simi(\mZ)$ the similarity matrices obtained from the data and the embedding.
  
 \paragraph{DR general objective.} With this in place, the DR problem can be formulated quite generally as the optimization problem
 %  minimizing over $\mZ$ the objective function
@@ -38,6 +38,8 @@ which define pairwise similarity matrices in the input and output space from emb
 \min_{\mZ \in \R^{N \times d}} \: \sum_{(i,j) \in \integ{N}^2}  L\big([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{ij}\big) \,. %+ R(\mZ)\,.
 \end{equation}
 where $L:\R \times \R \rightarrow \R$ is a loss that quantifies the similarity between pairs of points in the input space $\R^{p}$ compared to pairs of points in the output space $\R^{d}$. Various losses can be used, such as the quadratic loss $L_2(x,y) \coloneqq (x - y)^2$, the Kullback-Leibler divergence $\KL(x,y) \coloneqq x \log (x/y) - x +y$ or the binary cross-entropy $\BCE(x,y) \coloneqq -x \log(y) - (1-x) \log(1-y)$.
-In what follows, we show that most popular DR methods can be placed within this framework.
+
+In the following sections, we demonstrate that the majority of popular dimensionality reduction (DR) methods fit within this framework. Our discussion is organized around two key family of models that capture the fundamental principles of DR: kernel PCA methods discussed in \Cref{sec:spectral_methods}, and t-SNE-like approaches presented in \Cref{sec:neighbor_embedding}.
+
 
 

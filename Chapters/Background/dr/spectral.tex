@@ -2,10 +2,10 @@
 
 In this first part, we focus on dimensionality reduction methods that have closed form solutions. We call them \emph{spectral methods} as they rely on the spectral decomposition of the input affinity matrix. We are going to see that these methods are special instances of \Cref{eq:DR_criterion} with the element-wise loss $L_2$ and $[\mA_{Z}(\mZ)]_{ij} = \langle \vz_i, \vz_j \rangle$.
 
-Closed form solutions are based on the following celebrated result from \cite{eckart1936approximation}.
+Closed form solutions are based on the following key result by \cite{eckart1936approximation}.
 
 \begin{theorem}{\cite{eckart1936approximation}}\label{thm:eckart}
-	Let $\mM \in \R^{m \times n}$ be a real matrix with singular value decomposition (SVD) given by $\mM = \sum_{i=1}^{r} \sigma_i u_i v_i^\top$. Let $k \in \N$ with $k \leq r$ and define 
+	Let $\mM \in \R^{m \times n}$ be a real matrix with singular value decomposition (SVD) given by $\mM = \sum_{i=1}^{r} \sigma_i u_i v_i^\top$ where $(\vu_1, \dots, \vu_r)$ and $(\vv_1, \dots, \vv_r)$ are orthonormal families of vectors in $\R^m$ and $\R^n$ respectively, and $\sigma_1 \geq \dots \geq \sigma_r > 0$ are the singular values of $\mM$. Let $k \in \N$ with $k \leq r$ and define 
 	\begin{align}
 		\mP_k = \sum_{i=1}^{k} u_i u_i^\top \quad \text{and} \quad \mM_k = \mP_k \mM = \sum_{i=1}^{k} \sigma_i u_i v_i^\top
 	\end{align}
@@ -30,42 +30,55 @@ We start by considering the most canonical instance of \Cref{eq:DR_criterion} wi
 We now give a formal defintion of a Principal Component Analysis (PCA) embedding.
 
 \begin{definition}{(PCA embedding)}\label{def:PCA_embedding}
-	Let $\mX \in \R^{N \times p}$ of rank $r$ such that $\one_N \mX = \bm{0}_p$ (centered) and consider its compact SVD $\mX = \mU \mS \mV^\top$ with $\mS = \diag(s_1, ..., s_r)$ such that $s_1 \geq ... \geq s_r > 0$. A matrix
-	$\mZ \in \R^{N \times d}$ is called a PCA embedding of $\mX$ of dimension $d \leq r$ if there exists an orthogonal matrix $\mR$ such that $\mZ = \mU_{[:,:d]} \mS_{[:d,:d]} \mR$.
+	Let $\mX \in \mathbb{R}^{N \times p}$ be a matrix of rank $r$ such that $\mathbf{1}_N \mX = \mathbf{0}_p$ (i.e., it is centered). Suppose $\mX$ has the singular value decomposition (SVD) given by $\mX = \sum_{i=1}^{r} s_i \vu_i \vv_i^\top$, where $s_1 \geq \dots \geq s_r > 0$ are its positive singular values. A matrix $\mZ \in \mathbb{R}^{N \times d}$ is called a PCA embedding of $\mX$ of dimension $d \leq r$ if there exists an orthonormal family of vectors $(\vq_1, \dots, \vq_d)$ in $\mathbb{R}^d$ such that $\mZ = \sum_{i=1}^{d} s_i \vu_i \vq_i^\top$.	
 \end{definition}
-
+	
 \begin{remark}
-	Note that PCA embeddings are defined up to rotation of the features in the latent space via the orthogonal matrix $\mR$ that can be chosen arbitrarily. This is a direct consequence of the invariance of the inner product under orthogonal transformations.
+	Note that PCA embeddings are defined up to rotation of the features in the latent space via the orthonormal matrix $\mQ = (\vq_1, ..., \vq_d) \in \R^{d \times d}$ that can be chosen arbitrarily. This is a direct consequence of the invariance of the inner product under such orthonormal transformations.
 \end{remark}
 
 \begin{proposition}\label{prop:PCA_embedding}
-	The embeddings $\mZ \in \R^{N \times d}$ that minimize \ref{eq:DR_IP} are PCA embeddings of $\mX$.
+    The embeddings $\mZ \in \mathbb{R}^{N \times d}$ that minimize \ref{eq:DR_IP} are PCA embeddings of $\mX$.
 \end{proposition}
 
 \begin{proof}
-	We consider the eigendecomposition of $\mX \mX^\top$ as $\mU \mS^2 \mU^\top$ (equivalent to SVD as the eigenvalues of $\mX \mX^\top$ are positive). Thanks to part (a) of \Cref{thm:eckart}, the closest rank-$d$ matrix to $\mX \mX^\top$ in terms of Frobenius norm is given by $\mU_{[:,:d]} \mS_{[:d,:d]}^2 \mU_{[:,:d]}^\top$.
-	The result follows by observing that any PCA embedding $\mZ$ yields $\mZ \mZ^\top = \mU_{[:,:d]} \mS_{[:d,:d]}^2 \mU_{[:,:d]}^\top$.
+    Consider the eigendecomposition of $\mX \mX^\top$ given by $\mX \mX^\top = \sum_{i=1}^{r} s_i^2 \vu_i \vu_i^\top$, where $s_i$ are the singular values of $\mX$, and $\vu_i$ are the corresponding eigenvectors. According to part (a) of \Cref{thm:eckart}, the closest rank-$d$ matrix to $\mX \mX^\top$ in terms of the Frobenius norm is given by
+    $
+    \sum_{i=1}^{d} s_i^2 \vu_i \vu_i^\top.
+    $
+    The result follows by noting that any PCA embedding $\mZ$ yields 
+    $
+    \mZ \mZ^\top = \sum_{i=1}^{d} s_i^2 \vu_i \vu_i^\top,
+    $
+    which matches the rank-$d$ approximation of $\mX \mX^\top$.
 \end{proof}
 
+
 PCA is a widely-used method with interpretations that extend beyond its formulation as a preservation of inner product affinities, as seen in \Cref{eq:DR_IP}. In \Cref{memo:PCA}, we provide a brief overview of its most common formulations.
-
+	
 \begin{mem1}{A primer on PCA}\label{memo:PCA}
-	We recall two common intuitive formulations that give rise to PCA embeddings as defined in \Cref{def:PCA_embedding}. We keep the same notations with $\mX = \mU \mS \mV^\top$ the ordered SVD of $\mX$ which is already centered.
+	We recall two common intuitive formulations that give rise to PCA embeddings as defined in \Cref{def:PCA_embedding}. We maintain the same notation, with $\mX = \sum_{i=1}^{r} s_i \vu_i \vv_i^\top$ being the ordered SVD of $\mX$, which is assumed to be centered.
 
-	\paragraph{Maximum projected variance.} PCA seeks to find the $d$-dimensional linear subspace $\mathrm{Span}(\vb_1, ..., \vb_d)$ that maximizes the variance of the data projected onto it. We take the $\vb_i$'s as an orthonormal basis of the subspace, \ie $\vb_i^\top \vb_i = 1$ for any $i$ and $\vb_i^\top \vb_j = 0$ for $i \neq j$.
-	To derive this characterization, we consider the $p \times p$ covariance matrix $\mX^\top \mX$ and consider maximizing the projected variance as follows, where $\mB = (\vb_1, ..., \vb_d)^\top$:
+	\paragraph{Maximum projected variance.} PCA seeks to find the $d$-dimensional linear subspace $\mathrm{Span}(\vb_1, \dots, \vb_d)$ that maximizes the variance of the data projected onto it. We take the $\vb_i$'s as an orthonormal basis of the subspace, i.e., $\vb_i^\top \vb_i = 1$ for any $i$, and $\vb_i^\top \vb_j = 0$ for $i \neq j$. 
+	To derive this characterization, consider the $p \times p$ covariance matrix $\mX^\top \mX$ and maximize the projected variance as follows, where $\mB = (\vb_1, \dots, \vb_d)^\top$:
 	\begin{align}
-		\max_{\mB \in \R^{d \times p}, \mB \mB^\top = \mI_d} \: \mB^\top \left(\mX^\top \mX \right) \mB \:.
+	\max_{\mB \in \mathbb{R}^{d \times p}, \mB \mB^\top = \mI_d} \: \mB^\top \left(\mX^\top \mX\right) \mB \:.
 	\end{align}
-	The above quadratic form on the Stiefel manifold $\{\mB \in \R^{d \times p}, \mB \mB^\top = \mI_d \}$ is minimized by the top $d$ eigenvectors of $\mX^\top \mX$ \citep{absil2008optimization} which in our context is precisely $\mV_{[:d,:]}$ the first $d$ right singular vectors of $\mX$. The recovered reduced projection expressed in the new basis $(\vb_1, ..., \vb_d)$ is then given by $\mX \mV_{[:d,:]}^\top = \mU_{[:,:d]} \mS_{[:d,:d]}$ which is a PCA embedding of $\mX$ (\Cref{def:PCA_embedding}).
+	This quadratic form on the Stiefel manifold $\{\mB \in \mathbb{R}^{d \times p}, \mB \mB^\top = \mI_d \}$ is maximized by the top $d$ eigenvectors of $\mX^\top \mX$, which in our context corresponds to $(\vv_1, \dots, \vv_d)^\top$, the first $d$ right singular vectors of $\mX$. The recovered reduced representation expressed in the new basis $(\vb_1, \dots, \vb_d)$ is then given by
+	$
+	\mX \mB^\top = \sum_{i=1}^{d} s_i \vu_i \ve_i^\top
+	$
+	where $\ve_i$ is the $i$-th canonical basis vector in $\R^d$. The latter is a PCA embedding of $\mX$ (\Cref{def:PCA_embedding}).
 
-	\paragraph{Minimum reconstruction error.} Alternatively, one can explicitly look for the best projection as the one that minimizes a reconstruction error. If we consider the Frobenius norm, this amounts to 
+	\paragraph{Minimum reconstruction error.} Alternatively, one can explicitly seek the best projection by minimizing the reconstruction error. Considering the Frobenius norm, this amounts to 
 	\begin{align}
-		\min_{\mB \in \R^{d \times p}, \mB \mB^\top = \mI_d} \: \| \mX - \mX \mB^\top \mB \|_F^2 \:.
+	\min_{\mB \in \mathbb{R}^{d \times p}, \mB \mB^\top = \mI_d} \: \| \mX - \mX \mB^\top \mB \|_F^2 \:.
 	\end{align}
 	By part (b) of \Cref{thm:eckart}, the above directly leads to a PCA embedding.
+
 \end{mem1}
-	
+
+
 Throughout this thesis, we will explore PCA embeddings from multiple perspectives. Beyond offering a fresh understanding of the method, these alternative viewpoints will reveal intriguing possibilities for extending PCA in various ways. We now focus on the generalization of PCA to nonlinear embeddings applicable when $\simiX$ is a positive definite kernel.
 
 \subsubsection{Kernel Principal Component Analysis}
@@ -77,9 +90,10 @@ In what follows, we define $\simiX$ as a positive definite kernel if for any $\m
 	\sum_{(i,j) \in \integ{N}^2} \!\!\!\!\! ([\simiX(\mX)]_{ij}, \langle \vz_i, \vz_j \rangle)^2 = \| \simiX(\mX) - \mZ\mZ^\top \|^2_F\ \:.
 \end{align}
 
-Interestingly, any positive definite kernels can be seen as an inner product in a suitable space accessible through a nonlinear transformation often called the \emph{feature map}. Thus the above \Cref{eq:DR_kIP} can be seen as a nonlinear generalization of \Cref{eq:DR_IP}. We provide more details in the following \Cref{rem:kernels}.
+The above is a generalization of \Cref{eq:DR_IP} to the case of positive definite kernels.
+Interestingly, if there exists a function $\kappa$ such that for any $(i,j)$, $[\mA_{\mX}]_{ij} = \kappa(\vx_i, \vx_j)$, which may not always be the case due to various normalizations, then $\mA_{\mX}$ can be seen as an inner product in a suitable space accessible through a nonlinear transformation often called the \emph{feature map}. Thus the above \Cref{eq:DR_kIP} can be seen as a nonlinear generalization of \Cref{eq:DR_IP}. We provide more details in the following \Cref{mem:kernels}.
 
-\begin{mem1}{Kernels and Reproducing Kernel Hilbert Spaces}\label{rem:kernels}
+\begin{mem1}{Kernels and Reproducing Kernel Hilbert Spaces}\label{mem:kernels}
 	A kernel $\kappa(\cdot, \cdot)$ is positive definite if for an arbitrary number of points $(\vx_1, ..., \vx_n) \in \mathcal{X}^n$, the kernel matrix $\bm{K} = (\kappa(\vx_i, \vx_j))_{(i,j) \in [n]^2}$ is positive definite. The Aronszajn's theorem \citep{aronszajn1950theory} states that an equivalent condition to $\kappa$ being positive definite is the existence of a Hilbert space $\mathcal{H}$ and a mapping $\phi : \mathcal{X} \to \mathcal{H}$ such that for any $(\vx, \vx') \in \mathcal{X}^2$,
 \begin{align}\label{eq:kernel_inner_product}
     \kappa(\vx, \vx') = \langle \phi(\vx), \phi(\vx') \rangle_{\mathcal{H}} \:.
@@ -96,13 +110,13 @@ Equation \ref{eq:kernel_inner_product} tells us that the inner product between t
 Similarly to PCA, we can compute kernel PCA embeddings via the spectral decomposition of the affinity matrix.
 
 \begin{definition}{(kernel PCA embedding)}
-	Let $\mA_{\mX} \in \mathcal{S}^N_{+}$ of rank $r$ and consider its compact eigendecomposition $\mA_{\mX} = \mU \mS^2 \mU^\top$ with $\mS = \diag(s_1, ..., s_r)$ such that $s_1 \geq ... \geq s_r > 0$. A matrix
-	$\mZ \in \R^{N \times d}$ is called a kernel PCA embedding of $\mA_{\mX}$ of dimension $d \leq r$ if there exists an orthogonal matrix $\mR$ such that $\mZ = \mU_{[:,:d]} \mS_{[:d,:d]} \mR$.
+    Let $\mA_{\mX} \in \mathcal{S}^N_{+}$ be a matrix of rank $r$, and consider its compact eigendecomposition $\mA_{\mX} = \sum_{i=1}^{r} s_i^2 \vu_i \vu_i^\top$, where $s_1 \geq \dots \geq s_r > 0$ are its positive eigenvalues. A matrix $\mZ \in \mathbb{R}^{N \times d}$ is called a kernel PCA embedding of $\mA_{\mX}$ of dimension $d \leq r$ if there exists an orthonormal family of vectors $(\vq_1, \dots, \vq_d)$ in $\mathbb{R}^d$ such that $\mZ = \sum_{i=1}^{d} s_i \vu_i \vq_i^\top$.
 \end{definition}
 
 \begin{proposition}
-	The embeddings $\mZ \in \R^{N \times d}$ that minimize \ref{eq:DR_kIP} are kernel PCA embeddings of $\mA_{\mX}$.
+    The embeddings $\mZ \in \mathbb{R}^{N \times d}$ that minimize \ref{eq:DR_kIP} are kernel PCA embeddings of $\mA_{\mX}$.
 \end{proposition}
+
 
 \begin{proof}
 	It follows the same principles as the proof of \Cref{prop:PCA_embedding}. The result is obtained by replacing $\mX \mX^\top$ by any $\mA_{\mX} \in \mathcal{S}^N_{+}$.
