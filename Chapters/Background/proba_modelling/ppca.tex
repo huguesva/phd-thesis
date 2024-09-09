@@ -1,24 +1,40 @@
 \section{The Latent Variable Perspective}\label{sec:dr_proba_modelling}
 
-Our journey into dimensionality reduction theory begins with the probabilistic modeling perspective.
+After presenting the fundamental concepts of dimensionality reduction (DR) as the matching of two affinity matrices $\mA_{\mX}$ and $\mA_{\mZ}$ in \Cref{sec:background_dr}, we now offer a new perspective through probabilistic modeling.
 
-More specifically, we focus on latent variable models which aim to relate the observed data $\mX$ to some latent (or unobersed) variables $\mZ$. In this context, the latent space refers to the embedding space.
+In this perspective, the fundamental assumption is to view the data matrix $\mX$ as the result of a generative process based on an underlying latent low-dimensional variable $\mZ$. This interpretation justifies the use of the term \emph{latent space}, which we use interchangeably with \emph{embedding space} throughout this thesis.
 
-\subsection{Probabilistic PCA : the two dual views}
+This viewpoint is especially relevant for linear DR methods, such as PCA and its probabilistic variant, Probabilistic PCA (PPCA) \citep{tipping1999probabilistic}. It also prompts the question of how to extend this framework to more general DR formulations, including neighbor embedding approaches. This sets the stage for the material introduced in \Cref{chapter:GraphCoupling}.
 
-\subsubsection{Standard Probabilistic PCA}\label{sec:ppca}
+\subsection{From Probabilistic PCA ...}\label{sec:ppca}
 
-The key modelling assumption made in probabilistic PCA (PPCA) is that the data is generated through a linear transformation of the latent variables, to which Gaussian noise is added. This model is defined by the following generative process:
+In probabilistic PCA (PPCA), we make the key modelling assumption that the data $\mX$ is generated through a linear transformation of the latent variables $\mZ$, to which Gaussian noise is added. This model is thus defined by the following generative process:
 \begin{align}
     \mX = \mW \mZ + \mE,
 \end{align}
-where $\mX \in \R^{N \times p}$ is the data matrix, $\mZ \in \R^{N \times d}$ is the embedding matrix, $\mW \in \R^{p \times d}$ is the linear transformation matrix, and $\mE \in \R^{N \times p}$ is the noise matrix. 
+where $\mX \in \mathbb{R}^{N \times p}$ is the data matrix, $\mZ \in \mathbb{R}^{N \times d}$ is the embedding matrix, $\mW \in \mathbb{R}^{p \times d}$ is the linear transformation matrix, and $\mE \in \mathbb{R}^{N \times p}$ is the noise matrix. The noise is assumed to consist of independent and identically distributed (i.i.d.) Gaussian variables, i.e., $\mE = (\ve_1, \ldots, \ve_N)^\top$, where each $\ve_i$ follows a Gaussian distribution $\mathcal{N}(0, \sigma^2 \mI_p)$, with $\mI_p$ being the $p \times p$ identity matrix and $\sigma^2$ the variance of the noise.
 
-The noise is assumed to be Gaussian, i.e., $\mE \sim \mathcal{N}(0, \sigma^2 \mI)$, where $\sigma^2$ is the noise variance. 
+Importantly, the latent variables are also assumed to be \emph{iid} Gaussian distributed \ie for any $i$, $\vz_i \sim \mathcal{N}(0, \mI_d)$. With this in place, the model is fully specified by the parameters $\theta = (\mW, \sigma^2)$.
 
-Importantly, the latent space is assumed to be Gaussian as well: $\mZ \sim \mathcal{N}(0, \mI)$, where $\mI$ is the identity matrix. The model is fully specified by the parameters $\theta = (\mW, \sigma^2)$.
+Note that we can rewrite the above linear relation as
+\begin{align}
+    \forall i, \quad \vx_i = \mW \vz_i + \ve_i \:.
+\end{align}
+In this quite simple model, the $\vx_i$'s are independent as the samples in $\mZ$ and $\mE$ are assumed to be independent.
 
-A standard approach to fitting latent variable models involves marginalizing over the latent variables and optimizing the parameters using maximum likelihood estimation.
+\paragraph{Parameter estimation.} A standard approach to fitting latent variable models consists in marginalizing over the latent variables and optimizing the parameters using \emph{maximum likelihood estimation} (MLE).
+Since, $\ve_i \sim \mathcal{N}(0, \sigma^2 \mI_p)$ for any $i$, one has 
+\begin{align}
+    \forall i, \quad \vx_i | \left( \vz_i, \mW, \sigma \right) \: \sim \mathcal{N}(\mW \vx_i, \sigma^2 \mI_p) \:.
+\end{align}
+Integrating over the latent variable $\vz_i \sim \mathcal{N}(0, \mI_d)$, one obtains the marginal distribution of $\vx_i$ as follows
+\begin{align}
+    \vx_i | \left( \mW, \sigma \right) \: \sim \mathcal{N}(0, \mW \mW^\top + \sigma^2 \mI_p) \:.
+\end{align}
+
+\begin{remark}
+    later reason the the inter sample dependencies
+\end{remark}
 
 The negative log-likelihood is as follows:
 \begin{align}
@@ -26,4 +42,18 @@ The negative log-likelihood is as follows:
 \end{align}
 where $\| \cdot \|_F$ denotes the Frobenius norm.
 
-\subsubsection{The Bayesian Dual View}
+\begin{remark}
+    Probabilistic PCA as a cornerstone of generative modelling    
+
+    \citep{tomczak2021latent}
+\end{remark}
+
+\subsection{... to its Bayesian Dual View}
+
+
+\citep{lawrence2005probabilistic}
+
+
+\begin{prob}{Construction of adaptive affinities}
+    aa
+\end{prob}

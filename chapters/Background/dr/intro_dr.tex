@@ -24,12 +24,12 @@ Affinity-based DR methods essentially revolve around two key steps:
 
 Although the above general description of DR methods is intuitive, it brings up a critical question: how should one design effective affinity matrices $\mA_{\mX}$ and $\mA_{\mZ}$? As we will explore in this chapter, the choice of affinity is essential and significantly influences the characteristics of the final embedding. It also raises the question of which criterion to use to compare two affinity matrices, which also has important practical implications.
 
-We subsequently introduce the functions
+\paragraph{Notations.} We subsequently introduce the functions
 \begin{equation}
 \label{eq:sim_function}
 \simiX: \R^{N \times p} \to \R^{N \times N}, \simi: \R^{N \times d} \to \R^{N \times N}\,,
 \end{equation}
-which construct pairwise similarity matrices in the input and output space from embeddings $\mX$ and $\mZ$. As done above, we also slightly abuse notations by denoting $\mA_\mX = \simiX(\mX)$ and $\mA_\mZ = \simi(\mZ)$ the similarity matrices obtained from the data and the embedding.
+which construct pairwise similarity matrices in the input and output space from embeddings $\mX$ and $\mZ$. As done above, we also slightly abuse notations by denoting $\mA_\mX = \simiX(\mX)$ and $\mA_\mZ = \simi(\mZ)$ the similarity matrices obtained from the data and the embedding. We also denote by $\C_\X = \left(\|\vx_{i}-\vx_{j}\|_2^2\right)_{ij}$ and $\C_\Z = \left(\|\vz_{i}-\vz_{j}\|_2^2\right)_{ij}$ the squared Euclidean distance cost matrices derived from the samples in $\X$ and $\Z$ respectively.
  
 \paragraph{DR general objective.} With this in place, the DR problem can be formulated quite generally as the optimization problem
 %  minimizing over $\mZ$ the objective function

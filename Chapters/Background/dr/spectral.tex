@@ -26,16 +26,14 @@ We start by considering the most canonical instance of \Cref{eq:DR_criterion} wi
 We now give a formal defintion of a Principal Component Analysis (PCA) embedding.
 
 \begin{definition}{(PCA embedding)}\label{def:PCA_embedding}
-	Let $\mX \in \mathbb{R}^{N \times p}$ be a matrix of rank $r$ such that $\mathbf{1}_N \mX = \mathbf{0}_p$ (i.e., it is centered). Suppose $\mX$ has the singular value decomposition (SVD) given by $\mX = \sum_{i=1}^{r} s_i \vu_i \vv_i^\top$, where $s_1 \geq \dots \geq s_r > 0$ are its positive singular values. A matrix $\mZ \in \mathbb{R}^{N \times d}$ is called a PCA embedding of $\mX$ of dimension $d \leq r$ if there exists an orthonormal family of vectors $(\vq_1, \dots, \vq_d)$ in $\mathbb{R}^d$ such that $\mZ = \sum_{i=1}^{d} s_i \vu_i \vq_i^\top$.	
+	Let $\mX \in \mathbb{R}^{N \times p}$ be a matrix of rank $r$ such that $\mathbf{1}_N \mX = \mathbf{0}_p$ (i.e., it is centered). Suppose $\mX$ has the singular value decomposition (SVD) given by $\mX = \sum_{i=1}^{r} s_i \vu_i \vv_i^\top$, where $s_1 \geq \dots \geq s_r > 0$ are its positive singular values. A matrix $\mZ \in \mathbb{R}^{N \times d}$ is called a PCA embedding of $\mX$ of dimension $d \leq r$ if there exists an orthonormal family of vectors $(\vq_1, \dots, \vq_d)$ in $\mathbb{R}^d$ and a family of positive scalars $(\lambda_1, \dots, \lambda_d)$ such that $\mZ = \sum_{i=1}^{d} \lambda_i \vu_i \vq_i^\top$. Moreover, if $\lambda_i = s_i$ for any $i \in \integ{d}$, then $\mZ$ is called a \emph{standard PCA embedding} of $\mX$.
 \end{definition}
 	
 \begin{remark}
 	Note that PCA embeddings are defined up to rotation of the features in the latent space via the orthonormal matrix $\mQ = (\vq_1, ..., \vq_d) \in \R^{d \times d}$ that can be chosen arbitrarily. This is a direct consequence of the invariance of the inner product under such orthonormal transformations.
 \end{remark}
 
-\begin{remark}
-	Throughout this section, we consider that the features of the input data $\mX \in \R^{N \times p}$ are centered, \ie $\one_N \mX = \bm{0}_p$. Note that this can be ensured as a preprocessing step by applying the transformation $\mX \leftarrow \mX - \one_N \bm{\mu}^\top$ where $\bm{\mu} = \frac{1}{N} \one_N^\top \mX$ is the empirical mean along the rows of $\mX$.
-\end{remark}
+Throughout this section, we consider that the features of the input data $\mX \in \R^{N \times p}$ are centered, \ie $\one_N \mX = \bm{0}_p$. Note that this can be ensured as a preprocessing step by applying the transformation $\mX \leftarrow \mX - \one_N \bm{\mu}^\top$ where $\bm{\mu} = \frac{1}{N} \one_N^\top \mX$ is the empirical mean along the rows of $\mX$.
 
 \begin{proposition}\label{prop:PCA_embedding}
     The embeddings $\mZ \in \mathbb{R}^{N \times d}$ that minimize \ref{eq:DR_IP} are PCA embeddings of $\mX$.
