@@ -1,0 +1,25 @@
+\section*{Notation}
+
+\begin{itemize}
+	\item $\integ{n}$: set of integers $\{1,\dots,n\}$.
+	\item $\one_{n}$: vector of $\R^{n}$ with all entries identically set to $1$.
+	\item $\mI_n$: identity matrix of size $n \times n$.
+    \item $\exp$ and $\log$ applied to vectors/matrices are taken element-wise.
+    \item $\mathcal{S}^n$: space of $n \times n$ symmetric matrices.
+    \item The $i^{th}$ entry of a vector $\vv$ is denoted as either $v_i$ or $[\vv]_i$.
+	Similarly, for a matrix $\mM$, $M_{ij}$ and $[\mM]_{ij}$ both denote its entry $(i,j)$.
+    \item $\mathbf{P}_{i:}$ or $[\mathbf{P}]_{i:}$: $i$-th row of a matrix $\Pb$.
+    \item $\odot$ (\textit{resp.} $\oslash$): element-wise multiplication (\textit{resp.} division) between vectors/matrices.
+    \item $\langle \cdot, \cdot \rangle$ is the standard Euclidean inner product for matrices/vectors.
+    \item For $\bm{\alpha}, \bm{\beta} \in \R^n, \bm{\alpha} \oplus \bm{\beta} \in \R^{n \times n}$ is $(\alpha_i + \beta_j)_{ij}$.
+    \item The entropy of $\p \in \mathbb{R}^{n}_+$ is\footnote{With the convention $0 \log 0 = 0$.} $\operatorname{H}(\p) = -\sum_{i} p_i(\log(p_i)-1) = -\langle \pb, \log \pb - \bm{1} \rangle$.
+    \item The Kullback-Leibler divergence between two matrices $\Pb, \Qb$ with nonnegative entries such that $Q_{ij} = 0 \implies P_{ij}=0$ is $\KL(\Pb | \Qb) = \sum_{ij} P_{ij}\left(\log(\frac{P_{ij}}{Q_{ij}})-1\right) = \langle \Pb, \log \left(\Pb \oslash \Qb \right) - \bm{1}\bm{1}^\top \rangle$.
+    \item $S_N$ is the set of permutations of $\integ{N}$.
+    \item $P_N(\R^d)$ refers to the set of discrete probability measures composed of N points of $\R^d$.
+    \item $\Sigma_N$ stands for the probability simplex of size $N$ that is $\Sigma_N := \{\vh \in \R^N_+ \: \text{s.t.} \: \sum_i h_i = 1 \}$.
+    \item For $\vx \in \R^{N}, \diag(\vx)$ denotes the diagonal matrix whose elements are the $x_i$.
+    \item We denote by $\gU(\vh) = \left\{ \mT \in \R_+^{N \times n} | \mT \bm{1}_n = \vh \right\}$ and $\gU(\vh, \overline{\vh}) = \left\{ \mT \in \R_+^{N \times n} | \mT \bm{1}_n = \vh, \mT^\top \bm{1}_N = \overline{\vh} \right\}$ the set of discrete couplings with respectively one and two marginals.
+    \item $L_2(x,y) \coloneqq \frac{1}{2} |x - y|^2$ is the quadratic loss,  $L_{\mathrm{KL}}(x,y) \coloneqq L_{\mathrm{KL}}(x,y) - x + y $ the Kullback-Leibler divergence loss.
+    \item For a matrix $\mZ \in \R^{N \times d}$, we denote by $\mC_{\mZ} =  \simi(\mZ)$ its output through a similarity function $\simi: \R^{N \times d} \to \R^{N \times N}$.
+    % \item $\operatorname{DS} = \mathcal{U}(\bm{1}, \bm{1})$ is the space of $N \times N$ doubly stochastic matrices.
+\end{itemize}

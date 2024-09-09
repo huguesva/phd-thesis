@@ -1,5 +1,8 @@
 \section{The Distributional Perspective}\label{sec:dist_perspective_dr}
 
+
+\paragraph{Lagrangian viewpoint.}
+
 Optimal Transport (OT) \citep{villani2009optimal,peyre2019computational} is a popular
 framework for comparing probability distributions and is at the core of \Cref{chapter:SNEkhorn} and \Cref{chapter:DistR} of this thesis.
 
@@ -17,6 +20,9 @@ Lien DR et OT:
 Classical OT methods require defining a meaningful transportation cost between the supports of the two distributions. 
 This is however difficult in the context of dimensionality reduction where the two spaces $\R^p$ and $\R^d$ have different dimensions.
 
+
+\begin{mem1}{OT}
+AAAA
 
 \paragraph{Monge formulation.}
 We consider two Polish spaces $\mathcal{X}$ and $\mathcal{Y}$ such that we can define a cost function $c_{\mathcal{X} \mathcal{Y}} : \mathcal{X} \times \mathcal{Y} \to \R_+$. Let $\mu \in \mathcal{P}(\mathcal{X})$ and $\nu \in \mathcal{P}(\mathcal{Y})$ be two probability measures that we aim to compare.
@@ -43,6 +49,9 @@ measures, the equivalence holds if $\mu = \frac{1}{N} \sum_{i \in \integ{N}}
 \delta_{\bm{y}_i}$ as the solution of \eqref{eq:Wasserstein} is reached at an
 extremal point of the polytope of doubly stochastic matrices
 \citep{bertsimas1997introduction}.
+
+\end{mem1}
+
 
 \subsection{Optimal Transport Across Spaces : Gromov-Wasserstein Formulation}
 

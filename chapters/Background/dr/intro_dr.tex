@@ -2,7 +2,7 @@
 
 This chapter provides a comprehensive review of the existing literature on dimensionality reduction (DR) methods. In \Cref{sec:background_dr}, we introduce a general formulation of DR based on pairwise similarity matrices.
 
-Next, we explore DR techniques from two distinct viewpoints: latent variable models in \Cref{sec:dr_proba_modelling} and optimal transport in \Cref{sec:dist_perspective_dr}. These viewpoints offer opportunities for future extensions by enabling the modification of foundational assumptions. However, they currently apply only to a limited subset of DR methods. The chapters that follow will aim to expand these perspectives to include a wider array of DR techniques, particularly the nonlinear manifold learning approaches that have become increasingly popular in recent years.
+Next, we explore DR techniques from two distinct viewpoints: latent variable models in \Cref{sec:dr_proba_modelling} and optimal transport in \Cref{sec:dist_perspective_dr}. These viewpoints offer opportunities for future extensions by enabling the modification of foundational assumptions. However, these perspectives only apply to a limited subset of DR methods. The chapters that follow will aim to expand these perspectives to include a wider array of DR techniques, particularly the nonlinear manifold learning approaches that have become increasingly popular in recent years.
 
 
 \paragraph{Dimensionality reduction context.}
@@ -13,13 +13,13 @@ Throughout, we consider an input dataset with $N$ vectorial data points with dim
 In this section we review the most popular DR methods. These algorithm construct a low-dimensional representation of the data that best preserves a notion of geometric structure among the input samples. 
 
 This structure is generally encoded via a symmetric pairwise similarity matrix obtained from the input data $\mX$. Throughout, we call \emph{affinity} the weight matrix of a graph that encodes this similarity. The higher the weight in position $(i,j)$, the
-higher the similarity or proximity between samples $i$ and $j$. Simple usual affinities include the inner product $\left( \langle \vx_i, \vx_j \rangle \right)_{ij}$ or the Gaussian kernel $\left( \exp(-\|\vx_i - \vx_j\|_2^2) \right)_{ij}$.
+higher the similarity or proximity between samples $i$ and $j$. Simple usual affinities include the inner product $\left( \langle \vx_i, \vx_j \rangle \right)_{ij}$ or the Gaussian kernel $\left( \exp(-\|\vx_i - \vx_j\|_2^2) / \sigma \right)_{ij}$.
 
 Affinity-based DR methods essentially revolve around two key steps:
 
 \begin{enumerate}
     \item Capture the geometry of the data $\mX$ by defining a measure of similarity between samples in the input space, which is encoded into an $N \times N$ matrix $\mA_{\mX}$.
-    \item Construct a low-dimensional representation $\mZ$ that preserves this structure in the latent space. This step involves creating an affinity matrix $\mA_{\mZ}$ from $\mZ$ and optimizing $\mZ$ so that $\mA_{\mZ}$ aligns with $\mA_{\mX}$.
+    \item Create a low-dimensional representation $\mZ$ that maintains this structure in the latent space. This involves generating an affinity matrix $\mA_{\mZ}$ from $\mZ$ and adjusting $\mZ$ to make $\mA_{\mZ}$ correspond to $\mA_{\mX}$. We will later clarify what we mean by ``correspond''.
 \end{enumerate}
 
 Although the above general description of DR methods is intuitive, it brings up a critical question: how should one design effective affinity matrices $\mA_{\mX}$ and $\mA_{\mZ}$? As we will explore in this chapter, the choice of affinity is essential and significantly influences the characteristics of the final embedding. It also raises the question of which criterion to use to compare two affinity matrices, which also has important practical implications.
