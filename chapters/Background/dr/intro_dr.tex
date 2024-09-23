@@ -31,7 +31,7 @@ We define $\mA_\mX$ and $\mA_\mZ$ as the similarity matrices computed from the d
 \label{eq:DR_criterion}\tag{DR}
 \min_{\mZ \in \R^{N \times d}} \: \sum_{(i,j) \in \integ{N}^2}  L\big([\mA_\mX]_{ij}, [\mA_\mZ]_{ij}\big) \,.
 \end{equation}
-where $L:\R \times \R \rightarrow \R$ is a loss that quantifies the similarity between pairs of points in the input space $\R^{p}$ compared to pairs of points in the output space $\R^{d}$. Various losses can be used, such as the quadratic loss $L_2(x,y) \coloneqq (x - y)^2$, the Kullback-Leibler divergence $\KL(x,y) \coloneqq x \log (x/y) - x +y$ or the binary cross-entropy $\BCE(x,y) \coloneqq -x \log(y) - (1-x) \log(1-y)$.
+where $L:\R \times \R \rightarrow \R$ is a loss that quantifies the similarity between pairs of points in the input space $\R^{p}$ compared to pairs of points in the output space $\R^{d}$. Several types of loss functions can be employed, such as the quadratic loss $L_2(x, y) \coloneqq (x - y)^2$, the Kullback-Leibler divergence $\KL(x, y) \coloneqq x \log \left(\frac{x}{y}\right) - x + y$, which is defined for positive-valued affinities, or the binary cross-entropy $\BCE(x, y) \coloneqq -x \log(y) - (1 - x) \log(1 - y)$, which applies when affinities are bounded in the range $[0,1]$.
 
 In the following sections, we demonstrate that the majority of popular dimensionality reduction (DR) methods fit within this framework. Our discussion is organized around two key family of models that capture the fundamental principles of DR: kernel PCA methods discussed in \Cref{sec:spectral_methods}, and t-SNE-like approaches presented in \Cref{sec:neighbor_embedding}.
 
