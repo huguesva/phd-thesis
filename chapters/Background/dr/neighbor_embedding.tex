@@ -12,10 +12,10 @@ Within our framework, these methods correspond to \cref{eq:DR_criterion} with $L
 \paragraph{Neighbor Embedding objective.}
 NE objectives share a common structure: they aim to minimize the weighted sum of an \emph{attractive term} that pulls the embeddings closer together and a \emph{repulsive term} that pushes them apart and prevents trivial collapsed solutions \citep{van2022probabilistic}. Interestingly, the attractive term is often the cross-entropy between the input and output affinities. Additionally, sometimes for computational reasons, the repulsive term is typically a function of the output affinities only. Thus, the NE problem can be formulated as the following general objective, where the dependance in $\mZ$ is implictly encoded in the output affinity matrix $\mA_{\mZ}$:
 \begin{align}\tag{NE}\label{eq:ne_attraction_repulsion}
-    \min_{\mZ \in \R^{N \times d}} \: - \sum_{ij} [\mA_{\mX}]_{ij} \log [\mA_{\mZ}]_{ij} + \mathcal{L}_{\mathrm{rep}}(\mA_{\mZ}) \:.
+    \min_{\mZ \in \R^{N \times d}} \: - \sum_{ij} [\mA_{\mX}]_{ij} \log [\mA_{\mZ}]_{ij} + \mathcal{L}_{\mathrm{rep}}(\mZ) \:.
 \end{align}
 
-In the above, \(\mathcal{L}_{\mathrm{rep}}(\mA_{\mZ})\) represents the repulsive part of the loss function that takes different forms depending on the method. We now detail the two most popular NE methods: Stochastic Neighbor Embedding (SNE) and t-Distributed Stochastic Neighbor Embedding (t-SNE) as their principles are at the core of other NE approaches.
+In the above, \(\mathcal{L}_{\mathrm{rep}}(\mZ)\) represents the repulsive part of the loss function that takes different forms depending on the method. We now detail the two most popular NE methods: Stochastic Neighbor Embedding (SNE) and t-Distributed Stochastic Neighbor Embedding (t-SNE) as their principles are at the core of other NE approaches.
 % while \(\gamma\) is a hyperparameter that controls the balance between attraction and repulsion.
 
 \subsubsection{The Stochastic Neighbor Embedding Approach}\label{sec:sne}
@@ -33,26 +33,26 @@ where $\varepsilon > 0$ is a bandwidth parameter. The exponent $\mathrm{r}$ in t
 \end{remark}
 
 \paragraph{Entropic Affinities (EAs).}
-Crucially, to account for varying noise levels in the data, the authors of SNE propose to use an entropic affinity matrix, denoted $\mA_{\mX}^{\mathrm{e}}$ for \emph{entropic}, instead of $\mA_{\mX}^{\mathrm{r}}$. The core principle of EAs \citep{hinton2002stochastic} is to use \emph{adaptive} kernel bandwidths $(\varepsilon^\star_i)_{i \in \integ{n}}$ to better capture detailed structures in the data, as opposed to using constant bandwidths. The benefits of adaptive bandwidths have also been highlighted in other studies, such as \citep{van2018recovering} and \citep{zelnik2004self}. Adaptive bandwidths adjust distances to account for the varying density in different regions of the dataset.
+Crucially, to account for varying noise levels in the data, the authors of SNE propose to use an entropic affinity matrix, denoted $\mA_{\mX}^{\mathrm{e}}$ for \emph{entropic}, instead of $\mA_{\mX}^{\mathrm{r}}$. The core principle of EAs \citep{hinton2002stochastic} is to use \emph{adaptive} kernel bandwidths $(\varepsilon^\star_i)_{i \in \integ{N}}$ to better capture detailed structures in the data, as opposed to using constant bandwidths. The benefits of adaptive bandwidths have also been highlighted in other studies, such as \citep{van2018recovering} and \citep{zelnik2004self}. Adaptive bandwidths adjust distances to account for the varying density in different regions of the dataset.
 
-Entropic affinities rely on adaptive bandwidths to control the entropy of each row of the affinity. More precisely, given $\xi \in \integ{n-1}$, the goal of EAs is to build a Gaussian Markov chain transition matrix $\mA_{\mX}^{\mathrm{e}}$ with prescribed entropy as
+Entropic affinities rely on adaptive bandwidths to control the entropy of each row of the affinity. More precisely, given $\xi \in \integ{N-1}$, the goal of EAs is to build a Gaussian Markov chain transition matrix $\mA_{\mX}^{\mathrm{e}}$ with prescribed entropy as
 \begin{equation}
 \begin{split}
     \forall i, \: &\forall j, \: [\mA_{\mX}^{\mathrm{e}}]_{ij} = \frac{\exp{(-C_{ij}/\varepsilon^\star_i)}}{\sum_\ell \exp{(-C_{i\ell}/\varepsilon^\star_i)}} \\
     &\text{with} \:\: \varepsilon^\star_i \in \mathbb{R}^*_+ \:\: \text{s.t.} \: \operatorname{H}([\mA_{\mX}^{\mathrm{e}}]_{i:}) = \log{\xi} + 1\,. \label{eq:entropic_affinity_pb}
 \end{split}\tag{EA}
 \end{equation}
-The hyperparameter $\xi$, which is also known as \emph{perplexity}, can be interpreted as the effective number of neighbors for each data point. Indeed, a perplexity of $\xi$ means that each row of $\mA_{\mX}^{\mathrm{e}}$ (which is a discrete probability since $\mA_{\mX}^{\mathrm{e}}$ is row-wise stochastic) has the same entropy as a uniform distribution over $\xi$ neighbors. Therefore, it provides the practitioner with an interpretable parameter specifying which scale of dependencies the affinity matrix should faithfully capture. In practice, a root-finding algorithm is used to find the bandwidth parameters $(\varepsilon_i^\star)_{i \in \integ{n}}$ that satisfy the constraints \citep{vladymyrov2013entropic}. Hereafter, with a slight abuse of language, we call $e^{\operatorname{H}([\mA_\mX]_{i:})-1}$ the perplexity of the datapoint $i$ (associated with the affinity $\mA_\mX$).
+The hyperparameter $\xi$, which is also known as \emph{perplexity}, can be interpreted as the effective number of neighbors for each data point. Indeed, a perplexity of $\xi$ means that each row of $\mA_{\mX}^{\mathrm{e}}$ (which is a discrete probability since $\mA_{\mX}^{\mathrm{e}}$ is row-wise stochastic) has the same entropy as a uniform distribution over $\xi$ neighbors. Therefore, it provides the practitioner with an interpretable parameter specifying which scale of dependencies the affinity matrix should faithfully capture. In practice, a root-finding algorithm is used to find the bandwidth parameters $(\varepsilon_i^\star)_{i \in \integ{N}}$ that satisfy the constraints \citep{vladymyrov2013entropic}. Hereafter, with a slight abuse of language, we call $e^{\operatorname{H}([\mA_\mX]_{i:})-1}$ the perplexity of the datapoint $i$ (associated with the affinity $\mA_\mX$).
 
 \paragraph{SNE objective.}
 With this in place, SNE focuses on solving
 \begin{align}\label{eq:SNE_pb}\tag{SNE}
-    \min_{\mZ \in \R^{n \times d}} \: \mathcal{L}_{\mathrm{SNE}} \coloneqq \operatorname{KL}(\mA_{\mX}^{\mathrm{e}} | \mA_{\mZ}^{\mathrm{r}}) \;,
+    \min_{\mZ \in \R^{N \times d}} \: \mathcal{L}_{\mathrm{SNE}} \coloneqq \operatorname{KL}(\mA_{\mX}^{\mathrm{e}} | \mA_{\mZ}^{\mathrm{r}}) \;,
 \end{align}
 where $\mA_{\mX}^{\mathrm{e}}$ is the entropic affinity matrix computed from $\mX$ and $\mA_{\mZ}^{\mathrm{r}}$ is the row-normalized Gaussian kernel in the embedding space.
 Focusing on non-constant terms, the above objective can be seen as a special instance of \Cref{eq:ne_attraction_repulsion} with the following repulsion
 \begin{align}
-    \mathcal{L}_{\mathrm{rep}}(\mA_{\mZ}) = \sum_{i} \log \Big(\sum_j [\mA_{\mZ}]_{ij} \Big)
+    \mathcal{L}_{\mathrm{rep}}(\mZ) = \sum_{i} \log \Big(\sum_j [\mA_{\mZ}]_{ij} \Big)
 \end{align}
 where $\mA_{\mZ} = \exp{(-[\mC_{\mZ}])}$ is the Gaussian kernel matrix in the latent space.
 
@@ -79,7 +79,7 @@ Therefore, the t-SNE problem can be expressed as
 
 Similarly to SNE, the repulsive term is obtained as the normalization of the output affinity $\mA_{\mZ}$. In this case it reads:
 \begin{align}
-    \mathcal{L}_{\mathrm{rep}}(\mA_{\mZ}) = \log \Big(\sum_{ij} [\mA_{\mZ}]_{ij} \Big) \:,
+    \mathcal{L}_{\mathrm{rep}}(\mZ) = \log \Big(\sum_{ij} [\mA_{\mZ}]_{ij} \Big) \:,
 \end{align}
 where $[\mA_{\mZ}]_{ij} = (1 + [\C_{\Z}]_{ij})^{-1}$ is the student-t kernel in the embedding space.
 
@@ -91,11 +91,11 @@ For instance, \citet{Guo22} adapted t-SNE by using the Poincaré distance and by
 \paragraph{Connection with maximum likelihood estimation.}
 The t-SNE optimization problem can be viewed as a form of parametric density estimation. In this interpretation, we aim to approximate a target distribution $p$ with a parametric distribution $q_{\theta}$. In the context of t-SNE, $p$ represents a probability distribution over the edges of the affinity graph that connects the data samples, encoded by the affinity matrix $\mA_{\mX}$, where $[\mA_{\mX}]_{ij}$ denotes the probability of sampling the edge $(i,j)$. The parametric distribution $q_{\theta}$ is defined by the output affinities $\mA_{\mZ}$, with the parameters $\theta$ corresponding to the latent embeddings $\mZ$. The goal is to find the embedding positions $\mZ$ that best approximate the input affinities. This problem can be formulated as the following Maximum Likelihood Estimation (MLE) problem \citep{damrich2022t}:
 \begin{align}
-    \max_{\theta = \mZ} \mathbb{E}_{ij \sim p} \log \left( q_{\theta}(ij) \right) \:.
+    \max_{\theta = \mZ} \mathbb{E}_{(i,j) \sim p} \log q_{\theta} \big( (i,j) \big) \:.
 \end{align}
-As mentioned in \Cref{rem:norm_as_repulsion}, this formulation requires $q_{\theta}$ to be a normalized model to prevent trivial solutions. The normalized model is defined as $q_{\theta}(ij) = \phi(ij) / Z(\theta)$, where $Z(\theta) = \sum_{k \neq l} \phi(kl)$ acts as the partition function. Expanding the expectation yields the following objective:
+As mentioned in \Cref{rem:norm_as_repulsion}, this formulation requires $q_{\theta}$ to be a normalized model to prevent trivial solutions. The normalized model is defined as $q_{\theta}((i,j)) = \phi((i,j)) / Z(\theta)$, where $Z(\theta) = \sum_{k \neq l} \phi((k,l))$ acts as the partition function. Expanding the expectation yields the following objective:
 \begin{align}
-    \max_{\theta = \mZ}  - \sum_{ij} p(ij) \log \left( \phi(ij) \right) + \log \left( \sum_{kl} \phi(kl) \right),
+    \max_{\theta = \mZ}  - \sum_{ij} p((i,j)) \log \phi((i,j)) + \log \left( \sum_{(k,l)} \phi((k,l)) \right),
 \end{align}
 which corresponds to the objective in \Cref{eq:t-SNE_pb}, originally formulated as a Kullback-Leibler divergence between the input and output affinities.
 
@@ -112,7 +112,7 @@ Additionally, as highlighted by \citet{hu2022your}, the popular contrastive lear
 \end{align}
 This further supports the argument made in \Cref{chap:intro} that DR and self-supervised learning methods share common underlying principles. Along similar lines, \citet{balestriero2022contrastive} connects a broad range of popular self-supervised learning methods to the spectral embedding techniques discussed in \Cref{sec:spectral_methods}.
 
-There are several important distinctions between the two families of methods. First, SSL methods are inherently parametric, as they rely on neural networks, whereas NE methods are non-parametric. Second, SSL methods are aimed at learning representations that are useful for downstream tasks, typically in a space of dimensionality $d=128$ or higher, while NE methods mostly focus on visualization with $d=2$. Lastly, SSL methods require various techniques to stabilize the training process \citep{balestriero2023cookbookselfsupervisedlearning}, whereas NE methods are comparatively very simple and fast to train.
+There are several key distinctions between the two families of methods. First, SSL methods are inherently parametric, as the projection is encoded by a neural network, whereas NE methods are primarily non-parametric \cite{chen2020simple}. Second, SSL methods are aimed at learning representations that are useful for downstream tasks, typically in a space of dimensionality $d=128$ or higher, while NE methods mostly focus on visualization with $d=2$. Lastly, SSL methods require various techniques to stabilize the training process, including the use of a projector network \citep{balestriero2023cookbookselfsupervisedlearning}, whereas NE methods are comparatively much simpler and faster to train. \todo{fig gpu}
 
 Still, these insightful connections raise an intriguing question for expanding the scope of NE methods: can the principles of self-supervised learning (SSL) be applied to generate 2D embeddings for complex computer vision datasets where a meaningful ground metric is unavailable? In \citep{bohm2022unsupervised}, the authors explored this by attempting to directly project a SimCLR model into a 2D space using a student kernel, essentially adapting SimCLR to fit within the t-SNE framework. Their findings revealed that this approach is challenging to execute in a single step and performs more effectively when t-SNE is applied on top of a separately pre-trained SimCLR model.
 
@@ -126,7 +126,7 @@ A straightforward computation of the objective in \Cref{eq:ne_attraction_repulsi
 Let's first focus on the attraction term, \(\sum_{ij} -[\mA_{\mX}]_{ij} \log [\mA_{\mZ}]_{ij}\). In SNE and t-SNE, this term relies on entropic affinities \ie \(\mA_{\mX} = \mA_{\mX}^{\mathrm{e}}\), which, as discussed in the entropic affinities section, emphasizes a small number of effective neighbors determined by the perplexity parameter \(\xi\). Typically, \(\xi\) is set between 30 and 100, ensuring the preservation of local structures. In practice, it is often assumed that for any point \(i\), the affinity values \([\mA_{\mX}^{\mathrm{e}}]_{ij}\) for points \(j\) beyond the \(3 \times \xi\)-th neighbor of \(i\) are negligible, contributing minimally to the objective function. Consequently, a common preprocessing step involves reducing the affinity matrix \(\mA_{\mX}\) to a sparse \(N \times k\) matrix, where \(k = 3 \times \xi\), by retaining only the \(k\) nearest neighbors for each point. This can be efficiently done using for instance the KeOps library \citep{charlier2021kernel}. Such a preprocessing step significantly reduces both memory and computational costs, enabling the computation of the term \(\sum_{ij} -[\mA_{\mX}]_{ij} \log [\mA_{\mZ}]_{ij}\) in \(\mathcal{O}(Nk)\) time.
 
 
-Second, we turn our attention to the repulsion term $\mathcal{L}_{\mathrm{rep}}(\mA_{\mZ})$. Focusing specifically on t-SNE we have $\mathcal{L}_{\mathrm{rep}}(\mA_{\mZ}) = \log \Big(\sum_{ij} [\mA_{\mZ}]_{ij} \Big)$. Computing the sum over all pairs again induces a $\mathcal{O}(N^2)$ complexity. First methods to counter this issue by \cite{van2014accelerating} manages to reduce the complexity to $\mathcal{O}(N \log N)$ by approximating the repulsive term with a Barnes-Hut tree. This approximation reduces the complexity to $\mathcal{O}(N \log N)$ by approximating the repulsive term with a Barnes-Hut tree. The repulsive term is computed by recursively dividing the space into quadrants and approximating the contribution of distant points. One clear limitation of the latter is that it is bound to low dimensional embedding spaces as partitionment of the space scales poorly with the dimensionality. To overcome this limitation and provide more general approximation methods, another approach is to use Noise Contrastive Estimation \citep{gutmann2010noise} that builds upon the previously introduced characterization of t-SNE as maximum likelihood estimation.
+Second, we turn our attention to the repulsion term $\mathcal{L}_{\mathrm{rep}}(\mZ)$. Focusing specifically on t-SNE we have $\mathcal{L}_{\mathrm{rep}}(\mZ) = \log \Big(\sum_{ij} [\mA_{\mZ}]_{ij} \Big)$. Computing the sum over all pairs again induces a $\mathcal{O}(N^2)$ complexity. First methods to counter this issue by \cite{van2014accelerating} manages to reduce the complexity to $\mathcal{O}(N \log N)$ by approximating the repulsive term with a Barnes-Hut tree. This approximation reduces the complexity to $\mathcal{O}(N \log N)$ by approximating the repulsive term with a Barnes-Hut tree. The repulsive term is computed by recursively dividing the space into quadrants and approximating the contribution of distant points. One clear limitation of the latter is that it is bound to low dimensional embedding spaces as partitionment of the space scales poorly with the dimensionality. To overcome this limitation and provide more general approximation methods, another approach is to use Noise Contrastive Estimation \citep{gutmann2010noise} that builds upon the previously introduced characterization of t-SNE as maximum likelihood estimation.
 
 \begin{mem1}{Noise contrastive estimation}\label{mem:NCE}
     We focus on a popular technique to bypass the heavy direct computation of the partition function: Noise Contrastive Estimation (NCE) \citep{gutmann2010noise}. The approach proposed in NCE is to estimate the partition function of a model by contrasting the data distribution with a noise distribution.
@@ -148,7 +148,7 @@ Second, we turn our attention to the repulsion term $\mathcal{L}_{\mathrm{rep}}(
 
 \end{mem1}
 
-Applying the NCE technique to the t-SNE repulsion term $\mathcal{L}_{\mathrm{rep}}(\mA_{\mZ})$ has led to the development of several methods that have proven effective in practice. For what follwos we introduce the matrix $\widehat{\mA_{\mZ}}$ such that $[\widehat{\mA_{\mZ}}]_{ij} = [\mA_{\mZ}]_{ij} / ([\mA_{\mZ}]_{ij} + 1)$. The first such approach was LargeVis \citep{tang2016visualizing}, which simplifies to the following objective to minimize over the embeddings $\mZ$:
+Applying the NCE technique to the t-SNE repulsion term $\mathcal{L}_{\mathrm{rep}}(\mZ)$ has led to the development of several methods that have proven effective in practice. For what follwos we introduce the matrix $\widehat{\mA_{\mZ}}$ such that $[\widehat{\mA_{\mZ}}]_{ij} = [\mA_{\mZ}]_{ij} / ([\mA_{\mZ}]_{ij} + 1)$. The first such approach was LargeVis \citep{tang2016visualizing}, which simplifies to the following objective to minimize over the embeddings $\mZ$:
 \begin{align}\label{eq:LargeVis_pb}\tag{LargeVis}
     - \sum_{ij} [\mA_{\mX}]_{ij} \log [\widehat{\mA_{\mZ}}]_{ij} + \sum_{i \in N(i)} \log \left(1 - [\widehat{\mA_{\mZ}}]_{ij}\right)
 \end{align}

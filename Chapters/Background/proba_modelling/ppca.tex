@@ -1,6 +1,6 @@
 \section{The Latent Variable Perspective}\label{sec:dr_proba_modelling}
 
-After presenting the fundamental concepts of dimensionality reduction (DR) as the matching of two affinity matrices $\mA_{\mX}$ and $\mA_{\mZ}$ in \Cref{sec:background_dr}, we now offer a new perspective through probabilistic modeling.
+After presenting the fundamental concepts of dimensionality reduction (DR) as the matching of two affinity matrices $\mA_{\mX}$ and $\mA_{\mZ}$ in \Cref{sec:background_dr}, we now offer a fresh perspective through the lens of probabilistic modeling.
 
 In this perspective, the fundamental assumption is to view the data matrix $\mX$ as the result of a generative process based on an underlying latent low-dimensional variable $\mZ$. This interpretation justifies the use of the term \emph{latent space}, which we use interchangeably with \emph{embedding space} throughout this thesis.
 
@@ -8,7 +8,7 @@ This viewpoint is especially relevant for linear DR methods, such as PCA and its
 
 \subsection{From Probabilistic PCA ...}\label{sec:ppca}
 
-In probabilistic PCA (PPCA), we make the key modelling assumption that the data $\mX$ is generated through a linear transformation of the latent variables $\mZ$, to which Gaussian noise is added. This model is thus defined by the following generative process:
+In probabilistic PCA (\emph{PPCA}), we make the key modelling assumption that the data $\mX$ is generated through a linear transformation of the latent variables $\mZ$, to which Gaussian noise is added. This model is thus defined by the following generative process:
 \begin{align}
     \mX = \mW \mZ + \mE,
 \end{align}
@@ -31,6 +31,12 @@ Integrating over the latent variable $\vz_i \sim \mathcal{N}(0, \mI_d)$, one obt
 \begin{align}
     \vx_i | \left( \mW, \sigma \right) \: \sim \mathcal{N}(0, \mW \mW^\top + \sigma^2 \mI_p) \:.
 \end{align}
+
+Since the $\vx_i$'s are \emph{iid}, the log marginal likelihood can be experessed as the sum of the log-likelihoods of the individual samples. With matrix notations, we are left with the following problem, where we simplified constant terms
+\begin{align}
+    \max_{\mW, \sigma} \: -N \log |\mC| - \mX \mC^{-1} \mX^\top \quad \text{where} \quad \mC = \mW \mW^\top + \sigma^2 \mI_p \:.
+\end{align}
+As shown in \citep{tipping1999probabilistic}, the above is solved for 
 
 \begin{remark}
     later reason the the inter sample dependencies

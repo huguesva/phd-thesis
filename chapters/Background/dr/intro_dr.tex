@@ -1,41 +1,35 @@
 \newpage
 
-This chapter provides a comprehensive review of the existing literature on dimensionality reduction (DR) methods. In \Cref{sec:background_dr}, we introduce a general formulation of DR based on pairwise similarity matrices.
-
-Next, we explore DR techniques from two distinct viewpoints: latent variable models in \Cref{sec:dr_proba_modelling} and optimal transport in \Cref{sec:dist_perspective_dr}. These viewpoints offer opportunities for future extensions by enabling the modification of foundational assumptions. However, these perspectives only apply to a limited subset of DR methods. The chapters that follow will aim to expand these perspectives to include a wider array of DR techniques, particularly the nonlinear manifold learning approaches that have become increasingly popular in recent years.
+This chapter provides a review of the existing literature on dimensionality reduction (DR) methods. In \Cref{sec:background_dr}, we introduce a general formulation of DR based on pairwise similarity matrices. Next, we explore DR techniques from two distinct viewpoints: latent variable models in \Cref{sec:dr_proba_modelling} and optimal transport in \Cref{sec:dist_perspective_dr}. These viewpoints offer opportunities for future extensions by enabling the modification of foundational assumptions. However, these perspectives only apply to a limited subset of DR methods. The chapters that follow will aim to expand these perspectives to include a wider array of DR techniques, particularly the nonlinear manifold learning approaches that have become increasingly popular in recent years.
 
 
 \paragraph{Dimensionality reduction context.}
-Throughout, we consider an input dataset with $N$ vectorial data points with dimensionality $p$ \ie $\mX = (\vx_1, ..., \vx_N) ^\top$ where for all i, $\vx_i \in \R^{p}$. Dimensionality reduction focuses on constructing a low-dimensional representation or \emph{embedding} $\mZ = (\vz_1, ..., \vz_N)^\top \in \R^{N \times d}$ where for all $i$, $\vz_i \in \R^{d}$ with $d < p$.
+We consider an input dataset with $N$ vectorial data points of dimensionality $p$ \ie $\mX = (\vx_1, ..., \vx_N) ^\top$ where for all i, $\vx_i \in \R^{p}$. Dimensionality reduction focuses on constructing a low-dimensional representation or \emph{embedding} $\mZ = (\vz_1, ..., \vz_N)^\top \in \R^{N \times d}$ where for all $i$, $\vz_i \in \R^{d}$ and $d < p$.
 
 \section{Overview of Dimensionality Reduction Methods}\label{sec:background_dr}
 
 In this section we review the most popular DR methods. These algorithm construct a low-dimensional representation of the data that best preserves a notion of geometric structure among the input samples. 
 
 This structure is generally encoded via a symmetric pairwise similarity matrix obtained from the input data $\mX$. Throughout, we call \emph{affinity} the weight matrix of a graph that encodes this similarity. The higher the weight in position $(i,j)$, the
-higher the similarity or proximity between samples $i$ and $j$. Simple usual affinities include the inner product $\left( \langle \vx_i, \vx_j \rangle \right)_{ij}$ or the Gaussian kernel $\left( \exp(-\|\vx_i - \vx_j\|_2^2) / \sigma \right)_{ij}$.
+higher the similarity or proximity between samples $i$ and $j$. Simple usual affinities include the inner product $\left( \langle \vx_i, \vx_j \rangle \right)_{ij}$ or the Gaussian affinity $\left( \exp(-\|\vx_i - \vx_j\|_2^2) / \sigma \right)_{ij}$.
 
 Affinity-based DR methods essentially revolve around two key steps:
 
 \begin{enumerate}
     \item Capture the geometry of the data $\mX$ by defining a measure of similarity between samples in the input space, which is encoded into an $N \times N$ matrix $\mA_{\mX}$.
-    \item Create a low-dimensional representation $\mZ$ that maintains this structure in the latent space. This involves generating an affinity matrix $\mA_{\mZ}$ from $\mZ$ and adjusting $\mZ$ to make $\mA_{\mZ}$ correspond to $\mA_{\mX}$. We will later clarify what we mean by ``correspond''.
+    \item Create a low-dimensional representation $\mZ$ that maintains this structure. This involves generating an affinity matrix $\mA_{\mZ}$ from $\mZ$ and adjusting $\mZ$ to make $\mA_{\mZ}$ correspond to $\mA_{\mX}$. We will later clarify what we mean by ``correspond''.
 \end{enumerate}
 
 Although the above general description of DR methods is intuitive, it brings up a critical question: how should one design effective affinity matrices $\mA_{\mX}$ and $\mA_{\mZ}$? As we will explore in this chapter, the choice of affinity is essential and significantly influences the characteristics of the final embedding. It also raises the question of which criterion to use to compare two affinity matrices, which also has important practical implications.
 
-\paragraph{Notations.} We subsequently introduce the functions
-\begin{equation}
-\label{eq:sim_function}
-\simiX: \R^{N \times p} \to \R^{N \times N}, \simi: \R^{N \times d} \to \R^{N \times N}\,,
-\end{equation}
-which construct pairwise similarity matrices in the input and output space from embeddings $\mX$ and $\mZ$. As done above, we also slightly abuse notations by denoting $\mA_\mX = \simiX(\mX)$ and $\mA_\mZ = \simi(\mZ)$ the similarity matrices obtained from the data and the embedding. We also denote by $\C_\X = \left(\|\vx_{i}-\vx_{j}\|_2^2\right)_{ij}$ and $\C_\Z = \left(\|\vz_{i}-\vz_{j}\|_2^2\right)_{ij}$ the squared Euclidean distance cost matrices derived from the samples in $\X$ and $\Z$ respectively.
- 
+\paragraph{Notations.} 
+We define $\mA_\mX$ and $\mA_\mZ$ as the similarity matrices computed from the data $\mX$ and the embedding $\mZ$, respectively. Additionally, we represent the squared Euclidean distance cost matrices, computed from the samples in $\mX$ and $\mZ$, as $\C_\X = \left(\|\vx_{i}-\vx_{j}\|_2^2\right)_{ij}$ and $\C_\Z = \left(\|\vz_{i}-\vz_{j}\|_2^2\right)_{ij}$, respectively.
+
 \paragraph{DR general objective.} With this in place, the DR problem can be formulated quite generally as the optimization problem
 %  minimizing over $\mZ$ the objective function
 \begin{equation}
 \label{eq:DR_criterion}\tag{DR}
-\min_{\mZ \in \R^{N \times d}} \: \sum_{(i,j) \in \integ{N}^2}  L\big([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{ij}\big) \,. %+ R(\mZ)\,.
+\min_{\mZ \in \R^{N \times d}} \: \sum_{(i,j) \in \integ{N}^2}  L\big([\mA_\mX]_{ij}, [\mA_\mZ]_{ij}\big) \,.
 \end{equation}
 where $L:\R \times \R \rightarrow \R$ is a loss that quantifies the similarity between pairs of points in the input space $\R^{p}$ compared to pairs of points in the output space $\R^{d}$. Various losses can be used, such as the quadratic loss $L_2(x,y) \coloneqq (x - y)^2$, the Kullback-Leibler divergence $\KL(x,y) \coloneqq x \log (x/y) - x +y$ or the binary cross-entropy $\BCE(x,y) \coloneqq -x \log(y) - (1-x) \log(1-y)$.
 
