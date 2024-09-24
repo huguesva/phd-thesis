@@ -1,11 +1,18 @@
 \section{Introduction}\label{intro}
 
+
+This chapter is based on material from the following publication:
+
+\begin{center} 
+    \bibentry{van2022probabilistic} 
+\end{center}
+
 Due to a lack of clear probabilistic foundations, these properties remain mostly empirical. This gap between theory and practice is detrimental as practitioners may rely on strategies that are not optimal for their use case.
 While recent software developments are making these methods more scalable \cite{chan2018t,pezzotti2019gpgpu,linderman2019fast} and further expanding their use, the need for a well-established probabilistic framework is becoming more prominent.
 In this work, we define the generative probabilistic model that encompasses current embedding methods, while establishing new links with the well-established PCA model.
 
 \paragraph{Outline.} 
-Consider $\Xb = (\mathbf{x}_1,..., \mathbf{x}_n)^\top \in \mathbb{R}^{n \times p}$, an input dataset that consists of $n$ vectors of dimension $p$. Our task is to embed $\Xb$ in a lower dimensional space of dimension $q<p$ (typically $q=2$ for visualization), and we denote by $\Zb = (\mathbf{z}_1, ..., \mathbf{z}_n)^\top \in \mathbb{R}^{n \times q}$ the unknown embeddings. The rationale of our framework is to suppose that the observations $\Xb$ and $\Zb$ are structured by two latent graphs with $\Wb_{X}$ and $\Wb_{Z}$ standing for their $n$-square weight matrices.
+The rationale of our framework is to suppose that the observations $\Xb$ and $\Zb$ are structured by two latent graphs with $\Wb_{X}$ and $\Wb_{Z}$ standing for their $n$-square weight matrices.
 As the goal of DR is to preserve the input's structure in the latent space, we propose to find the best low-dimensional representation $\Zb$ of $\Xb$ such that $\Wb_{X}$ and $\Wb_{Z}$ are close. To build a flexible and robust probabilistic framework, we consider random graphs distributed according to some predefined prior distributions. Our objective is to match the posterior distributions of $\Wb_{X}$ and $\Wb_{Z}$. Note that as they share the same dimensionality the latter graphs can be easily compared unlike $\Xb$ and $\Zb$. The coupling is done with a cross-entropy criterion, the minimization of which will be referred to as graph coupling.
 
 In this work, our main contributions are as follows.
@@ -15,3 +22,12 @@ In this work, our main contributions are as follows.
     \item We uncover the intrinsic probabilistic property explaining why such methods perform poorly on conserving the large-scale structure of the data as a consequence of the degeneracy of the MRF when shift-invariant kernels are used (\cref{prop:integrability_pairwise_MRF}). Such degeneracy induces the loss of the relative positions of clusters corresponding to the connected components of the posterior latent graphs whose distributions are identified (\cref{prop:posterior_W}). These findings are highlighted by a new initialization of the embeddings (\cref{sec:towards_large_scale}).
     \item We show that for Gaussian MRFs, when adapting graph coupling to precision matrices with suitable priors, PCA appears as a natural extension of the coupling problem in its continuous version (\cref{PCA_graph_coupling}). Such a model does not suffer from the aforementioned degeneracy hence preserves the large-scale structure.
 \end{itemize}
+
+
+\begin{mem1}{Matrix normal model}\label{memo:matrix_normal}
+    AAA
+\end{mem1}
+
+\begin{mem1}{GMRF models}
+    AAA
+\end{mem1}

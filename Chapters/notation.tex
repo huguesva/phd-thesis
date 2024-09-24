@@ -9,6 +9,7 @@
     \item The $i^{th}$ entry of a vector $\vv$ is denoted as either $v_i$ or $[\vv]_i$.
 	Similarly, for a matrix $\mM$, $M_{ij}$ and $[\mM]_{ij}$ both denote its entry $(i,j)$.
     \item $\mathbf{P}_{i:}$ or $[\mathbf{P}]_{i:}$: $i$-th row of a matrix $\Pb$.
+    \item $|\mM|$ denotes the determinant of a square matrix $\mM$.
     \item $\odot$ (\textit{resp.} $\oslash$): element-wise multiplication (\textit{resp.} division) between vectors/matrices.
     \item $\langle \cdot, \cdot \rangle$ is the standard Euclidean inner product for matrices/vectors.
     \item For $\bm{\alpha}, \bm{\beta} \in \R^n, \bm{\alpha} \oplus \bm{\beta} \in \R^{n \times n}$ is $(\alpha_i + \beta_j)_{ij}$.
@@ -20,6 +21,5 @@
     \item For $\vx \in \R^{N}, \diag(\vx)$ denotes the diagonal matrix whose elements are the $x_i$.
     \item We denote by $\gU(\vh) = \left\{ \mT \in \R_+^{N \times n} | \mT \bm{1}_n = \vh \right\}$ and $\gU(\vh, \overline{\vh}) = \left\{ \mT \in \R_+^{N \times n} | \mT \bm{1}_n = \vh, \mT^\top \bm{1}_N = \overline{\vh} \right\}$ the set of discrete couplings with respectively one and two marginals.
     \item $L_2(x,y) \coloneqq \frac{1}{2} |x - y|^2$ is the quadratic loss,  $L_{\mathrm{KL}}(x,y) \coloneqq L_{\mathrm{KL}}(x,y) - x + y $ the Kullback-Leibler divergence loss.
-    \item For a matrix $\mZ \in \R^{N \times d}$, we denote by $\mC_{\mZ} =  \simi(\mZ)$ its output through a similarity function $\simi: \R^{N \times d} \to \R^{N \times N}$.
     % \item $\operatorname{DS} = \mathcal{U}(\bm{1}, \bm{1})$ is the space of $N \times N$ doubly stochastic matrices.
 \end{itemize}

@@ -1,65 +1,81 @@
 \section{The Latent Variable Perspective}\label{sec:dr_proba_modelling}
 
-After presenting the fundamental concepts of dimensionality reduction (DR) as the matching of two affinity matrices $\mA_{\mX}$ and $\mA_{\mZ}$ in \Cref{sec:background_dr}, we now offer a fresh perspective through the lens of probabilistic modeling.
+After introducing the fundamental concepts of dimensionality reduction (DR) as the matching of two affinity matrices, $\simiX$ and $\simiZ$, in \Cref{sec:background_dr}, we now present a fresh perspective through the lens of probabilistic modeling. In this framework, the key assumption is to regard the data matrix $\mX$ as the outcome of a generative process driven by an underlying latent low-dimensional variable $\mZ$. This interpretation motivates the use of the term \emph{latent space}, which we will use interchangeably with \emph{embedding space} throughout this thesis.
 
-In this perspective, the fundamental assumption is to view the data matrix $\mX$ as the result of a generative process based on an underlying latent low-dimensional variable $\mZ$. This interpretation justifies the use of the term \emph{latent space}, which we use interchangeably with \emph{embedding space} throughout this thesis.
-
-This viewpoint is especially relevant for linear DR methods, such as PCA and its probabilistic variant, Probabilistic PCA (PPCA) \citep{tipping1999probabilistic}. It also prompts the question of how to extend this framework to more general DR formulations, including neighbor embedding approaches. This sets the stage for the material introduced in \Cref{chapter:GraphCoupling}.
+This probabilistic perspective is particularly relevant for linear DR methods, such as PCA and its probabilistic variant, Probabilistic PCA (PPCA) \citep{tipping1999probabilistic}. It also raises the question of how this framework can be generalized to broader DR formulations, including neighbor embedding approaches. This section provides the groundwork for the material discussed in \Cref{chapter:GraphCoupling}.
 
 \subsection{From Probabilistic PCA ...}\label{sec:ppca}
 
-In probabilistic PCA (\emph{PPCA}), we make the key modelling assumption that the data $\mX$ is generated through a linear transformation of the latent variables $\mZ$, to which Gaussian noise is added. This model is thus defined by the following generative process:
-\begin{align}
+In \Cref{memo:PCA}, we observed that PCA embeddings are derived by projecting the data orthogonally onto the principal axes of its covariance matrix. The key idea behind \emph{probabilistic PCA} (PPCA) is to construct a probabilistic model around the linear relationship that connects the data to its latent low-dimensional embedding.
+
+This model is defined by the following generative process:
+\begin{align}\label{eq:ppca_linear}
     \mX = \mW \mZ + \mE,
 \end{align}
-where $\mX \in \mathbb{R}^{N \times p}$ is the data matrix, $\mZ \in \mathbb{R}^{N \times d}$ is the embedding matrix, $\mW \in \mathbb{R}^{p \times d}$ is the linear transformation matrix, and $\mE \in \mathbb{R}^{N \times p}$ is the noise matrix. The noise is assumed to consist of independent and identically distributed (i.i.d.) Gaussian variables, i.e., $\mE = (\ve_1, \ldots, \ve_N)^\top$, where each $\ve_i$ follows a Gaussian distribution $\mathcal{N}(0, \sigma^2 \mI_p)$, with $\mI_p$ being the $p \times p$ identity matrix and $\sigma^2$ the variance of the noise.
+where $\mX \in \mathbb{R}^{N \times p}$ represents the data matrix, $\mZ \in \mathbb{R}^{N \times d}$ denotes the embedding matrix, $\mW \in \mathbb{R}^{p \times d}$ is the linear transformation matrix, and $\mE \in \mathbb{R}^{N \times p}$ represents the noise matrix. The noise is assumed to be independent and identically distributed (i.i.d.) Gaussian, i.e., $\mE = (\ve_1, \ldots, \ve_N)^\top$, where each $\ve_i$ follows a Gaussian distribution $\mathcal{N}(\bm{0}, \sigma^2 \mI_p)$ with $\sigma^2$ as the noise variance. Importantly, the latent variables are also assumed to be \emph{iid} Gaussian distributed \ie for any $i$, $\vz_i \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{N}(\bm{0}, \mI_d)$. The symbol $\perp\!\!\!\!\perp$ indicates that these variables are \emph{independent}. The model is fully specified by the parameters $\theta = (\mW, \sigma^2)$.
 
-Importantly, the latent variables are also assumed to be \emph{iid} Gaussian distributed \ie for any $i$, $\vz_i \sim \mathcal{N}(0, \mI_d)$. With this in place, the model is fully specified by the parameters $\theta = (\mW, \sigma^2)$.
-
-Note that we can rewrite the above linear relation as
-\begin{align}
-    \forall i, \quad \vx_i = \mW \vz_i + \ve_i \:.
-\end{align}
-In this quite simple model, the $\vx_i$'s are independent as the samples in $\mZ$ and $\mE$ are assumed to be independent.
-
-\paragraph{Parameter estimation.} A standard approach to fitting latent variable models consists in marginalizing over the latent variables and optimizing the parameters using \emph{maximum likelihood estimation} (MLE).
-Since, $\ve_i \sim \mathcal{N}(0, \sigma^2 \mI_p)$ for any $i$, one has 
-\begin{align}
-    \forall i, \quad \vx_i | \left( \vz_i, \mW, \sigma \right) \: \sim \mathcal{N}(\mW \vx_i, \sigma^2 \mI_p) \:.
-\end{align}
-Integrating over the latent variable $\vz_i \sim \mathcal{N}(0, \mI_d)$, one obtains the marginal distribution of $\vx_i$ as follows
-\begin{align}
-    \vx_i | \left( \mW, \sigma \right) \: \sim \mathcal{N}(0, \mW \mW^\top + \sigma^2 \mI_p) \:.
-\end{align}
-
-Since the $\vx_i$'s are \emph{iid}, the log marginal likelihood can be experessed as the sum of the log-likelihoods of the individual samples. With matrix notations, we are left with the following problem, where we simplified constant terms
-\begin{align}
-    \max_{\mW, \sigma} \: -N \log |\mC| - \mX \mC^{-1} \mX^\top \quad \text{where} \quad \mC = \mW \mW^\top + \sigma^2 \mI_p \:.
-\end{align}
-As shown in \citep{tipping1999probabilistic}, the above is solved for 
+In this model, the $\vx_i$'s are independent since the samples in both $\mZ$ and $\mE$ are assumed to be independent. The relationship between $\mX$ and $\mZ$ can be simply expressed as the independent linear models: $\vx_i = \mW \vz_i + \ve_i$ for any $i$.
 
 \begin{remark}
-    later reason the the inter sample dependencies
+    Real-world data typically contain noise that exhibits some form of structure. To address this, several extensions of the PPCA model have been developed to relax the i.i.d. assumption, as we will do in \Cref{chapter:GraphCoupling}. For example, \cite{zhao2014robust} proposed a mixture of Gaussian noise, while \cite{kalaitzis2011residual} introduced additional fixed effects based on known covariates. In particular, \cite{allen2014generalized} modeled the noise structure using a matrix normal distribution, incorporating known covariance matrices for both rows and columns (see \Cref{memo:matrix_normal}). This method is especially relevant to the work presented in \Cref{chapter:GraphCoupling}.
 \end{remark}
 
-The negative log-likelihood is as follows:
-\begin{align}
-    \mathcal{L}(\theta) = \frac{1}{2\sigma^2} \| \mX - \mW \mZ \|_F^2 + \frac{Np}{2} \log(2\pi\sigma^2),
+
+\paragraph{Parameter estimation.} A standard approach to fitting latent variable models consists of marginalizing over the latent variables and optimizing the parameters using \emph{maximum likelihood estimation} (MLE). Since $\ve_i \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{N}(0, \sigma^2 \mI_p)$ for any $i$, one has
+\begin{align}\label{eq:ppca_likelihood}
+    \forall i, \quad \vx_i | \left( \vz_i, \mW, \sigma \right) \: \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{N}(\mW \vx_i, \sigma^2 \mI_p) \:.
 \end{align}
-where $\| \cdot \|_F$ denotes the Frobenius norm.
+Integrating over the latent variable $\vz_i \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{N}(0, \mI_d)$, one obtains the marginal distribution of $\vx_i$ as follows
+\begin{align}\label{eq:ppca_marginal}
+    \vx_i | \left( \mW, \sigma \right) \: \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{N}(\bm{0}, \mW \mW^\top + \sigma^2 \mI_p) \:.
+\end{align}
 
-\begin{remark}
-    Probabilistic PCA as a cornerstone of generative modelling    
+Since the $\vx_i$'s are \emph{iid}, the log marginal likelihood can be expressed as the sum of the log-likelihoods of the individual samples. Using matrix notation, this leads to the following optimization problem, where constant terms do not appear:
+\begin{align}
+    \max_{\mW, \sigma} \: -N \log |\mC| - \langle \mX^\top \mX, \mC^{-1} \rangle \quad \text{where} \quad \mC = \mW \mW^\top + \sigma^2 \mI_p \:.
+\end{align}
 
-    \citep{tomczak2021latent}
-\end{remark}
+We consider again $\mX = \sum_{i=1}^{r} s_i \vu_i \vv_i^\top$ the reduced and ordered SVD decomposition of $\mX$. \cite{tipping1999probabilistic} provided the stationary points of the above problem in closed form. For $\mW$, any optimal solution has the form:
+\begin{align}
+    \mW^* = \sum_{i=1}^d \lambda_i \vv_i \vr_i^\top \:,
+\end{align}
+where $\lambda_i = \sqrt{s_i^{2} - \sigma^{2}}$ and $(\vr_1, \dots, \vr_d)$ is any orthonormal family of vectors in $\mathbb{R}^d$. Therefore, the obtained $\mW^\star$ spans the principal subspaces of the data given by the first $d$ eigenvectors $(\vv_1, \dots, \vv_d)$ of the covariance matrix (see \Cref{memo:PCA}).
+
+Interestingly, the optimal solution for $\sigma$ is given by $\sigma^\star = \sqrt{\frac{1}{p-d} \sum_{i=d+1}^{r} s^2_i}$. In essence, the probabilistic PCA model captures the full covariance of the data along the principal $d$ retained axes, while approximating the standard deviation of the discarded axes through the parameter $\sigma^\star$. This can be viewed as a strategy for fitting a multivariate Gaussian model while focusing on the dominant correlations. For a fixed latent dimensionality $d$, the number of total parameters now scales linearly with the dimensionality of the input data. A comprehensive treatment of this model can be found in \citep{bishop2006pattern}.
+
+\begin{mem1}{Latent variable models as cornerstones of generative modelling}
+    One might naturally consider extending the linear relationship described in \Cref{eq:ppca_linear} to capture more complex interactions between latent and observed variables. Indeed, any parametric estimator, such as a neural network, can be employed for this purpose. 
+    While this increases expressivity, the downside is that the log-likelihood of \Cref{eq:ppca_marginal} becomes intractable. A common approach to address this is to approximate the log-likelihood via Markov chain Monte Carlo techniques \citep{andrieu2003introduction}; however, these methods often suffer from the curse of dimensionality. A more popular and effective solution is to employ variational inference.
+    This concept forms the basis of the \emph{variational autoencoder} (VAE) model \citep{kingma2013auto}, which has proven to be a powerful tool, defining an entire family of generative modeling methods (see, for example, the comprehensive overview provided by \cite{tomczak2021latent}). These methods can be seen as a nonlinear extension of the PPCA model discussed here, while retaining the same core principle of leveraging a prior over a latent variable.
+\end{mem1}
+
 
 \subsection{... to its Bayesian Dual View}
 
+We now adopt a slightly more \textit{Bayesian} viewpoint by treating the linear transformation matrix $\mW$ as a random variable. This approach is inspired by the work of \cite{lawrence2005probabilistic} and \cite{bishop1998bayesian}.
 
-\citep{lawrence2005probabilistic}
+The natural choice is to take a prior on $\mW$ that is conjugate with the likelihood in \Cref{eq:ppca_likelihood}. In the simplest case, we consider:
+\begin{align}
+     \forall i \in \integ{p}, \quad \vw_i \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{N}(\bm{0}, \mI_d) \:,
+\end{align}
+where $\mW = (\vw_1, ..., \vw_p)^\top$. Marginalizing with respect to $\mW$ is easy thanks to the choice of a conjugate prior. We obtain the marginalized likelihood as follows:
+\begin{align}
+    \forall j \in \integ{p}, \quad \mX_{:j} | (\mZ, \sigma) \: \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{N}(\bm{0}, \mZ \mZ^\top + \sigma^2 \mI_N) \:.
+\end{align}
+This leads us to the following global log-likelihood objective, where $\mK = \mZ \mZ^\top + \sigma^2 \mI_N$ and constant terms have been simplified.
+\begin{align}
+    \max_{\mZ \in \R^{N \times d}} \:\: -p \log |\mK| - \langle \mX \mX^\top, \mK^{-1} \rangle \:,
+\end{align}
+Again considering the the reduced and ordered SVD decomposition $\mX = \sum_{i=1}^{r} s_i \vu_i \vv_i^\top$, \cite{lawrence2005probabilistic} showed that any solution of the above has the form:
+\begin{align}
+    \mZ^\star = \sum_{i=1}^d \ell_i \vu_i \vr_i^\top \:,
+\end{align}
+where $\ell_i = (p s_i^2 - \sigma^2)^{-\frac{1}{2}}$ and $(\vr_1, \dots, \vr_d)$ is any orthonormal family of vectors in $\mathbb{R}^d$.
+Therefore $\mZ^{\star}$ is a PCA embedding of the data $\mX$ in the sense of \Cref{def:PCA_embedding}.
+
+\paragraph{Motivations for these models.}
 
 
-\begin{prob}{Construction of adaptive affinities}
-    aa
+\begin{prob}{Need to extend to neighbor embeddings}
+    Interestingly, we have demonstrated that a PCA embedding solution can also be obtained by following the reverse approach of the original PPCA model : marginalizing the model parameters and directly optimizing the embedding. PPCA and its dual formulation are 
 \end{prob}

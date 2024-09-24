@@ -16,20 +16,20 @@ higher the similarity or proximity between samples $i$ and $j$. Simple usual aff
 Affinity-based DR methods essentially revolve around two key steps:
 
 \begin{enumerate}
-    \item Capture the geometry of the data $\mX$ by defining a measure of similarity between samples in the input space, which is encoded into an $N \times N$ matrix $\mA_{\mX}$.
-    \item Create a low-dimensional representation $\mZ$ that maintains this structure. This involves generating an affinity matrix $\mA_{\mZ}$ from $\mZ$ and adjusting $\mZ$ to make $\mA_{\mZ}$ correspond to $\mA_{\mX}$. We will later clarify what we mean by ``correspond''.
+    \item Capture the geometry of the data $\mX$ by defining a measure of similarity between samples in the input space, which is encoded into an $N \times N$ matrix $\simiX$.
+    \item Create a low-dimensional representation $\mZ$ that maintains this structure. This involves generating an affinity matrix $\simiZ$ from $\mZ$ and adjusting $\mZ$ to make $\simiZ$ correspond to $\simiX$. We will later clarify what we mean by ``correspond''.
 \end{enumerate}
 
-Although the above general description of DR methods is intuitive, it brings up a critical question: how should one design effective affinity matrices $\mA_{\mX}$ and $\mA_{\mZ}$? As we will explore in this chapter, the choice of affinity is essential and significantly influences the characteristics of the final embedding. It also raises the question of which criterion to use to compare two affinity matrices, which also has important practical implications.
+Although the above general description of DR methods is intuitive, it brings up a critical question: how should one design effective affinity matrices $\simiX$ and $\simiZ$? As we will explore in this chapter, the choice of affinity is essential and significantly influences the characteristics of the final embedding. It also raises the question of which criterion to use to compare two affinity matrices, which also has important practical implications.
 
 \paragraph{Notations.} 
-We define $\mA_\mX$ and $\mA_\mZ$ as the similarity matrices computed from the data $\mX$ and the embedding $\mZ$, respectively. Additionally, we represent the squared Euclidean distance cost matrices, computed from the samples in $\mX$ and $\mZ$, as $\C_\X = \left(\|\vx_{i}-\vx_{j}\|_2^2\right)_{ij}$ and $\C_\Z = \left(\|\vz_{i}-\vz_{j}\|_2^2\right)_{ij}$, respectively.
+We define $\simiX$ and $\simiZ$ as the similarity matrices computed from the data $\mX$ and the embedding $\mZ$, respectively. Additionally, we represent the squared Euclidean distance cost matrices, computed from the samples in $\mX$ and $\mZ$, as $\C_\X = \left(\|\vx_{i}-\vx_{j}\|_2^2\right)_{ij}$ and $\C_\Z = \left(\|\vz_{i}-\vz_{j}\|_2^2\right)_{ij}$, respectively.
 
 \paragraph{DR general objective.} With this in place, the DR problem can be formulated quite generally as the optimization problem
 %  minimizing over $\mZ$ the objective function
 \begin{equation}
 \label{eq:DR_criterion}\tag{DR}
-\min_{\mZ \in \R^{N \times d}} \: \sum_{(i,j) \in \integ{N}^2}  L\big([\mA_\mX]_{ij}, [\mA_\mZ]_{ij}\big) \,.
+\min_{\mZ \in \R^{N \times d}} \: \sum_{(i,j) \in \integ{N}^2}  L\big([\simiX]_{ij}, [\simiZ]_{ij}\big) \,.
 \end{equation}
 where $L:\R \times \R \rightarrow \R$ is a loss that quantifies the similarity between pairs of points in the input space $\R^{p}$ compared to pairs of points in the output space $\R^{d}$. Several types of loss functions can be employed, such as the quadratic loss $L_2(x, y) \coloneqq (x - y)^2$, the Kullback-Leibler divergence $\KL(x, y) \coloneqq x \log \left(\frac{x}{y}\right) - x + y$, which is defined for positive-valued affinities, or the binary cross-entropy $\BCE(x, y) \coloneqq -x \log(y) - (1 - x) \log(1 - y)$, which applies when affinities are bounded in the range $[0,1]$.
 
