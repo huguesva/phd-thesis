@@ -21,11 +21,11 @@ We recall the result.
 \begin{proof}
 	By suboptimality of $\sigma = \operatorname{id}$ we clearly have 
 	\begin{equation}
-		\min_{\mZ \in \R^{N \times d}} \min_{\sigma \in S_N} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{\sigma(i) \sigma(j)}) \leq \min_{\mZ \in \R^{N \times d}} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{i j}).
+		\min_{\mZ \in \R^{N \times d}} \min_{\sigma \in S_N} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simiZ(\mZ)]_{\sigma(i) \sigma(j)}) \leq \min_{\mZ \in \R^{N \times d}} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simiZ(\mZ)]_{i j}).
 	\end{equation}
-	For the other direction, take an optimal solution $(\mZ, \sigma)$ of \cref{eq:gm}. Using the permutation equivariance of $\simi$, $[\simi(\mZ)]_{\sigma(i) \sigma(j)} = [\mP \simi(\mZ)\mP^\top]_{ij} = [\simi(\mP \mZ)]_{ij}$ for some permutation matrix $\mP$. But $\mP \mZ$ is admissible for problem \cref{eq:DR_criterion}. Hence 
+	For the other direction, take an optimal solution $(\mZ, \sigma)$ of \cref{eq:gm}. Using the permutation equivariance of $\simiZ$, $[\simiZ(\mZ)]_{\sigma(i) \sigma(j)} = [\mP \simiZ(\mZ)\mP^\top]_{ij} = [\simiZ(\mP \mZ)]_{ij}$ for some permutation matrix $\mP$. But $\mP \mZ$ is admissible for problem \cref{eq:DR_criterion}. Hence 
 	\begin{equation}
-		\min_{\mZ \in \R^{N \times d}} \min_{\sigma \in S_N} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{\sigma(i) \sigma(j)}) \geq \min_{\mZ \in \R^{N \times d}} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{i j}).
+		\min_{\mZ \in \R^{N \times d}} \min_{\sigma \in S_N} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simiZ(\mZ)]_{\sigma(i) \sigma(j)}) \geq \min_{\mZ \in \R^{N \times d}} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simiZ(\mZ)]_{i j}).
 	\end{equation}
 \end{proof}
 
@@ -37,61 +37,61 @@ In the following $\operatorname{DS}$ is the space of $N \times N$ doubly stochas
 	Let $\Omega \subseteq \R$ and $\im(\simiX) \subseteq \Omega^{N \times N}$. Suppose that $L(a, \cdot)$ is convex for any $a \in \Omega$ and
 	\begin{equation}
 		\label{eq:the_general_sufficient_hypothesis}
-		\min_{\mZ \in \R^{N \times d}} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{ij}) \leq \min_{\mZ \in \R^{N \times d}, \mT \in \DS} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\mT \simi(\mZ) \mT^\top]_{ij})\,.
+		\min_{\mZ \in \R^{N \times d}} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\simiZ(\mZ)]_{ij}) \leq \min_{\mZ \in \R^{N \times d}, \mT \in \DS} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\mT \simiZ(\mZ) \mT^\top]_{ij})\,.
 	\end{equation}
-	Then the minimum \cref{eq:DR_criterion} is equal to $\min_{\mZ}\GW_L(\simiX(\mX), \simi(\mZ), \frac{1}{N}\one_N, \frac{1}{N}\one_N)$.
+	Then the minimum \cref{eq:DR_criterion} is equal to $\min_{\mZ}\GW_L(\simiX(\mX), \simiZ(\mZ), \frac{1}{N}\one_N, \frac{1}{N}\one_N)$.
 \end{proposition}
 \begin{proof}
-	Consider any doubly stochastic matrix $\mT$ and note that $[\mT \simi(\mZ) \mT^\top]_{ij} = \sum_{kl} [\simi(\mZ)]_{kl} T_{ik} T_{jl}$. Using the convexity of $L(a, \cdot)$ for any $a \in \Omega$ and Jensen's inequality we have
+	Consider any doubly stochastic matrix $\mT$ and note that $[\mT \simiZ(\mZ) \mT^\top]_{ij} = \sum_{kl} [\simiZ(\mZ)]_{kl} T_{ik} T_{jl}$. Using the convexity of $L(a, \cdot)$ for any $a \in \Omega$ and Jensen's inequality we have
 	\begin{equation}
 		\begin{split}
 			\label{eq:jensenagain}
-			\sum_{ij} L([\simiX(\mX)]_{ij}, [\mT \simi(\mZ) \mT^\top]_{ij}) &= \sum_{ij} L([\simiX(\mX)]_{ij}, \sum_{kl} [\simi(\mZ)]_{kl} T_{ik} T_{jl})\\
-			&\leq \sum_{ijkl} L([\mC_\mX]_{ij}, [\simi(\mZ)]_{kl}) T_{ik} T_{jl}\,.
+			\sum_{ij} L([\simiX(\mX)]_{ij}, [\mT \simiZ(\mZ) \mT^\top]_{ij}) &= \sum_{ij} L([\simiX(\mX)]_{ij}, \sum_{kl} [\simiZ(\mZ)]_{kl} T_{ik} T_{jl})\\
+			&\leq \sum_{ijkl} L([\mC_\mX]_{ij}, [\simiZ(\mZ)]_{kl}) T_{ik} T_{jl}\,.
 		\end{split}
 	\end{equation}
 	In particular
 	\begin{equation}
-		\min_{\mZ} \min_{\mT \in \DS} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\mT \simi(\mZ) \mT^\top]_{ij}) \leq \min_{\mZ} \ \min_{\mT \in \DS} \sum_{ijkl} L([\mC_\mX]_{ij}, [\simi(\mZ)]_{kl}) T_{ik} T_{jl} \,.
+		\min_{\mZ} \min_{\mT \in \DS} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\mT \simiZ(\mZ) \mT^\top]_{ij}) \leq \min_{\mZ} \ \min_{\mT \in \DS} \sum_{ijkl} L([\mC_\mX]_{ij}, [\simiZ(\mZ)]_{kl}) T_{ik} T_{jl} \,.
 	\end{equation}
 	Hence, using \cref{eq:the_general_sufficient_hypothesis},
 	\begin{equation}
-		\min_{\mZ} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{ij}) \leq \min_{\mZ} \ \min_{\mT \in \DS} \sum_{ijkl} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{kl}) T_{ik} T_{jl}\,.
+		\min_{\mZ} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\simiZ(\mZ)]_{ij}) \leq \min_{\mZ} \ \min_{\mT \in \DS} \sum_{ijkl} L([\simiX(\mX)]_{ij}, [\simiZ(\mZ)]_{kl}) T_{ik} T_{jl}\,.
 	\end{equation}
-	But the converse inequality is also true by sub-optimality of $\mT = \mI_N$ for the problem $\min_{\mZ} \ \min_{\mT \in \DS} \sum_{ijkl} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{kl}) T_{ik} T_{jl}$. Overall 
+	But the converse inequality is also true by sub-optimality of $\mT = \mI_N$ for the problem $\min_{\mZ} \ \min_{\mT \in \DS} \sum_{ijkl} L([\simiX(\mX)]_{ij}, [\simiZ(\mZ)]_{kl}) T_{ik} T_{jl}$. Overall 
 	\begin{equation}
-		\min_{\mZ} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{ij}) = \min_{\mZ} \ \min_{\mT \in \DS} \sum_{ijkl} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{kl}) T_{ik} T_{jl}\,.
+		\min_{\mZ} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\simiZ(\mZ)]_{ij}) = \min_{\mZ} \ \min_{\mT \in \DS} \sum_{ijkl} L([\simiX(\mX)]_{ij}, [\simiZ(\mZ)]_{kl}) T_{ik} T_{jl}\,.
 	\end{equation}
-	Now we conclude by using that the RHS of this equation is equivalent to the minimization in $\mZ$ of $\GW_L(\simiX(\mX), \simi(\mZ), \frac{1}{N}\one_N, \frac{1}{N}\one_N)$ (both problems only differ from a constant scaling factor $N^2$).
+	Now we conclude by using that the RHS of this equation is equivalent to the minimization in $\mZ$ of $\GW_L(\simiX(\mX), \simiZ(\mZ), \frac{1}{N}\one_N, \frac{1}{N}\one_N)$ (both problems only differ from a constant scaling factor $N^2$).
 \end{proof}
 
 As a consequence we have the following result.
 \begin{proposition}
 	\label{proposition:thetwoconditions}
-	Let $\Omega \subseteq \R$ and $\im(\simiX) \subseteq \Omega^{N \times N}$. The minimum \cref{eq:DR_criterion} is equal to $\min_{\mZ} \GW_L(\simiX(\mX), \simi(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N)$ when:
+	Let $\Omega \subseteq \R$ and $\im(\simiX) \subseteq \Omega^{N \times N}$. The minimum \cref{eq:DR_criterion} is equal to $\min_{\mZ} \GW_L(\simiX(\mX), \simiZ(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N)$ when:
 	\begin{enumerate}[label=(\roman*), rightmargin=25pt]
-		\item $L(a, \cdot)$ is convex for any $a \in \Omega$ and the image of $\simi$ is stable by \\
+		\item $L(a, \cdot)$ is convex for any $a \in \Omega$ and the image of $\simiZ$ is stable by \\
         doubly-stochastic matrices, \ie, 
 		\begin{equation}
 			\label{eq:stability_ds}
-			\forall \mZ \in \R^{N \times d}, \forall \mT \in \DS, \exists \mY \in \R^{N \times d}, \ \simi(\mY) = \mT \simi(\mZ) \mT^\top\,.
+			\forall \mZ \in \R^{N \times d}, \forall \mT \in \DS, \exists \mY \in \R^{N \times d}, \ \simiZ(\mY) = \mT \simiZ(\mZ) \mT^\top\,.
 		\end{equation}
 		\item $L(a, \cdot)$ is convex \underline{and non-decreasing} for any $a \in \Omega$ and
 		\begin{equation}
 			\label{eq:another_condition_based_on_convexity}
-			\forall \mZ \in \R^{N \times d}, \forall \mT \in \DS, \exists \mY \in \R^{N \times d}, \ \simi(\mY) \leq \mT \simi(\mZ) \mT^\top\,,
+			\forall \mZ \in \R^{N \times d}, \forall \mT \in \DS, \exists \mY \in \R^{N \times d}, \ \simiZ(\mY) \leq \mT \simiZ(\mZ) \mT^\top\,,
 		\end{equation}
 		where $\leq$ is understood element-wise, \ie, $\bm{A} \leq \bm{B} \iff \forall (i,j), \ A_{ij} \leq B_{ij}$. 
 	\end{enumerate}
 \end{proposition}
 \begin{proof}
-	For the first point it suffices to see that the condition \cref{eq:stability_ds} implies that $\{\mT \simi(\mZ) \mT^\top: \mZ \in \R^{N \times d}, \mT \in \DS\} \subseteq \{\simi(\mZ): \mZ \in \R^{N \times d}\}$ (in fact we have equality by choosing $\mT = \mathbf{I}_N$) and thus \cref{eq:the_general_sufficient_hypothesis} holds and we apply \cref{proposition:general_sufficient_condition}.
+	For the first point it suffices to see that the condition \cref{eq:stability_ds} implies that $\{\mT \simiZ(\mZ) \mT^\top: \mZ \in \R^{N \times d}, \mT \in \DS\} \subseteq \{\simiZ(\mZ): \mZ \in \R^{N \times d}\}$ (in fact we have equality by choosing $\mT = \mathbf{I}_N$) and thus \cref{eq:the_general_sufficient_hypothesis} holds and we apply \cref{proposition:general_sufficient_condition}.
 	
-	For the second point we will also show that \cref{eq:the_general_sufficient_hypothesis} holds. Consider $\mZ^\star, \mT^\star$ minimizers of $\min_{\mZ, \mT \in \DS} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\mT \simi(\mZ) \mT^\top]_{ij})$. By hypothesis there exists $\mY \in \R^{N \times d}$ such that 
+	For the second point we will also show that \cref{eq:the_general_sufficient_hypothesis} holds. Consider $\mZ^\star, \mT^\star$ minimizers of $\min_{\mZ, \mT \in \DS} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\mT \simiZ(\mZ) \mT^\top]_{ij})$. By hypothesis there exists $\mY \in \R^{N \times d}$ such that 
     \begin{align}
-        \forall (i,j) \in \integ{N}^2, \quad [\mT^\star \simi(\mZ^\star) {\mT^{\star}}^\top]_{ij} \geq [\simi(\mY)]_{ij} \:.
+        \forall (i,j) \in \integ{N}^2, \quad [\mT^\star \simiZ(\mZ^\star) {\mT^{\star}}^\top]_{ij} \geq [\simiZ(\mY)]_{ij} \:.
     \end{align}
-    Since $L([\simiX(\mX)]_{ij}, \cdot)$ is non-decreasing for any $(i,j)$ then $\sum_{ij} L([\simiX(\mX)]_{ij}, [\mT^\star \simi(\mZ^\star) {\mT^{\star}}^\top]_{ij}) \geq \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mY)]_{ij})$ and thus $\sum_{ij} L([\simiX(\mX)]_{ij}, [\mT^\star \simi(\mZ^\star) {\mT^{\star}}^\top]_{ij}) \geq \min_{\mZ} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{ij})$ which gives the condition \cref{eq:the_general_sufficient_hypothesis} and we have the conclusion by \cref{proposition:general_sufficient_condition}. 
+    Since $L([\simiX(\mX)]_{ij}, \cdot)$ is non-decreasing for any $(i,j)$ then $\sum_{ij} L([\simiX(\mX)]_{ij}, [\mT^\star \simiZ(\mZ^\star) {\mT^{\star}}^\top]_{ij}) \geq \sum_{ij} L([\simiX(\mX)]_{ij}, [\simiZ(\mY)]_{ij})$ and thus $\sum_{ij} L([\simiX(\mX)]_{ij}, [\mT^\star \simiZ(\mZ^\star) {\mT^{\star}}^\top]_{ij}) \geq \min_{\mZ} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\simiZ(\mZ)]_{ij})$ which gives the condition \cref{eq:the_general_sufficient_hypothesis} and we have the conclusion by \cref{proposition:general_sufficient_condition}. 
 \end{proof}
 
 We recall that a function $R: \R^{N \times d} \to \R$ is called permutation invariant if $R(\mP \mZ) = R(\mZ)$ for any $\mZ \in \R^{N \times d}$ and $N \times N$ permutation matrix $\mP$. From the previous results we have the following corollary, which proves, in particular, the first point of \cref{theo:main_theo}.
@@ -99,7 +99,7 @@ We recall that a function $R: \R^{N \times d} \to \R$ is called permutation inva
 	\label{corr:equivCE}
 	We have the following equivalences:
 	\begin{enumerate}[label=(\roman*), rightmargin=25pt]
-		\item Consider the spectral methods which correspond to $\simi(\mZ) = \mZ \mZ^\top$ and $L =L_2$. Then for any $\simiX$
+		\item Consider the spectral methods which correspond to $\simiZ(\mZ) = \mZ \mZ^\top$ and $L =L_2$. Then for any $\simiX$
 		\begin{equation}
 			\min_{\mZ \in \R^{N \times d}} \sum_{ij} L_2([\mC_\mX]_{ij}, \langle \vz_i, \vz_j\rangle)
 		\end{equation}
@@ -110,27 +110,27 @@ We recall that a function $R: \R^{N \times d} \to \R$ is called permutation inva
 		are equal.
 		\item Consider the cross-entropy loss $L(x,y) = x \log(x/y)$ and $\simiX$ such that $\im(\simiX)\subseteq \R_{+}^{N \times N}$. Suppose that the similarity in the output space can be written as 
 		\begin{equation}
-			\forall (i,j)\in \integ{N}^2, [\simi(\mZ)]_{ij} =  f(\vz_i -\vz_j)/ R(\mZ)\,,
+			\forall (i,j)\in \integ{N}^2, [\simiZ(\mZ)]_{ij} =  f(\vz_i -\vz_j)/ R(\mZ)\,,
 		\end{equation}
 		for some logarithmically concave function $f: \R^d \to \R_{+}$ and normalizing factor $R: \R^{N \times d} \to \R_{+}^{*}$ which is both convex and permutation invariant. Then,
 		\begin{equation}
 			\label{eq:neighbor_embedding_problem}
-			\min_{\mZ \in \R^{N \times d}} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{ij})
+			\min_{\mZ \in \R^{N \times d}} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simiZ(\mZ)]_{ij})
 		\end{equation}
 		and 
 		\begin{equation}
-			\min_{\mZ \in \R^{N \times d}} \GW_{L}(\simiX(\mX), \simi(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N)
+			\min_{\mZ \in \R^{N \times d}} \GW_{L}(\simiX(\mX), \simiZ(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N)
 		\end{equation}
 		are equal. 
 	\end{enumerate}
 \end{corollary}
 \begin{proof}
-	For the first point we show that the condition \cref{eq:stability_ds} of \cref{proposition:thetwoconditions} is satisfied. Indeed take any $\mZ, \mT$ then $\mT \simi(\mZ) \mT^\top = \mT \mZ \mZ^\top \mT^\top = (\mT \mZ)(\mT \mZ)^\top = \simi(\mT \mZ)$.
+	For the first point we show that the condition \cref{eq:stability_ds} of \cref{proposition:thetwoconditions} is satisfied. Indeed take any $\mZ, \mT$ then $\mT \simiZ(\mZ) \mT^\top = \mT \mZ \mZ^\top \mT^\top = (\mT \mZ)(\mT \mZ)^\top = \simiZ(\mT \mZ)$.
 	
-	For the second point if we consider $\tilde L(a,b) = a\times b$ then we use that the neighbor embedding problem \cref{eq:neighbor_embedding_problem} is equivalent to $\min_{\mZ \in \R^{N \times d}} \sum_{ij} - [\simiX(\mX)]_{ij}\log([\simi(\mZ)]_{ij}) = \min_{\mZ \in \R^{N \times d}} \sum_{ij} \tilde{L}([\simiX(\mX)]_{ij}, [\widetilde{\simi}(\mZ)]_{ij})$ where $[\widetilde{\simi}(\mZ)]_{ij} = g(\vz_i-\vz_j) + \log(R(\mZ))$ with $g = -\log \circ f$. Since $f$ is logarithmically concave $g$ is convex. Moreover we have that $\tilde{L}(a, \cdot)$ is convex (it is linear) and non-decreasing since $a \in \R_+$ in this case ($\mC_\mX$ is non-negative). Also for any $\mZ \in \R^{N \times d}$ and $\mT \in \DS$ we have, using Jensen's inequality since $\mT$ is doubly-stochastic,
+	For the second point if we consider $\tilde L(a,b) = a\times b$ then we use that the neighbor embedding problem \cref{eq:neighbor_embedding_problem} is equivalent to $\min_{\mZ \in \R^{N \times d}} \sum_{ij} - [\simiX(\mX)]_{ij}\log([\simiZ(\mZ)]_{ij}) = \min_{\mZ \in \R^{N \times d}} \sum_{ij} \tilde{L}([\simiX(\mX)]_{ij}, [\widetilde{\simiZ}(\mZ)]_{ij})$ where $[\widetilde{\simiZ}(\mZ)]_{ij} = g(\vz_i-\vz_j) + \log(R(\mZ))$ with $g = -\log \circ f$. Since $f$ is logarithmically concave $g$ is convex. Moreover we have that $\tilde{L}(a, \cdot)$ is convex (it is linear) and non-decreasing since $a \in \R_+$ in this case ($\mC_\mX$ is non-negative). Also for any $\mZ \in \R^{N \times d}$ and $\mT \in \DS$ we have, using Jensen's inequality since $\mT$ is doubly-stochastic,
 	\begin{equation}
 		\begin{split}
-			[\mT \widetilde{\simi}(\mZ) \mT^\top]_{ij} &= \sum_{kl} g(\vz_k-\vz_l) T_{ik} T_{jl} + \log(R(\mZ)) \\
+			[\mT \widetilde{\simiZ}(\mZ) \mT^\top]_{ij} &= \sum_{kl} g(\vz_k-\vz_l) T_{ik} T_{jl} + \log(R(\mZ)) \\
 			&\geq  g(\sum_{kl}(\vz_k-\vz_l) T_{ik} T_{jl}) + \log(R(\mZ))\\
 			&= g(\sum_{k} \vz_k T_{ik} - \sum_{l} \vz_l T_{jl})+ \log(R(\mZ))\,.
 		\end{split}
@@ -138,10 +138,10 @@ We recall that a function $R: \R^{N \times d} \to \R$ is called permutation inva
 	Now we will prove that $\log(R(\mZ)) \geq \log(R(\mT \mZ))$. Using Birkhoff's theorem \citep{birkhoff1946tres} the matrix $\mT$ can be decomposed as a convex combination of permutation matrices, \ie,  $\mT = \sum_k \lambda_k \mP_k$ where $(\mP_k)_k$ are permutation matrices and $\lambda_k \in \R_{+}$ with $\sum_{k} \lambda_k = 1$. Hence by convexity and Jensen's inequality $R(\mT \mZ) = R(\sum_k \lambda_k \mP_k \mZ) \leq \sum_{k} \lambda_k R(\mP_k \mZ)$. Now using that $R$ is permutation invariant we get $R(\mP_k \mZ) = R(\mZ)$ and thus $R(\mT \mZ) \leq \sum_k \lambda_k R(\mZ) = R(\mZ)$. Since the logarithm is non-decreasing we have $\log(R(\mZ)) \geq \log(R(\mT \mZ))$ and, overall,
 	\begin{equation}
 		\begin{split}
-			[\mT \widetilde{\simi}(\mZ) \mT^\top]_{ij} \geq  g(\sum_{k} \vz_k T_{ik} - \sum_{l} \vz_l T_{jl}) + \log(R(\mT \mZ)) = [\widetilde{\simi}(\mT\mZ)]_{ij}\,.
+			[\mT \widetilde{\simiZ}(\mZ) \mT^\top]_{ij} \geq  g(\sum_{k} \vz_k T_{ik} - \sum_{l} \vz_l T_{jl}) + \log(R(\mT \mZ)) = [\widetilde{\simiZ}(\mT\mZ)]_{ij}\,.
 		\end{split}
 	\end{equation}
-	Thus if we introduce $\mY = \mT \mZ$ we have $[\mT \widetilde{\simi}(\mZ) \mT^\top]_{ij} \geq [\widetilde{\simi}(\mY)]_{ij}$ and \cref{eq:another_condition_based_on_convexity} is satisfied. Thus we can apply \cref{proposition:thetwoconditions} and state that $\min_{\mZ \in \R^{N \times d}} \sum_{ij} \tilde{L}([\simiX(\mX)]_{ij}, [\widetilde{\simi}(\mZ)]_{ij})$ and $\min_{\mZ \in \R^{N \times d}} \GW_{\tilde{L}}(\simiX(\mX), \widetilde{\simi}(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N)$ are equivalent which concludes as $\min_{\mZ \in \R^{N \times d}} \GW_{\tilde{L}}(\simiX(\mX), \widetilde{\simi}(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N) = \min_{\mZ \in \R^{N \times d}} \GW_{L}(\simiX(\mX), \simi(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N)$.
+	Thus if we introduce $\mY = \mT \mZ$ we have $[\mT \widetilde{\simiZ}(\mZ) \mT^\top]_{ij} \geq [\widetilde{\simiZ}(\mY)]_{ij}$ and \cref{eq:another_condition_based_on_convexity} is satisfied. Thus we can apply \cref{proposition:thetwoconditions} and state that $\min_{\mZ \in \R^{N \times d}} \sum_{ij} \tilde{L}([\simiX(\mX)]_{ij}, [\widetilde{\simiZ}(\mZ)]_{ij})$ and $\min_{\mZ \in \R^{N \times d}} \GW_{\tilde{L}}(\simiX(\mX), \widetilde{\simiZ}(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N)$ are equivalent which concludes as $\min_{\mZ \in \R^{N \times d}} \GW_{\tilde{L}}(\simiX(\mX), \widetilde{\simiZ}(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N) = \min_{\mZ \in \R^{N \times d}} \GW_{L}(\simiX(\mX), \simiZ(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N)$.
 \end{proof}
 
 It remains to prove the second point of \cref{theo:main_theo} as stated below.
@@ -149,27 +149,27 @@ It remains to prove the second point of \cref{theo:main_theo} as stated below.
 	\label{prop:second_point_theorem}
 	Consider $\im(\simiX) \subseteq \R_+^{N \times N}$, $L = L_{\KL}$. Suppose that for any $\mX$ the matrix $\simiX(\mX)$ is CPD and for any $\mZ$ 
 	\begin{equation}
-		\simi(\mZ) = \diag(\alphab_\mZ) \mK_\mZ \diag(\betab_\mZ)\,,
+		\simiZ(\mZ) = \diag(\alphab_\mZ) \mK_\mZ \diag(\betab_\mZ)\,,
 	\end{equation}
-	where $\alphab_\mZ, \betab_\mZ \in \R^{N}_{> 0}$ and  $\mK_\mZ \in \R^{N \times N}_{> 0}$ is such that $\log(\mK_\mZ)$ is CPD. Then the minimum \cref{eq:DR_criterion} is equal to $\min_{\mZ} \GW_L(\simiX(\mX), \simi(\mZ), \frac{1}{N}\one_N, \frac{1}{N}\one_N)$. 
+	where $\alphab_\mZ, \betab_\mZ \in \R^{N}_{> 0}$ and  $\mK_\mZ \in \R^{N \times N}_{> 0}$ is such that $\log(\mK_\mZ)$ is CPD. Then the minimum \cref{eq:DR_criterion} is equal to $\min_{\mZ} \GW_L(\simiX(\mX), \simiZ(\mZ), \frac{1}{N}\one_N, \frac{1}{N}\one_N)$. 
 \end{proposition}
 \begin{proof}
 	To prove this result we will show that, for any $\mZ$, the function
 	\begin{equation}
 		\label{eq:the_concave_we_have}
-		\mT \in \gU(\frac{1}{N}\one_N, \frac{1}{N}\one_N) \to E_{L}(\simiX(\mX), \simi(\mZ), \mT)\,,
+		\mT \in \gU(\frac{1}{N}\one_N, \frac{1}{N}\one_N) \to E_{L}(\simiX(\mX), \simiZ(\mZ), \mT)\,,
 	\end{equation}
-	is actually concave. Indeed, in this case  there exists a minimizer which is an extremal point of $\gU(\frac{1}{N}\one_N, \frac{1}{N}\one_N)$. By Birkhoff’s theorem \citep{birkhoff1946tres} these extreme points are the matrices $\frac{1}{N} \mP$ where $\mP$ is a $N \times N$ permutation matrix. Consequently, when the function \cref{eq:the_concave_we_have} is concave minimizing $\GW_L(\simiX(\mX), \simi(\mZ), \frac{1}{N}\one_N, \frac{1}{N}\one_N)$ in $\mZ$ is equivalent to minimizing in $\mZ$
+	is actually concave. Indeed, in this case  there exists a minimizer which is an extremal point of $\gU(\frac{1}{N}\one_N, \frac{1}{N}\one_N)$. By Birkhoff’s theorem \citep{birkhoff1946tres} these extreme points are the matrices $\frac{1}{N} \mP$ where $\mP$ is a $N \times N$ permutation matrix. Consequently, when the function \cref{eq:the_concave_we_have} is concave minimizing $\GW_L(\simiX(\mX), \simiZ(\mZ), \frac{1}{N}\one_N, \frac{1}{N}\one_N)$ in $\mZ$ is equivalent to minimizing in $\mZ$
 	\begin{align}
-		&\min_{\mP \in \R^{N \times N} \text{ permutation}} \ \sum_{ijkl} L([\simiX(\mX)]_{ik}, [\simi(\mZ)]_{jl}) P_{ij} P_{kl} \\
-        &= \min_{\sigma \in S_N} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{\sigma(i)\sigma(j)})\,,
+		&\min_{\mP \in \R^{N \times N} \text{ permutation}} \ \sum_{ijkl} L([\simiX(\mX)]_{ik}, [\simiZ(\mZ)]_{jl}) P_{ij} P_{kl} \\
+        &= \min_{\sigma \in S_N} \ \sum_{ij} L([\simiX(\mX)]_{ij}, [\simiZ(\mZ)]_{\sigma(i)\sigma(j)})\,,
 	\end{align}
 	which is exactly the Gromov-Monge problem described in \cref{lemma:GMproblemequiv} and thus the problem is equivalent to \cref{eq:DR_criterion} by \cref{lemma:GMproblemequiv}.
 	
-	First note that $L(x,y) = x \log(x)-x - x \log(y) +y$ so for any $\mT \in \gU(\frac{1}{N}\one_N, \frac{1}{N}\one_N)$ the loss $E_{L}(\simiX(\mX), \simi(\mZ), \mT)$ is equal to
+	First note that $L(x,y) = x \log(x)-x - x \log(y) +y$ so for any $\mT \in \gU(\frac{1}{N}\one_N, \frac{1}{N}\one_N)$ the loss $E_{L}(\simiX(\mX), \simiZ(\mZ), \mT)$ is equal to
 	\begin{equation}
 		\begin{split}
-			\sum_{ijkl} L([\simiX(\mX)]_{ik}, [\simi(\mZ)]_{jl}) T_{ij} T_{kl} &= a_\mX+ b_\mZ - \sum_{ijkl} [\simiX(\mX)]_{ik}\log([\simi(\mZ)]_{jl}) T_{ij} T_{kl} \\
+			\sum_{ijkl} L([\simiX(\mX)]_{ik}, [\simiZ(\mZ)]_{jl}) T_{ij} T_{kl} &= a_\mX+ b_\mZ - \sum_{ijkl} [\simiX(\mX)]_{ik}\log([\simiZ(\mZ)]_{jl}) T_{ij} T_{kl} \\
 			&=a_\mX+ b_\mZ - \sum_{ijkl} [\simiX(\mX)]_{ik}\log([\alphab_\mZ]_j [\betab_\mZ]_l [\mW]_{jl}) T_{ij} T_{kl} \\
 			&=a_\mX+ b_\mZ - \frac{1}{N}\sum_{ijk} [\simiX(\mX)]_{ik}\log([\alphab_\mZ]_j) T_{ij}  \\
 			&- \frac{1}{N} \sum_{ikl} [\simiX(\mX)]_{ik}\log([\betab_\mZ]_l) T_{kl}\\
@@ -243,12 +243,12 @@ We give a necessary and sufficient condition under which the DR problem is equiv
 	which concludes the proof.
 \end{proof}
 \begin{remark}
-	The condition on the set of similarity matrices $\mathcal{C}$ is quite reasonable: it indicates that if $\mC$ is an admissible similarity matrix, then permuting the rows and columns of $\mC$ results in another admissible similarity matrix. For DR, the corresponding $\mathcal{C}$ is $\mathcal{C} = \{\simi(\mZ): \mZ \in \R^{N \times d}\}$. In this case, if $\simi(\mZ)$ is of the form
+	The condition on the set of similarity matrices $\mathcal{C}$ is quite reasonable: it indicates that if $\mC$ is an admissible similarity matrix, then permuting the rows and columns of $\mC$ results in another admissible similarity matrix. For DR, the corresponding $\mathcal{C}$ is $\mathcal{C} = \{\simiZ(\mZ): \mZ \in \R^{N \times d}\}$. In this case, if $\simiZ(\mZ)$ is of the form
 	\begin{equation}
 		\label{forme_simi}
-		[\simi(\mZ)]_{ij} = h(f(\bm{z}_i, \bm{z}_j), g(\mZ))\,,
+		[\simiZ(\mZ)]_{ij} = h(f(\bm{z}_i, \bm{z}_j), g(\mZ))\,,
 	\end{equation} 
-	where $f: \R^d \times \R^d \to \R, \ h: \R \times \R \to \R$ and $g: \R^{N \times d} \to \R$ which is permutation invariant \citep{bronstein2021geometric}, then $\mathcal{C}$ is stable under permutation. Indeed, permuting the rows and columns of $\simi(\mZ)$ by $\sigma$ is equivalent to considering the similarity $\simi(\mY)$, where $\mY = (\bm{z}_{\sigma(1)}, \cdots, \bm{z}_{\sigma(n)})^\top$. Moreover, most similarities in the target space considered in DR take the form \cref{forme_simi}: $\langle \Phi(\bm{z}_i), \Phi(\bm{z}_j) \rangle_{\mathcal{H}}$ (kernels such as in spectral methods with $\Phi = \operatorname{id}$), $f(\bm{z}_i, \bm{z}_j)/ \sum_{nm} f(\bm{z}_n, \bm{z}_m)$ (normalized similarities such as in SNE and t-SNE). Also note that the condition on $\mathcal{C} = \{\simi(\mZ): \mZ \in \R^{N \times d}\}$ of \cref{prop:bilinear_problem} is met as soon as $\simi : \R^{N \times d} \to \R^{N \times N}$ is permutation equivariant. 
+	where $f: \R^d \times \R^d \to \R, \ h: \R \times \R \to \R$ and $g: \R^{N \times d} \to \R$ which is permutation invariant \citep{bronstein2021geometric}, then $\mathcal{C}$ is stable under permutation. Indeed, permuting the rows and columns of $\simiZ(\mZ)$ by $\sigma$ is equivalent to considering the similarity $\simiZ(\mY)$, where $\mY = (\bm{z}_{\sigma(1)}, \cdots, \bm{z}_{\sigma(n)})^\top$. Moreover, most similarities in the target space considered in DR take the form \cref{forme_simi}: $\langle \Phi(\bm{z}_i), \Phi(\bm{z}_j) \rangle_{\mathcal{H}}$ (kernels such as in spectral methods with $\Phi = \operatorname{id}$), $f(\bm{z}_i, \bm{z}_j)/ \sum_{nm} f(\bm{z}_n, \bm{z}_m)$ (normalized similarities such as in SNE and t-SNE). Also note that the condition on $\mathcal{C} = \{\simiZ(\mZ): \mZ \in \R^{N \times d}\}$ of \cref{prop:bilinear_problem} is met as soon as $\simiZ : \R^{N \times d} \to \R^{N \times N}$ is permutation equivariant. 
 \end{remark}
 
 \section{Generalized Semi-relaxed Gromov-Wasserstein is a divergence}\label{sec:srGW_divergence_supp}

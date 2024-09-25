@@ -3,16 +3,19 @@
 
 This chapter is based on material from the following publication:
 
+\begin{mdframed}
 \begin{center} 
     \bibentry{van2022probabilistic} 
 \end{center}
+\end{mdframed}
 
+This work adresses \Cref{prob:probabilistic_models} 
 Due to a lack of clear probabilistic foundations, these properties remain mostly empirical. This gap between theory and practice is detrimental as practitioners may rely on strategies that are not optimal for their use case.
 While recent software developments are making these methods more scalable \cite{chan2018t,pezzotti2019gpgpu,linderman2019fast} and further expanding their use, the need for a well-established probabilistic framework is becoming more prominent.
 In this work, we define the generative probabilistic model that encompasses current embedding methods, while establishing new links with the well-established PCA model.
 
 \paragraph{Outline.} 
-The rationale of our framework is to suppose that the observations $\Xb$ and $\Zb$ are structured by two latent graphs with $\Wb_{X}$ and $\Wb_{Z}$ standing for their $n$-square weight matrices.
+The rationale of our framework is to suppose that the observations $\Xb$ and $\Zb$ are structured by two latent graphs with $\Wb_{X}$ and $\Wb_{Z}$ standing for their $N$-square weight matrices.
 As the goal of DR is to preserve the input's structure in the latent space, we propose to find the best low-dimensional representation $\Zb$ of $\Xb$ such that $\Wb_{X}$ and $\Wb_{Z}$ are close. To build a flexible and robust probabilistic framework, we consider random graphs distributed according to some predefined prior distributions. Our objective is to match the posterior distributions of $\Wb_{X}$ and $\Wb_{Z}$. Note that as they share the same dimensionality the latter graphs can be easily compared unlike $\Xb$ and $\Zb$. The coupling is done with a cross-entropy criterion, the minimization of which will be referred to as graph coupling.
 
 In this work, our main contributions are as follows.

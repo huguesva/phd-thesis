@@ -14,24 +14,24 @@ In this section, we present the strong connections between the classical \cref{e
 \cref{eq:DR_criterion}, dimension reduction seeks to find embeddings $\mZ$ so
 that the similarity between the $(i,j)$ samples of the input data is as close as
 possible to the similarity between the $(i,j)$ samples of the embeddings. Under
-reasonable assumptions about $\simi$, this also amounts to identifying the embedding $\mZ$ \emph{and} the best permutation that realigns the two similarity matrices. %To precise this idea we first recall that the function $\simi$ is
-Recall that the function $\simi$ is equivariant by permutation, if, for any $N \times N$ permutation matrix $\mP$ and any
-$\mZ$, $\simi(\mP \mZ) = \mP \simi(\mZ) \mP^\top$ \cite{bronstein2021geometric}.
-This type of assumption is natural for $\simi$: if we rearrange the order of
+reasonable assumptions about $\simiZ$, this also amounts to identifying the embedding $\mZ$ \emph{and} the best permutation that realigns the two similarity matrices. %To precise this idea we first recall that the function $\simiZ$ is
+Recall that the function $\simiZ$ is equivariant by permutation, if, for any $N \times N$ permutation matrix $\mP$ and any
+$\mZ$, $\simiZ(\mP \mZ) = \mP \simiZ(\mZ) \mP^\top$ \cite{bronstein2021geometric}.
+This type of assumption is natural for $\simiZ$: if we rearrange the order of
 samples (\ie, the rows of $\mZ$), we expect the similarity matrix between the
 samples to undergo the same rearrangement. 
 \begin{restatable}{lemma}{GMproblemequiv}
 \label{lemma:GMproblemequiv}
-Let $\simi$ be a permutation equivariant function and $L$ any loss. The minimum \cref{eq:DR_criterion} is equal to 
+Let $\simiZ$ be a permutation equivariant function and $L$ any loss. The minimum \cref{eq:DR_criterion} is equal to 
 \begin{equation}
 \label{eq:gm}
-\min_{\mZ \in \R^{N \times d}} \min_{\sigma \in S_N} \: \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{\sigma(i) \sigma(j)}) \:.
+\min_{\mZ \in \R^{N \times d}} \min_{\sigma \in S_N} \: \sum_{ij} L([\simiX(\mX)]_{ij}, [\simiZ(\mZ)]_{\sigma(i) \sigma(j)}) \:.
 \end{equation}
 Also, any sol. $\mZ$ of \cref{eq:DR_criterion} is such that $(\mZ, \operatorname{id})$ is sol. of \cref{eq:gm} and conversely any $(\mZ, \sigma)$ sol. of \cref{eq:gm} is such that $\mZ$ is a sol of \cref{eq:DR_criterion} up to $\sigma$.
 \end{restatable}
 See proof in \Cref{proof:GMproblemequiv}. The correspondence established between \cref{eq:DR_criterion} and \cref{eq:gm}
 unveils a \emph{quadratic problem} similar to GW. Specifically, \cref{eq:gm} relates to
-the Gromov-Monge problem\footnote{Precisely $\min_{\sigma \in S_N} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simi(\mZ)]_{\sigma(i) \sigma(j)})$ is the Gromov-Monge discrepancy between two discrete distributions, with the same number of atoms and uniform weights.}
+the Gromov-Monge problem\footnote{Precisely $\min_{\sigma \in S_N} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simiZ(\mZ)]_{\sigma(i) \sigma(j)})$ is the Gromov-Monge discrepancy between two discrete distributions, with the same number of atoms and uniform weights.}
 \cite{memoli2018gromov} which seeks to identify, by solving a quadratic assignment problem \cite{cela2013quadratic}, the permutation $\sigma$ that best
 aligns two similarity matrices. \Cref{lemma:GMproblemequiv} therefore shows that the best permutation is the identity when we also optimize the embedding $\mZ$.
 We can delve deeper into these comparisons and demonstrate that the general formulation of dimension reduction is also equivalent to minimizing the Gromov-Wasserstein objective, which serves as a relaxation of the Gromov-Monge problem \cite{memoli2022comparison}.
@@ -45,37 +45,37 @@ We can delve deeper into these comparisons and demonstrate that the general form
 We thus have the following theorem that extends \Cref{lemma:GMproblemequiv} to the GW problem (proof can be found in \Cref{proof:theo:main_theo}).
 \begin{restatable}{theorem}{maintheodistr}
 \label{theo:main_theo}
-The minimum \cref{eq:DR_criterion} is equal to $\min_{\mZ}\GW_L(\simiX(\mX), \simi(\mZ), \frac{1}{N}\one_N, \frac{1}{N}\one_N)$ in the following settings:
+The minimum \cref{eq:DR_criterion} is equal to $\min_{\mZ}\GW_L(\simiX(\mX), \simiZ(\mZ), \frac{1}{N}\one_N, \frac{1}{N}\one_N)$ in the following settings:
 \begin{enumerate}[label=(\roman*), rightmargin=25pt]
-\item (spectral methods)  $\simiX(\mX)$ is any matrix, $L = L_2$ and $\simi(\mZ) = \mZ \mZ^\top$. 
+\item (spectral methods)  $\simiX(\mX)$ is any matrix, $L = L_2$ and $\simiZ(\mZ) = \mZ \mZ^\top$. 
 \item (neighbor embedding methods) $\im(\simiX) \subseteq \R_{>0}^{N \times N}$, $L = L_{\KL}$, the matrix $\simiX(\mX)$ is CPD and, for any $\mZ$,
 \begin{equation}
-\simi(\mZ) = \diag(\alphab_\mZ) \mK_\mZ \diag(\betab_\mZ)\,,
+\simiZ(\mZ) = \diag(\alphab_\mZ) \mK_\mZ \diag(\betab_\mZ)\,,
 \end{equation}
 where $\alphab_\mZ, \betab_\mZ \in \R^{N}_{> 0}$ and $\mK_\mZ \in \R^{N \times N}_{> 0}$ is such that $\log(\mK_\mZ)$ is CPD.
 \end{enumerate}
 \end{restatable}
 % $C_Z$is infinitely divisible, resultat qui pourrait etre ameliorer C_Z = W_Z/alpha_Z tel que log W_Z est CPD
 
-Remarkably, this result shows that \emph{all spectral DR methods} can be seen as OT problems in disguise, as they all equivalently minimize a GW problem. The second point of the theorem also provides some insights into this equivalence in the case of neighbor embedding methods. For instance, the Gaussian kernel $\mK_\mZ$, used extensively in DR, satisfies the hypothesis as $\log(\mK_\mZ) = (-\|\vz_i-\vz_j\|_2^2)_{ij}$ is CPD (see \eg \citealt{maron2018probably}). The terms $\alphab_\mZ, \betab_\mZ$ also allow for considering all the usual normalizations of $\mK_\mZ$: by a scalar so as to have $\sum_{ij} [\simi(\mZ)]_{ij}=1$, but also any row-stochastic or doubly stochastic normalization (with the Sinkhorn-Knopp algorithm \citealt{sinkhorn1967concerning}).
+Remarkably, this result shows that \emph{all spectral DR methods} can be seen as OT problems in disguise, as they all equivalently minimize a GW problem. The second point of the theorem also provides some insights into this equivalence in the case of neighbor embedding methods. For instance, the Gaussian kernel $\mK_\mZ$, used extensively in DR, satisfies the hypothesis as $\log(\mK_\mZ) = (-\|\vz_i-\vz_j\|_2^2)_{ij}$ is CPD (see \eg \citealt{maron2018probably}). The terms $\alphab_\mZ, \betab_\mZ$ also allow for considering all the usual normalizations of $\mK_\mZ$: by a scalar so as to have $\sum_{ij} [\simiZ(\mZ)]_{ij}=1$, but also any row-stochastic or doubly stochastic normalization (with the Sinkhorn-Knopp algorithm \citealt{sinkhorn1967concerning}).
 
 Matrices satisfying $\log(\mK_\mZ)$ being CPD are well-studied in the literature
 and are known as infinitely divisible matrices \cite{bhatia2006infinitely}. It
 is noteworthy that the t-Student kernel does not fall into this category.
 Moreover,  in the aforementioned neighbor embedding methods, the matrix
 $\simiX(\mX)$ is generally not CPD. The intriguing question of generalizing this
-result with weaker assumptions on $\simi$ and $\simiX$ remains open for future
+result with weaker assumptions on $\simiZ$ and $\simiX$ remains open for future
 research. Interestingly, we have observed in the numerical experiments performed in \Cref{sec:exps} that the
 symmetric entropic affinity of \citet{van2023snekhorn} was systematically CPD. 
 % is often CPD in practice. 
 
 \begin{remark}
-In \Cref{corr:equivCE} of the appendix we also provide other sufficient conditions for neighbor embedding methods with the cross-entropy loss $L(x,y) = x \log(x/y)$. They rely on specific structures for $\simi$ but do not impose any assumptions on $\simiX$. Additionally, in \Cref{sec:necessary_and_sufficient}, we provide a \emph{necessary} condition based on a bilinear relaxation of the GW problem. Although its applicability is limited due to challenges in proving it in full generality, it requires minimal assumptions on $\simiX, \simi$ and $L$.
+In \Cref{corr:equivCE} of the appendix we also provide other sufficient conditions for neighbor embedding methods with the cross-entropy loss $L(x,y) = x \log(x/y)$. They rely on specific structures for $\simiZ$ but do not impose any assumptions on $\simiX$. Additionally, in \Cref{sec:necessary_and_sufficient}, we provide a \emph{necessary} condition based on a bilinear relaxation of the GW problem. Although its applicability is limited due to challenges in proving it in full generality, it requires minimal assumptions on $\simiX, \simiZ$ and $L$.
 \end{remark} 
 
 %\tv{NON LE POINT II NE MARCHE PAS DU TOUT}
 
-% Le second point du théorème,  permet de donner quelques insight sur cette equivalence dans le cas des neighbor embedding methods. En effet, dans certaines méthodes comme tSNE \cite{van2008visualizing} une similarité possible $\simi(\mZ)$ peut s'écrire comme un noyau Gaussien entre les points, normalisé par sa somme total. Dans ce cas $\log(\simi(\mZ))$ est proportionnel à une matrice de distance au carré ce qui est bien  Bien que les matrices $\simiX$ usuellement utilisée 
+% Le second point du théorème,  permet de donner quelques insight sur cette equivalence dans le cas des neighbor embedding methods. En effet, dans certaines méthodes comme tSNE \cite{van2008visualizing} une similarité possible $\simiZ(\mZ)$ peut s'écrire comme un noyau Gaussien entre les points, normalisé par sa somme total. Dans ce cas $\log(\simiZ(\mZ))$ est proportionnel à une matrice de distance au carré ce qui est bien  Bien que les matrices $\simiX$ usuellement utilisée 
 
 
 % Certain neighbor embedding methods can also be interpreted within this framework. For instance, when the input similarities is 
@@ -85,7 +85,7 @@ In \Cref{corr:equivCE} of the appendix we also provide other sufficient conditio
 % when the similarity between two points is translation-invariant and logarithmically concave. For instance, SNE considers  $f(\vz_i -\vz_j) = \exp(-\|\vz_i-\vz_j\|_2^2)$ which satisfies the conditions of the theorem. The normalization constant $R$ serves as a ‘‘repulsion'' term and aims, among other objectives, to avoid the trivial solution $\mZ = 0$ \cite{van2022probabilistic}. 
 
 % \hva{dans SNE c'est pas exactement cette norm, somme que sur un indice}
-% It is typically chosen such that $\simi(\mZ)$  sums to $1$ (\textit{e.g.,}
+% It is typically chosen such that $\simiZ(\mZ)$  sums to $1$ (\textit{e.g.,}
 % In t-SNE for instance, $R(\mZ) = \sum_{n m} \exp(-\|\vz_n-\vz_m\|_2^2$). 
 
 % It should be noted that the assumptions on $R$ do not encompass all mentioned neighbor embedding methods (e.g., in SNE, $R$ is permutation invariant but not convex). The intriguing question about the generalization of this result to any type of normalizing factor remains for future research.
@@ -106,7 +106,7 @@ In essence, both \Cref{lemma:GMproblemequiv} and \Cref{theo:main_theo} indicate 
 % We have the following equivalences
 %  \begin{enumerate}[label=(\roman*)]
 % \item For any $\mC_\mX$ spectral methods are equivalent to GW minimization,  \ie\ minimizing \cref{eq:spectral_method} is equivalent to minimizing $\operatorname{GW}_{L_{2}}(\mC_\mX, \mZ \mZ^\top, \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N)$ in $\mZ$.
-% \item Neighbor embedding methods are equivalent to GW minimization, \ie\ minimizing \cref{eq:neighbor_techniques} is equivalent to minimizing $\operatorname{GW}_{L_{\operatorname{KL}}}(\mC_\mX, \simi(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N)$, whenever 1) $\mC_\mX$ is any matrix and $\forall \mZ, \simi(\mZ) = f(\bm{z}_i - \bm{z}_j)$ for $f:\R^{d} \to \R_+^{*}$ that either $\log$-convex or $\log$-concave or 2) $\mC_\mX$ and $\forall \mZ, -\log(\simi(\mZ))$ are CPD or CND.
+% \item Neighbor embedding methods are equivalent to GW minimization, \ie\ minimizing \cref{eq:neighbor_techniques} is equivalent to minimizing $\operatorname{GW}_{L_{\operatorname{KL}}}(\mC_\mX, \simiZ(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N)$, whenever 1) $\mC_\mX$ is any matrix and $\forall \mZ, \simiZ(\mZ) = f(\bm{z}_i - \bm{z}_j)$ for $f:\R^{d} \to \R_+^{*}$ that either $\log$-convex or $\log$-concave or 2) $\mC_\mX$ and $\forall \mZ, -\log(\simiZ(\mZ))$ are CPD or CND.
 % \end{enumerate}
 % \end{corollary}
 % 
@@ -130,29 +130,29 @@ In essence, both \Cref{lemma:GMproblemequiv} and \Cref{theo:main_theo} indicate 
 % \begin{restatable}{proposition}{mainproposition}
 %  %\begin{theorem}
 %  \label{proposition:mainproposition}
-%  Let $\Omega \subseteq \R$ such that $\im(\simiX) \subseteq \Omega^{N \times N}$. Consider a loss $L$ such that $L(a, \cdot)$ is convex and non-decreasing for any $a \in \Omega$. Suppose that the function $\simi$ satisfies 
+%  Let $\Omega \subseteq \R$ such that $\im(\simiX) \subseteq \Omega^{N \times N}$. Consider a loss $L$ such that $L(a, \cdot)$ is convex and non-decreasing for any $a \in \Omega$. Suppose that the function $\simiZ$ satisfies 
 % \begin{equation}
 % 	\label{eq:another_condition_based_on_convexity_inside}
-% 	\forall \mZ, \forall \mT \in \operatorname{DS}, \exists \mY, \ \simi(\mY) \leq \mT \simi(\mZ) \mT^\top\,,
+% 	\forall \mZ, \forall \mT \in \operatorname{DS}, \exists \mY, \ \simiZ(\mY) \leq \mT \simiZ(\mZ) \mT^\top\,,
 % \end{equation}
-% where $\leq$ is understood element-wise, \ie, $\bm{A} \leq \bm{B} \iff \forall (i,j), \ A_{ij} \leq B_{ij}$. Then minimizing in $\mZ$ the objective \cref{eq:DR_criterion} is equivalent to minimizing $\GW_L(\simiX(\mX), \simi(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N)$ in $\mZ$. Moreover, when $L(a, \cdot)$ is only convex for any $a \in \Omega$, the same conclusion holds by replacing the inequality with an equality in \cref{eq:another_condition_based_on_convexity_inside}.
-% % Let $\mC_\mX$ be any matrix. Minimizing in $\mZ$ the objective \cref{eq:DR_criterion} is equivalent to minimizing $\mathrm{GW}_L (\mC_{\mX}, \mC_{\mZ}, \frac{1}{N} \bm{1}_N , \frac{1}{N} \bm{1}_N)$ in $\mZ$ when any of the following conditions on $L, \simi$ are met:
+% where $\leq$ is understood element-wise, \ie, $\bm{A} \leq \bm{B} \iff \forall (i,j), \ A_{ij} \leq B_{ij}$. Then minimizing in $\mZ$ the objective \cref{eq:DR_criterion} is equivalent to minimizing $\GW_L(\simiX(\mX), \simiZ(\mZ), \frac{1}{N}\mathbf{1}_N, \frac{1}{N}\mathbf{1}_N)$ in $\mZ$. Moreover, when $L(a, \cdot)$ is only convex for any $a \in \Omega$, the same conclusion holds by replacing the inequality with an equality in \cref{eq:another_condition_based_on_convexity_inside}.
+% % Let $\mC_\mX$ be any matrix. Minimizing in $\mZ$ the objective \cref{eq:DR_criterion} is equivalent to minimizing $\mathrm{GW}_L (\mC_{\mX}, \mC_{\mZ}, \frac{1}{N} \bm{1}_N , \frac{1}{N} \bm{1}_N)$ in $\mZ$ when any of the following conditions on $L, \simiZ$ are met:
 % %  \begin{enumerate}[label=(\roman*)]
 
 % % \item The function $L(a,\cdot)$ is convex for any $a$ and 
 % % \begin{equation}
-% % \forall \mZ,  \forall \mT \in \operatorname{DS}, \exists \mY, \ \mT \simi(\mZ) \mT^\top = \simi(\mY)\,.
+% % \forall \mZ,  \forall \mT \in \operatorname{DS}, \exists \mY, \ \mT \simiZ(\mZ) \mT^\top = \simiZ(\mY)\,.
 % % \end{equation}
 % % \item The similarity in the output space can be written as \tv{no sorry}
 % % \begin{equation}
-% % \forall \mZ, \ [\simi(\mZ)]_{ij} = h\big(f(\bm{z}_{i}-\bm{z}_{j}), \ g(\mZ)\big) \,,
+% % \forall \mZ, \ [\simiZ(\mZ)]_{ij} = h\big(f(\bm{z}_{i}-\bm{z}_{j}), \ g(\mZ)\big) \,,
 % % \end{equation}
 % % where $h: \R \times \R \to \R, g: \R^{N \times d} \to \R$ and $f: \R^d \to \R$ are such that $\bm{z} \to L(a, h(f(\bm{z}), b))$ is convex for any $a, b$.
-% % \item $L(a,\cdot)$ is convex and non-decreasing for any $a$, and $\forall \mZ, \ [\simi(\mZ)]_{ij} = f(\bm{z}_{i}-\bm{z}_{j}) \times g(\mZ)$ for some convex function $f: \R^d \to \R$ and $g: \R^{N \times d} \to \R_{+}$.
-% % \item $L$ can be written as $L(a,b) = f_1(a) + f_2(b) + h_1(a) h_2(b)$ and $h_1(\mC_\mX)$ and $\forall \mZ, h_2(\simi(\mZ))$ are CND or CPD.
+% % \item $L(a,\cdot)$ is convex and non-decreasing for any $a$, and $\forall \mZ, \ [\simiZ(\mZ)]_{ij} = f(\bm{z}_{i}-\bm{z}_{j}) \times g(\mZ)$ for some convex function $f: \R^d \to \R$ and $g: \R^{N \times d} \to \R_{+}$.
+% % \item $L$ can be written as $L(a,b) = f_1(a) + f_2(b) + h_1(a) h_2(b)$ and $h_1(\mC_\mX)$ and $\forall \mZ, h_2(\simiZ(\mZ))$ are CND or CPD.
 %  %\end{enumerate}
 % \end{restatable}
-% This proposition  provides sufficient conditions for the equivalence between classical DR problems and GW ones. We emphasize that this result holds for any matrix in the input space, as long as the convexity hypothesis of the loss is verified on the values of this matrix. The first condition can be interpreted as showing that to the image of $\simi$ is stable by $N \times N$ doubly stochastic matrices, which holds in particular when $\simi(\mZ) = \mZ \mZ^\top$. 
+% This proposition  provides sufficient conditions for the equivalence between classical DR problems and GW ones. We emphasize that this result holds for any matrix in the input space, as long as the convexity hypothesis of the loss is verified on the values of this matrix. The first condition can be interpreted as showing that to the image of $\simiZ$ is stable by $N \times N$ doubly stochastic matrices, which holds in particular when $\simiZ(\mZ) = \mZ \mZ^\top$. 
 
 % We denote by $\overline{\mu} = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\bm{x}_i}$ the input data distribution. One can notice that the DR problem of \eqref{eq:DR_criterion} is equivalent to the following Gromov-Monge formulation
 % \begin{align}\tag{DR-2}

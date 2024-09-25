@@ -1,10 +1,8 @@
 % Appendix Template
 
-\chapter{Appendix of \Cref{chapter:GraphCoupling}}
+\section{Appendix}
 
-\minitoc
-
-\section{Proof of \Cref{PCA_graph_coupling}}
+\subsection{Proof of \Cref{PCA_graph_coupling}}
 
 \PCAgraphcoupling*
 
@@ -63,7 +61,7 @@ $$\forall i \in \integ{n}, \quad
 Note that this solution is not unique if there are repeated eigenvalues. Notice also that one has the freedom to choose the Wishart prior parameters such that $\gamma=1$. Doing so, the solution satisfies $\Z^\star \Z^{\star \:T} = \bm{V}_{[:,q]} \bm{D}_{[q,q]} \bm{V}^\top_{[q,:]}$. Therefore there exists $\bm{R}$ an orthogonal matrix of size $q$ such that $\Z^{\star} = \bm{V}_{[:,q]}\bm{D}_{[q,q]}^{\frac{1}{2}}\bm{R}$. The latter is the output of a PCA model of $\X$ with $q$ components, which is defined up to a rotation.
 \end{proof}
 
-\section{Proof of \Cref{prop:integrability_pairwise_MRF}} \label{proof:lambda_perp_integrability}
+\subsection{Proof of \Cref{prop:integrability_pairwise_MRF}} \label{proof:lambda_perp_integrability}
 
 \integrabilitypairwiseMRF*
 
@@ -130,7 +128,7 @@ using the Fubini Tonelli theorem. The result follows from $\lambda_{\mathbb{R}^p
 \end{proof}
 
 
-\section{Proof of \Cref{prop:posterior_W}}
+\subsection{Proof of \Cref{prop:posterior_W}}
 \label{proof:posterior_limit}
 
 \posteriorW
@@ -195,11 +193,11 @@ This distribution amounts to: $\W \sim \mathcal{M}\left(n, \left(\frac{\pi_{ij} 
 \end{proof}
 
 
-\section{Towards Capturing Large-Scale Dependencies}\label{sec:towards_large_scale}
+\subsection{Towards Capturing Large-Scale Dependencies}\label{sec:towards_large_scale}
 
 In this section, we investigate the ability of graph coupling to faithfully represent the global structure in low dimensions. To gain intuition on the case where the distribution induced by the graph is not degenerate, we consider a proper Gaussian graph coupling model and show its equivalence with PCA. We then provide a new initialization procedure to alleviate the large-scale deficiency of graph coupling when degenerate MRFs are used.
 
-\subsection{Hierarchical Graph Coupling}\label{sec:hierarchical_modelling}
+\subsubsection{Hierarchical Graph Coupling}\label{sec:hierarchical_modelling}
 
 The goal of this section is to show that global structure in SNE-like embeddings can be improved by structuring the CCs' positions. We consider the following hierarchical model for $\Xb$, where $\mathcal{P}_{X} \in \{B,D,E\}$, $k_x$ satisfies the assumptions of \cref{prop:integrability_pairwise_MRF} and $\nu_{X} \geq n$:
 \begin{align*}
@@ -235,7 +233,7 @@ Note that while (\ref{eq:loss_LW}) approximates the objective of SNE-like method
 
 From this observation, we propose a simple heuristic to minimize (\ref{eq:add_term_Coupling}) that consists in computing a PCA embedding of $\mathbb{E}_{\mathbb{P}_{\mathcal{P}_X}(\cdot;\Kb_{X})}\left[ \Ub_{[:R]}\Ub_{[R]}^\top \right]\Xb$. The distribution of the connected components of the posterior of $\Wb_{X}$ being intractable, we resort to a Monte-Carlo estimation of the above expectation. The latter procedure called \textit{ccPCA} aims at recovering the inter-CC structure that is filtered by SNE-like methods. \textit{ccPCA} may then be used as initialization for optimizing (\ref{eq:loss_LW}) which is done by running the DR method corresponding to the graph priors at hand (\cref{sec:retrieving_DR_methods}). This second step essentially consists in refining the intra-CC structure. 
 
-\subsection{Experiments with \textit{ccPCA}}\label{sec:ccPCA}
+\subsubsection{Experiments with \textit{ccPCA}}\label{sec:ccPCA}
 
 % \begin{figure*}[t]
 % \begin{center}

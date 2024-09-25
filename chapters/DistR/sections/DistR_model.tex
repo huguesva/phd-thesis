@@ -12,7 +12,7 @@ The previous interpretation is significant because it allows for two generalizat
 
 Precisely, the optimization problem that we tackle in this paper can be formulated as follows
 \begin{align}\tag{DistR}\label{eq:Dist-DR}
-	\min_{\begin{smallmatrix} \mZ \in \R^{n \times d} \\ \vh_Z \in \Sigma_n \end{smallmatrix}} \GW_L (\simiX(\mX), \simi(\mZ), \vh_X, \vh_Z)
+	\min_{\begin{smallmatrix} \mZ \in \R^{n \times d} \\ \vh_Z \in \Sigma_n \end{smallmatrix}} \GW_L (\simiX(\mX), \simiZ(\mZ), \vh_X, \vh_Z)
 \end{align}
 %where $\mZ \in \R^{n \times d}$, $\vh_Z \in \R^n$ .
 This problem comes down to learning the closest graph $(\mC_Z(\mZ), \vh_Z)$ parametrized by $\mZ$ from $(\mC_X(\mX), \vh_X)$ in the GW sense. When $n < N$, the embeddings $(\vz_1, \cdots, \vz_n)$ then act as \emph{low-dimensional prototypical examples} of input samples, whose learned relative importance $\vh_Z$ accommodates clusters of varying proportions in the input data $\mX$ (see \Cref{fig:general_idea}). We refer to them as \emph{prototypes}. The weight vector $\vh_X$ is typically assumed to be uniform, that is $\vh_X=\frac{1}{N} \one_N$, in the absence of prior knowledge. As discussed in \Cref{sec:DR_as_OT}, traditional DR amounts to setting $n = N, \vh_Z = \frac{1}{N} \one_N$.
@@ -48,7 +48,7 @@ point is therefore linked to a unique prototype/cluster.
 
 \paragraph{A semi-relaxed objective.} For a given embedding $\mZ$ and $L=L_2$, it is known that minimizing in $\vh_{Z}$ the DistR objective is \emph{equivalent} to a problem that is computationally simpler than the usual GW one, namely the semi-relaxed GW divergence $\srGW_L$ \cite{vincent2021semi}:
 \begin{equation*}\tag{srGW} \label{eq:srGW}
-	\min_{\mT \in \gU_n(\vh_X)} E_L(\simiX(\mX), \simi(\mZ), \mT) \:,
+	\min_{\mT \in \gU_n(\vh_X)} E_L(\simiX(\mX), \simiZ(\mZ), \mT) \:,
 \end{equation*}
 where $\gU_n(\vh_X) := \left\{ \mT \in \R_{+}^{N \times n}: \mT \one_n = \vh_X\right\}$. To efficiently address \cref{eq:Dist-DR}, we first observe that this equivalence holds for any inner divergence $L$ with a straightforward adaptation of the proof in \citet{vincent2021semi}. 
 %We complete our analysis with the following result.
@@ -100,14 +100,14 @@ We will see that a link can be drawn with kernel K-means using the analogy of \e
 We emphasize that the only (important) difference between \cref{eq:srGBW} and
 \cref{eq:Dist-DR} is that there is no constraint imposed on $\overline{\mC}$ in
 srGWB. In contrast, \cref{eq:Dist-DR} looks for minimizing over $\overline{\mC}
-\in \{\simi(\mZ): \mZ \in \R^{N \times d}\}$. For instance, choosing $\simi(\mZ) = \mZ \mZ^\top$ in \cref{eq:Dist-DR} is
+\in \{\simiZ(\mZ): \mZ \in \R^{N \times d}\}$. For instance, choosing $\simiZ(\mZ) = \mZ \mZ^\top$ in \cref{eq:Dist-DR} is
 equivalent to enforcing $\operatorname{rank}(\overline{\mC}) \leq d$ in
 \cref{eq:srGBW}.
 \begin{figure*}[t!]
 	\begin{center}
 		\centerline{\includegraphics[width=\columnwidth]{figures/DistR/DistDR_embed.pdf}}
 		\caption{Examples of 2-dimensional embeddings produced by DistR using the SEA similarity for $\simiX$ 
-		and the Student's kernel for $\simi$. The latter computed in $\R^2$ for the first three datasets and the Poincaré ball for the last one.
+		and the Student's kernel for $\simiZ$. The latter computed in $\R^2$ for the first three datasets and the Poincaré ball for the last one.
 		Displayed images are medoids for each cluster \ie $\argmax_i [\mC_X(\mX)\mT_{:,k}]_i$ for cluster $k$. The area of image $k$ is proportional to $[\vh_Z]_k$.
 		}
 		\label{fig:visu_gwdr}
@@ -126,7 +126,7 @@ We establish below that srGWB is of particular interest for clustering. The moti
 % Notice that we also establish a corollary of \Cref{theo:srgw_bary_concavity} providing an analog result when masses on $\overline{\mC}$ are not optimized. 
 %These relations and \Cref{theo:srgw_bary_concavity} further legitimize the use of GW projections for clustering and allow us to expect OT plans of \ref{eq:Dist-DR} to be close to providing a hard-clustering of $\mX$. \tv{a reformuler}
 \Cref{theo:srgw_bary_concavity} and relations proven in \citet{chen2023gromov} provide that  \cref{eq:srGBW} is equivalent to the aforementioned kernel K-means when $\mC_X(\mX)$ is positive semi-definite. Moreover, as the (hard) clustering property holds for more generic types of matrices, namely CPD and CND, srGWB stands out as a fully-fledged clustering method.
-Although these results do not apply directly to DistR, we argue that they further legitimize the use of GW projections for clustering. Interestingly, we also observe in practice that the couplings obtained by DistR are always membership matrices, regardless of $\simi$. Further research will be carried out to better understand this phenomenon. 
+Although these results do not apply directly to DistR, we argue that they further legitimize the use of GW projections for clustering. Interestingly, we also observe in practice that the couplings obtained by DistR are always membership matrices, regardless of $\simiZ$. Further research will be carried out to better understand this phenomenon. 
 %and allow us to believe that the OT of DistR are close to providing hard clustering. We point out that it was always the case in our experiments.
 %When $\vh$ is uniform, these extremities are membership matrices up to a factor $\frac{1}{N}$ \cite[Theorem 1]{cao2022centrosymmetric}. 
 %Interestingly, 
