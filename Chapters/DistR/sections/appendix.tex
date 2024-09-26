@@ -1,6 +1,4 @@
-\chapter{Appendix of \Cref{chapter:DistR}}
-
-\minitoc 
+\section{Appendix}
 
 \textbf{Outline of the supplementary material:}
 \begin{itemize}
@@ -12,9 +10,9 @@
 
 \end{itemize}
 
-\section{Proof of results in \Cref{sec:DR_as_OT}}\label{sec:DR_as_OT_supp}
+\subsection{Proof of results in \Cref{sec:DR_as_OT}}\label{sec:DR_as_OT_supp}
 
-\subsection{Proof of \cref{lemma:GMproblemequiv} \label{proof:GMproblemequiv}}
+\subsubsection{Proof of \cref{lemma:GMproblemequiv} \label{proof:GMproblemequiv}}
 
 We recall the result.
 \GMproblemequiv*
@@ -29,7 +27,7 @@ We recall the result.
 	\end{equation}
 \end{proof}
 
-\subsection{Proof of \cref{theo:main_theo} \label{proof:theo:main_theo}}
+\subsubsection{Proof of \cref{theo:main_theo} \label{proof:theo:main_theo}}
 
 In the following $\operatorname{DS}$ is the space of $N \times N$ doubly stochastic matrices. We begin by proving the first point of \cref{theo:main_theo}. We will rely on the simple, but useful, result below.
 \begin{proposition}
@@ -179,7 +177,7 @@ It remains to prove the second point of \cref{theo:main_theo} as stated below.
 	where $a_\mX, b_\mZ$ are terms that do not depend on $\mT$. Since the problem is quadratic the concavity only depends on the term $-\sum_{ijkl} [\simiX(\mX)]_{ik}\log([\mK_\mZ]_{jl}) T_{ij} T_{kl} = -\tr(\simiX(\mX) \mT^\top \log(\mK_\mZ) \mT)$. From \cite{maron2018probably} we know that the function $\mT \to -\tr(\simiX(\mX) \mT^\top \log(\mK_\mZ) \mT)$ is concave on $\gU(\frac{1}{N} \one_N, \frac{1}{N} \one_N)$ when $\simiX(\mX)$ is CPD and $\log(\mW_\mZ)$ is CPD. This concludes the proof.	
 \end{proof}
 
-\subsection{Necessary and sufficient condition \label{sec:necessary_and_sufficient}}
+\subsubsection{Necessary and sufficient condition \label{sec:necessary_and_sufficient}}
 
 We give a necessary and sufficient condition under which the DR problem is equivalent to a GW problem
 \begin{proposition}
@@ -251,7 +249,7 @@ We give a necessary and sufficient condition under which the DR problem is equiv
 	where $f: \R^d \times \R^d \to \R, \ h: \R \times \R \to \R$ and $g: \R^{N \times d} \to \R$ which is permutation invariant \citep{bronstein2021geometric}, then $\mathcal{C}$ is stable under permutation. Indeed, permuting the rows and columns of $\simiZ(\mZ)$ by $\sigma$ is equivalent to considering the similarity $\simiZ(\mY)$, where $\mY = (\bm{z}_{\sigma(1)}, \cdots, \bm{z}_{\sigma(n)})^\top$. Moreover, most similarities in the target space considered in DR take the form \cref{forme_simi}: $\langle \Phi(\bm{z}_i), \Phi(\bm{z}_j) \rangle_{\mathcal{H}}$ (kernels such as in spectral methods with $\Phi = \operatorname{id}$), $f(\bm{z}_i, \bm{z}_j)/ \sum_{nm} f(\bm{z}_n, \bm{z}_m)$ (normalized similarities such as in SNE and t-SNE). Also note that the condition on $\mathcal{C} = \{\simiZ(\mZ): \mZ \in \R^{N \times d}\}$ of \cref{prop:bilinear_problem} is met as soon as $\simiZ : \R^{N \times d} \to \R^{N \times N}$ is permutation equivariant. 
 \end{remark}
 
-\section{Generalized Semi-relaxed Gromov-Wasserstein is a divergence}\label{sec:srGW_divergence_supp}
+\subsection{Generalized Semi-relaxed Gromov-Wasserstein is a divergence}\label{sec:srGW_divergence_supp}
 \begin{remark}[Weak isomorphism]
 	According to the notion of weak isomorphism in \citep{chowdhury2019gromov}, for a graph $(\mC, \vh)$ with corresponding discrete measure $\mu = \sum_i h_i \delta_{x_i}$, two nodes $x_i$ and $x_j$ are the ‘‘same'' if they have the same internal perception \emph{i.e} $C_{ii} = C_{jj} = C_{ij} = C_{ji}$ and external perception  $\forall k \neq (i, j), C_{ik} = C_{jk},  C_{ki} = C_{kj}$. So two graphs $(\mC_1, \vh_1)$ and $(\mC_2, \vh_2)$ are said to be weakly isomorphic, if there exist a canonical representation $(\mC_c, \vh_c)$ such that $\card(\supp(\vh_c)) = p \leq n, m$ and $M_1 \in \left\{0,1 \right\}^{n \times p}$ (resp. $M_2 \in \left\{0,1 \right\}^{m \times p}$) such that for $k \in \left\{1, 2\right\}$
 	\begin{equation}
@@ -279,7 +277,7 @@ We first emphasize a simple result.
 	$(\Leftarrow)$ As mentioned, $(\mC, \vh)$ and $(\overline{\mC}, \overline{\vh})$ being weakly isomorphic implies that $\GW_{L_2}=0$. So there exists $\mT \in \mathcal{U}(\vh, \overline{\vh})$, such that $E_L(\mC, \overline{\mC}, \mT) = 0$. Moreover $\mT$ is admissible for the srGW problem as $\mT \in \mathcal{U}(\vh, \overline{\vh}) \subset \mathcal{U}_n(\vh)$, thus $\srGW_L(\mC, \overline{\mC}, \vh, \overline{\vh}) = 0$.
 \end{proof}
 
-\subsection{About trivial solutions of semi-relaxed GW when $L$ is not a proper divergence}
+\subsubsection{About trivial solutions of semi-relaxed GW when $L$ is not a proper divergence}
 
 We briefly describe here some trivial solutions of $\srGW_L$ when $L$ is not a proper divergence. We recall that
 \begin{equation}
@@ -353,7 +351,7 @@ We emphasize that this hypothesis on $L$ \emph{cannot be satisfied} as soon as $
 	% \end{equation}
 % With Jensen we have $\sum_{kl}\|\vz_k -\vz_l\|_2^2 T_{ik} T_{jl} \geq \|\sum_{kl}(\vz_k -\vz_l)T_{ik} T_{jl}\|_2^2 = \|\sum_{k} \vz_k T_{ik} - \sum_{l} \vz_l T_{jl}\|_2^2$. Suppose there is a $\vz$ that is equal to zero, say it is $\vz_n$.
 
-\section{Clustering properties: Proof of \cref{theo:srgw_bary_concavity} \label{sec:srGW_concavity_supp}}
+\subsection{Clustering properties: Proof of \cref{theo:srgw_bary_concavity} \label{sec:srGW_concavity_supp}}
 We recall that a matrix $\mC \in \R^{N \times N}$ is conditionally positive definite (CPD), \textit{resp.} negative definite (CND), if $\forall \vx \in \R^{N}, \vx^\top \mathbf{1}_N = 0 \text{ s.t. } \vx^\top \mC \vx \geq 0$, \textit{resp.} $\leq 0$. We also consider the Hadamard product of matrices as $\mA \odot \mB = (A_{ij} \times B_{ij})_{ij}$. The $i$-th column of a matrix $\mT$ is the vector denoted by $\mT_{:,i}$. For a vector $\vx\in \R^{n}$ we denote by $\diag(\vx)$ the diagonal $n \times n$ matrix whose elements are the $x_i$. 
 
 We state below the theorem that we prove in this section.
@@ -634,11 +632,11 @@ To prove the theorem we will first prove that the function $G: \mT \to \min_{\ov
 \end{proof}
 
 
-\section{Algorithmic details}\label{sec:algorithms}
+\subsection{Algorithmic details}\label{sec:algorithms}
 
 We detail in the following the algorithms mentioned in Section \ref{sec:DDR} to address the semi-relaxed GW divergence computation in our Block Coordinate Descent algorithm for the DistR problem. We begin with details on the computation of an equivalent objective function and its gradient, potentially under low-rank assumptions over structures $\mC$ and $\overline{\mC}$.
 
-\subsection{Objective function and gradient computation.}\label{subsec:GWloss} 
+\subsubsection{Objective function and gradient computation.}\label{subsec:GWloss} 
 
 \paragraph{Problem statement.} Let consider any matrices $\mC \in \R^{n \times n}$, $\overline{\mC} \in \R^{m \times m}$, and a probability vector $\vh \in \Sigma_n$. In all our use cases,  we considered inner losses $L: \R \times \R \rightarrow \R_+$ which can be decomposed following Proposition 1 in \cite{peyre2016gromov}. Namely we assume the existence of functions $f_1, f_2, h_1, h_2$ such that 
 \begin{equation}\label{eq:loss_decomposition}
@@ -681,7 +679,7 @@ Then computing $F_2(\mT)$ and its scalar product with $\mT$ can be done followin
 \underline{$L=L_{KL}$}: In this setting $f_2(\mC_Z(\mZ)) = \mC_Z(\mZ)$ and $h_1(\mC_X(\mX)) = \mC_X(\mX)$ naturally preserves the low-rank nature of input matrices, but $h_2(\mC_Z(\mZ)) = \log(\mC_Z(\mZ))$ does not. So computing the first term $F_1$, can be performed following this paranthesis order $\bm{1}_N ((  \bm{1}_N^\top \mT) \mA_1)) \mA_2^\top) $ in $O(N(n + s))$ operations. While the second term $F_2$ should be computed following this order $\mA_1 ((\mA_2^\top \mT)  \log(\mC_Z(\mZ)))$ in $O(Nnr + rn^2)$ operations. While their respective scalar product can be computed in $O(Nn)$. So the overall complexity is $O(Nnr + n^2r)$.\\
 Notice that in the gaussian kernel case for neighbor embedding methods, where $[\mC_Z(\mZ)]_{ij} = \exp(-\|\vz_i-\vz_j\|_2^2)$ up to some normalization. We have $[h_2(\mC_Z(\mZ))]_{ij} = -\|\vz_i-\vz_j\|_2^2$ which admits a low-rank factorization such that we can recover the complexity illustrated above for $L=L_2$.
 
-\subsection{Solvers.}
+\subsubsection{Solvers.}
 We develop next our extension of both the Mirror Descent and Conditional Gradient solvers first introduced in \cite{vincent2021semi}, for any inner loss $L$ that decomposes as in \eqref{eq:loss_decomposition} .
 
 \paragraph{Mirror Descent algorithm.} This solver comes down to solve for the \emph{exact} srGW problem using mirror-descent scheme w.r.t the KL geometry. At each iteration $(i)$, the solver comes down to, first computing the gradient $\nabla_{\mT}F(\mT^{(i)})$ given in \eqref{eq:srgw_gradient} evaluated in $\mT^{(i)}$, then updating the transport plan using the following closed-form solution to a KL projection:

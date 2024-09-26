@@ -1,0 +1,376 @@
+% !TeX root = ../workshop_paper.tex
+
+
+
+\section{$\psi$-Bregman Projections for $\psi_{\KL}$ and $\psi_{\alpha}$}\label{sec:proof_projs}
+
+    In this section, we detail the expressions of the projections used in the alternating Bregman projection approach.
+
+    \begin{figure*}[t]
+        \begin{center}
+        \centerline{\includegraphics[width=0.6\columnwidth]{chapters/OTARI/figures/visu_divs.pdf}}
+        \caption{$\sum_i \psi(p_i)$ plotted over the 3 dimensional probability simplex for $\psi_{\KL}$ (negative Shannon entropy) and $\psi_2 : \bm{x} \to \frac{1}{2} \| \bm{x} \|^2_2$. Unlike $\psi_{\KL}$, the level sets of $\psi_2$ intercept with the boundaries of the simplex thus leading to potentially sparse solutions when used to regularize OT.}
+        \label{fig:Ps_vs_Pse}
+        \end{center}
+    \end{figure*}
+    
+    \subsection{$\KL$ Projections}
+
+    We first consider the negative Shannon entropy $\psi_{\KL}(\vp) = \scalar{\vp}{\log \vp - \bm{1}}$.
+
+    \paragraph{Projection onto $\Pi(\bm{a}) \cap \mathcal{B}_{\KL}(\xi)$.}
+    The $\KL$ projection of a matrix $\mK \in \R_+^{N_S \times N_T}$ onto $\Pi(\bm{a}) \cap \mathcal{B}_1(\xi)$ is the following problem.
+    \begin{align}
+        \min_{\mP \in \R_+^{N_S \times N_T}} \quad &\langle \mP, \log (\mP \oslash \mK) - \bm{1}\bm{1}^\top \rangle \\
+        \text{s.t.} \quad &\forall i \in \integ{N_S}, \: \psi_{\KL}(\mP_{i:}) \leq \eta \\
+        & \mP \bm{1} = \bm{a} \:.
+    \end{align}
+    The associated Lagrangian writes
+    \begin{align}
+        \mathcal{L}(\mP, \bm{\lambda}, \bm{\gamma}) &= \langle \mP, \log \mP - \log \mK - \bm{1}\bm{1}^\top \rangle + \langle \bm{\gamma}, \psi_{\KL}(\mP) - \eta \bm{1}\rangle + \langle \bm{\lambda}, \bm{a} - \mP \bm{1} \rangle \:.
+    \end{align}
+    
+    Strong duality holds hence any optimal primal-dual variables $(\mP^\star, \bm{\gamma}^\star, \bm{\lambda}^\star)$ must satisfy the KKT conditions. The first-order optimality condition gives
+    \begin{align}
+        \nabla_{\mP} \mathcal{L} (\mP^\star, \bm{\gamma}^\star, \bm{\lambda}^\star) &= \log \left( \mP^\star \oslash \mK \right) + \operatorname{diag}(\bm{\gamma}^\star)\log{\mP^\star} - \bm{\lambda}^\star \bm{1}^\top = \bm{0} \:.
+    \end{align}
+    Isolating $\mP^\star$ yields
+    \begin{align}
+        \forall (i,j) \in \integ{N_S} \times \integ{N_T}, \quad P^\star_{ij} = \frac{1}{u_i} \exp{((\log K_{ij})/(1 + \gamma^\star_i))}
+    \end{align}
+    where $u_i = \exp{(-\lambda_i/(1 + \gamma^\star_i))}$. Given the marginal constraint, we have 
+    \begin{equation}
+        u_i = a_i^{-1} \sum_{j \in \integ{N_T}} \exp{((\log K_{ij})/(1 + \gamma^\star_i))} \:.
+    \end{equation}
+    We are now left with $\mP^\star$ as a function of $\bm{\gamma}$. Plugging $\mP^\star$ in $\mathcal{L}$ yields the dual function $\bm{\gamma} \mapsto \mathcal{G}(\bm{\gamma})$. This function is concave (as the objective of the dual problem) and its gradient reads:
+    \begin{align}
+        \nabla_{\bm{\gamma}} \mathcal{G}(\bm{\gamma}) = (\log \xi + 1 )\bm{1} - \operatorname{H}(\mP^\star(\bm{\gamma})) \:.
+    \end{align}
+    Similarly to \cite{van2023snekhorn}, one can show that the above gradient is canceled for a unique $\overline{\bm{\gamma}}$. The optimal dual variable is then given by $\bm{\gamma}^\star = [\overline{\bm{\gamma}}]_+$.
+    % Denoting by $\bm{\rho} = \bm{1} + \bm{\kappa}$ and taking the dual feasibility constraint $\bm{\kappa} \bm{\geq} \bm{0}$ into account gives the solution: for any $i$, $\rho^\star_i = \max(\varepsilon^\star_i, 1)$ where $\bm{\varepsilon}^\star$ solves (\ref{eq:entropic_affinity_pb}) with cost $\C = -\log \mK$.
+    % Moreover we have that $\sigma \leq \min(\bm{\varepsilon}^\star)$ where $\bm{\varepsilon}^\star \in (\R^*_+)^n$ solves (\ref{eq:entropic_affinity_pb}). Therefore for any $i \in \integ{n}$, one has $\varepsilon_i^\star / \sigma \geq 1$. Thus there exists $\kappa_i^\star \in \R_+$ such that $\sigma (1 + \kappa_i^\star) = \varepsilon_i^\star$. 
+    
+    % This $\bm{\kappa}^\star$ cancels the above gradient \ie $(\log \xi + 1 )\bm{1} = \operatorname{H}(\mP^\star(\bm{\kappa}^\star))$ thus solves the dual problem. Therefore given the expression of $\mP^\star$ we have that $\operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{B}_{\xi}}(\mK) = \mP^{\mathrm{e}}$.
+
+    Hence 
+    \begin{align}
+        \operatorname{Proj}^{\KL}_{\Pi(\bm{a}) \cap \mathcal{B}_{\KL}(\xi)}(\mathbf{K}) = \diag(\mathbf{\Lambda} \mathbf{1})^{-1} \mathbf{\Lambda} \quad \text{with} \quad \mathbf{\Lambda} = \exp{(\diag(\bm{1} + \bm{\gamma}^\star)^{-1} \log \mathbf{K})}
+    \end{align}
+    where the optimal dual variable $\bm{\gamma}^\star \bm{\geq} \bm{0}$ can be found using any unidimensional root search method.
+
+    \paragraph{Projection onto $\mathcal{S}$.} The $\KL$ projection onto $\mathcal{S}$ of $\mK \in \R_+^{n \times n}$ amounts to the following problem:
+    \begin{align}
+        \argmin_{\mP \in \mathcal{S}} \ &\KL(\mP | \mK) \:.
+    \end{align}
+    For this problem the Lagrangian reads, where $\mW \in \R^{n \times n}$ is a dual variable, 
+    \begin{equation}
+    \mathcal{L}(\mP, \mW) = \KL(\mP | \mK) + \langle \mW, \mP -\mP^{\top} \rangle \:.
+    \end{equation}
+    If we cancel the gradient of $\mathcal{L}$ with respect to $\mP$ we obtain $\log(\mP^\star \oslash \mK) + \mW - \mW^\top = \bm{0}$. Thus $\mP^\star = \exp( \mW-\mW^\top) \odot \mK$. 
+    We must also have the primal feasibility that is $\mP^\star = \mP^{\star \top}$. Plugging the expression in this condition leads to $\mW - \mW^\top= \frac{1}{2} \log(\mK^\top \oslash \mK)$. Hence plugging it back we get $\mP^\star = \exp( \frac{1}{2} \log(\mK^\top \oslash \mK)) \odot \mK = \left(\mK^\top \oslash \mK \right)^{\odot \frac {1}{2}} \odot \mK = \left(\mK \odot \mK^{\top}\right)^{\odot \frac {1}{2}}$. Thus the projection reads:
+    \begin{equation}
+        \operatorname{Proj}^{\KL}_{\mathcal{S}}(\mathbf{K}) = \left(\mK \odot \mK^{\top}\right)^{\odot \frac{1}{2}} \:.
+    \end{equation}
+
+    
+    \subsection{$D_\alpha$ Projections for $\alpha > 1$}
+
+    We now consider $\psi_{\alpha}(\vp) = \| \vp \|_{\alpha}^{\alpha}$ for $\alpha>1$ and associated Bregman divergence $D_{\alpha}$.
+    We break down the $\ell_{\alpha}$ and marginal ($\ell_1$) projections to retrieve closed-form expressions.
+
+    \paragraph{Projection onto $\Pi(\bm{a})$.} The $D_\alpha$ projection of a matrix $\mK \in \R_+^{N_S \times N_T}$ onto $\Pi(\bm{a})$ amounts to
+    \begin{align}
+        \min_{\mP} \quad &\frac{1}{\alpha} \left\langle \mP^{\odot \alpha}, \bm{1} \right\rangle - \left\langle \mP, \mK^{\odot (\alpha-1)} \right\rangle \\
+        \text{s.t.} \quad &\mP \bm{1} = \bm{a} \\
+        & \mP \in \R_+^{N_S \times N_T} \:.
+    \end{align}
+    Introducing the dual variables $\bm{\lambda} \in \mathbb{R}^n$ and $\bm{\Omega} \in \mathbb{R}_+^{n \times n}$, the Lagrangian of the above problem writes:
+    \begin{align}
+        \mathcal{L}(\mP, \bm{\lambda}, \bm{\omega}, \bm{\Omega}) &=  \frac{1}{\alpha} \left\langle \mP^{\odot \alpha}, \bm{1} \right\rangle - \left\langle \mP, \mK^{\odot (\alpha-1)} \right\rangle + \langle \bm{\lambda}, \bm{a} - \mP \bm{1} \rangle - \langle \bm{\Omega}, \mT \rangle \:.
+    \end{align}
+    $\mP^\star$ solves the primal problem if and only if there exists $(\bm{\lambda}^\star, \bm{\Omega}^\star)$ that satisfies the KKT conditions, in particular, the first-order condition is
+    \begin{align}
+        \nabla_{\mP} \mathcal{L} (\mP^\star, \bm{\lambda}^\star, \bm{\omega}^\star, \bm{\Omega}^\star) &= - \mathbf{K}^{\odot(\alpha-1)} + [\mP^\star]^{\odot (\alpha - 1)} - \bm{\lambda}^\star \bm{1}^\top - \bm{\Omega}^\star = \bm{0} \:.
+    \end{align}
+    Picking $\bm{\Omega}^\star = -[\bm{\lambda}^\star \bm{1}^\top + \mathbf{K}^{\odot(\alpha-1)}]_{-}$ (where $[\mathbf{X}]_{-} = \mathbf{X} - [\mathbf{X}]_{+}$) yields a $\mP^\star$ of the form
+    \begin{align}
+        \mP^\star &= [\bm{\lambda}^\star \bm{1}^\top + \mathbf{K}^{\odot(\alpha-1)}]_+^{\odot 1/(\alpha-1)} \:.
+    \end{align}
+    To satisfy the KKT conditions, one has to find the solution $\bm{\lambda}^\star$ of the following independent problems 
+    \begin{align}
+        \forall i \in \integ{n}, \quad \sum_j [\lambda^\star_i + K_{ij}^{(\alpha-1)}]_+^{1/(\alpha-1)} =  a_i \:.
+    \end{align}
+Therefore we have
+    \begin{align}
+        \text{for } \alpha>1, \quad \operatorname{Proj}^{D_{\alpha}}_{\Pi(\bm{a})}(\mK) = \left[\bm{\lambda}^\star \bm{1}^\top + \mK^{\odot(\alpha-1)}\right]_+^{\odot 1/(\alpha-1)} \:.
+    \end{align}
+
+    \paragraph{Projection onto $\mathcal{B}_\alpha(\xi)$.} The $D_\alpha$ projection of a matrix $\mK \in \R_+^{N_S \times N_T}$ onto $\mathcal{B}_\alpha(\xi)$ reduces to
+    \begin{align}
+        \min_{\mP \in \R_+^{N_S \times N_T}} \quad &\frac{1}{\alpha}\left\langle \mP^{\odot \alpha}, \bm{1} \right\rangle - \left\langle \mP, \mK^{\odot (\alpha-1)} \right\rangle \\
+        \text{s.t.} \quad
+        &\forall i \in \integ{N_S}, \: \|\mP_{i:} \|_\alpha^\alpha \leq (1/\xi)^{\alpha-1} \:.
+    \end{align}
+    Introducing the dual variable $\bm{\omega} \in \mathbb{R}_+^n$, the Lagrangian writes:
+    \begin{align}
+        \mathcal{L}(\mP, \bm{\omega}, \bm{\Omega}) &=  \frac{1}{\alpha}\left\langle \mP^{\odot \alpha}, \bm{1} \right\rangle - \left\langle \mP, \mK^{\odot (\alpha-1)} \right\rangle + \frac{1}{\alpha} \sum_i \omega_i \left(\|\mP_{i:}\|_{\alpha}^{\alpha} - (1/\xi)^{\alpha-1} \right) \:.
+    \end{align}
+    $\mP^\star$ solves the primal problem if and only if there exists $\bm{\omega}^\star$ that satisfies the KKT conditions.
+    The first-order condition yields
+    \begin{align}
+        \nabla_{\mP} \mathcal{L} (\mP^\star, \bm{\omega}^\star, \bm{\Omega}^\star) &= - \mK^{\odot(\alpha-1)} + \operatorname{diag}(\bm{\omega}^\star + \bm{1})[\mP^\star]^{\odot (\alpha - 1)} = \bm{0} \:.
+    \end{align}
+    Hence it follows
+    \begin{align}
+        \mP^\star = \operatorname{diag}(\bm{\omega}^\star + \bm{1})^{-1/(\alpha-1)}\mathbf{K} \:.
+    \end{align}
+    
+    
+    To satisfy the KKT conditions, one has to find the root $\bm{\omega}^\star$ of the following independent problems 
+    \begin{align}
+        \forall i \in \integ{n}, \quad \left(\omega_i + 1 \right)^{\alpha / (\alpha-1)} =  \xi^{\alpha-1} \|\mK_{i:}\|_\alpha^\alpha \:.
+    \end{align}
+    Thus we have 
+    \begin{align}
+        \omega_i + 1 = \left(\xi^{\alpha-1} \|\mK_{i:}\|_\alpha^\alpha \right)^{(\alpha-1) / \alpha} \:.
+    \end{align}
+
+    Taking the constraint $\bm{\omega} \bm{\geq} \bm{0}$ into account yields the following projection:
+    \begin{align}
+        \text{for } \alpha>1, \quad  \operatorname{Proj}^{D_\alpha}_{\mathcal{B}_\alpha(\xi)}(\mK) &= \operatorname{diag}(\bm{\gamma}^\star)^{-1/(\alpha-1)}\mathbf{K} \\ \text{where } \forall i, [\bm{\gamma}^\star]_i &= \max \left(\left(\xi^{\alpha-1} \|\mK_{i:}\|_\alpha^\alpha \right)^{(\alpha-1) / \alpha}, 1 \right)
+         \:.
+    \end{align}
+        
+    \paragraph{Projection onto $\mathcal{S}$.} The $D_\alpha$ projection of a matrix $\mK \in \R_+^{N_S \times N_T}$ onto $\mathcal{S}$ boils down to
+    \begin{align}
+        \min_{\mP \in \R_+^{N_S \times N_T}} \quad &\frac{1}{\alpha}\left\langle \mP^{\odot \alpha}, \bm{1} \right\rangle - \left\langle \mP, \mK^{\odot (\alpha-1)} \right\rangle \\
+        \text{s.t.} \quad
+        &\mP = \mP^\top \:.
+    \end{align}
+    As usual, the first order KKT condition with the dual variable $\mW^\star$ yields $[\mP^\star]^{\odot (\alpha - 1)} - \mK^{\odot(\alpha-1)} + \mW - \mW^\top = \bm{0}$.
+    By primal feasibility we have $\mP^\star = \mP^{\star \top}$ thus $[\mP^\star]^{\odot (\alpha - 1)} = \left[\mP^{\star \top}\right]^{\odot (\alpha - 1)}$. This gives $\mW - \mW^\top = \frac{1}{2} (\mK^{\odot (\alpha-1)} -  (\mK^{\top})^{\odot (\alpha-1)})$. Hence $\mP^\star = \frac{1}{2^{\alpha-1}} (\mK^{\odot (\alpha-1)} +  (\mK^{\top})^{\odot (\alpha-1)})^{\odot 1/(\alpha-1)}$. Therefore we have:
+    \begin{align}
+        \text{for } \alpha>1, \quad 
+        \operatorname{Proj}^{D_\alpha}_{\mathcal{S}}(\mathbf{K}) = \frac{1}{2^{\alpha-1}} \left(\mK^{\odot (\alpha-1)} +  \left(\mK^{\top}\right)^{\odot (\alpha-1)}\right)^{\odot 1/(\alpha-1)}
+        \:.
+    \end{align}
+
+    % \subsection{$D_\alpha$ Projections for $\alpha < 1$}
+
+    % \hug{not sparse, maybe useless}
+
+    % Finally, we consider $\psi_{\alpha}(\vp) = - \| \vp \|_{\alpha}^{\alpha}$ for $\alpha<1$.
+    % \paragraph{Projection onto $\Pi(\bm{a})$.}
+    % The $D_\alpha$ projection of a matrix $\mK \in \R_+^{N_S \times N_T}$ onto $\Pi(\bm{a})$ amounts to
+    % \begin{align}
+    %     \min_{\mP \in \R_+^{N_S \times N_T}} &\left\langle \mP, \mK^{\odot (\alpha-1)} \right\rangle - \frac{1}{\alpha} \left\langle \mP^{\odot \alpha}, \bm{1} \right\rangle \\
+    %     \text{s.t.} \quad &\mP \bm{1} = \bm{a} \:.
+    % \end{align}
+
+        
+
+%     \subsection{Euclidean Projections}
+%     % \subsection{$\ell_2$ norm}
+
+%     For the Euclidean case, we break down the projection into $\ell_2$ norm and marginal projections. Starting with the marginal projection, we have the following expression \cite{lorenz2021quadratically}    
+% \begin{equation}
+%     \operatorname{Proj}^{\ell_2}_{\Pi(\bm{a})}(\mathbf{K}) = [\bm{\lambda}^\star \bm{1}^\top + \mathbf{K}]_+
+% \end{equation}
+%     where $\bm{\lambda}^\star$ is such that $[\bm{\lambda}^\star \bm{1}^\top + \mathbf{K}]_+ \in \Pi(\bm{a})$.
+
+%     Focusing on the $\ell_2$ norm we have the following result.
+%     \begin{prop}
+%     One has
+%     \begin{equation}
+%         \operatorname{Proj}^{\ell_2}_{\mathcal{B}_2(\xi)}(\mathbf{K}) = \operatorname{diag}(\bm{\gamma}^\star)^{-1}\mathbf{K}
+%     \end{equation}
+%     where for any $i$, $\gamma^\star_i = \max \left(\xi^{1 / 2} \|\mK_{i:}\|_2, 1 \right)$.
+%     \end{prop}
+    
+    
+%     \begin{proof}
+    
+%     The $D_2$ projection of a matrix $\mK \in \R_+^{N_S \times N_T}$ onto $\mathcal{B}_2(\xi)$ reduces to
+%     \begin{align}
+%         \min_{\mP \in \R_+^{N_S \times N_T}} \quad &\frac{1}{2}\left\langle \mathbf{P}^{\odot 2}, \bm{1} \right\rangle - \left\langle \mathbf{P}, \mathbf{K} \right\rangle \\
+%         \text{s.t.} \quad
+%         &\forall i \in \integ{N_S}, \: \|\mP_{i:} \|_2^2 \leq (1/\xi) \:.
+%     \end{align}
+%     Introducing the dual variable $\bm{\omega} \in \mathbb{R}_+^n$, the Lagrangian writes:
+%     \begin{align}
+%         \mathcal{L}(\mP, \bm{\omega}, \bm{\Omega}) &=  \frac{1}{2}\left\langle \mathbf{P}^{\odot 2}, \bm{1} \right\rangle - \left\langle \mathbf{P}, \mathbf{K} \right\rangle + \frac{1}{2} \sum_i \omega_i \left(\|\mP_{i:}\|_{2}^{2} - (1/\xi) \right) \:.
+%     \end{align}
+%     $\mP^\star$ solves the primal problem if and only if there exists $\bm{\omega}^\star$ that satisfies the KKT conditions.
+%     The first-order condition yields
+%     \begin{align}
+%         \nabla_{\mP} \mathcal{L} (\mP^\star, \bm{\omega}^\star, \bm{\Omega}^\star) &= - \mathbf{K} + \operatorname{diag}(\bm{\omega}^\star + \bm{1})\mP^\star = \bm{0} \:.
+%     \end{align}
+%     Hence it follows
+%     \begin{align}
+%         \mP^\star = \operatorname{diag}(\bm{\omega}^\star + \bm{1})^{-1}\mathbf{K} \:.
+%     \end{align}
+    
+    
+%     To satisfy the KKT conditions, one has to find the root $\bm{\omega}^\star$ of the following independent problems 
+%     \begin{align}
+%         \forall i, \quad \left(\omega_i + 1 \right)^{2} =  \xi \|\mK_{i:}\|_2^2 \:.
+%     \end{align}
+%     Thus we have $\omega_i + 1 = \xi^{1 / 2} \|\mK_{i:}\|_2 $ and taking $\omega_i \geq 0$ into account yields the result.
+%     \end{proof}
+
+
+\section{Proofs of the Optimal Transport Solutions}
+
+\subsection{Optimal Transport with Global Constraint}\label{sec:proof_global}
+
+\begin{proposition}\label{prop:cot}
+    Let $\psi : \R^{N_S} \to \R$ satisfy \cref{assumption_psi}. We define $\overline{\mathcal{B}}(\eta) \coloneqq \{ \mP \: \text{s.t.} \: \sum_i \psi(\mP_{i:}) \leq \eta \}$. Let $(\bm{a}, \bm{b}, \eta)$ be such that $\Pi(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)$ has an interior point and let $\mP^\star$ be a solution of
+\begin{align}
+    \min_{\mP \in \Pi(\bm{a}, \bm{b})} \: \langle \mP, \mC \rangle \quad \text{s.t.} \quad  \mP \in \overline{\mathcal{B}}(\eta) \:.
+    \tag{ROT}
+\end{align}
+    Let $\varepsilon^\star$ be an optimal dual variable associated with $\mP \in \overline{\mathcal{B}}(\eta)$.
+    If $\varepsilon^\star > 0$, then for any $0 < \sigma \leq \varepsilon^\star$, it holds $\mP^\star = \operatorname{Proj}^{D_\psi}_{\Pi(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)}(\mK_\sigma)$
+    where $\mK_\sigma \coloneqq \nabla \psi^*(-\mC/ \sigma)$.
+    One also has $\mP^\star = \nabla \psi^*((\mC - \bm{\lambda}^\star \oplus \bm{\mu}^\star) / \varepsilon^\star)$
+    where $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ solve
+    \begin{align}
+        \max_{\bm{\lambda}, \bm{\mu}, \varepsilon>0}  \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle + \varepsilon \Big(\sum_i \psi^*((\C_{i:} - \lambda_i \bm{1} - \bm{\mu}) / \varepsilon) - \eta \Big) \:.
+    \tag{Dual-ROT}
+    \end{align}
+\end{proposition}
+
+\begin{proof}
+    We first show that $\mP^\star = \operatorname{Proj}^{D_\psi}_{\Pi(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)}(\mK_\varepsilon)$ before focusing on the dual problem.
+
+    \textbf{\underline{Part I : Proof of the Bregman projection.}}
+
+    Simplifying the constant terms $\operatorname{Proj}^{D_\psi}_{\Pi(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)}(\mK_\varepsilon)$ boils down to the following problem
+    \begin{align}
+        \min_{\mP} \quad &\sum_i \psi(\mP_{i:}) - \langle \mP, \nabla \psi(\mK_\sigma) \rangle \\
+        \text{s.t.} \quad &\sum_i \psi(\mP_{i:}) \leq \eta \\
+        & \mP \bm{1} = \bm{a}, \quad \mP^\top \bm{1} = \bm{b} \\
+        & \mP \in \R_+^{n \times n} \:.
+    \end{align}
+    This problem is convex and strictly feasible. Strong duality holds thanks to Slater's constraint qualification. Therefore the KKT conditions \cite{boyd2004convex} are necessary and sufficient conditions for optimality.
+    The Lagrangian can be expressed as
+    \begin{align}
+        \mathcal{L}(\mP, \nu, \bm{\lambda}, \bm{\mu}) &= \sum_i \psi(\mP_{i:}) - \langle \mP, \nabla \psi(\mK_\sigma) \rangle + \nu\Big(\sum_i \psi(\mP_{i:}) - \eta \Big) \\
+        &+ \langle \bm{\lambda}, \bm{a} - \mP \bm{1} \rangle + \langle \bm{\mu}, \bm{b} - \mP^\top \bm{1} \rangle - \langle \mathbf{\Omega}, \mP \rangle \:.
+    \end{align}
+    Any optimal primal-dual variables $(\mP^\star, \nu^\star, \bm{\lambda}^\star, \bm{\mu}^\star, \mathbf{\Omega}^\star)$ satisfies
+    \begin{align}
+            \nabla_{\mP} \mathcal{L}(\mP^\star,  \nu^\star, \bm{\lambda}^\star, \bm{\mu}^\star) &=  (\nu^\star + 1) \nabla \psi(\mP^\star) - \nabla \psi(\mK_\sigma) - \bm{\lambda}^\star \oplus \bm{\mu}^\star - \mathbf{\Omega}^\star = \bm{0} \:.
+    \end{align}
+    Note that by definition $\mK_\sigma = \nabla \psi^\star(-\mC/\epsilon)$ and thus $\nabla \psi(\mK_\sigma) = \nabla \psi[\nabla \psi^\star(-\mC/\sigma)] = -\mC / \sigma$ \cite{rockafellar1997convex}. Thus we have 
+    \begin{align}
+        \mC + \sigma (\nu^\star + 1) \nabla \psi(\mP^\star) -  \sigma \bm{\lambda}^\star \oplus \bm{\mu}^\star - \sigma \mathbf{\Omega}^\star= \bm{0} \:.
+    \end{align}
+    Similarly, for the optimal transport problem \eqref{prop:cot}
+    \begin{align}
+        \min_{\mT} \quad \langle \mT, \mC \rangle \quad \text{s.t.} \quad  \mT \in \Pi(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta) \:,
+    \end{align}
+    we get the optimality condition for optimal primal-dual variables $(\mT^\star, \varepsilon^\star, \bm{\rho}^\star, \bm{\kappa}^\star, \mathbf{\Lambda}^\star)$
+    \begin{align}
+        \C + \varepsilon^\star \nabla \psi(\mT^\star) -  \bm{\rho}^\star \oplus \bm{\kappa}^{\star} - \mathbf{\Lambda}^\star = \bm{0} \:.
+    \end{align}
+    Focusing on the original Bregman projection problem, we can then consider
+    \begin{align}
+        \left\{
+        \begin{array}{ll}
+            \bm{\lambda} &= \bm{\rho}^\star / \sigma \\
+            \bm{\mu} &= \bm{\kappa}^\star / \sigma \\
+            \nu &= \varepsilon^\star / \sigma - 1 \\
+            \mathbf{\Omega} &= \mathbf{\Lambda}^\star / \sigma \\
+            \mP &= \mT^\star \:.
+        \end{array}
+    \right.
+    \end{align}
+    With the above choice, 
+    \begin{itemize}
+        \item  $(\mP, \nu, \bm{\lambda}, \bm{\mu}, \mathbf{\Omega})$ satisfies the first order optimality condition.
+        \item $\mP = \mT^\star \in \Pi(\bm{a}, \bm{b}) \cap \mathcal{E}(\eta)$ thus the primal constraint is satisfied. 
+        \item $\sigma \leq \varepsilon^\star$ implies that $\nu \geq 0$ and $\mathbf{\Omega}$ has positive entries thereby dual constraints are satisfied. 
+        \item $\varepsilon^\star \neq 0$ thus by complementary slackeness $\psi(\mT^\star) = \eta$ hence complementary slackness is also verified for $\mP$ since $\mP = \mT^\star$.
+    \end{itemize}
+    Therefore the KKT conditions are met hence $(\mP, \nu, \bm{\lambda}, \bm{\mu}, \mathbf{\Omega}) = (\mP^\star, \nu^\star, \bm{\lambda}^\star, \bm{\mu}^\star, \mathbf{\Omega}^\star)$ and $\mP^\star = \mT^\star$.
+\end{proof}
+
+\textbf{\underline{Part II : Proof of dual ascent.}}
+
+The optimal dual variables $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ solve the following problem 
+\begin{align}
+    &\max_{\bm{\lambda}, \bm{\mu}, \varepsilon > 0} \: \min_{\mP \bm{\geq} \bm{0}} \: \langle \mP, \mC \rangle + \langle \bm{\lambda}, \bm{a} - \mP \bm{1} \rangle + \langle \bm{\mu}, \bm{b} - \mP^\top \bm{1} \rangle + \varepsilon \Big(\sum_i \psi(\mP_{i:}) - \eta \Big) \\
+    = &\max_{\bm{\lambda}, \bm{\mu}, \varepsilon> 0} \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle - \varepsilon \eta + \min_{\mP \bm{\geq} \bm{0}} \: \langle \mP, \mC - \bm{\lambda}\bm{1}^\top - \bm{1}\bm{\mu}^\top \rangle + \varepsilon \sum_i \psi(\mP_{i:}) \\
+    = &\max_{\bm{\lambda}, \bm{\mu}, \varepsilon>0} \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle - \varepsilon \eta + \min_{\mP \bm{\geq} \bm{0}} \: \sum_i \langle \mP_{i:}, \mC_{i:} - \lambda_i \bm{1} - \bm{\mu} \rangle + \varepsilon \psi(\mP_{i:}) \\
+    \stackrel{(\star)}{=} &\max_{\bm{\lambda}, \bm{\mu}, \varepsilon>0}  \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle + \varepsilon \Big(\sum_i \psi^*((\mC_{i:} - \lambda_i \bm{1} - \bm{\mu}) / \varepsilon) - \eta \Big) \:.
+    \tag{Dual-ROT}
+    \label{eq:dual-ROT}
+\end{align}
+In ($\star$) we have used that $\psi^*(\bm{x}) = \sup_{\bm{y} \bm{\geq} \bm{0}} \langle \bm{x}, \bm{y} \rangle - \psi(\bm{y})$.
+From Danskin's theorem \cite{danskin1966theory}, one can recover the solution of the primal
+\begin{align}
+    \forall i, \: \mP^\star_{i:} = \nabla \psi^*((\mC_{i:} - \lambda^\star_i \bm{1} - \bm{\mu}^\star) / \varepsilon^\star) \:.
+\end{align}
+Using matrix notations yields $\mP^\star = \nabla \psi^*((\mC - \bm{\lambda}^\star \oplus \bm{\mu}^\star) / \varepsilon^\star)$
+where $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ are the solution of the dual problem \eqref{eq:dual-ROT}.
+
+\subsection{OT with Pointwise Constraints on Either Sources or Targets (OTARI-s and OTARI-t) : proof of \cref{prop:pcot}}\label{sec:proofs}
+
+\begin{proposition}
+    Let $(\bm{a}, \bm{b}, \xi)$ be such that $\Pi(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)$ has an interior point and let $\mP^\star$ solve
+    \begin{align}
+      \min_{\mP \in \Pi(\bm{a}, \bm{b})} \: \langle \mP, \mC \rangle \quad \text{s.t.} \quad  \mP \in \mathcal{B}_\psi(\xi) \:.
+      \tag{OTARI-s}
+  \end{align}
+  Let $\bm{\varepsilon}^\star$ be the optimal dual variable associated with the constraint $\mP \in \mathcal{B}_\psi(\xi)$.
+  If $\bm{\varepsilon}^\star \bm{>} \bm{0}$, then it holds $\mP^\star = \operatorname{Proj}^{D_\psi}_{\Pi(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)}(\mK_\varepsilon)$ for any $0 < \varepsilon \leq \min_i{\varepsilon_i^\star}$. Moreover it holds $\mP^\star = \nabla \psi^* \left(\diag(\bm{\varepsilon}^\star)^{-1} (\mC - \bm{\lambda}^\star \oplus \bm{\mu}^\star) \right)$ where $(\bm{\lambda}^\star, \bm{\mu}^\star, \bm{\varepsilon}^\star)$ solve the following dual
+  \begin{align}
+    \max_{\bm{\lambda}, \bm{\mu}, \bm{\varepsilon} \bm{>} \bm{0}} \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle + \left\langle \bm{\varepsilon}, \psi^*\left(\diag(\bm{\varepsilon})^{-1} (\mC - \bm{\lambda} \oplus \bm{\mu}) \right) - \psi(\mathbf{e}_\xi) \bm{1}  \right\rangle \:.
+    \tag{Dual-OTARI-s}
+  \end{align}
+\end{proposition}
+
+\begin{proof}
+Again we break down the proof, focusing on the primal and then on the dual approach.
+
+\textbf{\underline{Part I : Proof of the Bregman projection.}}
+
+The proof is almost identical to the one in \cref{prop:cot}. We use the same notations for simplicity. The only difference brought by the pointwise constraint is that $\bm{\nu}^\star$ is now vectorial. The first-order optimality condition for the Bregman projection problem reads
+\begin{align}
+    \mC + \sigma (\diag{(\bm{\nu}^\star)} + \mathbf{I}_{N_S}) \nabla \psi(\mP^\star) -  \sigma \bm{\lambda}^\star \oplus \bm{\mu}^\star - \sigma \mathbf{\Omega}^\star= \bm{0} \:.
+\end{align}
+Again using the same notations as before, the first order KKT condition for problem \eqref{eq:cot} reads
+\begin{align}
+    \mC + \diag(\bm{\varepsilon}^\star) \nabla \psi(\mT^\star) -  \bm{\rho}^\star \oplus \bm{\kappa}^{\star} - \mathbf{\Lambda}^\star = \bm{0} \:.
+\end{align}
+We end the proof by following the same reasoning as for \cref{prop:cot}, choosing for any $i$, $\nu_i = \varepsilon_i^\star / \sigma - 1 \geq 0$.
+
+\textbf{\underline{Part II : Dual Problem of \eqref{eq:pcOT}.}}
+
+The optimization problem \eqref{eq:pcOT} writes
+\begin{align}
+    \min_{\mP \in \Pi(\bm{a}, \bm{b})} \: \langle \mP, \mC \rangle \quad \text{s.t.} \quad  \mP \in \mathcal{B}_\psi(\xi) \:.
+\end{align}
+Introducing the dual variables $\bm{\lambda} \in \mathbb{R}^n$ and $\bm{\mu} \in \mathbb{R}^n$ for the marginals and $\bm{\varepsilon} \in \mathbb{R}_+^{n}$ for the constraint $\mP \in \mathcal{B}_\psi(\xi)$. The problem can be formulated as
+\begin{align}
+    \min_{\mP \bm{\geq} \bm{0}} \: \max_{\bm{\lambda}, \bm{\mu}, \bm{\varepsilon} \bm{\geq} \bm{0}} \: \langle \mP, \mC \rangle + \langle \bm{\lambda}, \bm{a} - \mP \bm{1} \rangle + \langle \bm{\mu}, \bm{b} - \mP^\top \bm{1} \rangle + \langle \bm{\varepsilon}, \psi(\mP) - \psi(\mathbf{e}_\xi) \bm{1} \rangle \:.
+\end{align} 
+When $\bm{\varepsilon}^\star \bm{>} \bm{0}$, relying on strong duality to invert the min and max operators, the problem reduces to
+\begin{align}
+    &\max_{\bm{\lambda}, \bm{\mu}, \bm{\varepsilon} \bm{>} \bm{0}} \: \min_{\mP \bm{\geq} \bm{0}} \: \langle \mP, \C \rangle + \langle \bm{\lambda}, \bm{a} - \mP \bm{1} \rangle + \langle \bm{\mu}, \bm{b} - \mP^\top \bm{1} \rangle + \langle \bm{\varepsilon}, \psi(\mP) - \psi(\mathbf{e}_\xi) \bm{1} \rangle \\
+    = &\max_{\bm{\lambda}, \bm{\mu}, \bm{\varepsilon} \bm{>} \bm{0}} \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle - \langle \bm{\varepsilon}, \psi(\mathbf{e}_\xi) \bm{1} \rangle + \min_{\mP \bm{\geq} \bm{0}} \: \langle \mP, \mC - \bm{\lambda}\bm{1}^\top - \bm{1}\bm{\mu}^\top \rangle + \langle \bm{\varepsilon}, \psi(\mP) \rangle \\
+    = &\max_{\bm{\lambda}, \bm{\mu}, \bm{\varepsilon} \bm{>} \bm{0}} \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle - \langle \bm{\varepsilon}, \psi(\mathbf{e}_\xi) \bm{1} \rangle + \min_{\mP \bm{\geq} \bm{0}} \: \sum_i \langle \mP_{i:}, \C_{i:} - \lambda_i \bm{1} - \bm{\mu} \rangle + \varepsilon_i \psi(\mP_{i:}) \\
+    = &\max_{\bm{\lambda}, \bm{\mu}, \bm{\varepsilon} \bm{>} \bm{0}}  \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle - \langle \bm{\varepsilon}, \psi(\mathbf{e}_\xi) \bm{1} \rangle + \sum_i \varepsilon_i \psi^*((\C_{i:} - \lambda_i \bm{1} - \bm{\mu}) / \varepsilon_i) \\
+    \stackrel{(\star)}{=} &\max_{\bm{\lambda}, \bm{\mu}, \bm{\varepsilon} \bm{>} \bm{0}} \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle + \left\langle \bm{\varepsilon}, \psi^*\left((\mC - \bm{\lambda} \oplus \bm{\mu}) \oslash \bm{\varepsilon} \bm{1}^\top \right) - \psi(\mathbf{e}_\xi) \bm{1} \right\rangle \:.
+    \label{eq:dual-otari-s}
+    \tag{Dual-OTARI-s}
+\end{align}
+In ($\star$) we used that $\psi^*(\mathbf{X}) = \left(\psi^*(\mathbf{X}_{1:}), ..., \psi^*(\mathbf{X}_{N:})\right)^\top$.
+From Danskin's theorem \cite{danskin1966theory}, one can recover the solution of the primal
+\begin{align}
+    \mP^\star = \nabla \psi^* \left(\diag(\bm{\varepsilon}^\star)^{-1} (\C - \bm{\lambda}^\star \oplus \bm{\mu}^\star) \right)
+\end{align}
+where $(\bm{\lambda}^\star, \bm{\mu}^\star, \bm{\varepsilon}^\star)$ solve \eqref{eq:dual-otari-s}.
+\end{proof}
+

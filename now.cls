@@ -10,7 +10,7 @@
                NOW document class]
 
 % use 'book' as a base class
-\PassOptionsToClass{letterpaper,11pt,twoside,onecolumn,final}{book}
+\PassOptionsToClass{letterpaper,12pt,twoside,onecolumn,final}{book}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ProcessOptions
 \LoadClass{book}
@@ -140,8 +140,8 @@
 % section title fonts
 \RequirePackage{titlesec}
 
-\def\sectionfont{\LARGE\selectfont\sffamily\bfseries\boldmath}
-\def\subsectionfont{\sffamily\Large\bfseries\boldmath}
+\def\sectionfont{\sffamily\Large\bfseries\boldmath}
+\def\subsectionfont{\sffamily\LARGE\bfseries\boldmath}
 \def\subsubsectionfont{\sffamily\large\bfseries\boldmath}
 \def\paragraphfont{\sffamily\normalsize\bfseries\boldmath}
 

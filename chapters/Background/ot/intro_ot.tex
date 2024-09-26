@@ -52,6 +52,68 @@ extremal point of the polytope of doubly stochastic matrices
 \end{mem1}
 
 
+\section{Regularized Optimal Transport}
+
+We first introduce the discrete OT problem before presenting regularized formulations and associated algorithms.
+All the notations are presented in \cref{sec:notations}.
+% \subsection{Discrete Optimal Transport}
+Let $X_S = \{ \bm{x}_i^S \in \R^d \}_{i=1}^{N_S}$ and $X_T = \{ \bm{x}_i^T \in \R^d \}_{i=1}^{N_T}$ denote the sets of respectively source and target point locations. The discrete \emph{Monge-Kantorovitch} problem \cite{kantorovich1942transfer} focuses on the optimal allocation strategy to transport the empirical measure $\mu_S = \sum_{i=1}^{N_S} a_i  \delta_{\bm{x}_i^S}$ onto $\mu_T = \sum_{i=1}^{N_T} b_i  \delta_{\bm{x}_i^T}$ where $\bm{a} \in \Delta^{N_S}$ and $\bm{b} \in \Delta^{N_T}$. It consists in computing a \emph{coupling} $\mP \in \R_{+}^{N_S \times N_T}$ \ie a joint probability measure over $X_S \times X_T$ solving the linear program
+\begin{equation}
+    \tag{OT}
+    \label{eq:OT}
+    \min_{\mP \in \Pi(\bm{a}, \bm{b})} \: \langle \mP, \mC \rangle
+\end{equation}
+where $\Pi(\bm{a}, \bm{b})$ is the transport polytope with marginals $(\bm{a}, \bm{b})$ and the \emph{cost matrix} $\mathbf{C} \in \R_+^{N_S \times N_T}$ encodes the pairwise distances between the source and target samples. One can typically consider the squared Euclidean distance $C_{ij} = \|\bm{x}^S_{i}-\bm{x}^T_{j}\|_2^2$ or any Riemannian distance over a manifold \cite{villani2009optimal}.
+
+% \subsection{Strictly Convex Optimal Transport}
+To enable faster algorithmic resolution as well as smoother solutions, one can rely on a strictly convex regularizer $\psi : \R^{N_s} \to \R$. It amounts to solving $\min_{\mP \in \Pi(\bm{a}, \bm{b})} \: \langle \mP, \C \rangle + \varepsilon^\star \sum_i \psi(\mP_{i:})$ where $\varepsilon^\star > 0$. 
+Interestingly, regularized OT can also be framed using a convex constraint as follows
+\begin{align}\label{eq:cot}
+    \min_{\mP \in \Pi(\bm{a}, \bm{b})} \: \langle \mP, \mC \rangle \quad \text{s.t.} \quad  \mP \in \overline{\mathcal{B}}(\eta)
+    \tag{ROT}
+\end{align}
+where $\overline{\mathcal{B}}(\eta) \coloneqq \{ \mP \: \text{s.t.} \: \sum_i \psi(\mP_{i:}) \leq \eta \}$. Note that the previously introduced $\varepsilon^\star$ is the optimal dual variable associated with the constraint $\overline{\mathcal{B}}(\eta)$ in the above equivalent formulation. 
+Throughout, we make the following assumption on $\psi$.
+\begin{assumption}\label{assumption_psi}
+    Let $\psi: \mathrm{dom}(\psi) \to \R \cup \{\infty\}$ be strictly convex and differentiable on the interior of its domain $\mathrm{dom}(\psi) \subset \R^{N_S}_+$.
+\end{assumption}
+
+In what follows, we denote by $\psi(\mP) = (\psi(\mP_{1:}), ..., \psi(\mP_{N_S:}))^\top$.
+We introduce $\psi^*:= \mathbf{p} \to \sup_{\mathbf{q} \in \mathrm{dom}(\psi)} \langle \mathbf{p}, \mathbf{q} \rangle - \psi(\mathbf{q})$ the convex conjugate of $\psi$ \cite{rockafellar1997convex}.
+Note that when $\psi$ is strictly convex, this supremum is uniquely achieved and from Danskin's theorem \cite{danskin1966theory}: $\nabla \psi^*(\bm{p}) = \argmax_{\mathbf{q} \in \mathrm{dom}(\psi)} \langle \mathbf{p}, \mathbf{q} \rangle - \psi(\mathbf{q})$. 
+We show in \cref{sec:proof_global} that when $\varepsilon^\star > 0$, \textit{i.e.}\ when the constraint $\mP \in \overline{\mathcal{B}}(\eta)$ is active, \eqref{eq:cot} is solved for $\mP^\star = \nabla \psi^*((\mC - \bm{\lambda}^\star \oplus \bm{\mu}^\star) / \varepsilon^\star)$ \footnote{We use the notation $\nabla \psi^*(\mP) \coloneqq (\nabla \psi^*(\mP_{1:}), ..., \nabla \psi^*(\mP_{N_S:}))^\top$.} where $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ solve the following dual problem 
+% of \eqref{eq:cot}
+\begin{align}
+    \max_{\bm{\lambda}, \bm{\mu}, \varepsilon>0}  \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle + \varepsilon \Big(\sum_i \psi^*((\mC_{i:} - \lambda_i \bm{1} - \bm{\mu}) / \varepsilon) - \eta \Big) \:.
+    \tag{Dual-ROT}
+\end{align}
+The above objective is concave thus the problem can be solved exactly using \textit{e.g.}\ BFGS \cite{liu1989limited} or ADAM \cite{kingma2014adam}.
+% \paragraph{Projection-based approach.} 
+As a complementary view, one can also frame \eqref{eq:cot} as a $\psi$-Bregman projection over a convex set. The $\psi$-Bregman divergence is defined as 
+\begin{align}
+    D_\psi(\mP, \mQ) := \psi(\mP) - \psi(\mQ) - \langle \mP - \mQ, \nabla \psi(\mQ) \rangle \:.
+\end{align}
+The solution of \eqref{eq:cot} can then be expressed as
+$\mP^\star = \operatorname{Proj}^{D_\psi}_{\Pi(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)}(\mK_\sigma)$
+where $\mK_\sigma \coloneqq \nabla \psi^*(- \mC / \sigma)$ for any $\sigma < \varepsilon^\star$ (see \cref{sec:proof_global} for details). The key benefit of the above result is that it enables solving \eqref{eq:cot} with alternating Bregman projection schemes \cite{benamou2015iterative}.
+% \begin{align}
+%     \max_{\bm{\lambda}, \bm{\mu}, \varepsilon > 0} \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle + \varepsilon \left\langle \bm{1}, \psi^*\left((\C - \bm{\lambda} \oplus \bm{\mu}) / \varepsilon \right) - \eta \bm{1} \right\rangle \:.
+%     \tag{Dual-ROT}
+% \end{align}
+
+In this work, we focus specifically on 
+certain Bregman divergences: the Kullback Leibler ($\KL$) divergence and the squared Euclidean distance.
+% with associated $\ell_2$ norm.
+The first reads $D_{\KL}(\mP | \mQ) = \langle \mP, \log \left(\mP \oslash \mQ \right) - \bm{1} \bm{1}^\top \rangle$ with associated negative entropy $\psi_{\KL}(\mathbf{p}) = \langle \mathbf{p}, \log \mathbf{p} - 1 \rangle$. In this case, \eqref{eq:cot} boils down to entropic OT and solved for $\operatorname{Proj}^{\KL}_{\Pi(\bm{a}, \bm{b})}(\mK_{\varepsilon^\star})$ where $\mK_{\varepsilon^\star} = \nabla \psi_{\KL}^{*}(-\mC / \varepsilon^\star) = \exp(-\mC / \varepsilon^\star)$ is a Gibbs kernel. This projection is well-known as the \emph{static Schrödinger bridge} \cite{leonard2013survey} referring to statistical physics where it first appeared \cite{schrodinger1931umkehrung}, and can be computed efficiently using the Sinkhorn algorithm \cite{cuturi2013sinkhorn}. For the squared Euclidean distance, we define $\psi_{2}(\mathbf{p}) = \frac{1}{2} \| \mathbf{p} \|^2_2$. The associated problem \eqref{prop:cot} is usually referred to as quadratic OT \cite{lorenz2021quadratically} and can yield sparse OT plans unlike entropic.
+
+% In this work, we focus on a specific class of Bregman divergences called \emph{$\alpha$-divergences} or \emph{Rényi divergences}.
+% The \emph{Rényi divergence} \cite{renyi1961measures} for $\mP, \mQ \in \R_+^{N_S \times N_T}$ reads
+% \begin{align}
+%     D_{\alpha} (\mathbf{P} | \mathbf{Q}) = \frac{1}{\alpha-1} \log \left\langle \mathbf{P}^{\odot \alpha}, \mathbf{Q}^{\odot(1-\alpha)}\right\rangle
+%     \tag{$D_\alpha$}
+% \end{align}
+% where throughout we adopt the conventions that $0/0 = 0$, $0 \log(0) = 0$ and $x/0 = \infty$ for $x > 0$. In the context of Bregman divergence, it corresponds to choosing $\psi = \operatorname{H}_\alpha$, the related \emph{Rényi entropy} (or \emph{$\alpha$-entropy})\cite{ben1978renyi}, where for a vector $\p \in \mathbb{R}^{N_T}_+$, $\operatorname{H}_{\alpha}(\mathbf{p}) = \frac{1}{1-\alpha} \log \left\langle \mathbf{p}^{\odot \alpha}, \mathbf{1} \right\rangle$ with $\bm{1}$ being the all-one vector. Note that these definitions can be extended to $\alpha = 0$, $1$, and $+\infty$ by continuity. Of special note is the limit $\alpha \to 1$
+
 \subsection{Optimal Transport Across Spaces : Gromov-Wasserstein Formulation}
 
 We review in this section the Gromov-Wasserstein formulation of OT aiming at comparing distributions ‘‘across spaces''.

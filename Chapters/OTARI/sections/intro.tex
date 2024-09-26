@@ -1,0 +1,35 @@
+% !TeX root = ../workshop_paper.tex
+
+\section{Introduction}
+
+Optimal transport (OT) is a well-established framework to compare probability distributions with numerous applications in machine learning \cite{arjovsky2017wasserstein, ozair2019wasserstein, peyre2019computational}.
+Discrete OT seeks a transportation plan that minimizes the total transportation cost between samples from the source and target distributions.
+In the absence of regularization, this optimal OT plan is inherently sparse. 
+Regularizing OT with a strictly convex term is a widely adopted practical approach, leading to reduced numerical complexity and more diffuse OT plans \cite{peyre2019computational}.
+As an illustration, the prominent entropic regularization \cite{cuturi2013sinkhorn} leads to a dense plan.
+In some applications, the smoothing effect induced by the regularization has a primary importance on its own. A key example is the construction of doubly stochastic affinity matrices for clustering and dimensionality reduction \cite{landa2021doubly,Zass}, where smoothing enables connecting to neighbor points.
+Another is domain adaptation \cite{courty2017joint} where smoothed OT often results in enhanced performance when compared to non-regularized ones (see for instance \cref{tab:da_exps}). Many OT regularization schemes on the primal formulation impose a scalar constraint on the global transport plan.
+% \titouan{bon c'est pas si vrai il y a plein de manière de pénaliser: dual semi-dual, primal sur les colonnes etc... j'ai donc un peu changé}.
+Consequently, central data points tend to exhibit a denser (or more diffuse) transport plan compared to extreme (or outlier) data points, for which diffusion is more costly. As a result, the latter points receive limited benefits from the smoothing effect introduced by the regularizer as shown in the left side of \cref{fig:entropic_ot_plans}. This partly explains OT's significant sensitivity to outliers in many applications \cite{mukherjee2021outlier, pmlr-v202-chuang23a}. 
+% \titouan{la je pense qu'il faut parler de toute la littérature ‘‘outlier robust OT'' par exemple justin solomon mais il y en a plein d'autres}. 
+To remedy this, one needs to constrain the transport plan in a pointwise manner.
+Note that this has recently been explored for constructing affinity matrices \cite{van2023snekhorn} (\ie symmetric OT setting) leading to enhanced noise robustness and clustering abilities.
+
+\paragraph{Contributions.} In this work, we develop a new formulation of OT, called OT with Adaptive Regularization (OTARI), allowing to control, for any strictly convex function $\psi$, the value of $\psi$ on each row and/or column of the OT plan. 
+We then show the advantages of OTARI over usual regularized OT on domain adaptation tasks, focusing particularly on the negative entropy and the $\ell_2$ norm respectively associated with entropic \cite{cuturi2013sinkhorn} and quadratic \cite{blondel2018smooth} optimal transport.
+
+\paragraph{Notations.}
+We adopt the conventions that $0/0 = 0$, $0 \log(0) = 0$ and $x/0 = \infty$ for $x > 0$.
+% For $n \in \mathbb{N}$, $\integ{n}$ denotes the set $\{1,...,n\}$. 
+$\exp$, $\log$ applied to vectors/matrices are taken element-wise.  
+$\bm{1}$ is the all-one vector whose size depends on the context.
+$\langle \cdot, \cdot \rangle$ is the standard inner product for matrices/vectors. 
+$P_{ij}$ denotes the entry at position $(i,j)$ of a matrix $\mathbf{P}$ while $\mathbf{P}_{i:}$ and denotes the $i$-th row. 
+$\mP \bm{\geq} \bm{0}$ means that for any $(i,j)$, $P_{ij} \geq 0$.
+$\odot$ (\textit{resp.} $\oslash$) stands for element-wise multiplication (\textit{resp.} division) between vectors/matrices. 
+For $\bm{a}, \bm{b} \in \R^n, \bm{a} \oplus \bm{b} \in \R^{n \times n}$ is $(a_i + b_j)_{ij}$.
+For $\alpha \in \R$, $\bm{p}^{\odot \alpha}$ and $\mP^{\odot \alpha}$ denote element-wise exponentiation \ie $[\bm{p}^{\odot \alpha}]_i = p_i^\alpha$.
+$[\mP]_+$ is the element-wise positive part with $\max(0,P_{ij})$ in position $(i,j)$.
+For $n \in \mathbb{N}$, $\Delta^{n}$ is the probability simplex $\{ \bm{p} \in \R_+^n \: \text{s.t.} \: \sum_i p_i = 1 \}$.
+For $\bm{a} \in \Delta^{N_S}$ and $\bm{b} \in \Delta^{N_T}$, $\Pi(\bm{a}, \bm{b}) = \{ \mP \in \R_+^{N_S \times N_T} \: \text{s.t.} \: \mP \bm{1} = \bm{a} \: \text{and} \: \mP^\top \bm{1} = \bm{b} \}$ is the transport polytope with marginals $(\bm{a}, \bm{b})$ while $\Pi(\bm{a}) = \{ \mP \in \R_+^{N_S \times N_T} \: \text{s.t.} \: \mP \bm{1} = \bm{a} \}$ is the semi-relaxed transport polytope.
+For a set $\mathcal{E}$ and a divergence $D$, $\operatorname{Proj}^{D}_{\mathcal{E}}(\mK)  =  \argmin_{\mP \in\mathcal{E}} D(\mP | \mK)$.
