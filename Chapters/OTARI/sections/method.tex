@@ -12,7 +12,7 @@ Note that in particular $\psi_{\KL}(\mathbf{e}_{\xi}) = - (\log \xi + 1)$ and $\
 % In contrast to the constraint utilized in standard strictly convex OT \eqref{eq:scOT}, $\mathcal{B}_\psi(\xi)$ imposes a constraint on \emph{each row} of the transport plan $\mP$.
 We now define Optimal Transport with Adaptive Regularization (OTARI) as the generalization of \eqref{eq:cot} to the case where the strictly convex constraint is given by $\mathcal{B}_\psi(\xi)$. Similarly to \cref{prop:cot} (\cref{sec:proof_global}), we can frame OTARI as a $\psi$-Bregman projection of $\mK_\sigma = \nabla \psi^*(-\mC / \sigma)$ or solve it using dual ascent.
 
-\textbf{OTARI problem.}
+\paragraph{OTARI problem.}
   Let $(\bm{a}, \bm{b}, \xi)$ be such that $\Pi(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)$ has an interior point.
   We consider the following problem:
   \begin{align}\label{eq:pcOT}
@@ -20,7 +20,7 @@ We now define Optimal Transport with Adaptive Regularization (OTARI) as the gene
     \tag{OTARI-s}
 \end{align}
 
-\textbf{Mirror descent.}
+\paragraph{Mirror descent.}
 We propose to solve the above using a mirror descent algorithm that consists in the following update of the primal variable $\mP$:
 \begin{align}
   \mP_{t+1} &= \argmin_{\mP \in \Pi(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)} \: \scalar{\mP}{\mC} + \frac{1}{\gamma_t} D_{\psi}(\mP, \mP_t) \\
@@ -75,7 +75,7 @@ We propose to solve the above using a mirror descent algorithm that consists in 
 %   \end{align}
 % and can also be seen as a $\psi$-Bregman projection through a trivial extension of \cref{prop:pcot}. \hug{à reprendre}
 
-\begin{wrapfigure}[15]{L}{0.52\textwidth}
+\begin{wrapfigure}[18]{L}{0.52\textwidth}
   \begin{minipage}{0.52\textwidth}
 \begin{algorithm}[H]
   \caption{\textit{Dykstra} for solving (OTARI-d)}

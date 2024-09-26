@@ -1,8 +1,9 @@
 % !TeX root = ../workshop_paper.tex
 
 
+\section{Proofs}
 
-\section{$\psi$-Bregman Projections for $\psi_{\KL}$ and $\psi_{\alpha}$}\label{sec:proof_projs}
+\subsection{$\psi$-Bregman Projections for $\psi_{\KL}$ and $\psi_{\alpha}$}\label{sec:proof_projs}
 
     In this section, we detail the expressions of the projections used in the alternating Bregman projection approach.
 
@@ -14,7 +15,7 @@
         \end{center}
     \end{figure*}
     
-    \subsection{$\KL$ Projections}
+    \subsubsection{$\KL$ Projections}
 
     We first consider the negative Shannon entropy $\psi_{\KL}(\vp) = \scalar{\vp}{\log \vp - \bm{1}}$.
 
@@ -46,7 +47,7 @@
     \begin{align}
         \nabla_{\bm{\gamma}} \mathcal{G}(\bm{\gamma}) = (\log \xi + 1 )\bm{1} - \operatorname{H}(\mP^\star(\bm{\gamma})) \:.
     \end{align}
-    Similarly to \cite{van2023snekhorn}, one can show that the above gradient is canceled for a unique $\overline{\bm{\gamma}}$. The optimal dual variable is then given by $\bm{\gamma}^\star = [\overline{\bm{\gamma}}]_+$.
+    Similarly to \citep{van2023snekhorn}, one can show that the above gradient is canceled for a unique $\overline{\bm{\gamma}}$. The optimal dual variable is then given by $\bm{\gamma}^\star = [\overline{\bm{\gamma}}]_+$.
     % Denoting by $\bm{\rho} = \bm{1} + \bm{\kappa}$ and taking the dual feasibility constraint $\bm{\kappa} \bm{\geq} \bm{0}$ into account gives the solution: for any $i$, $\rho^\star_i = \max(\varepsilon^\star_i, 1)$ where $\bm{\varepsilon}^\star$ solves (\ref{eq:entropic_affinity_pb}) with cost $\C = -\log \mK$.
     % Moreover we have that $\sigma \leq \min(\bm{\varepsilon}^\star)$ where $\bm{\varepsilon}^\star \in (\R^*_+)^n$ solves (\ref{eq:entropic_affinity_pb}). Therefore for any $i \in \integ{n}$, one has $\varepsilon_i^\star / \sigma \geq 1$. Thus there exists $\kappa_i^\star \in \R_+$ such that $\sigma (1 + \kappa_i^\star) = \varepsilon_i^\star$. 
     
@@ -73,7 +74,7 @@
     \end{equation}
 
     
-    \subsection{$D_\alpha$ Projections for $\alpha > 1$}
+    \subsubsection{$D_\alpha$ Projections for $\alpha > 1$}
 
     We now consider $\psi_{\alpha}(\vp) = \| \vp \|_{\alpha}^{\alpha}$ for $\alpha>1$ and associated Bregman divergence $D_{\alpha}$.
     We break down the $\ell_{\alpha}$ and marginal ($\ell_1$) projections to retrieve closed-form expressions.
@@ -155,7 +156,7 @@ Therefore we have
         \:.
     \end{align}
 
-    % \subsection{$D_\alpha$ Projections for $\alpha < 1$}
+    % \subsubsection{$D_\alpha$ Projections for $\alpha < 1$}
 
     % \hug{not sparse, maybe useless}
 
@@ -169,8 +170,8 @@ Therefore we have
 
         
 
-%     \subsection{Euclidean Projections}
-%     % \subsection{$\ell_2$ norm}
+%     \subsubsection{Euclidean Projections}
+%     % \subsubsection{$\ell_2$ norm}
 
 %     For the Euclidean case, we break down the projection into $\ell_2$ norm and marginal projections. Starting with the marginal projection, we have the following expression \cite{lorenz2021quadratically}    
 % \begin{equation}
@@ -219,9 +220,9 @@ Therefore we have
 %     \end{proof}
 
 
-\section{Proofs of the Optimal Transport Solutions}
+\subsection{Proofs of the Optimal Transport Solutions}
 
-\subsection{Optimal Transport with Global Constraint}\label{sec:proof_global}
+\subsubsection{Optimal Transport with Global Constraint}\label{sec:proof_global}
 
 \begin{proposition}\label{prop:cot}
     Let $\psi : \R^{N_S} \to \R$ satisfy \cref{assumption_psi}. We define $\overline{\mathcal{B}}(\eta) \coloneqq \{ \mP \: \text{s.t.} \: \sum_i \psi(\mP_{i:}) \leq \eta \}$. Let $(\bm{a}, \bm{b}, \eta)$ be such that $\Pi(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)$ has an interior point and let $\mP^\star$ be a solution of
@@ -243,7 +244,7 @@ Therefore we have
 \begin{proof}
     We first show that $\mP^\star = \operatorname{Proj}^{D_\psi}_{\Pi(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)}(\mK_\varepsilon)$ before focusing on the dual problem.
 
-    \textbf{\underline{Part I : Proof of the Bregman projection.}}
+    \paragraph{\underline{Part I : Proof of the Bregman projection.}}
 
     Simplifying the constant terms $\operatorname{Proj}^{D_\psi}_{\Pi(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)}(\mK_\varepsilon)$ boils down to the following problem
     \begin{align}
@@ -252,7 +253,7 @@ Therefore we have
         & \mP \bm{1} = \bm{a}, \quad \mP^\top \bm{1} = \bm{b} \\
         & \mP \in \R_+^{n \times n} \:.
     \end{align}
-    This problem is convex and strictly feasible. Strong duality holds thanks to Slater's constraint qualification. Therefore the KKT conditions \cite{boyd2004convex} are necessary and sufficient conditions for optimality.
+    This problem is convex and strictly feasible. Strong duality holds thanks to Slater's constraint qualification. Therefore the KKT conditions \citep{boyd2004convex} are necessary and sufficient conditions for optimality.
     The Lagrangian can be expressed as
     \begin{align}
         \mathcal{L}(\mP, \nu, \bm{\lambda}, \bm{\mu}) &= \sum_i \psi(\mP_{i:}) - \langle \mP, \nabla \psi(\mK_\sigma) \rangle + \nu\Big(\sum_i \psi(\mP_{i:}) - \eta \Big) \\
@@ -296,7 +297,7 @@ Therefore we have
     Therefore the KKT conditions are met hence $(\mP, \nu, \bm{\lambda}, \bm{\mu}, \mathbf{\Omega}) = (\mP^\star, \nu^\star, \bm{\lambda}^\star, \bm{\mu}^\star, \mathbf{\Omega}^\star)$ and $\mP^\star = \mT^\star$.
 \end{proof}
 
-\textbf{\underline{Part II : Proof of dual ascent.}}
+\paragraph{\underline{Part II : Proof of dual ascent.}}
 
 The optimal dual variables $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ solve the following problem 
 \begin{align}
@@ -308,14 +309,14 @@ The optimal dual variables $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\st
     \label{eq:dual-ROT}
 \end{align}
 In ($\star$) we have used that $\psi^*(\bm{x}) = \sup_{\bm{y} \bm{\geq} \bm{0}} \langle \bm{x}, \bm{y} \rangle - \psi(\bm{y})$.
-From Danskin's theorem \cite{danskin1966theory}, one can recover the solution of the primal
+From Danskin's theorem \citep{danskin1966theory}, one can recover the solution of the primal
 \begin{align}
     \forall i, \: \mP^\star_{i:} = \nabla \psi^*((\mC_{i:} - \lambda^\star_i \bm{1} - \bm{\mu}^\star) / \varepsilon^\star) \:.
 \end{align}
 Using matrix notations yields $\mP^\star = \nabla \psi^*((\mC - \bm{\lambda}^\star \oplus \bm{\mu}^\star) / \varepsilon^\star)$
 where $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ are the solution of the dual problem \eqref{eq:dual-ROT}.
 
-\subsection{OT with Pointwise Constraints on Either Sources or Targets (OTARI-s and OTARI-t) : proof of \cref{prop:pcot}}\label{sec:proofs}
+\subsubsection{OT with Pointwise Constraints on Either Sources or Targets (OTARI-s and OTARI-t) : proof of \cref{prop:pcot}}\label{sec:proofs}
 
 \begin{proposition}
     Let $(\bm{a}, \bm{b}, \xi)$ be such that $\Pi(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)$ has an interior point and let $\mP^\star$ solve
@@ -334,7 +335,7 @@ where $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ are the solution
 \begin{proof}
 Again we break down the proof, focusing on the primal and then on the dual approach.
 
-\textbf{\underline{Part I : Proof of the Bregman projection.}}
+\paragraph{\underline{Part I : Proof of the Bregman projection.}}
 
 The proof is almost identical to the one in \cref{prop:cot}. We use the same notations for simplicity. The only difference brought by the pointwise constraint is that $\bm{\nu}^\star$ is now vectorial. The first-order optimality condition for the Bregman projection problem reads
 \begin{align}
@@ -346,7 +347,7 @@ Again using the same notations as before, the first order KKT condition for prob
 \end{align}
 We end the proof by following the same reasoning as for \cref{prop:cot}, choosing for any $i$, $\nu_i = \varepsilon_i^\star / \sigma - 1 \geq 0$.
 
-\textbf{\underline{Part II : Dual Problem of \eqref{eq:pcOT}.}}
+\paragraph{\underline{Part II : Dual Problem of \eqref{eq:pcOT}.}}
 
 The optimization problem \eqref{eq:pcOT} writes
 \begin{align}
@@ -367,7 +368,7 @@ When $\bm{\varepsilon}^\star \bm{>} \bm{0}$, relying on strong duality to invert
     \tag{Dual-OTARI-s}
 \end{align}
 In ($\star$) we used that $\psi^*(\mathbf{X}) = \left(\psi^*(\mathbf{X}_{1:}), ..., \psi^*(\mathbf{X}_{N:})\right)^\top$.
-From Danskin's theorem \cite{danskin1966theory}, one can recover the solution of the primal
+From Danskin's theorem \citep{danskin1966theory}, one can recover the solution of the primal
 \begin{align}
     \mP^\star = \nabla \psi^* \left(\diag(\bm{\varepsilon}^\star)^{-1} (\C - \bm{\lambda}^\star \oplus \bm{\mu}^\star) \right)
 \end{align}
