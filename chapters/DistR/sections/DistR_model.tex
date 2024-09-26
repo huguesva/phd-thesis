@@ -39,14 +39,14 @@ point is therefore linked to a unique prototype/cluster.
 % 		%	\includegraphics[height=3cm]{figures/grids/srGWprojections_largegrid_kernelPCA_px32_cut.pdf}
 % 		%	\includegraphics[height=3cm]{figures/grids/srGWprojections_largegrid_kernelPCA_px64_cut.pdf}
 % 		%	\includegraphics[height=3cm]{figures/grids/srGWprojections_largegrid_kernelPCA_px96_cut.pdf}}
-% 		\caption{GW projections of a single-cell genomics dataset \cite{chen2019high} on regular grids with increasing resolutions, respectively encoded as $C_X(\mX) = \mX \mX^\top$ and $C_Z(\mZ) = \mZ \mZ^\top$. Pixels on cropped grids are colored by interpolating samples' colors according to the transport plan and their intensity is proportional to their mass.}
+% 		\caption{GW projections of a single-cell genomics dataset \citep{chen2019high} on regular grids with increasing resolutions, respectively encoded as $C_X(\mX) = \mX \mX^\top$ and $C_Z(\mZ) = \mZ \mZ^\top$. Pixels on cropped grids are colored by interpolating samples' colors according to the transport plan and their intensity is proportional to their mass.}
 % 		\label{fig:visu_fixedsupport}
 % 	\end{center}
 % 	\vspace{-0.8cm}
 % \end{figure*}
 
 
-\paragraph{A semi-relaxed objective.} For a given embedding $\mZ$ and $L=L_2$, it is known that minimizing in $\vh_{Z}$ the DistR objective is \emph{equivalent} to a problem that is computationally simpler than the usual GW one, namely the semi-relaxed GW divergence $\srGW_L$ \cite{vincent2021semi}:
+\paragraph{A semi-relaxed objective.} For a given embedding $\mZ$ and $L=L_2$, it is known that minimizing in $\vh_{Z}$ the DistR objective is \emph{equivalent} to a problem that is computationally simpler than the usual GW one, namely the semi-relaxed GW divergence $\srGW_L$ \citep{vincent2021semi}:
 \begin{equation*}\tag{srGW} \label{eq:srGW}
 	\min_{\mT \in \gU_n(\vh_X)} E_L(\simiX(\mX), \simiZ(\mZ), \mT) \:,
 \end{equation*}
@@ -55,7 +55,7 @@ where $\gU_n(\vh_X) := \left\{ \mT \in \R_{+}^{N \times n}: \mT \one_n = \vh_X\r
 %\begin{proposition}\label{prop:srgw_divergence}
 %	For any divergence $L$, \ref{eq:srGW} vanishes iif there exists $\vh_Z \in \Sigma_n$  such that $(\mC_X(\mX), \vh_X)$ and $(\mC_Z(\mX), \vh_Z)$ are weakly isomorphic. \tv{vraiment besoin d'une prop ? comme ona pas def weakly isom, juste un commentaire ?}
 %\end{proposition}
-Additionally, we prove that $\srGW_L$ remains a divergence as soon as $L$ is itself a divergence. Consequently, $\srGW_L$ vanishes iff both measures are isomorphic in a weak sense \cite{chowdhury2019gromov}. We emphasize that taking a proper divergence $L$ is important (and basic assumptions on $\mX$), as it avoids some trivial solutions as detailed in Appendix \ref{sec:srGW_divergence}.
+Additionally, we prove that $\srGW_L$ remains a divergence as soon as $L$ is itself a divergence. Consequently, $\srGW_L$ vanishes iff both measures are isomorphic in a weak sense \citep{chowdhury2019gromov}. We emphasize that taking a proper divergence $L$ is important (and basic assumptions on $\mX$), as it avoids some trivial solutions as detailed in Appendix \ref{sec:srGW_divergence}.
 
 %The latter notion may introduce trivial solutions into our \ref{eq:Dist-DR} problem which can be avoided with basic assumptions over $\mu_X$, always verified in our experiments, that we discuss .   
 
@@ -87,13 +87,13 @@ In what follows, we call a coupling $\mT \in [0,1]^{N \times n}$ with a single n
 
 % Recall that \ref{eq:Dist-DR} focuses on finding the embedding distribution $\mu_Z =\sum_{i=1}^n [\vh_Z]_i \delta_{\vz_i} \in \gP_n(\R^d)$ while imposing a specific geometry, induced by $C_Z$, over the embeddings. 
 
-% We emphasize its differences with the problem known as \emph{srGW barycenter} \cite{vincent2021semi}, that seeks for a closest target graph $(\overline{\mC}, \overline{\vh})$ from $(\mC_X, \vh_X)$ without any assumption, or control, over the support of the target distribution: 
+% We emphasize its differences with the problem known as \emph{srGW barycenter} \citep{vincent2021semi}, that seeks for a closest target graph $(\overline{\mC}, \overline{\vh})$ from $(\mC_X, \vh_X)$ without any assumption, or control, over the support of the target distribution: 
 
-%the \emph{srGW barycenter} \cite{vincent2021semi}, %is however strongly connected to \ref{eq:Dist-DR}.
+%the \emph{srGW barycenter} \citep{vincent2021semi}, %is however strongly connected to \ref{eq:Dist-DR}.
 %and not only a target graph $(\overline{\mC}, \vh_Z)$. \tv{a reformuler}
 %  whose support would be let implicit,	
-% The latter problem, known as the \emph{srGW barycenter} \cite{vincent2021semi}, is however strongly connected to \ref{eq:Dist-DR}.
-We will see that a link can be drawn with kernel K-means using the analogy of \emph{GW barycenters}. More precisely the \emph{srGW barycenter} \cite{vincent2021semi} seeks for a closest target graph $(\overline{\mC}, \overline{\vh})$ from $(\mC_X, \vh_X)$ by solving
+% The latter problem, known as the \emph{srGW barycenter} \citep{vincent2021semi}, is however strongly connected to \ref{eq:Dist-DR}.
+We will see that a link can be drawn with kernel K-means using the analogy of \emph{GW barycenters}. More precisely the \emph{srGW barycenter} \citep{vincent2021semi} seeks for a closest target graph $(\overline{\mC}, \overline{\vh})$ from $(\mC_X, \vh_X)$ by solving
 \begin{equation}\tag{srGWB}\label{eq:srGBW}
 	\min_{\overline{\mC} \in \R^{n \times n}} \min_{\mT \in \mathcal{U}_n(\vh_X)} E_L(\simiX(\mX), \overline{\mC}, \mT) \:.
 \end{equation} 
@@ -115,7 +115,7 @@ equivalent to enforcing $\operatorname{rank}(\overline{\mC}) \leq d$ in
 	\vspace{-0.8cm}
 \end{figure*}
 
-We establish below that srGWB is of particular interest for clustering. The motivation for this arises from the findings of \citet{chen2023gromov}, which demonstrate that when $\simiX(\mX)$ is positive semi-definite and $\mT$ is \emph{constrained} to belong to the set of membership matrices (as opposed to couplings in $\gU_n(\vh)$), \cref{eq:srGBW} is equivalent to a kernel K-means whose samples are weighted by $\vh_X$ \cite{dhillon2004kernel, dhillon2007weighted}. These additional constraints are in fact unnecessary since we show below that the original srGWB problem admits membership matrices as the optimal coupling for a broader class of $\simiX(\mX)$ input matrices (see proofs in appendix \ref{sec:srGW_concavity}).%by demonstrating that the constraint on $\mT$ to be a membership matrix is, in fact, unnecessary. We show below that the original srGWB problem admits  membership matrices as optimal coupling for a broader class of input matrices $\simiX(\mX)$ (see proofs in Appendix \ref{sec:srGW_concavity}).
+We establish below that srGWB is of particular interest for clustering. The motivation for this arises from the findings of \citet{chen2023gromov}, which demonstrate that when $\simiX(\mX)$ is positive semi-definite and $\mT$ is \emph{constrained} to belong to the set of membership matrices (as opposed to couplings in $\gU_n(\vh)$), \cref{eq:srGBW} is equivalent to a kernel K-means whose samples are weighted by $\vh_X$ \citep{dhillon2004kernel, dhillon2007weighted}. These additional constraints are in fact unnecessary since we show below that the original srGWB problem admits membership matrices as the optimal coupling for a broader class of $\simiX(\mX)$ input matrices (see proofs in appendix \ref{sec:srGW_concavity}).%by demonstrating that the constraint on $\mT$ to be a membership matrix is, in fact, unnecessary. We show below that the original srGWB problem admits  membership matrices as optimal coupling for a broader class of input matrices $\simiX(\mX)$ (see proofs in Appendix \ref{sec:srGW_concavity}).
 % seminal result in this direction from  considered $\mC_X(\mX)$ PSD and the combinatorial (Monge) counterpart of the \ref{eq:srGBW} problem. 
 \begin{restatable}{theorem}{baryconcavity}
 	\label{theo:srgw_bary_concavity}
@@ -131,15 +131,15 @@ Although these results do not apply directly to DistR, we argue that they furthe
 %When $\vh$ is uniform, these extremities are membership matrices up to a factor $\frac{1}{N}$ \cite[Theorem 1]{cao2022centrosymmetric}. 
 %Interestingly, 
 
-%\hva{à retravailler/incorporer} Following \cite{vayer2018optimal}
-% (equation 6) , we can also see that $g$ is convex whenever the GW problem from a graph to itself is concave. Hence Proposition 2 from \cite{redko2020co} also extends our analysis %, we can conclude that our sufficient condition is also satisfied when $\mC_X$ is a  to squared Euclidean distance matrices. % \hva{or a PSD matrix} as often in DR \hva{(see \cref{sec:DR_methods})}.
+%\hva{à retravailler/incorporer} Following \citep{vayer2018optimal}
+% (equation 6) , we can also see that $g$ is convex whenever the GW problem from a graph to itself is concave. Hence Proposition 2 from \citep{redko2020co} also extends our analysis %, we can conclude that our sufficient condition is also satisfied when $\mC_X$ is a  to squared Euclidean distance matrices. % \hva{or a PSD matrix} as often in DR \hva{(see \cref{sec:DR_methods})}.
 
 \subsection{Computation}\label{sec:computation_GW}
 
-DistR is a non-convex problem that we propose to tackle using a Block Coordinate Descent algorithm (BCD, \citealt{tseng2001convergence}) guaranteed to converge to local optimum \cite{grippo2000convergence, Lyu2023bmm}. The BCD alternates between the two following steps. First, we optimize in $\mZ$ for a fixed transport plan using gradient descent with adaptive learning rates \cite{kingma2014adam}. Then we solve for a srGW problem given $\mZ$. To this end, we benchmarked both the Conditional Gradient and Mirror Descent algorithms proposed in \citet{vincent2021semi}, extended to support losses $L_2$ and $L_{\KL}$.
+DistR is a non-convex problem that we propose to tackle using a Block Coordinate Descent algorithm (BCD, \citealt{tseng2001convergence}) guaranteed to converge to local optimum \citep{grippo2000convergence, Lyu2023bmm}. The BCD alternates between the two following steps. First, we optimize in $\mZ$ for a fixed transport plan using gradient descent with adaptive learning rates \citep{kingma2014adam}. Then we solve for a srGW problem given $\mZ$. To this end, we benchmarked both the Conditional Gradient and Mirror Descent algorithms proposed in \citet{vincent2021semi}, extended to support losses $L_2$ and $L_{\KL}$.
 
-Following Proposition 1 in \citep{peyre2016gromov}, a vanilla implementation leads to $\mathcal{O}(n N^2 + n^2N)$ operations to compute the loss or its gradient. In many DR methods, $\mC_X(\mX)$ or $\mC_Z(\mZ)$, or their transformations within the loss $L$, admit explicit low-rank factorizations. Including \emph{e.g.} matrices involved in spectral methods and other similarity matrices derived from squared Euclidean distance matrices \cite{scetbon2022linear}. In these settings, we exploit these factorizations to reduce the computational complexity of our solvers down to $\mathcal{O}(Nn(p + d) + (N + m)pd + n^2)$ when $L=L_2$, and $O(Nnd + n^2d)$ when $L = L_{\KL}$. We refer the reader interested in these algorithmic details to Appendix \ref{sec:algorithms}.
-%By leveraging the low-rank natures of structures $\mC_X(\mX)$ and $\mC_Z(\mZ)$ encountered in many DR methods, or of their transformations within $L$, the computational complexity can be reduced up to $\mathcal{O}(Nn(p + d) + (N + m)pd)$ \tv{a discuter plus : c'dst linear ! + quelle genre de low rank + citer cutu}. \cite{scetbon2022linear} - We refer the reader interested in these algorithmic details to Appendix X \tv{attention}.
+Following Proposition 1 in \citep{peyre2016gromov}, a vanilla implementation leads to $\mathcal{O}(n N^2 + n^2N)$ operations to compute the loss or its gradient. In many DR methods, $\mC_X(\mX)$ or $\mC_Z(\mZ)$, or their transformations within the loss $L$, admit explicit low-rank factorizations. Including \emph{e.g.} matrices involved in spectral methods and other similarity matrices derived from squared Euclidean distance matrices \citep{scetbon2022linear}. In these settings, we exploit these factorizations to reduce the computational complexity of our solvers down to $\mathcal{O}(Nn(p + d) + (N + m)pd + n^2)$ when $L=L_2$, and $O(Nnd + n^2d)$ when $L = L_{\KL}$. We refer the reader interested in these algorithmic details to Appendix \ref{sec:algorithms}.
+%By leveraging the low-rank natures of structures $\mC_X(\mX)$ and $\mC_Z(\mZ)$ encountered in many DR methods, or of their transformations within $L$, the computational complexity can be reduced up to $\mathcal{O}(Nn(p + d) + (N + m)pd)$ \tv{a discuter plus : c'dst linear ! + quelle genre de low rank + citer cutu}. \citep{scetbon2022linear} - We refer the reader interested in these algorithmic details to Appendix X \tv{attention}.
 %The complexity of each update is majorized by the computation of the objective \cref{eq:gw_pb} which scales in $\mathcal{O}(nN^2 + n^2N)$.
 
 % \textbf{Computation.}	We adopt a block coordinate strategy, iteratively solving the OT and embedding subproblems.
@@ -147,7 +147,7 @@ Following Proposition 1 in \citep{peyre2016gromov}, a vanilla implementation lea
 	% %     \mZ \xleftarrow[]{} \argmin_{\mZ \in \R^{n \times d}} \: \sum_{k \in \integ{K}} \mathrm{srGW}_L(\mC_k, \vh, \mC_Z) \:.
 	% % \end{align}
 % Motivated by the
-% envelope theorem \cite{carter2001foundations}\cvc{BCD you dont need to mention this}, we do not backpropagate the gradient through the iterative computation of the GW plan. The complexity of each update is majorized by the computation of the objective \cref{eq:gw_pb} which scales in $\mathcal{O}(nN^2 + n^2N)$. Note that relaxing the marginal constraint in srGW makes the rows of the OT plan independent thus leading to a significant reduction of the computational cost compared to regular GW \cvc{we dont care about that}. 
+% envelope theorem \citep{carter2001foundations}\cvc{BCD you dont need to mention this}, we do not backpropagate the gradient through the iterative computation of the GW plan. The complexity of each update is majorized by the computation of the objective \cref{eq:gw_pb} which scales in $\mathcal{O}(nN^2 + n^2N)$. Note that relaxing the marginal constraint in srGW makes the rows of the OT plan independent thus leading to a significant reduction of the computational cost compared to regular GW \cvc{we dont care about that}. 
 % \begin{algorithm}[h]
 	% 	\caption{\textit{BCD for Joint Clustering and Dimensionality Reduction}}
 	% 	\label{algo:BCD_partitioned_affinities}
@@ -164,22 +164,22 @@ Following Proposition 1 in \citep{peyre2016gromov}, a vanilla implementation lea
 	% \end{algorithm}
 
 % \textbf{Related work multi-view.}
-% In \cite{gong2022gromov}, an encoder neural network is learned for each view such that the GW barycenter of the input kernels matches the identity matrix. 
+% In \citep{gong2022gromov}, an encoder neural network is learned for each view such that the GW barycenter of the input kernels matches the identity matrix. 
 
-% Library \cite{perry2021mvlearn}
+% Library \citep{perry2021mvlearn}
 
-% Multi-view MDS \cite{trendafilov2010stepwise}
+% Multi-view MDS \citep{trendafilov2010stepwise}
 
 % \textbf{Multi-Scale Dimensionality Reduction.}
-% A long-standing problem in DR is to construct embeddings that can faithfully account for both close and large-scale dependencies as most popular approaches including SNE-like algorithms (\textit{e.g.}\ UMAP \cite{mcinnes2018umap} or t-SNE \cite{van2008visualizing}) usually fail in this task. % (see \emph{e.g} \cref{fig:multi_scale}).
+% A long-standing problem in DR is to construct embeddings that can faithfully account for both close and large-scale dependencies as most popular approaches including SNE-like algorithms (\textit{e.g.}\ UMAP \citep{mcinnes2018umap} or t-SNE \citep{van2008visualizing}) usually fail in this task. % (see \emph{e.g} \cref{fig:multi_scale}).
 % To remedy this, two main approaches are considered in practice. The first handles the large-scale structure at initialization and then runs a SNE-like method on top of it with relatively small perplexity\footnote{SNE-like methods adaptively set a kernel bandwidth for each point based on the 'perplexity' hyperparameter that can be intuitively interpreted as the number of effective neighbors of each point.} 
 % % to capture fine-grained structure 
-% \cite{van2023snekhorn, kobak2021initialization} while the second 
+% \citep{van2023snekhorn, kobak2021initialization} while the second 
 % % This assumes that the initial structure will be preserved in the course of the embedding optimization, which is unfortunately often not the case 
-% consists of averaging multiple similarity matrices associated with various perplexities \cite{lee2015multi}.
+% consists of averaging multiple similarity matrices associated with various perplexities \citep{lee2015multi}.
 % Both approaches generally lead to unsatisfactory results as shown in \cref{fig:multi_scale}.
-% % The first is to handle the large-scale structure at initialization and then run a SNE-like method on top of it with relatively small perplexity to capture fine-grained structure \cite{van2023snekhorn}.
-% % This assumes that the initial structure will be preserved in the course of the embedding optimization, which is unfortunately often not the case \cite{kobak2021initialization}. The second approaches boils down to averaging multiple similarity matrices associated with various scales (or perplexities) \cite{lee2015multi} but it generally leads to unsatisfactory results as shown in \cref{fig:multi_scale}. 
+% % The first is to handle the large-scale structure at initialization and then run a SNE-like method on top of it with relatively small perplexity to capture fine-grained structure \citep{van2023snekhorn}.
+% % This assumes that the initial structure will be preserved in the course of the embedding optimization, which is unfortunately often not the case \citep{kobak2021initialization}. The second approaches boils down to averaging multiple similarity matrices associated with various scales (or perplexities) \citep{lee2015multi} but it generally leads to unsatisfactory results as shown in \cref{fig:multi_scale}. 
 % Based on this observation, we propose a new approach that leverages our model. %the \cref{eq:GW_DR_pb} model. 
 % We first compute prototypes $\mZ \in \R^{n \times d}$ by solving \cref{eq:GW_DR_pb} using a large scale affinity $\mC^{L}_X$
 % and then position embeddings $\mY \in \R^{N \times d}$ using a small scale affinity $\mC^{\ell}_X$ under barycentric constraint given by the prototypes
@@ -195,7 +195,7 @@ Following Proposition 1 in \citep{peyre2016gromov}, a vanilla implementation lea
 %The closest to our work is CO-Optimal Transport  in which the
 % GW framework is extended to compute OT plans between both samples and features
 % of two datasets of different sizes. 
-The closest to our work is the CO-Optimal-Transport (COOT) clustering approach proposed in \cite{redko2020co} that estimates simultaneously a clustering of samples and features through the CO-Optimal Transport problem,
+The closest to our work is the CO-Optimal-Transport (COOT) clustering approach proposed in \citep{redko2020co} that estimates simultaneously a clustering of samples and features through the CO-Optimal Transport problem,
 % \tv{pas sur d'avoir besoin de la formule ça prend de la place}
 \begin{align}\tag{COOT}
 	\label{eq:coot_pb}
@@ -205,8 +205,8 @@ where $\vh_1 \in \Sigma_N$, $\overline{\vh}_1 \in \Sigma_n$, $\vh_2 \in \Sigma_p
 We emphasize that COOT-clustering, which consists in optimizing the COOT objective
 above \emph{w.r.t.} $\mZ$, is a linear DR model as the reduction is done with the map $\mT_2$. In contrast, DistR
 leverages the more expressive non-linear similarity functions of existing DR
-methods. Other joint DR-clustering approaches, such as \cite{liu2022joint},
+methods. Other joint DR-clustering approaches, such as \citep{liu2022joint},
 involve modeling latent variables by a mixture of distributions. In comparison,
 our framework is more versatile, as it can easily adapt to any $(L, \mC_X,
 \mC_Z)$ of existing DR methods (\Cref{sec:dr_methods}).
-%\cite{collas2023entropic}
+%\citep{collas2023entropic}

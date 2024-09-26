@@ -467,7 +467,7 @@ We now describe how to perform the two $\KL$ projection steps.
 %     For any matrix $\Pb \in \R_+^{n \times n}$, it holds $\operatorname{Proj}^{\operatorname{KL}}_{\mathcal{S}}(\Pb) = \big(\Pb \odot \Pb^\top \big)^{\odot \frac{1}{2}}$.
 % \end{lemma}
 
-\textbf{Projection onto $\mathcal{S}$.} The $\KL$ projection onto $\mathcal{S}$ of $\K \in \R_+^{n \times n}$ amounts to the following problem.
+\paragraph{Projection onto $\mathcal{S}$.} The $\KL$ projection onto $\mathcal{S}$ of $\K \in \R_+^{n \times n}$ amounts to the following problem.
 \begin{align}
     \argmin_{\Pb \in \mathcal{S}} \ &\KL(\Pb | \K) \:.
 \end{align}
@@ -480,7 +480,7 @@ Similarly as before, if we cancel the gradient of $\mathcal{L}$ with respect to 
 \argmin_{\Pb \in \mathcal{S}} \: \KL(\Pb | \K) = \left(\K \odot \K^{\top}\right)^{\odot \frac{1}{2}} \:.
 \end{equation}
 
-\textbf{Projection onto $\mathcal{H}_{\xi}$.}
+\paragraph{Projection onto $\mathcal{H}_{\xi}$.}
 Concerning the entropic projection, on can compute $\operatorname{Proj}^{\operatorname{KL}}_{\mathcal{H}_{\xi}} \colon \mathcal{S} \to \mathcal{H}_\xi$ using a slight adaptation of \cref{lemma_ea_proj}. For any $\Pb \in \mathcal{S}$, it holds
 \begin{align}
   \forall (i,j), \quad \operatorname{Proj}^{\operatorname{KL}}_{\mathcal{H}_{\xi}}(\Pb)_{ij} =  \frac{\exp{(-\log P_{ij}/\rho_i)}}{\sum_\ell \exp{(- \log P_{i\ell}/\rho_i)}}

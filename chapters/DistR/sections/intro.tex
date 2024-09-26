@@ -21,10 +21,10 @@ This chapter is based on material from the following publication:
 \end{figure}
 
 \paragraph{Two sides of the same coin.} As a matter of fact, methods from both families share many similitudes, %among which is
-including the construction of a similarity graph between input samples. In clustering, many popular approaches design a reduced or coarsened version of the initial similarity graph while preserving some of its spectral properties~\cite{von2007tutorial, schaeffer2007graph}. 
+including the construction of a similarity graph between input samples. In clustering, many popular approaches design a reduced or coarsened version of the initial similarity graph while preserving some of its spectral properties~\citep{von2007tutorial, schaeffer2007graph}. 
 %attributes related to the graph spectrum 
 In DR, the goal is to solve the inverse problem of finding low-dimensional embeddings that generate a similarity graph close to the %initial
-one computed from input data points \cite{ham2004kernel,hinton2002stochastic}.
+one computed from input data points \citep{ham2004kernel,hinton2002stochastic}.
 %With so many similarities
 Our work builds on these converging viewpoints and addresses the following question: \emph{can DR and clustering  be expressed in a common and unified framework ?}
 
@@ -34,7 +34,7 @@ $\mu=\frac{1}{N}\sum_i\delta_{\vx_i}$.
 % instead of a data matrix. 
 This enables us to consider statistical measures of similarity such as Optimal Transport (OT), which is at the core of our work.
 On the one hand, OT and clustering are strongly related.
-The celebrated K-means approach can be seen as a particular case of minimal Wasserstein estimator where a distribution of $n$ Diracs is optimized \textit{w.r.t} their weights and positions \cite{Canas12}. Other connections between spectral clustering and the OT-based Gromov-Wasserstein (GW) distance have been recently developed in \citet{chowdhury2021generalized,chen2023gromov,vincent2021semi}. On the other hand, the link between DR and OT has not been explored yet. DR methods, when modeling data as distributions,
+The celebrated K-means approach can be seen as a particular case of minimal Wasserstein estimator where a distribution of $n$ Diracs is optimized \textit{w.r.t} their weights and positions \citep{Canas12}. Other connections between spectral clustering and the OT-based Gromov-Wasserstein (GW) distance have been recently developed in \citet{chowdhury2021generalized,chen2023gromov,vincent2021semi}. On the other hand, the link between DR and OT has not been explored yet. DR methods, when modeling data as distributions,
 usually focus on joint distribution between samples within each space separately, see \eg \citet{van2023snekhorn} or \citet{lu2019doubly}.
 Consequently, they do not consider couplings to transport samples across spaces of varying dimensions. %To the best of our knowledge, DR methods, when modeling data as distributions,
 %focus on joint distribution between samples within each space separately, see \eg \citet{van2023snekhorn} or \citet{lu2019doubly}.
@@ -71,7 +71,7 @@ Finally, we show in section \ref{sec:exps} the practical interest of our approac
 % \hva{à atténuer un peu:}
 % We also illustrate the generality by investigating particularly novel DR methods that optimize the GW divergence in an Eulerian way, with a reduced distribution of fixed support \nc{such as} regular grids (images) or on other supports that can encode prior knowledge.
 
-% Summarizing a dataset in an unsupervised way is of utmost importance in modern machine learning pipelines \cite{donoho2000high}. Reduced data representations offer numerous advantages, including improved pattern and structure recognition as well as faster processing for downstream tasks \cite{pochet2004systematic, mendible2020dimensionality, cantini2021benchmarking}.
+% Summarizing a dataset in an unsupervised way is of utmost importance in modern machine learning pipelines \citep{donoho2000high}. Reduced data representations offer numerous advantages, including improved pattern and structure recognition as well as faster processing for downstream tasks \citep{pochet2004systematic, mendible2020dimensionality, cantini2021benchmarking}.
 
 % To construct such representations, one can either reduce the sample size by aggregating points together (referred to as \emph{clustering}) or reduce the feature dimensionality \textit{i.e.}\ performing \emph{dimensionality reduction} (DR). 
 % Both tasks are actively studied topics and %interestingly
@@ -80,11 +80,11 @@ Finally, we show in section \ref{sec:exps} the practical interest of our approac
 %  \cvc{(missing high level motivation about why one would want to do so?)}
 % However current formulations of DR do not permit adapting the sample size of the resulting embedding. 
 % In other words, there does not exist a consistent model allowing to adapt current state-of-the-art DR algorithms to simultaneously perform clustering. As a result, clustering and DR are performed sequentially \cvc{(need to outline limitations of sequential approach)}. 
-% In cell biology, for instance, similar cells are grouped into \emph{metacells} \cite{baran2019metacell} that are then embedded onto a low-dimensional space for visualization and other downstream tasks.
-% This may result in clusters that are not adapted to the final embedding space and vice versa \cite{liu2022joint} \cvc{(maybe the example should come sooner)}.
+% In cell biology, for instance, similar cells are grouped into \emph{metacells} \citep{baran2019metacell} that are then embedded onto a low-dimensional space for visualization and other downstream tasks.
+% This may result in clusters that are not adapted to the final embedding space and vice versa \citep{liu2022joint} \cvc{(maybe the example should come sooner)}.
 
 % \textbf{Contributions.}
-% In this work, we uncover the link between popular DR methods and the Gromov-Wasserstein optimal transport problem \cite{memoli2011gromov}. \cvc{This leads us to frame DR as a novel optimization problem over any discrete distributions, \emph{a.k.a} Distributional Dimensionality Reduction, that provides a first grounded approch for joint DR and clustering.} This novel characterization allows us to frame DR as an optimization problem over discrete distributions offering enhanced flexibility. In particular, it allows one to choose the resolution of the output thus providing a grounded approach for joint dimensionality reduction and clustering. Our contributions can be summarized as follows.
+% In this work, we uncover the link between popular DR methods and the Gromov-Wasserstein optimal transport problem \citep{memoli2011gromov}. \cvc{This leads us to frame DR as a novel optimization problem over any discrete distributions, \emph{a.k.a} Distributional Dimensionality Reduction, that provides a first grounded approch for joint DR and clustering.} This novel characterization allows us to frame DR as an optimization problem over discrete distributions offering enhanced flexibility. In particular, it allows one to choose the resolution of the output thus providing a grounded approach for joint dimensionality reduction and clustering. Our contributions can be summarized as follows.
 % \begin{itemize}
 % 	\item In \Cref{sec:DRasOT}, we provide conditions on the loss and similarity functions under which DR can be equivalently formulated as the GW projection of the empirical data distribution.
 % 	\item In \Cref{sec:DDR}

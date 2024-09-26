@@ -136,16 +136,16 @@ using the Fubini Tonelli theorem. The result follows from $\lambda_{\mathbb{R}^p
 \begin{proof}
 Let $\mathcal{P} \in \{B, D, E\}$, $k$ be a valid kernel (assumptions of \cref{prop:integrability_pairwise_MRF}) with $\K_{X} = (k(\mathbf{x}_{i} - \mathbf{x}_{j}))_{(i,j) \in \integ{n}^2}$ and $\bm{\pi} \in \mathbb{R}_+^{n \times n}$. Let $\W \sim \mathbb{P}_{\mathcal{P},k}^{\varepsilon}(\cdot \: ; \bm{\pi},1)$. Inversion of conditional with Bayes rule gives:
 \begin{align}
-    \forall \bm{W} \in \mathcal{S}_{W}, \quad \mathbb{P}(\W | \bm{X}) \propto
+    \forall \mW \in \mathcal{S}_{W}, \quad \mathbb{P}(\W | \bm{X}) \propto
     \mathcal{C}_{k}^{\varepsilon}(\W)^{-1} f^{\varepsilon}(\X, \W) f_{k}(\X, \W) \mathbb{P}^{\varepsilon}_{\mathcal{P},k}(\W; \bm{\pi}, 1) \label{inversion_Conditional}
 \end{align}
 where the prior reads:
 \begin{align}
-    \mathbb{P}_{\mathcal{P},k}^{\varepsilon}(\bm{W}; \bm{\pi}, 1) \propto \mathcal{C}^{\varepsilon}_k(\W) \Omega_{\mathcal{P}}(\W) \prod_{(i,j) \in \integ{n}^2} \pi_{ij}^{W_{ij}} \:.
+    \mathbb{P}_{\mathcal{P},k}^{\varepsilon}(\mW; \bm{\pi}, 1) \propto \mathcal{C}^{\varepsilon}_k(\W) \Omega_{\mathcal{P}}(\W) \prod_{(i,j) \in \integ{n}^2} \pi_{ij}^{W_{ij}} \:.
 \end{align}
 Hence the joint normalizing constant simplifies such that:
 \begin{align}
-    \forall \bm{W} \in \mathcal{S}_{W}, \quad \mathbb{P}(\W | \bm{X}) &\propto
+    \forall \mW \in \mathcal{S}_{W}, \quad \mathbb{P}(\W | \bm{X}) &\propto
     f^{\varepsilon}(\X, \W) \Omega_{\mathcal{P}}(\W) \prod_{(i,j) \in \integ{n}^2} \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \\
     &\xrightarrow[\varepsilon \to 0]{} \Omega_{\mathcal{P}}(\W) \prod_{(i,j) \in \integ{n}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}}
 \end{align}
@@ -154,7 +154,7 @@ which ends the proof. As a complement, we now explicit the simple forms taken by
 \paragraph{$B$-Prior.}
 Recall that in this case the prior reads:
 \begin{align*}
-    \mathbb{P}_{B}^{\varepsilon}(\bm{W}; \bm{\pi},1) &\propto \mathcal{C}_{k}^{\varepsilon}(\bm{W}) \prod_{(i,j) \in \integ{n}^2} \pi_{ij}^{W_{ij}} \ind_{W_{ij} \leq 1} \:.
+    \mathbb{P}_{B}^{\varepsilon}(\mW; \bm{\pi},1) &\propto \mathcal{C}_{k}^{\varepsilon}(\mW) \prod_{(i,j) \in \integ{n}^2} \pi_{ij}^{W_{ij}} \ind_{W_{ij} \leq 1} \:.
 \end{align*}
 Therefore the posterior limit graph has the distribution:
 \begin{align*}
@@ -167,7 +167,7 @@ This distribution amounts to: $\forall (i,j) \in \integ{n}^2, \quad \W_{ij} \sta
 
 \paragraph{$D$-Prior.} The prior writes:
 \begin{align*}
-    \mathbb{P}_{D}^{\varepsilon}(\bm{W}; \bm{\pi}, 1) &\propto \mathcal{C}_{k}^{\varepsilon}(\bm{W}) \prod_{(i,j) \in \integ{n}^2} \pi_{ij}^{W_{ij}} \ind_{W_{i+} = 1} \:.
+    \mathbb{P}_{D}^{\varepsilon}(\mW; \bm{\pi}, 1) &\propto \mathcal{C}_{k}^{\varepsilon}(\mW) \prod_{(i,j) \in \integ{n}^2} \pi_{ij}^{W_{ij}} \ind_{W_{i+} = 1} \:.
 \end{align*}
 The distribution of the posterior limit then becomes:
 \begin{align*}
@@ -181,7 +181,7 @@ This distribution amounts to: $\forall i \in \integ{n}, \quad \W_{i} \stackrel{\
 \paragraph{$E$-Prior.}
 In this case the prior reads:
 \begin{align*}
-    \mathbb{P}_{E}^{\varepsilon}(\bm{W}; \bm{\pi}, 1) &\propto \mathcal{C}_{k}^{\varepsilon}(\bm{W}) \prod_{(i,j) \in \integ{n}^2} \frac{\pi_{ij}^{W_{ij}}}{W_{ij}!} \ind_{W_{++} = n} \:.
+    \mathbb{P}_{E}^{\varepsilon}(\mW; \bm{\pi}, 1) &\propto \mathcal{C}_{k}^{\varepsilon}(\mW) \prod_{(i,j) \in \integ{n}^2} \frac{\pi_{ij}^{W_{ij}}}{W_{ij}!} \ind_{W_{++} = n} \:.
 \end{align*}
 Finally, deriving the distribution of the posterior graph limit:
 \begin{align*}
@@ -211,7 +211,7 @@ The same model is considered for $\Wb_{Z}$, $\bm{\Theta}_{Z}$ and $\Zb$, choosin
     &= \mathbb{E}_{\Wb_{X}|\Xb}\left[\log \mathbb{P}(\Wb_{Z} = \Wb_{X} | \Zb)\right] + \label{eq:loss_LW} \\
     & \mathbb{E}_{(\Wb_{X},\bm{\Theta}_{X})|\Xb}\left[ \log \mathbb{P}(\bm{\Theta}_{Z} = \bm{\Theta}_{X}| \Wb_{Z} = \Wb_{X}, \Zb) \right] \label{eq:add_term_Coupling}
 \end{align}
-where (\ref{eq:loss_LW}) is the usual coupling criterion of $\Wb_X$ and $\Wb_Z$ capturing intra-CC variability while (\ref{eq:add_term_Coupling}) is a penalty resulting from the Gaussian structure on $\mathcal{S}_{M}$. Constructed as such, the above objective allows a trade-off between local and global structure preservation. Following current trends in DR \cite{kobak2021initialization}, we propose to take care of the global structure first \textit{i.e.}\ focusing on (\ref{eq:add_term_Coupling}) before (\ref{eq:loss_LW}). The difficulty of dealing with (\ref{eq:add_term_Coupling}) lies in the hierarchical construction of the graph and the Gaussian precision (see \cref{fig:graphical_model_hierarchical}). We state the following result.
+where (\ref{eq:loss_LW}) is the usual coupling criterion of $\Wb_X$ and $\Wb_Z$ capturing intra-CC variability while (\ref{eq:add_term_Coupling}) is a penalty resulting from the Gaussian structure on $\mathcal{S}_{M}$. Constructed as such, the above objective allows a trade-off between local and global structure preservation. Following current trends in DR \citep{kobak2021initialization}, we propose to take care of the global structure first \textit{i.e.}\ focusing on (\ref{eq:add_term_Coupling}) before (\ref{eq:loss_LW}). The difficulty of dealing with (\ref{eq:add_term_Coupling}) lies in the hierarchical construction of the graph and the Gaussian precision (see \cref{fig:graphical_model_hierarchical}). We state the following result.
 
 % \begin{wrapfigure}[15]{R}{0.5\textwidth}
 % \begin{center}
@@ -238,13 +238,13 @@ From this observation, we propose a simple heuristic to minimize (\ref{eq:add_te
 % \begin{figure*}[t]
 % \begin{center}
 % \centerline{\includegraphics[width=\columnwidth]{figures/GraphCoupling/cluster_positions.png}}
-% \caption{Top: MNIST embeddings produced by PCA, Laplacian eigenmaps, \textit{ccPCA} and finally t-SNE launched after the previous three embeddings to improve the fine-grain structure. Bottom: mean coordinates for each digit using the embeddings of the first row. The color legend is the same as in \cref{fig:tSNE-clusters-truth}. t-SNE was trained during $1000$ iterations using default parameters with the openTSNE implementation \cite{polivcar2019opentsne}.}
+% \caption{Top: MNIST embeddings produced by PCA, Laplacian eigenmaps, \textit{ccPCA} and finally t-SNE launched after the previous three embeddings to improve the fine-grain structure. Bottom: mean coordinates for each digit using the embeddings of the first row. The color legend is the same as in \cref{fig:tSNE-clusters-truth}. t-SNE was trained during $1000$ iterations using default parameters with the openTSNE implementation \citep{polivcar2019opentsne}.}
 % \label{fig:methods_embeddings}
 % \end{center}
 % \vspace{-0.8cm}
 % \end{figure*}
 
-\Cref{fig:tSNE-clusters-truth} shows that a t-SNE embedding of a balanced MNIST dataset of 10000 samples \cite{deng2012mnist} with isotropic Gaussian initialization performs poorly in conserving the relative positions of clusters. As each digit cluster contains approximately $1000$ points, with a perplexity of $30$, sampling an edge across digit clusters in the graph posterior $\mathbb{P}_{\mathcal{P}_X}(\cdot;\Kb_{X})$ is very unlikely. Recall that the perplexity value \cite{maaten2008tSNE} corresponds to the approximate number of effective neighbors of each point. Hence images of different digits are with very high probability in different CCs of the graph posterior and their CC-wise means are not coupled as discussed in \cref{sec:interpretations}. To remedy this in practice, PCA or Laplacian eigenmaps are usually used as initialization \cite{kobak2021initialization}. 
+\Cref{fig:tSNE-clusters-truth} shows that a t-SNE embedding of a balanced MNIST dataset of 10000 samples \citep{deng2012mnist} with isotropic Gaussian initialization performs poorly in conserving the relative positions of clusters. As each digit cluster contains approximately $1000$ points, with a perplexity of $30$, sampling an edge across digit clusters in the graph posterior $\mathbb{P}_{\mathcal{P}_X}(\cdot;\Kb_{X})$ is very unlikely. Recall that the perplexity value \citep{maaten2008tSNE} corresponds to the approximate number of effective neighbors of each point. Hence images of different digits are with very high probability in different CCs of the graph posterior and their CC-wise means are not coupled as discussed in \cref{sec:interpretations}. To remedy this in practice, PCA or Laplacian eigenmaps are usually used as initialization \citep{kobak2021initialization}. 
 
 These strategies are tested (\cref{fig:methods_embeddings}) together with \textit{ccPCA}. This shows that 
 \textit{ccPCA} manages to retrieve the digits that mostly support the large-scale variability as measured by the peripheral positioning of digits $0$ (blue), $2$ (green), $6$ (pink) and $7$ (grey) given by the right side of \cref{fig:tSNE-clusters-truth}. Other perplexity values for \textit{ccPCA} are explored in appendix \ref{sec:other_perp} while the experimental setup is detailed in appendix \ref{sec:setup_exp}. In appendix \ref{sec:quantitative_evaluation}, we perform quantitative evaluations of \textit{ccPCA} for both t-SNE and UMAP on various datasets using K-ary neighborhood criteria. We find that using \textit{ccPCA} as initialization is in general more reliable than PCA and Laplacian eigenmaps for preserving global structure using both t-SNE and UMAP. 

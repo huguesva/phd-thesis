@@ -2,33 +2,33 @@
 
 In this section, we show that neighbor embedding methods can be recovered in the presented framework. They are obtained, for particular choices of graph priors, at the limit $\varepsilon \to 0$ when $f^{\varepsilon}$ becomes noninformative and the CCs' relative positions are lost. 
 
-We now turn to the priors for $\mA$. Our methodology is similar to that of constructing conjugate priors for distributions in the exponential family \citep{wainwright2008graphical}, notably we insert the cumulant function $\mathcal{C}_k^{\varepsilon}$ (\textit{i.e.}\ normalizing constant of the conditional) as a multivariate term of the prior. 
+We now turn to the priors for $\mW$. Our methodology is similar to that of constructing conjugate priors for distributions in the exponential family \citep{wainwright2008graphical}, notably we insert the cumulant function $\mathcal{C}_k^{\varepsilon}$ (\textit{i.e.}\ normalizing constant of the conditional) as a multivariate term of the prior. 
 
 We consider different forms: binary ($B$), unitary out-degree ($D$) and $n$-edges ($E$), relying on an additional term ($\Omega$) to constrain the topology of the graph. For a matrix $\Ab$, $A_{i+}$ denotes $\sum_j A_{ij}$ and $A_{++}$ denotes $\sum_{ij} A_{ij}$. In the following, $\bm{\pi}$ plays the role of the edge's prior. The latter can be leveraged to incorporate some additional information about the dependency structure, for instance when a network is observed as in \cite{li2020high}. 
 
 \begin{definition}\label{def:prior_W}
-Let $\bm{\pi} \in \mathbb{R}_+^{N \times N}$, $\varepsilon \in \mathbb{R}_+$, $\alpha \in \mathbb{R}$, $k$ satisfies the assumptions of \cref{prop:integrability_pairwise_MRF} and $\mathcal{P} \in \{B,D,E\}$. For $\mA \in \mathcal{S}_{W}$ we introduce:
-$$\mathbb{P}_{\mathcal{P},k}^{\varepsilon}(\mA; \bm{\pi}, \alpha) \propto \mathcal{C}^{\varepsilon}_k(\mA)^{\alpha} \: \Omega_{P}(\mA) \prod_{(i,j) \in \integ{N}^2} \pi_{ij}^{W_{ij}}$$
-where $\Omega_{B}(\mA) = \prod_{ij} \ind_{W_{ij} \leq 1}$, $\Omega_{D}(\mA) = \prod_{i} \ind_{W_{i+} = 1}$ and $\Omega_{E}(\mA) = \ind_{W_{++} = n}\prod_{ij}(W_{ij}!)^{-1}$.
+Let $\bm{\pi} \in \mathbb{R}_+^{N \times N}$, $\varepsilon \in \mathbb{R}_+$, $\alpha \in \mathbb{R}$, $k$ satisfies the assumptions of \cref{prop:integrability_pairwise_MRF} and $\mathcal{P} \in \{B,D,E\}$. For $\mW \in \mathcal{S}_{W}$ we introduce:
+$$\mathbb{P}_{\mathcal{P},k}^{\varepsilon}(\mW; \bm{\pi}, \alpha) \propto \mathcal{C}^{\varepsilon}_k(\mW)^{\alpha} \: \Omega_{P}(\mW) \prod_{(i,j) \in \integ{N}^2} \pi_{ij}^{W_{ij}}$$
+where $\Omega_{B}(\mW) = \prod_{ij} \ind_{W_{ij} \leq 1}$, $\Omega_{D}(\mW) = \prod_{i} \ind_{W_{i+} = 1}$ and $\Omega_{E}(\mW) = \ind_{W_{++} = n}\prod_{ij}(W_{ij}!)^{-1}$.
 \end{definition}
 
-When $\alpha = 0$, the above no longer depends on $\varepsilon$ and $k$. We will use the compact notation $\mathbb{P}_{\mathcal{P}}(\mA ; \bm{\pi}) = \mathbb{P}_{\mathcal{P},k}^{\varepsilon}(\mA; \bm{\pi}, 0)$. Note that by $\mA \sim \mathbb{P}_{\mathcal{P}}(\cdot \: ; \bm{\pi})$ we have the following simple Bernoulli $(\mathcal{B})$ and multinomial $(\mathcal{M})$ distributions, where matrix or vector division is to be understood as element-wise.
+When $\alpha = 0$, the above no longer depends on $\varepsilon$ and $k$. We will use the compact notation $\mathbb{P}_{\mathcal{P}}(\mW ; \bm{\pi}) = \mathbb{P}_{\mathcal{P},k}^{\varepsilon}(\mW; \bm{\pi}, 0)$. Note that by $\mW \sim \mathbb{P}_{\mathcal{P}}(\cdot \: ; \bm{\pi})$ we have the following simple Bernoulli $(\mathcal{B})$ and multinomial $(\mathcal{M})$ distributions, where matrix or vector division is to be understood as element-wise.
 \begin{itemize}
     \item If $\mathcal{P} = B$, $\forall (i,j) \in \integ{N}^2, \: W_{ij} \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{B}\left(\pi_{ij}/(1 + \pi_{ij}) \right)$.
-    \item If $\mathcal{P} = D$, $\forall i \in \integ{N}, \: \mA_{i} \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{M}\left(1, \bm{\pi}_{i}/\pi_{i+} \right)$.
-    \item If $\mathcal{P} = E$, $\mA \sim \mathcal{M}\left(n, \bm{\pi}/\pi_{++} \right)$.
+    \item If $\mathcal{P} = D$, $\forall i \in \integ{N}, \: \mW_{i} \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{M}\left(1, \bm{\pi}_{i}/\pi_{i+} \right)$.
+    \item If $\mathcal{P} = E$, $\mW \sim \mathcal{M}\left(n, \bm{\pi}/\pi_{++} \right)$.
 \end{itemize}
 
 We now show that the posterior distribution of the graph given the observations takes a simple form when the distribution of CC empirical means $\bm{X}_{M}$ diffuses \textit{i.e.}\ when $\varepsilon \to 0$ (a proof of the following result can be found in \cref{proof:posterior_limit}). In the following, $\odot$ stands for the Hadamard product and $\mathcal{D}$ for the convergence in distribution.
 
 \begin{restatable}{proposition}{posteriorW}
 \label{prop:posterior_W}
-Let $\bm{\pi} \in \mathbb{R}_+^{N \times N}$, $k$ satisfies the assumptions of \cref{prop:integrability_pairwise_MRF} with  $\Kb_{X} = (k(\Xb_{i} - \Xb_{j}))_{(i,j) \in \integ{N}^2}$ and $\mathcal{P}\in \{B, D, E\}$. If $\mA^{\varepsilon} \sim \mathbb{P}_{\mathcal{P},k}^{\varepsilon}(\cdot \: ; \bm{\pi},1)$ then
-$$\mA^{\varepsilon} | \Xb \xrightarrow[\varepsilon \to 0]{\mathcal{D}} \mathbb{P}_{\mathcal{P}}(\cdot \: ;\bm{\pi} \odot \Kb_{X}) \:.$$
+Let $\bm{\pi} \in \mathbb{R}_+^{N \times N}$, $k$ satisfies the assumptions of \cref{prop:integrability_pairwise_MRF} with  $\Kb_{X} = (k(\Xb_{i} - \Xb_{j}))_{(i,j) \in \integ{N}^2}$ and $\mathcal{P}\in \{B, D, E\}$. If $\mW^{\varepsilon} \sim \mathbb{P}_{\mathcal{P},k}^{\varepsilon}(\cdot \: ; \bm{\pi},1)$ then
+$$\mW^{\varepsilon} | \Xb \xrightarrow[\varepsilon \to 0]{\mathcal{D}} \mathbb{P}_{\mathcal{P}}(\cdot \: ;\bm{\pi} \odot \Kb_{X}) \:.$$
 \end{restatable}
 
 \begin{remark}
-For all $\mA \in \mathcal{S}_{W}$, $\mathcal{C}^{\varepsilon}(\mA)$ diverges as $\varepsilon \to 0$, hence the graph prior (\cref{def:prior_W}) is improper at the limit. This compensates for the uninformative diffuse conditional and allows to retrieve a well-defined tractable posterior limit.
+For all $\mW \in \mathcal{S}_{W}$, $\mathcal{C}^{\varepsilon}(\mW)$ diverges as $\varepsilon \to 0$, hence the graph prior (\cref{def:prior_W}) is improper at the limit. This compensates for the uninformative diffuse conditional and allows to retrieve a well-defined tractable posterior limit.
 \end{remark}
 
 \subsection{Retrieving Popular Dimension Reduction Methods}\label{sec:retrieving_DR_methods}
@@ -36,7 +36,7 @@ For all $\mA \in \mathcal{S}_{W}$, $\mathcal{C}^{\varepsilon}(\mA)$ diverges as 
 We now provide a unified view of neighbor embedding objectives as a coupling between graph posterior distributions. To that extent, we derive the cross entropy associated with the various graph priors at hand. In what follows, $k_x$ and $k_z$ satisfy the assumptions of \cref{prop:integrability_pairwise_MRF} and we denote by $\Kb_{X}$ and $\Kb_{Z}$ the associated kernel matrices on  $\Xb$ and $\Zb$ respectively. For both graph priors we consider the parameters $\bm{\pi}=\bm{1}$ and $\alpha=1$. For $(\mathcal{P}_{X}, \mathcal{P}_{Z}) \in \{B,D,E\}^2$, we introduce the 
 cross entropy between the limit posteriors at $\varepsilon \to 0$,
 \begin{align*}
-    \mathcal{H}_{\mathcal{P}_X, \mathcal{P}_Z} = - \mathbb{E}_{\mA_{X} \sim }\mathbb{P}_{\mathcal{P}_X}(\cdot;\Kb_X)[\log \mathbb{P}_{\mathcal{P}_{Z}}(\mA_{Z} = \mA_{X}; \Kb_{Z})]
+    \mathcal{H}_{\mathcal{P}_X, \mathcal{P}_Z} = - \mathbb{E}_{\mW_{X} \sim }\mathbb{P}_{\mathcal{P}_X}(\cdot;\Kb_X)[\log \mathbb{P}_{\mathcal{P}_{Z}}(\mW_{Z} = \mW_{X}; \Kb_{Z})]
 \end{align*}
 defining a coupling criterion to be optimized with respect to embedding coordinates $\Zb$. We now go through each couple $(\mathcal{P}_{X}, \mathcal{P}_{Z})$ such that $\operatorname{supp}\left(\mathbb{P}_{\mathcal{P}_X}\right) \subset \operatorname{supp}\left(\mathbb{P}_{\mathcal{P}_Z}\right)$ for the cross-entropy to be defined.
 
@@ -60,11 +60,11 @@ Now choosing $\mathcal{P}_{X} = D$ and $\mathcal{P}_{Z} = B$, one can also notic
 which is the objective of LargeVis \cite{tang2016visualizing}.
 
 \paragraph{UMAP.}
-Let us take $\mathcal{P}_{X} = \mathcal{P}_{Z} = B$ and consider the symmetric thresholded graph $\widetilde{\mA}_{X} = \ind_{\mA_{X} + \mA_X^\top \geq 1}$. By independence of the edges, $[\widetilde{\mA}_{X}]_{ij} \sim \mathcal{B}\left(P^{B}_{ij} \right) \quad \text{where} \quad  \widetilde{P}^{B}_{ij} = P^{B}_{ij} + P^{B}_{ji} - P^{B}_{ij} P^{B}_{ji}$ and $\Pb^{B} = \left( [\Kb_X]_{ij} / (1+[\Kb_X]_{ij}) \right)_{(i,j) \in \integ{N}^2}$. Coupling $\widetilde{\mA}_{X}$ and $\mA_{Z}$ gives:
+Let us take $\mathcal{P}_{X} = \mathcal{P}_{Z} = B$ and consider the symmetric thresholded graph $\widetilde{\mW}_{X} = \ind_{\mW_{X} + \mW_X^\top \geq 1}$. By independence of the edges, $[\widetilde{\mW}_{X}]_{ij} \sim \mathcal{B}\left(P^{B}_{ij} \right) \quad \text{where} \quad  \widetilde{P}^{B}_{ij} = P^{B}_{ij} + P^{B}_{ji} - P^{B}_{ij} P^{B}_{ji}$ and $\Pb^{B} = \left( [\Kb_X]_{ij} / (1+[\Kb_X]_{ij}) \right)_{(i,j) \in \integ{N}^2}$. Coupling $\widetilde{\mW}_{X}$ and $\mW_{Z}$ gives:
 \begin{align*}
     \mathcal{H}_{\widetilde{B},B} &= -2 \sum_{i<j} \widetilde{P}_{ij}^{B} \log Q_{ij}^{B} + \left(1 - \widetilde{P}_{ij}^{B} \right) \log \left( 1 - Q_{ij}^{B} \right)
 \end{align*}
-which is the loss function considered in UMAP \cite{mcinnes2018umap}, the construction of $\widetilde{\mA}_{X}$ being borrowed from section 3.1 of the paper.
+which is the loss function considered in UMAP \cite{mcinnes2018umap}, the construction of $\widetilde{\mW}_{X}$ being borrowed from section 3.1 of the paper.
 
 \begin{remark}
 One can also consider $\mathcal{H}_{E,E}$ but as detailed in \cite{maaten2008tSNE}, this criterion fails at positioning outliers and is therefore not considered. 
@@ -74,7 +74,7 @@ Interestingly, any other feasible combination of the presented priors relates to
 \subsection{Interpretations}\label{sec:interpretations}
 
 \begin{table}[]
-    \caption{Prior distributions for $\mA_{X}$ and $\mA_{Z}$ associated with the pairwise similarity coupling DR algorithms. Grey-colored boxes are such that the cross-entropy is undefined.}
+    \caption{Prior distributions for $\mW_{X}$ and $\mW_{Z}$ associated with the pairwise similarity coupling DR algorithms. Grey-colored boxes are such that the cross-entropy is undefined.}
     \begin{center}
     \begin{small}
     \begin{sc}
@@ -105,7 +105,7 @@ Decomposing $\mathcal{H}_{\mathcal{P}_X, \mathcal{P}_Z}$ with Bayes' rule and si
     \min_{\Zb \in \mathbb{R}^{n \times q}} -\hspace{-0.2cm}\sum_{(i,j) \in \integ{N}^2} \Pb^{\mathcal{P}_X}_{ij}\log k_z(\mathbf{z}_{i} - \mathbf{z}_{j}) + \log \mathbb{P}(\Zb).
 \end{align}
 The first and second terms in \cref{eq:optim_H_Z} respectively summarize the attractive and repulsive forces of the objective. Recall from \cref{prop:posterior_W}
-that $\Pb^{\mathcal{P}_X}$ is the posterior expectation of $\mA_{X}$. Hence in SNE-like methods, the attractive forces resume to a pairwise MRF log likelihood with respect to a graph posterior expectation given $\Xb$. For instance if $k_z$ is the Gaussian kernel, this attractive term reads $\operatorname{tr} \left(\Zb^\top \bm{L}^\star \Zb \right)$ where $\bm{L}^\star = \mathbb{E}_{\mA \sim \mathbb{P}_{\mathcal{P}_X}(\cdot;\Kb_{X})}[L(\mA)]$, boiling down to the objective of Laplacian eigenmaps \cite{belkin2003laplacian}. Therefore, for Gaussian MRFs, the attractive forces resume to an unconstrained Laplacian eigenmaps objective. Such link, already noted in \cite{carreira2010elastic}, is easily unveiled in our framework. Moreover, one can notice that only this attractive term depends on $\Xb$ as the repulsion is given by the marginal term in (\ref{eq:optim_H_Z}). The latter reads $\mathbb{P}(\Zb) = \sum_{\mA \in \mathcal{S}_{W}} \mathbb{P}(\Zb, \mA)$ with $\mathbb{P}(\Zb, \mA) \propto f_k(\Zb, \mA)\Omega_{\mathcal{P}_Z}(\mA)$. Such penalty notably prevents a trivial solution, as $\bm{0}$, like any constant vector, is a mode of $f_k(\cdot, \mA)$ for all $\mA$. Also note that the prior for $\mA_{X}$ only conditions attraction while the prior for $\mA_{Z}$ only affects repulsion. In the present work we focus solely on deciphering the probabilistic model that accounts for neighbor embedding loss functions and refer to \cite{bohm2020unifying} for a quantitative study of attraction and repulsion in these methods.
+that $\Pb^{\mathcal{P}_X}$ is the posterior expectation of $\mW_{X}$. Hence in SNE-like methods, the attractive forces resume to a pairwise MRF log likelihood with respect to a graph posterior expectation given $\Xb$. For instance if $k_z$ is the Gaussian kernel, this attractive term reads $\operatorname{tr} \left(\Zb^\top \bm{L}^\star \Zb \right)$ where $\bm{L}^\star = \mathbb{E}_{\mW \sim \mathbb{P}_{\mathcal{P}_X}(\cdot;\Kb_{X})}[L(\mW)]$, boiling down to the objective of Laplacian eigenmaps \cite{belkin2003laplacian}. Therefore, for Gaussian MRFs, the attractive forces resume to an unconstrained Laplacian eigenmaps objective. Such link, already noted in \cite{carreira2010elastic}, is easily unveiled in our framework. Moreover, one can notice that only this attractive term depends on $\Xb$ as the repulsion is given by the marginal term in (\ref{eq:optim_H_Z}). The latter reads $\mathbb{P}(\Zb) = \sum_{\mW \in \mathcal{S}_{W}} \mathbb{P}(\Zb, \mW)$ with $\mathbb{P}(\Zb, \mW) \propto f_k(\Zb, \mW)\Omega_{\mathcal{P}_Z}(\mW)$. Such penalty notably prevents a trivial solution, as $\bm{0}$, like any constant vector, is a mode of $f_k(\cdot, \mW)$ for all $\mW$. Also note that the prior for $\mW_{X}$ only conditions attraction while the prior for $\mW_{Z}$ only affects repulsion. In the present work we focus solely on deciphering the probabilistic model that accounts for neighbor embedding loss functions and refer to \cite{bohm2020unifying} for a quantitative study of attraction and repulsion in these methods.
 
 \paragraph{Global Structure Preservation. }
-To gain intuition, consider that $\mA_{X}$ is observed. As we showed in \cref{sec:within_CC}, when one relies on shift-invariant kernels, the positions of the CC means are taken from a diffuse distribution. Since the above methods are all derived from the limit posteriors at $\varepsilon \to 0$, $\Xb_{M}$ and $\Zb_{M}$ have no influence on the coupling objective. Hence if two nodes belong to different CCs, their low dimensional pairwise distance will likely not be faithful. We can expect this phenomenon to persist when the expectation on $\mA_{X}$ is considered, especially when clusters are well distinguishable in $\Xb$. This observation is central to understand the large scale deficiency of these methods. Note that this happens at the benefit of the local structure which is faithfully represented in low dimension, as discussed in \cref{intro}. In the following section we propose to mitigate the global structure deficiency with non-degenerate MRF models.
+To gain intuition, consider that $\mW_{X}$ is observed. As we showed in \cref{sec:within_CC}, when one relies on shift-invariant kernels, the positions of the CC means are taken from a diffuse distribution. Since the above methods are all derived from the limit posteriors at $\varepsilon \to 0$, $\Xb_{M}$ and $\Zb_{M}$ have no influence on the coupling objective. Hence if two nodes belong to different CCs, their low dimensional pairwise distance will likely not be faithful. We can expect this phenomenon to persist when the expectation on $\mW_{X}$ is considered, especially when clusters are well distinguishable in $\Xb$. This observation is central to understand the large scale deficiency of these methods. Note that this happens at the benefit of the local structure which is faithfully represented in low dimension, as discussed in \cref{intro}. In the following section we propose to mitigate the global structure deficiency with non-degenerate MRF models.

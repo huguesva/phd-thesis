@@ -17,28 +17,28 @@ Then the solution to the precision coupling problem:
 is a PCA embedding of $\Xb$ with $q$ components.
 \end{restatable}
 
-We now highlight the parallels with the previous construction done for neighbor embedding methods. First note that the multivariate Gaussian with full-rank precision is inherently a pairwise MRF \citep{rue2005gaussian}. When choosing the Gaussian kernel for neighbor embedding methods, we saw that the graph Laplacian $\bm{L}_{X}$ of $\mA_{X}$ was playing the role of the among-row precision matrix, as we had $\Xb | \mA_{X} \sim \mathcal{N}(\bm{0}, \bm{L}_{X}^{-1} \otimes \bm{I}_p)$ (equation \ref{eq:gaussian_kernel}). Recall that the latter always has a null space which is spanned by the CC indicator vectors of $\mA$ (\cref{sec:laplacian_prop}). Here, the key difference is that we impose a full-rank constraint on the precision $\bm{\Theta}$. Concerning the priors, we choose the ones that are conjugate to the conditionals (\ref{eq:X_given_theta}) and (\ref{eq:Z_given_theta}), as previously done when constructing the prior for neighbor embedding methods (definition \ref{def:prior_W}). Hence in the full-rank setting, the prior simply amounts to a Wishart distribution denoted by $\mathcal{W}$.
+We now highlight the parallels with the previous construction done for neighbor embedding methods. First note that the multivariate Gaussian with full-rank precision is inherently a pairwise MRF \citep{rue2005gaussian}. When choosing the Gaussian kernel for neighbor embedding methods, we saw that the graph Laplacian $\bm{L}_{X}$ of $\mW_{X}$ was playing the role of the among-row precision matrix, as we had $\Xb | \mW_{X} \sim \mathcal{N}(\bm{0}, \bm{L}_{X}^{-1} \otimes \bm{I}_p)$ (equation \ref{eq:gaussian_kernel}). Recall that the latter always has a null space which is spanned by the CC indicator vectors of $\mW$ (\cref{sec:laplacian_prop}). Here, the key difference is that we impose a full-rank constraint on the precision $\bm{\Theta}$. Concerning the priors, we choose the ones that are conjugate to the conditionals (\ref{eq:X_given_theta}) and (\ref{eq:Z_given_theta}), as previously done when constructing the prior for neighbor embedding methods (definition \ref{def:prior_W}). Hence in the full-rank setting, the prior simply amounts to a Wishart distribution denoted by $\mathcal{W}$.
 
 The above theorem further highlights the flexibility and generality of the graph coupling framework. Unlike usual constructions of PCA or probabilistic PCA \citep{tipping1999probabilistic}, in the above the linear relation between $\Xb$ and $\Zb$ is recovered by solving the graph coupling problem and not explicitly stated beforehand. To the best of our knowledge, it is the first time such a link has been uncovered between PCA and SNE-like methods. In contrast with the latter, PCA is well-known for its ability to preserve global structure while being significantly less efficient at identifying clusters \citep{anowar2021conceptual}. Therefore, as suspected in \cref{sec:interpretations}, the degeneracy of the conditional distribution given the graph is key to determining the distance preservation properties of the embeddings. We propose in \cref{sec:hierarchical_modelling} to combine both graph coupling approaches to strike a balance between global and local structure preservation.
 
 \section {Shift-Invariant Pairwise MRF to Model Row Dependencies} \label{sec:graph_structure}
 
-We start by defining the distribution of the observations given a graph. The latter takes the form of a pairwise MRF model which as we show is improper (\textit{i.e.}\ not integrable on $\mathbb{R}^{n \times p}$) when shift-invariant kernels are used. We consider a fixed directed graph $\mA \in \mathcal{S}_{W}$ where:
-$$\mathcal{S}_{W} = \left\{\mA \in \mathbb{N}^{N \times N} \mid \forall (i,j) \in \integ{N}^2, W_{ii}=0, W_{ij} \leq n \right\}$$
+We start by defining the distribution of the observations given a graph. The latter takes the form of a pairwise MRF model which as we show is improper (\textit{i.e.}\ not integrable on $\mathbb{R}^{n \times p}$) when shift-invariant kernels are used. We consider a fixed directed graph $\mW \in \mathcal{S}_{W}$ where:
+$$\mathcal{S}_{W} = \left\{\mW \in \mathbb{N}^{N \times N} \mid \forall (i,j) \in \integ{N}^2, W_{ii}=0, W_{ij} \leq n \right\}$$
 Throughout, $(E, \mathcal{B}(E), \lambda_E)$ denotes a measure space where $\mathcal{B}(E)$ is the Borel $\sigma$-algebra on $E$ and $\lambda_E$ is the Lebesgue measure on $E$.
 
 \subsection{Graph Laplacian Null Space}\label{sec:laplacian_prop}
 A central element in our construction is the graph Laplacian linear map, defined as follows, where $\mathcal{S}^N_+(\mathbb{R})$ is the set of positive semidefinite matrices.
 \begin{definition}\label{graph_laplacian}
 The graph Laplacian operator is the map $L \colon \mathbb{R}_+^{N \times N} \cap \mathcal{S}^N(\R) \to \mathcal{S}^N_+(\mathbb{R})$ such that
-$$\text{for } (i,j) \in \integ{N}^2, \quad L(\mA)_{ij} = \left\{
+$$\text{for } (i,j) \in \integ{N}^2, \quad L(\mW)_{ij} = \left\{
 \begin{array}{ll}
     - W_{ij} & \text{if } i \neq j \\
     \sum_{k \in \integ{N}} W_{ik} & \text{otherwise} \:.
 \end{array} 
 \right. $$
 \end{definition}
-With an abuse of notation, let $\Lb = L(\overline{\mA})$ where $\overline{\mA} = \mA + \mA^\top$. Let $(C_1,...,C_{R})$ be a partition of $\integ{N}$ (\textit{i.e.}\ the set $\{1,2,...,N\}$) corresponding to the connected components (CCs) of $\overline{\mA}$. As well known in spectral graph theory \citep{Chung97}, the null space of $\Lb$ is spanned by the orthonormal vectors $\{\Ub_{r}\}_{r \in [R]}$ such that for $r \in [R]$,
+With an abuse of notation, let $\Lb = L(\overline{\mW})$ where $\overline{\mW} = \mW + \mW^\top$. Let $(C_1,...,C_{R})$ be a partition of $\integ{N}$ (\textit{i.e.}\ the set $\{1,2,...,N\}$) corresponding to the connected components (CCs) of $\overline{\mW}$. As well known in spectral graph theory \citep{Chung97}, the null space of $\Lb$ is spanned by the orthonormal vectors $\{\Ub_{r}\}_{r \in [R]}$ such that for $r \in [R]$,
 $\Ub_{r} = \left(n_r^{-1/2} \ind_{i \in C_r}\right)_{i \in \integ{N}}$ with $n_r = \operatorname{Card}(C_r)$. By the spectral theorem, $\Ub_{[R]}$ can be completed such that $\Lb = \bm{U \Lambda U^\top}$ where $\Ub = (\Ub_1, ..., \Ub_N)$ is orthogonal and $\bm{\Lambda} = \operatorname{diag}((\lambda_i)_{i \in \integ{N}})$ with $0 = \lambda_1 = ... = \lambda_R < \lambda_{R+1} \leq ... \leq \lambda_Nn$. 
 
 In what follows, the data is split into two parts: $\Xb_{M}$, the orthogonal projection of $\Xb$ on $\mathcal{S}_{M} = (\ker \Lb) \otimes \mathbb{R}^p$, and $\Xb_{C}$, the projection on $\mathcal{S}_{C} = (\ker \Lb)^{\perp} \otimes \mathbb{R}^p$. For $i \in \integ{N}$, $\Xb_{M,i} = \sum_{r \in [R]} n_r^{-1} \ind_{i \in C_r}\sum_{\ell \in C_r} \Xb_{\ell} $ hence $\Xb_{M}$ stands for the empirical means of $\Xb$ on CCs, thus modelling the CC positions, while $\Xb_{C} = \Xb - \Xb_{M}$ is CC-wise centered, thus modeling the relative positions of the nodes within CCs. We now introduce the probability distribution of these variables.
@@ -47,45 +47,45 @@ In what follows, the data is split into two parts: $\Xb_{M}$, the orthogonal pro
 
 In this work, the dependency structure among rows of the data is governed by a graph. The strength of the connection between two nodes is given by a symmetric function $k: \mathbb{R}^p \to \mathbb{R}_+$ \hva{reformuler symmetric}. We consider the following pairwise MRF unnormalized density function:
 \begin{align}\label{eq:unnormalized_MRF}
-  f_{k} \colon (\Xb,\mA) &\mapsto \prod_{(i,j) \in \integ{N}^2} k(\mathbf{x}_{i} - \mathbf{x}_{j})^{W_{ij}} \: .
+  f_{k} \colon (\Xb,\mW) &\mapsto \prod_{(i,j) \in \integ{N}^2} k(\mathbf{x}_{i} - \mathbf{x}_{j})^{W_{ij}} \: .
 \end{align}
-As we will see shortly, the above is at the heart of DR methods based on pairwise similarities. Note that as $k$ measures the similarity between couples of samples, $f_k$ will take high values if the rows of $\Xb$ vary smoothly on the graph $\mA$. Thus we can expect $\mathbf{x}_i$ and $\mathbf{x}_j$ to be close if there is an edge between node $i$ and node $j$ in $\mA$. A key remark is that $f_{k}$ is kept invariant by translating $\Xb_{M}$. Namely for all $\Xb \in \mathbb{R}^{n \times p}$, $f_{k}(\Xb, \mA) = f_{k}(\Xb_{C}, \mA)$. This invariance results in $f_{k}(\cdot, \mA)$ being non integrable on $\mathbb{R}^{n \times p}$, as we see with the following example. 
+As we will see shortly, the above is at the heart of DR methods based on pairwise similarities. Note that as $k$ measures the similarity between couples of samples, $f_k$ will take high values if the rows of $\Xb$ vary smoothly on the graph $\mW$. Thus we can expect $\mathbf{x}_i$ and $\mathbf{x}_j$ to be close if there is an edge between node $i$ and node $j$ in $\mW$. A key remark is that $f_{k}$ is kept invariant by translating $\Xb_{M}$. Namely for all $\Xb \in \mathbb{R}^{n \times p}$, $f_{k}(\Xb, \mW) = f_{k}(\Xb_{C}, \mW)$. This invariance results in $f_{k}(\cdot, \mW)$ being non integrable on $\mathbb{R}^{n \times p}$, as we see with the following example. 
 
 \paragraph{Gaussian kernel.} For a positive definite matrix $\mathbf{\Sigma} \in \mathcal{S}^N_{++}(\mathbb{R})$, consider the Gaussian kernel $k : \Xb \mapsto e^{- \frac{1}{2}\| \Xb \|_{\mathbf{\Sigma}}^2}$ where $\mathbf{\Sigma}$ stands for the covariance among columns. One has:
 \begin{align}\label{eq:gaussian_kernel}
-    \log f_{k}(\Xb, \mA) &= -\sum_{(i,j) \in \integ{N}^2} W_{ij} \| \mathbf{x}_{i}-\mathbf{x}_{j} \|^2_{\mathbf{\Sigma}}
+    \log f_{k}(\Xb, \mW) &= -\sum_{(i,j) \in \integ{N}^2} W_{ij} \| \mathbf{x}_{i}-\mathbf{x}_{j} \|^2_{\mathbf{\Sigma}}
     = - \operatorname{tr} \left(\mathbf{\Sigma}^{-1} \Xb^{T} \Lb \Xb\right)
 \end{align}
-by property of the graph Laplacian (\cref{graph_laplacian}). In this case, it is clear that due to the rank deficiency of $\Lb$, $f_{k}(\cdot, \mA)$ is only $\lambda_{\mathcal{S}_{C}}$-integrable. In general DR settings one does not want to rely on Gaussian kernels only. A striking example is the use of the Student kernel in t-SNE \citep{maaten2008tSNE}. Heavy-tailed kernels appear useful when the dimension of the embeddings is smaller than the intrinsic dimension of the data \citep{kobak2019heavy}. Our contribution provides flexibility by extending the previous result to a large class of kernels, as stated in the following theorem.
+by property of the graph Laplacian (\cref{graph_laplacian}). In this case, it is clear that due to the rank deficiency of $\Lb$, $f_{k}(\cdot, \mW)$ is only $\lambda_{\mathcal{S}_{C}}$-integrable. In general DR settings one does not want to rely on Gaussian kernels only. A striking example is the use of the Student kernel in t-SNE \citep{maaten2008tSNE}. Heavy-tailed kernels appear useful when the dimension of the embeddings is smaller than the intrinsic dimension of the data \citep{kobak2019heavy}. Our contribution provides flexibility by extending the previous result to a large class of kernels, as stated in the following theorem.
 
 \begin{restatable}{theorem}{integrabilitypairwiseMRF}
 \label{prop:integrability_pairwise_MRF}
-If $k$ is $\lambda_{\mathbb{R}^p}$-integrable and bounded above $\lambda_{\mathbb{R}^p}$-almost everywhere then $f_{k}(\cdot, \mA)$ is $\lambda_{\mathcal{S}_{C}}$-integrable.
+If $k$ is $\lambda_{\mathbb{R}^p}$-integrable and bounded above $\lambda_{\mathbb{R}^p}$-almost everywhere then $f_{k}(\cdot, \mW)$ is $\lambda_{\mathcal{S}_{C}}$-integrable.
 \end{restatable}
 
 We refer to \cref{proof:lambda_perp_integrability} for the proof.
-We can now define a distribution on $(\mathcal{S}_{C}, \mathcal{B}(\mathcal{S}_{C}))$, where $\mathcal{C}_{k}(\mA) = \int f_{k}(\cdot, \mA) d\lambda_{\mathcal{S}_{C}}$:
+We can now define a distribution on $(\mathcal{S}_{C}, \mathcal{B}(\mathcal{S}_{C}))$, where $\mathcal{C}_{k}(\mW) = \int f_{k}(\cdot, \mW) d\lambda_{\mathcal{S}_{C}}$:
 \begin{align}\label{eq:proba_perp}
-\mathbb{P}_{k}(d\Xb_{C} | \mA) = \mathcal{C}_{k}(\mA)^{-1} f_{k}(\Xb_{C}, \mA) \lambda_{\mathcal{S}_{C}}(d\Xb_{C}) \: .
+\mathbb{P}_{k}(d\Xb_{C} | \mW) = \mathcal{C}_{k}(\mW)^{-1} f_{k}(\Xb_{C}, \mW) \lambda_{\mathcal{S}_{C}}(d\Xb_{C}) \: .
 \end{align}
 
 \begin{remark}
-Kernels may have node-specific bandwidths $\bm{\tau}$, set during a pre-processing step, giving $f_{k}(\Xb,\mA) = \prod_{(i,j)} k((\mathbf{x}_{i} - \mathbf{x}_{j})/\tau_{i})^{W_{ij}}$. Note that such bandwidth does not affect the degeneracy of the distribution and \cref{prop:integrability_pairwise_MRF} still holds.
+Kernels may have node-specific bandwidths $\bm{\tau}$, set during a pre-processing step, giving $f_{k}(\Xb,\mW) = \prod_{(i,j)} k((\mathbf{x}_{i} - \mathbf{x}_{j})/\tau_{i})^{W_{ij}}$. Note that such bandwidth does not affect the degeneracy of the distribution and \cref{prop:integrability_pairwise_MRF} still holds.
 \end{remark}
 
 
-\paragraph{Between-Rows Dependency Structure.} By symmetry of $k$, reindexing gives: $f_{k}(\Xb, \mA) = \prod_{j \in \integ{N}} \prod_{i \in [j]} k(\mathbf{x}_{i} - \mathbf{x}_{j})^{\overline{W}_{ij}}$. Hence distribution \eqref{eq:proba_perp} boils down to a pairwise MRF model \citep{clifford1990markov} with respect to the undirected graph $\overline{\mA}$, $\mathcal{C}_{k}$ playing the role of the partition function. Note that since $f_k$ (Equation \ref{eq:unnormalized_MRF}) trivially factorize according to the cliques of $\overline{\mA}$, the Hammersley-Clifford theorem ensures that the rows of $\Xb_{C}$ satisfy the local and global Markov properties with respect to $\overline{\mA}$. 
+\paragraph{Between-Rows Dependency Structure.} By symmetry of $k$, reindexing gives: $f_{k}(\Xb, \mW) = \prod_{j \in \integ{N}} \prod_{i \in [j]} k(\mathbf{x}_{i} - \mathbf{x}_{j})^{\overline{W}_{ij}}$. Hence distribution \eqref{eq:proba_perp} boils down to a pairwise MRF model \citep{clifford1990markov} with respect to the undirected graph $\overline{\mW}$, $\mathcal{C}_{k}$ playing the role of the partition function. Note that since $f_k$ (Equation \ref{eq:unnormalized_MRF}) trivially factorize according to the cliques of $\overline{\mW}$, the Hammersley-Clifford theorem ensures that the rows of $\Xb_{C}$ satisfy the local and global Markov properties with respect to $\overline{\mW}$. 
 
 \subsection{Uninformative Model for CC-wise Means}
 
-We showed that the MRF (\ref{eq:unnormalized_MRF}) is only integrable on $\mathcal{S}_{C}$, the definition of which depends on the connectivity structure of $\mA$. As we now demonstrate, the latter MRF can be seen as a limit of proper distributions on $\mathbb{R}^{n \times p}$, see \textit{e.g.}\ \cite{rue2005gaussian} for a similar construction in the Gaussian case. 
-We introduce the Borel function $f^{\varepsilon}(\cdot, \mA) \colon \mathbb{R}^{n \times p} \to \mathbb{R}_+$ for $\varepsilon > 0$ such that for all $\Xb \in \mathbb{R}^{n \times p}$, $f^{\varepsilon}(\Xb, \mA) = f^{\varepsilon}(\Xb_{M}, \mA)$. To allow $f^{\varepsilon}$ to become arbitrarily non-informative, we assume that for all $\mA \in \mathcal{S}_{W}$, $f^\varepsilon(\cdot, \mA)$ is $\lambda_{\mathcal{S}_{M}}$-integrable for all $\varepsilon \in \mathbb{R}^*_+$ and $f^{\varepsilon}(\cdot, \mA) \xrightarrow[\varepsilon \to 0]{} 1$ almost everywhere.
+We showed that the MRF (\ref{eq:unnormalized_MRF}) is only integrable on $\mathcal{S}_{C}$, the definition of which depends on the connectivity structure of $\mW$. As we now demonstrate, the latter MRF can be seen as a limit of proper distributions on $\mathbb{R}^{n \times p}$, see \textit{e.g.}\ \cite{rue2005gaussian} for a similar construction in the Gaussian case. 
+We introduce the Borel function $f^{\varepsilon}(\cdot, \mW) \colon \mathbb{R}^{n \times p} \to \mathbb{R}_+$ for $\varepsilon > 0$ such that for all $\Xb \in \mathbb{R}^{n \times p}$, $f^{\varepsilon}(\Xb, \mW) = f^{\varepsilon}(\Xb_{M}, \mW)$. To allow $f^{\varepsilon}$ to become arbitrarily non-informative, we assume that for all $\mW \in \mathcal{S}_{W}$, $f^\varepsilon(\cdot, \mW)$ is $\lambda_{\mathcal{S}_{M}}$-integrable for all $\varepsilon \in \mathbb{R}^*_+$ and $f^{\varepsilon}(\cdot, \mW) \xrightarrow[\varepsilon \to 0]{} 1$ almost everywhere.
 We now define the conditional distribution on $(\mathcal{S}_{M}, \mathcal{B}(\mathcal{S}_{M}))$ as follows:
 \begin{align}\label{eq:proba_parallel}
-     \mathbb{P}^{\varepsilon}(d\Xb_{M}| \mA) = \mathcal{C}^{\varepsilon}(\mA)^{-1} f^{\varepsilon}(\Xb_{M}, \mA) \lambda_{\mathcal{S}_{M}}(d\Xb_{M})
+     \mathbb{P}^{\varepsilon}(d\Xb_{M}| \mW) = \mathcal{C}^{\varepsilon}(\mW)^{-1} f^{\varepsilon}(\Xb_{M}, \mW) \lambda_{\mathcal{S}_{M}}(d\Xb_{M})
 \end{align}
-where $\mathcal{C}^{\varepsilon}(\mA) = \int f^{\varepsilon}(\cdot, \mA) d\lambda_{\mathcal{S}_{M}}$.
-With this at hand, the joint conditional is defined as the product measure of (\ref{eq:proba_perp}) and (\ref{eq:proba_parallel}) over the row axis, the integrability of which is ensured by the Fubini-Tonelli theorem. In the following we will use the compact notation $\mathcal{C}^{\varepsilon}_k(\mA) = \mathcal{C}_k(\mA)\mathcal{C}^{\varepsilon}(\mA)$ for the joint normalizing constant.
+where $\mathcal{C}^{\varepsilon}(\mW) = \int f^{\varepsilon}(\cdot, \mW) d\lambda_{\mathcal{S}_{M}}$.
+With this at hand, the joint conditional is defined as the product measure of (\ref{eq:proba_perp}) and (\ref{eq:proba_parallel}) over the row axis, the integrability of which is ensured by the Fubini-Tonelli theorem. In the following we will use the compact notation $\mathcal{C}^{\varepsilon}_k(\mW) = \mathcal{C}_k(\mW)\mathcal{C}^{\varepsilon}(\mW)$ for the joint normalizing constant.
 
 \begin{remark}
 At the limit $\varepsilon \to 0$ the above construction amounts to setting an infinite variance on the distribution of the empirical means of $\Xb$ on CCs, thus losing the inter-CC structure. 

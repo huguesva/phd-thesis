@@ -16,7 +16,7 @@ that the similarity between the $(i,j)$ samples of the input data is as close as
 possible to the similarity between the $(i,j)$ samples of the embeddings. Under
 reasonable assumptions about $\simiZ$, this also amounts to identifying the embedding $\mZ$ \emph{and} the best permutation that realigns the two similarity matrices. %To precise this idea we first recall that the function $\simiZ$ is
 Recall that the function $\simiZ$ is equivariant by permutation, if, for any $N \times N$ permutation matrix $\mP$ and any
-$\mZ$, $\simiZ(\mP \mZ) = \mP \simiZ(\mZ) \mP^\top$ \cite{bronstein2021geometric}.
+$\mZ$, $\simiZ(\mP \mZ) = \mP \simiZ(\mZ) \mP^\top$ \citep{bronstein2021geometric}.
 This type of assumption is natural for $\simiZ$: if we rearrange the order of
 samples (\ie, the rows of $\mZ$), we expect the similarity matrix between the
 samples to undergo the same rearrangement. 
@@ -32,9 +32,9 @@ Also, any sol. $\mZ$ of \cref{eq:DR_criterion} is such that $(\mZ, \operatorname
 See proof in \Cref{proof:GMproblemequiv}. The correspondence established between \cref{eq:DR_criterion} and \cref{eq:gm}
 unveils a \emph{quadratic problem} similar to GW. Specifically, \cref{eq:gm} relates to
 the Gromov-Monge problem\footnote{Precisely $\min_{\sigma \in S_N} \sum_{ij} L([\simiX(\mX)]_{ij}, [\simiZ(\mZ)]_{\sigma(i) \sigma(j)})$ is the Gromov-Monge discrepancy between two discrete distributions, with the same number of atoms and uniform weights.}
-\cite{memoli2018gromov} which seeks to identify, by solving a quadratic assignment problem \cite{cela2013quadratic}, the permutation $\sigma$ that best
+\citep{memoli2018gromov} which seeks to identify, by solving a quadratic assignment problem \citep{cela2013quadratic}, the permutation $\sigma$ that best
 aligns two similarity matrices. \Cref{lemma:GMproblemequiv} therefore shows that the best permutation is the identity when we also optimize the embedding $\mZ$.
-We can delve deeper into these comparisons and demonstrate that the general formulation of dimension reduction is also equivalent to minimizing the Gromov-Wasserstein objective, which serves as a relaxation of the Gromov-Monge problem \cite{memoli2022comparison}.
+We can delve deeper into these comparisons and demonstrate that the general formulation of dimension reduction is also equivalent to minimizing the Gromov-Wasserstein objective, which serves as a relaxation of the Gromov-Monge problem \citep{memoli2022comparison}.
 
 
 \paragraph{DR as GW Minimization.} We suppose that the distributions have the same number of points ($N = n$) and uniform weights ($\vh_Z = \vh_X = \frac{1}{N} \one_N$). We recall that a matrix $\mC \in \R^{N \times N}$ is conditionally positive definite (CPD), \textit{resp.} conditionally negative definite (CND), if it is symmetric and $\forall \vx \in \R^{N}, \vx^\top \mathbf{1}_N = 0 \text{ s.t. } \vx^\top \mC \vx \geq 0$, \textit{resp.} $\leq 0$. 
@@ -60,7 +60,7 @@ where $\alphab_\mZ, \betab_\mZ \in \R^{N}_{> 0}$ and $\mK_\mZ \in \R^{N \times N
 Remarkably, this result shows that \emph{all spectral DR methods} can be seen as OT problems in disguise, as they all equivalently minimize a GW problem. The second point of the theorem also provides some insights into this equivalence in the case of neighbor embedding methods. For instance, the Gaussian kernel $\mK_\mZ$, used extensively in DR, satisfies the hypothesis as $\log(\mK_\mZ) = (-\|\vz_i-\vz_j\|_2^2)_{ij}$ is CPD (see \eg \citealt{maron2018probably}). The terms $\alphab_\mZ, \betab_\mZ$ also allow for considering all the usual normalizations of $\mK_\mZ$: by a scalar so as to have $\sum_{ij} [\simiZ(\mZ)]_{ij}=1$, but also any row-stochastic or doubly stochastic normalization (with the Sinkhorn-Knopp algorithm \citealt{sinkhorn1967concerning}).
 
 Matrices satisfying $\log(\mK_\mZ)$ being CPD are well-studied in the literature
-and are known as infinitely divisible matrices \cite{bhatia2006infinitely}. It
+and are known as infinitely divisible matrices \citep{bhatia2006infinitely}. It
 is noteworthy that the t-Student kernel does not fall into this category.
 Moreover,  in the aforementioned neighbor embedding methods, the matrix
 $\simiX(\mX)$ is generally not CPD. The intriguing question of generalizing this
@@ -75,14 +75,14 @@ In \Cref{corr:equivCE} of the appendix we also provide other sufficient conditio
 
 %\tv{NON LE POINT II NE MARCHE PAS DU TOUT}
 
-% Le second point du théorème,  permet de donner quelques insight sur cette equivalence dans le cas des neighbor embedding methods. En effet, dans certaines méthodes comme tSNE \cite{van2008visualizing} une similarité possible $\simiZ(\mZ)$ peut s'écrire comme un noyau Gaussien entre les points, normalisé par sa somme total. Dans ce cas $\log(\simiZ(\mZ))$ est proportionnel à une matrice de distance au carré ce qui est bien  Bien que les matrices $\simiX$ usuellement utilisée 
+% Le second point du théorème,  permet de donner quelques insight sur cette equivalence dans le cas des neighbor embedding methods. En effet, dans certaines méthodes comme tSNE \citep{van2008visualizing} une similarité possible $\simiZ(\mZ)$ peut s'écrire comme un noyau Gaussien entre les points, normalisé par sa somme total. Dans ce cas $\log(\simiZ(\mZ))$ est proportionnel à une matrice de distance au carré ce qui est bien  Bien que les matrices $\simiX$ usuellement utilisée 
 
 
 % Certain neighbor embedding methods can also be interpreted within this framework. For instance, when the input similarities is 
 
 
 
-% when the similarity between two points is translation-invariant and logarithmically concave. For instance, SNE considers  $f(\vz_i -\vz_j) = \exp(-\|\vz_i-\vz_j\|_2^2)$ which satisfies the conditions of the theorem. The normalization constant $R$ serves as a ‘‘repulsion'' term and aims, among other objectives, to avoid the trivial solution $\mZ = 0$ \cite{van2022probabilistic}. 
+% when the similarity between two points is translation-invariant and logarithmically concave. For instance, SNE considers  $f(\vz_i -\vz_j) = \exp(-\|\vz_i-\vz_j\|_2^2)$ which satisfies the conditions of the theorem. The normalization constant $R$ serves as a ‘‘repulsion'' term and aims, among other objectives, to avoid the trivial solution $\mZ = 0$ \citep{van2022probabilistic}. 
 
 % \hva{dans SNE c'est pas exactement cette norm, somme que sur un indice}
 % It is typically chosen such that $\simiZ(\mZ)$  sums to $1$ (\textit{e.g.,}
@@ -110,12 +110,12 @@ In essence, both \Cref{lemma:GMproblemequiv} and \Cref{theo:main_theo} indicate 
 % \end{enumerate}
 % \end{corollary}
 % 
-%\cite{van2023snekhorn}
+%\citep{van2023snekhorn}
 
 
  % is  can be $L_2$ or $L_{\mathrm{KL}}$. As detailed in \Cref{sec:DR_methods}, the definitions of $c_{\mathcal{X}}$ and $c_{\mathcal{Z}}$ as well as $L$ are what differentiate each method.
 
-% In what follows, $k_{\mathcal{X}}$ denotes a positive definite kernel on $\mathcal{X} \times \mathcal{X}$ \ie . For any such kernel, there exists a mapping $\phi^\mathcal{X}$ from $\mathcal{X}$ onto a Hilbert space $\mathcal{H}_{\mathcal{X}}$ such that $k_{\mathcal{X}}(\bm{x}_i, \bm{x}_j) = \langle \phi^{\mathcal{X}}(\bm{x}_i), \phi^{\mathcal{X}}(\bm{x}_j) \rangle_{\mathcal{H}_{\mathcal{X}}}$ \cite{aronszajn1950theory}. 
+% In what follows, $k_{\mathcal{X}}$ denotes a positive definite kernel on $\mathcal{X} \times \mathcal{X}$ \ie . For any such kernel, there exists a mapping $\phi^\mathcal{X}$ from $\mathcal{X}$ onto a Hilbert space $\mathcal{H}_{\mathcal{X}}$ such that $k_{\mathcal{X}}(\bm{x}_i, \bm{x}_j) = \langle \phi^{\mathcal{X}}(\bm{x}_i), \phi^{\mathcal{X}}(\bm{x}_j) \rangle_{\mathcal{H}_{\mathcal{X}}}$ \citep{aronszajn1950theory}. 
 
 % \begin{remark}
 % 	When used as a cost inside \eqref{eq:GW_pb}, it amounts to GW between the measures in feature space with the inner product cost

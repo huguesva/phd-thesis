@@ -4,7 +4,7 @@
 \section{Optimal Transport with Adaptive Regularization}\label{sec:pwot}
 
 In this section, we present a new formulation of OT that imposes constraints on each row of the OT plan.
-We begin by introducing the set of matrices with \emph{point-wise} constraints. To set the upper bound, we rely on the perplexity parameter $\xi$ \cite{van2023snekhorn} that can be interpreted as the number of effective neighbors for each point. Concretely, we define $\mathbf{e}_{\xi} = \frac{1}{\xi}(\ind_{i \leq \xi})_{i}$ the probability vector of $\xi$ uniform arms and
+We begin by introducing the set of matrices with \emph{point-wise} constraints. To set the upper bound, we rely on the perplexity parameter $\xi$ \citep{van2023snekhorn} that can be interpreted as the number of effective neighbors for each point. Concretely, we define $\mathbf{e}_{\xi} = \frac{1}{\xi}(\ind_{i \leq \xi})_{i}$ the probability vector of $\xi$ uniform arms and
 \begin{align}
   \mathcal{B}_\psi(\xi) &\coloneqq \{\mP \bm{\geq} \bm{0} \: \text{s.t.}\ \: \forall i, \: \psi(\mP_{i:}) \leq \psi(\mathbf{e}_{\xi}) \} \:.
 \end{align}
@@ -112,9 +112,9 @@ Note that we can impose the pointwise constraint equivalently on the rows or the
 We also propose a doubly constrained formulation called (OTARI-d) that consists of projecting $\mK_\sigma$ onto the nonempty set $\mathcal{B}_\psi(\xi^{a}) \cap \mathcal{B}^\top_\psi(\xi^b)$ 
 % where $\xi^{a}$ and $\xi^{b}$ are chosen such that this intersection is nonempty 
 where we defined $\mathcal{B}^\top_\psi(\xi) = \{ \mP^\top \in \mathcal{B}_\psi(\xi)\}$ thus ensuring sufficient smoothing for both rows and columns.
-Such projection can be computed using alternating Bregman projections, whose convergence has been well-studied \cite{censor1998dykstra, benamou2015iterative}.
-As we generally do not have access to a closed form for the projection onto the transport polytope $\Pi(\bm{a}, \bm{b})$, it is common to alternate projection onto $\Pi(\bm{a})$ and $\Pi(\bm{b})$ separately (see \eg the seminal Sinkhorn algorithm \cite{cuturi2013sinkhorn}).
-We extend this scheme by adding projection steps into the pointwise constraints $\mathcal{B}_\psi(\xi)$ for both $\mP$ and $\mP^\top$. As this set is not affine, one needs to resort to the Dykstra procedure \cite{dykstra1983algorithm} that can be applied to a broad class of Bregman divergences \cite{bauschke2000dykstras}, as shown in \cref{algo:Dykstra_pcot}.
+Such projection can be computed using alternating Bregman projections, whose convergence has been well-studied \citep{censor1998dykstra, benamou2015iterative}.
+As we generally do not have access to a closed form for the projection onto the transport polytope $\Pi(\bm{a}, \bm{b})$, it is common to alternate projection onto $\Pi(\bm{a})$ and $\Pi(\bm{b})$ separately (see \eg the seminal Sinkhorn algorithm \citep{cuturi2013sinkhorn}).
+We extend this scheme by adding projection steps into the pointwise constraints $\mathcal{B}_\psi(\xi)$ for both $\mP$ and $\mP^\top$. As this set is not affine, one needs to resort to the Dykstra procedure \citep{dykstra1983algorithm} that can be applied to a broad class of Bregman divergences \citep{bauschke2000dykstras}, as shown in \cref{algo:Dykstra_pcot}.
 % It consists of adding corrective terms to the non-affine projection. 
 In \cref{sec:proof_projs}, we provide the form of the projections for $\psi_{\KL}$ and $\psi_2$. A key benefit of decoupling both row and column constraints is that projection onto $\mathcal{B}_{\psi}(\xi)$ exhibits a simple structure where the rows can be decoupled into independent subproblems.
 % In the latter, $\psi^*$ is the Fenchel conjugate of $\psi$.

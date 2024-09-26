@@ -64,9 +64,8 @@ In \cref{fig:simulated_data_multinomial}, we show that, unlike $\overline{\Pb^{\
 
 % \subsection{Real data}\label{sec:exp_real_data}
 
-\begin{wraptable}[16]{R}{8cm}
+\begin{table*}\centering
     \caption{ARI ($\times 100$) clustering scores on genomics data.}
-    % \vskip 0.in
     \begin{small}
     \begin{sc}
     \begin{tabular}{lc@{\hskip 0.1in}c@{\hskip 0.1in}c@{\hskip 0.1in}c@{\hskip 0.1in}c}
@@ -91,7 +90,7 @@ In \cref{fig:simulated_data_multinomial}, we show that, unlike $\overline{\Pb^{\
     \end{tabular}
     \end{sc}
 \end{small}
-\end{wraptable}
+\end{table*}
 % \vspace*{-0.5cm}
 
 \paragraph{Real-world datasets.} We then experiment with various labeled
@@ -155,11 +154,11 @@ adaptivity. In the next experiment, we show that these advantages translate into
 better clustering and neighborhood retrieval at the embedding level when running
 SNEkhorn.
 
-\begin{wrapfigure}[12]{R}{0.5\textwidth}
-    \centerline{\includegraphics[width=\linewidth]{figures/SNEkhorn/fig_sc.pdf}}
+\begin{figure}
+    \centerline{\includegraphics[width=0.7\linewidth]{figures/SNEkhorn/fig_sc.pdf}}
     \captionof{figure}{SNAREseq embeddings produced by t-SNE and t-SNEkhorn with $\xi=50$.}
     \label{fig:sc}
-\end{wrapfigure}
+\end{figure}
 
 \paragraph{Dimension Reduction.}
 To guarantee a fair comparison, we implemented not only SNEkhorn, but also t-SNE and UMAP in \texttt{PyTorch} \citep{paszke2017automatic}. 
@@ -198,7 +197,7 @@ The results, presented in \cref{tab:DR_genomics_data}, demonstrate the notable s
 \begin{table*}\centering
 \caption{Scores for the UMAP, t-SNE and t-SNEkhorn embeddings.}
 \vskip 0.1in
-\begin{small}
+\begin{footnotesize}
 \begin{tabular}{@{\hskip 0.1in}l@{\hskip 0.1in}c@{\hskip 0.1in}c@{\hskip 0.1in}c@{\hskip 0.1in}c@{\hskip 0.1in}c@{\hskip 0.1in}c@{\hskip 0.1in}c@{\hskip 0.1in}c@{\hskip 0.1in}}
     \toprule[1.5pt]
 & \multicolumn{3}{c}{Silhouette ($\times 100$)} & & \multicolumn{3}{c}{Trustworthiness ($\times 100$)} \\
@@ -223,7 +222,7 @@ SNAREseq & $6.8\pm6.0$ & $35.8\pm5.2$ & $\mathbf{67.9\pm1.2}$ && $93.1\pm2.8$ & 
 \bottomrule[1.5pt]
 \label{tab:DR_genomics_data}
 \end{tabular}
-\end{small}
+\end{footnotesize}
 \vspace*{-0.5cm}
 \end{table*}
 
