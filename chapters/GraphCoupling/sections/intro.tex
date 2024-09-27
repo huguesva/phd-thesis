@@ -15,6 +15,18 @@ While recent software developments have made these methods more scalable \citep{
 In this work, we define a generative probabilistic model that unifies current embedding methods and establish new connections with the well-known PCA model discussed in \Cref{sec:dr_proba_modelling}.  
 Second, this work aims to facilitate further extensions of these models by providing mechanisms to incorporate structural priors, a direction we explore in \Cref{sec:supp_material_gc}.
 
+\paragraph{General approach.}
+In this work we explore We demonstrate that such graphs essentially capture conditional independencies among rows through a pairwise Markov Random Field (MRF) model whose construction can be found in \cref{sec:graph_structure}. 
+
+\begin{mem1}{Matrix normal model}\label{memo:matrix_normal}
+    AAA
+\end{mem1}
+
+\begin{mem1}{GMRF models}
+    AAA
+\end{mem1}
+\todo{REMARK : far from iid assumption}
+
 
 \paragraph{Outline.} 
 The rationale of our framework is to suppose that the observations $\Xb$ and $\Zb$ are structured by two latent graphs with $\Wb_{X}$ and $\Wb_{Z}$ standing for their $N$-square weight matrices.
@@ -24,15 +36,6 @@ In this work, our main contributions are as follows.
 
 \begin{itemize}
     \item We show in \Cref{sec:pca_graph_coupling} that for Gaussian MRFs, when adapting graph coupling to precision matrices with suitable conjugate priors, one is able to recover PCA embeddings as solutions of the coupling problem in its continuous version (\cref{PCA_graph_coupling}).
-    \item We show that SNE, t-SNE, LargeVis and UMAP are all instances of graph coupling and characterized by different choices of prior for discrete latent structuring graphs (\cref{sec:GC_unified}). We demonstrate that such graphs essentially capture conditional independencies among rows through a pairwise Markov Random Field (MRF) model whose construction can be found in \cref{sec:graph_structure}.
+    \item We show that SNE, t-SNE, LargeVis and UMAP are all instances of graph coupling and characterized by different choices of prior for discrete latent structuring graphs (\cref{sec:GC_unified}). We demonstrate that such graphs essentially induce a MRF structure whose construction can be found in \cref{sec:graph_structure}.
     \item We uncover the intrinsic probabilistic property explaining why such methods perform poorly on conserving the large-scale structure of the data as a consequence of the degeneracy of the MRF when shift-invariant kernels are used (\cref{prop:integrability_pairwise_MRF}). Such degeneracy induces the loss of the relative positions of clusters corresponding to the connected components of the posterior latent graphs whose distributions are identified (\cref{prop:posterior_W}). These findings are highlighted by a new initialization of the embeddings (\cref{sec:towards_large_scale}).
 \end{itemize}
-
-
-\begin{mem1}{Matrix normal model}\label{memo:matrix_normal}
-    AAA
-\end{mem1}
-
-\begin{mem1}{GMRF models}
-    AAA
-\end{mem1}
