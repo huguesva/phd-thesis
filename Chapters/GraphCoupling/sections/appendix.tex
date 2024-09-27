@@ -6,6 +6,37 @@
 
 In this section, we investigate the ability of graph coupling to faithfully represent the global structure in low dimensions. To gain intuition on the case where the distribution induced by the graph is not degenerate, we consider a proper Gaussian graph coupling model and show its equivalence with PCA. We then provide a new initialization procedure to alleviate the large-scale deficiency of graph coupling when degenerate MRFs are used.
 
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[
+    roundnode_w/.style={circle, draw=black!60, fill=white, minimum size=8.5mm, line width=0.1mm},
+    roundnode_g/.style={circle, draw=black!60, fill=black!15, minimum size=8.5mm, line width=0.1mm},
+    squarednode/.style={rectangle, draw=black!60, fill=black!5, minimum size=7mm}
+    ]
+    %Nodes
+    \node[roundnode_w]  (Theta_X)     {$\bm{\Theta}_{\scaleto{X}{4pt}}$};
+    \node[roundnode_w]      (W_X)   [above left=of Theta_X]  {$\W_{\scaleto{X}{4pt}}$};
+    \node[roundnode_g]        (X_C)     [below left =of Theta_X]  {$\X_{\scaleto{C}{4pt}}$};
+    \node[roundnode_g]        (X_M)     [below =of Theta_X]  {$\X_{\scaleto{M}{4pt}}$};
+    \node[roundnode_w]      (Theta_Z)       [right=of Theta_X]    {$\bm{\Theta}_{\scaleto{Z}{4pt}}$};
+    \node[roundnode_w]      (W_Z)       [above right=of Theta_Z]    {$\W_{\scaleto{Z}{4pt}}$};
+    \node[roundnode_g]        (Z_C)     [below right=of Theta_Z]  {$\Z_{\scaleto{C}{4pt}}$};
+    \node[roundnode_g]        (Z_M)     [below =of Theta_Z]  {$\Z_{\scaleto{M}{4pt}}$};
+    
+    %Lines
+    \draw[->] (W_X) -- (X_C);
+    \draw[->] (W_X) -- (Theta_X);
+    \draw[->] (Theta_X) -- (X_M);
+    \draw[->] (W_Z) -- (Z_C);
+    \draw[->] (W_Z) -- (Theta_Z);
+    \draw[->] (Theta_Z) -- (Z_M);
+    \draw[dotted,<->] (W_X) -- (W_Z);
+    \draw[dotted,<->] (Theta_X) -- (Theta_Z);
+    \end{tikzpicture}
+    \caption{Graphical representation of the hierarchical model considered in \cref{sec:hierarchical_modelling}. Plain directed arrows represent conditional dependencies while dotted arrows represent the coupling links. \Cref{corollary_ccPCA} provides a solution for the coupling between $\bm{\Theta}_{\scaleto{X}{4pt}}$ and $\bm{\Theta}_{\scaleto{Z}{4pt}}$.}
+    \label{fig:graphical_model_hierarchical}
+\end{figure}
+
 \subsubsection{Hierarchical Graph Coupling}\label{sec:hierarchical_modelling}
 
 The goal of this section is to show that global structure in SNE-like embeddings can be improved by structuring the CCs' positions. We consider the following hierarchical model for $\Xb$, where $\mathcal{P}_{X} \in \{B,D,E\}$, $k_x$ satisfies the assumptions of \cref{prop:integrability_pairwise_MRF} and $\nu_{X} \geq n$:
@@ -248,6 +279,23 @@ Finally, deriving the distribution of the posterior graph limit:
 
 This distribution amounts to: $\W \sim \mathcal{M}\left(N, \left(\frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{\sum_{(\ell,t) \in \integ{N}^2} \pi_{\ell t} k(\mathbf{x}_{\ell} - \mathbf{x}_t)}\right)_{(i,j) \in \integ{N}^2}\right)$.
 \end{proof}
+
+\subsubsection{Proof of \Cref{corollary_ccPCA}}
+
+With the presented hierarchical model (\cref{fig:graphical_model_hierarchical}), the coupling problem is the following:
+\begin{align}\label{eq:optim_corollary}
+    \min_{\Z \in \mathcal{S}^q_{\scaleto{M}{3pt}}} \quad \operatorname{tr}\left(\bm{U}_{\scaleto{[:R]}{5pt}}\Z^\top(\bm{I}_{\scaleto{R}{4pt}} +  \varepsilon \bm{U}_{\scaleto{[R]}{5pt}}^\top\X\X^\top\bm{U}_{\scaleto{[:R]}{5pt}})^{-1}\bm{U}_{\scaleto{[R]}{5pt}}^\top\Z\right) - \log |\bm{I}_{\scaleto{R}{4pt}}  +  \varepsilon \bm{U}_{\scaleto{[R]}{5pt}}^\top\Z\Z^\top\bm{U}_{\scaleto{[:R]}{5pt}}| 
+\end{align}
+where $\bm{U}_{\scaleto{[:R]}{5pt}}$ are the eigenvectors associated to the Laplacian null-space of $\overline{\W}_{\scaleto{X}{4pt}}$.
+
+Let us denote $\bar{\Z} = \bm{U}_{\scaleto{[R]}{5pt}}^\top\Z \in \mathbb{R}^{R \times q}$ and $\bar{\X} = \bm{U}_{\scaleto{[R]}{5pt}}^\top\X \in \mathbb{R}^{R \times p}$. Note that $\Z \to \bm{U}_{\scaleto{[R]}{5pt}}^\top\Z$ is a bijective linear map from $\mathcal{S}^q_{\scaleto{M}{4pt}}$ to $\mathbb{R}^{R \times q}$ with inverse $\bar{\Z} \to \bm{U}_{\scaleto{[R]}{5pt}}\bar{\Z}$ (and equivalently for $\mathbb{R}^{R \times p}$). Hence (\ref{eq:optim_corollary}) is equivalent to:
+\begin{align}\label{eq:small_dim_optim_corollary}
+    \min_{\bar{\Z} \in \mathbb{R}^{R \times q}} \quad \operatorname{tr}\left(\bar{\Z}^\top(\bm{I}_{\scaleto{R}{4pt}} +  \varepsilon \bar{\X}\bar{\X}^\top)^{-1}\bar{\Z}\right) - \log |\bm{I}_{\scaleto{R}{4pt}}  +  \varepsilon \bar{\Z}\bar{\Z}^\top| 
+\end{align}
+
+According to \cref{PCA_graph_coupling}, the solution of problem (\ref{eq:small_dim_optim_corollary}) is such that there exists $\bm{R}$ orthogonal, $\bar{\Z}^\star = \bm{V}_{[:,q]} \bm{S}_{[q,q]} \bm{R}$ where $\bar{\X}\bar{\X}^\top = \bm{V} \bm{S}^2 \bm{V}^\top$ is the eigendecomposition in an orthogonal basis of the among-row covariance matrix of $\bar{\X}$. Note that the solution does not depend on $\varepsilon$.
+
+Therefore (\ref{eq:optim_corollary}) is solved for $\Z^\star = \bm{U}_{\scaleto{[:R]}{5pt}}\bm{V}_{[:,q]} \bm{S}_{[q,q]} \bm{R}$. One can notice that since the singular value decomposition (\textit{i.e.}\ SVD) of $\bm{U}_{\scaleto{[R]}{5pt}}^\top\X$ takes the form $\bm{V}\bm{S}\bm{B}$ where $\bm{B}$ is an semi-orthogonal matrix of size $p$, then $\bm{U}_{\scaleto{[:R]}{5pt}}\bm{U}_{\scaleto{[R]}{5pt}}^\top\X = \bm{U}_{\scaleto{[:R]}{5pt}}\bm{V}\bm{S}\bm{B}$. Noticing that $\bm{V}' = \bm{U}_{\scaleto{[:R]}{5pt}}\bm{V}$ is orthogonal, one has that $\bm{V}' \bm{S}\bm{B}$ is a compact SVD of $\bm{U}_{\scaleto{[:R]}{5pt}}\bm{U}_{\scaleto{[R]}{5pt}}^\top\X$. Therefore, since $\Z^\star = \bm{V}' \bm{S}$, $\Z^\star$ is a PCA embedding of $\bm{U}_{\scaleto{[:R]}{5pt}}\bm{U}_{\scaleto{[R]}{5pt}}^\top\X$.
 
 
 \subsection{Experiments with \textit{ccPCA}}\label{sec:cc_pca_exps}

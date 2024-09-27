@@ -44,7 +44,7 @@ In what follows, the data is split into two parts: $\Xb_{M}$, the orthogonal pro
 
 \subsection{Pairwise MRF and Shift-Invariances}\label{sec:within_CC}
 
-In this work, the dependency structure among rows of the data is governed by a graph. The strength of the connection between two nodes is given by a symmetric function $k: \mathbb{R}^p \to \mathbb{R}_+$ \hva{reformuler symmetric}. We consider the following pairwise MRF unnormalized density function:
+In this work, the dependency structure among rows of the data is governed by a graph. The strength of the connection between two nodes is given by a symmetric\footnote{\ie $k(-\vx) = k(\vx)$ for any $\vx$ in $\R^p$.} function $k: \mathbb{R}^p \to \mathbb{R}_+$. We consider the following pairwise MRF unnormalized density function:
 \begin{align}\label{eq:unnormalized_MRF}
   f_{k} \colon (\Xb,\mW) &\mapsto \prod_{(i,j) \in \integ{N}^2} k(\mathbf{x}_{i} - \mathbf{x}_{j})^{W_{ij}} \: .
 \end{align}

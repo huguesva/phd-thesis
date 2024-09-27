@@ -16,11 +16,19 @@ In this work, we define a generative probabilistic model that unifies current em
 Second, this work aims to facilitate further extensions of these models by providing mechanisms to incorporate structural priors, a direction we explore in \Cref{sec:supp_material_gc}.
 
 \paragraph{General approach.}
-In this work we explore We demonstrate that such graphs essentially capture conditional independencies among rows through a pairwise Markov Random Field (MRF) model whose construction can be found in \cref{sec:graph_structure}. 
+Our approach is similar to that of \Cref{sec:dual_view} in that we devise a parametric model for the data and introduce priors on the parameters. Hence the starting point is to define a proper likelihood. 
 
 \begin{mem1}{Matrix normal model}\label{memo:matrix_normal}
     AAA
 \end{mem1}
+
+In the same philosophy,  the priors of the parameters are taken as conjugate with the predefined likelihood. 
+
+However, the originality of our approach lies in the fact that we use two independent models for the data $\mX$ and the embeddings $\mZ$. We then focus on coupling the posterior distributions of the parameters in both models. Inspired by the general formulation of dimensionality reduction as affinity matching algorithms \Cref{sec:background_dr}, the parameters we consider are the affinity matrices in both domains.
+
+In this work we explore We demonstrate that such graphs essentially capture conditional independencies among rows through a pairwise Markov Random Field (MRF) model whose construction can be found in \cref{sec:graph_structure}. 
+
+
 
 \begin{mem1}{GMRF models}
     AAA
