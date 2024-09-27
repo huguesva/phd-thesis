@@ -1,0 +1,243 @@
+\section{Appendix of experimental section}\label{sec:appendix_exps}
+
+We report in the following subsections of this section:
+\begin{itemize}
+	\item \ref{sec:implementation_details}: implementation details, validation of hyperparameters, datasets and metrics.
+	\item \ref{sec:coot_exp}: comparison with COOT clustering.
+	\item \ref{sec:full_sensitivity}: complete scores on all datasets.
+	\item \ref{sec:supp_hom_vs_sil}: study homogeneity vs silhouette score for various numbers of prototypes.
+	\item \ref{sec:supp_hom_vs_nmi}: study homogeneity vs k-means score for various numbers of prototypes.
+	\item \ref{sec:compute_time}: computation time study.
+	\item \ref{sec:hyperbolic}: Proofs of concepts with hyperbolic DR kernels.
+\end{itemize}
+
+\subsection{Experimental setting}\label{sec:implementation_details}
+
+\textbf{Sequential methods.} We detail in the following the sequential methods DR$\to$C and C$\to$DR considered in our benchmark. DR$\to$C representations are constructed by first running the DR method (\Cref{sec:dr_methods}) associated with $(L, \mC_X, \mC_Z)$ thus obtaining an intermediate representation $\widetilde{\mZ} \in \R^{N \times d}$. Then, spectral clustering \cite{von2007tutorial} on the similarity matrix $\mC_Z(\widetilde{\mZ})$ is performed to compute a cluster assignment matrix $\widetilde{\mT} \in \R^{N \times n}$. The final reduced representation in $\R^{n \times d}$ is the average of each point per cluster, \ie the collection of the centroids, which is formally $\diag(\tilde{\vh})^{-1} \widetilde{\mT}^\top \widetilde{\mZ} \in \R^{n \times d}$ where $\tilde{\vh} = \widetilde{\mT}^\top \one_N$.
+For C$\to$DR, a cluster assignment matrix $\widehat{\mT} \in \R^{N \times n}$ is first computed using spectral clustering on $\mC_X(\mX)$.
+Then, the cluster centroid $\diag(\hat{\vh})^{-1} \widehat{\mT}^\top \mX$, where $\hat{\vh} = \widehat{\mT}^\top \bm{1}_N$, is passed as input to the DR method associated with $(L, \mC_X, \mC_Z)$.
+
+\textbf{Implementation.} 
+Throughout, the spectral clustering implementation of \texttt{scikit-learn} \cite{pedregosa2011scikit} is used to perform either the clustering steps or the initialization of transport plans. 
+For all methods, $\mZ$ is initialized from \emph{i.i.d.} sampling of the standard Gaussian distribution $\mathcal{N}(0,1)$ and further optimized using \texttt{PyTorch}'s automatic differentiation \cite{paszke2017automatic} with Adam optimizer \cite{kingma2014adam}. OT-based solvers are built upon the \texttt{POT} \cite{flamary2021pot} library.
+k-Means is performed using the \texttt{scikit-learn}~\cite{pedregosa2011scikit} implementation.
+
+\textbf{Validated hyperparameters.} For the SEA based similarities, we validated \texttt{perplexity} across the set $\{20, 50, 100, 150, 200, 250\}$. For all kernels, the number of output samples $n$ spans a set of $10$ values, starting at the number of classes in the data and incrementing in steps of $20$. For the computation of $\mT$ in DistR (see \Cref{sec:DDR_ob}), we benchmark our Conditional Gradient solver, and the Mirror Descent algorithm whose hyperparameter $\varepsilon$ is validated in the two first values within the set $\{10^{i}\}_{i=-3}^3$ leading to stable optimization.
+
+\textbf{Datasets.}
+We provide details about the datasets used in our study. 
+For image datasets, we use COIL-20\footnote{\url{https://www1.cs.columbia.edu/CAVE/software/softlib/coil-100.php}} \cite{nene1996columbia}, MNIST and fashion-MNIST\footnote{taken from Torchvision \cite{marcel2010torchvision}.} \cite{xiao2017fashion}. Regarding single-cell genomics datasets, we rely on PBMC 3k\footnote{downloaded from Scanpy \cite{wolf2018scanpy}.} \cite{wolf2018scanpy}, SNAREseq\footnote{\url{https://github.com/rsinghlab/SCOT}} chromatin and gene expression \cite{chen2019high} and the scRNA-seq dataset\footnote{\url{https://github.com/solevillar/scGeneFit-python}} from \cite{zeisel2015cell} with two hierarchical levels of label. 
+Dimensions are provided in \Cref{tab:dataset_details}
+When the dimensionality of a dataset exceeds $50$, we pre-process it by applying a PCA in dimension $50$, as done in practice \cite{van2008visualizing}.
+
+\begin{table}[h!] \vspace{-5mm}
+\centering
+\caption{Dataset Sizes.}\label{tab:dataset_details}
+\scalebox{0.8}{
+	\begin{tabular}{|c||c|c|c|} \hline
+		& Number of samples & Dimensionality & Number of classes \\ \hline \hline
+		MNIST & $10000$ & $784$ & $10$ \\ \hline
+		F-MNIST & $10000$ & $784$ & $10$ \\ \hline
+		COIL & $1440$ & $16384$ & $20$ \\ \hline
+		SNAREseq (chromatin) & $1047$ & $19$ & $5$ \\
+		\hline
+		SNAREseq (gene expression) & $1047$ & $10$ & $5$ \\
+		\hline
+		Zeisel & 3005 & 5000 & (8, 49) \\
+		\hline
+		PBMC & 2638 & 1838 & 8 \\
+		\hline
+\end{tabular}}
+\end{table}
+
+\textbf{Scores.} The homogeneity and NMI scores are taken from \texttt{Torchmetrics} \cite{detlefsen2022torchmetrics}. The other scores used in the experiments are computed as follows.
+
+\textit{i) Silhouette}: The first step is to associate a label with each prototype $\vz_k$ defined by the $y$ maximizing $\sum_{i \in \integ{N}} T_{ik} \bm{1}_{y_i = y}$ where $y_i$ is the class label of the input data point $\vx_i$. Then, to incorporate the relative importance $w_i = \left[\vh_Z\right]_i$ of each prototype $\vz_i$, we define the \emph{weighted} mean intra-cluster and nearest-cluster distances that read 
+	\begin{equation}
+		a_i (\mZ, \mY, \vw)= \frac{\sum_{j\in \integ{N} \delta_{y_i =y_j} w_j d(\vz_j, \vz_j)}}{\sum_{j \in \integ{N} \delta_{y_i = y_j} w_j }} \quad \text{and} \quad b_i (\mZ, \mY, \vw)= \frac{\sum_{j \in \integ{N}} \delta_{y_j = k} w_j d(\vz_j, \vz_i)}{ \sum_{j \in \integ{N}} \delta_{y_j = k}w_j }
+	\end{equation}
+	such that the silhouette coefficient is $s_i(\mZ, \mY, \vw) = \frac{b_i - a_i}{\max(b_i, a_i)}$ and the final silhouette score reads as
+	\begin{equation}
+		S(\mZ, \mY, \vw) = \sum_{i \in \integ{N}} w_i s_i(\mZ, \mY, \vw) \:.
+	\end{equation}
+
+\textit{ii) k-means}: We first run the k-means algorithm on the prototypes $\{\vz_k\}_{k \in \integ{n}}$ giving us the predicted label $\tilde{y}_k$ for each $k \in \integ{n}$. The predicted label for each input data point $i \in \integ{N}$ is then given by its prototype's predicted label \ie $\hat{y}_i = \tilde{y}_{\arg \max_k T_{ik}}$. Then we compute the NMI score \cite{kvaalseth2017normalized} between $(\hat{y}_i)_{i \in \integ{N}}$ and the ground-truth class labels $(y_i)_{i \in \integ{N}}$.
+
+\subsection{Comparison with COOT clustering}\label{sec:coot_exp}
+
+The CO-Optimal-Transport (COOT) problem, proposed in \cite{redko2020co}, is as follows,
+\begin{align}\tag{COOT}
+	\label{eq:coot_pb}
+	\min_{\mT_r \in \gU(\vh_r, \overline{\vh}_r)} \min_{ \mT_c \in \gU(\vh_c, \overline{\vh}_c)} \: \sum_{ijkl} (X_{ik} - Z_{jl})^2 [\mT_r]_{ij} [\mT_c]_{kl} \,,
+\end{align}
+where $\vh_r \in \Sigma_N$, $\overline{\vh}_r \in \Sigma_n$, $\vh_c \in \Sigma_p$ and $\overline{\vh}_c \in \Sigma_d$. 
+One can seek to optimize the above objective with respect to $\mZ$ to obtain a competitor method to DistR. This problem is called COOT clustering in \cite{redko2020co}. In the latter, $\mT_r$ then plays the role of a soft clustering matrix of the rows of $\mX$ while $\mT_c$ can be seen as a soft clustering matrix of its columns. The above is thus a linear DR model.
+
+
+\begin{table}[h!]
+	\centering
+	\scalebox{0.6}{
+		\begin{tabular}{|c|c|c||c|c|c|c|c|c|} \hline
+			$\mathcal{Z}$ & methods & $\mC_X$ / $\mC_Z$ & COIL & MNIST & FMNIST & PBMC & SNA1 & SNA2 \\ \hline \hline
+			\multirow{4}{*}{$\mathbb{R}^{2}$}
+			& DistR (ours) & SEA / St. & 99.50 (0.60) & 97.80 (0.00) & 93.40 (0.00) & 97.10 (0.00) & 100.00 (0.00) & 100.00 (0.00) \\
+			& DR$\to$C & - & 98.10 (0.50) & 93.30 (3.40) & 94.30 (2.80) & 96.30 (0.90) & 100.00 (0.00) & 100.00 (0.00) \\
+			& C$\to$DR & - & 100.00 (0.00) & 97.80 (0.00) & 93.40 (0.00) & 97.10 (0.00) & 100.00 (0.00) & 100.00 (0.00) \\
+			& COOT & NA & 43.90 (0.70) & 9.80 (3.00) & 8.50 (0.90) & 15.90 (1.90) & 44.00 (4.60) & 49.70 (8.60) \\
+			\hline \hline
+			\multirow{4}{*}{$\mathbb{R}^{10}$}
+			& DistR (ours) & $\langle, \rangle_{\R^p}$ / $\langle, \rangle_{\R^d}$ & 96.80 (0.70) & 97.00 (0.90) & 93.40 (0.00) & 97.10 (0.40) & 80.50 (0.00) & 100.00 (0.00) \\
+			& DR$\to$C & - & 73.30 (1.80) & 98.30 (3.40) & 93.20 (1.90) & 90.20 (1.40) & 72.70 (6.00) & 90.00 (20.00) \\
+			& C$\to$DR & - & 83.70 (0.00) & 100.00 (0.00) & 93.40 (0.00) & 93.30 (0.00) & 80.50 (0.00) & 100.00 (0.00) \\
+			& COOT & NA & 45.50 (1.60) & 13.70 (2.10) & 9.30 (2.80) & 16.10 (2.40) & 45.60 (5.90) & 76.50 (16.60) \\
+			\hline
+	\end{tabular}}
+	\vspace{0.2cm}
+	\caption{Best homogeneity scores for $n$ validated in a span up to $200$ with increments of $20$.}
+	\label{tab:coot_scores}
+	\vspace{-0.5cm}
+\end{table}
+In \Cref{tab:coot_scores}, we display the homogeneity values obtained with COOT along with the methods described \Cref{sec:exps}. Precisely, it measures to what extent the clustering given by $\mT_r$ groups points with the same ground truth label. One can notice that COOT falls short compared to its competitors that leverage affinity matrices as in state-of-the-art (non-linear) DR methods.
+
+
+\subsection{Complete scores}\label{sec:full_sensitivity}
+
+We complete the results shown in \Cref{sec:exps} by providing the scores obtained on all datasets and models. Scores are plotted in \Cref{fig:sensitivity_sne} for the t-SNE model and in \Cref{fig:sensitivity_ip} for the PCA model. 
+\begin{figure*}[h!]
+	\begin{center}
+		\centerline{\includegraphics[width=0.9\columnwidth]{figures/DistR/sensitivity_SNE_dim_2/full_sensitivity.pdf}}
+		\caption{Scores ($\times 100$) with respect to the number of prototypes (in $\R^2$) produced by DistR using the t-SNE model: SEA similarity for $\simiX$ \cite{van2023snekhorn}, Student's kernel for $\simiZ$ and loss $L_{\KL}$.}
+	\label{fig:sensitivity_sne}
+	\end{center}
+\end{figure*}\newpage
+
+\begin{figure*}[h!]
+	\begin{center}
+		\centerline{\includegraphics[width=0.9\columnwidth]{figures/DistR/sensitivity_IP_dim_10/full_sensitivity.pdf}}
+		\caption{Scores ($\times 100$) with respect to the number of prototypes (in $\R^{10}$) produced by DistR using the PCA model: $\langle, \rangle_{\R^p}$ similarity for $\simiX$ \cite{van2023snekhorn}, $\langle, \rangle_{\R^d}$ for $\simiZ$ and loss $L_{2}$.}
+	\label{fig:sensitivity_ip}
+	\end{center}
+	\vspace{-0.8cm}
+\end{figure*} \newpage
+
+
+\subsection{Dynamics between homogeneity and silhouette scores across numbers of prototypes}\label{sec:supp_hom_vs_sil}
+For each method depending on some hyperparameters, models performing the best on average across all numbers of prototypes are illustrated in \Cref{fig:PCA_hom_vs_sil} for spectral methods and in \Cref{fig:SNE_hom_vs_sil} for neighbor embedding ones. 
+	\begin{figure*}[h!]
+		\begin{center}
+			\centerline{\includegraphics[width=\columnwidth]{figures/DistR/scatter_plots/legend.pdf}}\vspace{-1mm}
+			\centerline{\includegraphics[width=\columnwidth]{figures/DistR/scatter_plots/scatterplot_PCA_mean_sum_percentile_normalized_by_dataset.pdf}
+			}
+			\caption{Trade-off between homogeneity vs silhouette scores using PCA model across various numbers of prototypes $n$. The illustration follows the same principal than \cref{fig:trade_off}}
+			\label{fig:PCA_hom_vs_sil}
+		\end{center}
+	\end{figure*}
+	\newpage
+	\begin{figure*}[h!]
+		\begin{center}
+			\centerline{\includegraphics[width=\columnwidth]{figures/DistR/scatter_plots/legend.pdf}}\vspace{-1mm}
+			\centerline{\includegraphics[width=\columnwidth]{figures/DistR/scatter_plots/scatterplot_t-SNE_mean_sum_percentile_normalized_by_dataset.pdf}
+			}
+			\caption{Trade-off between homogeneity vs silhouette scores using t-SNE model across various numbers of prototypes $n$. The illustration follows the same principal than \cref{fig:trade_off}}
+			\label{fig:SNE_hom_vs_sil}
+		\end{center}
+		\vspace{-0.8cm}
+	\end{figure*}
+	\newpage
+	\subsection{Dynamics between homogeneity and NMI scores across numbers of prototypes}\label{sec:supp_hom_vs_nmi}
+	For each method depending on some hyperparameters, models performing the best on average across all numbers of prototypes are illustrated in \Cref{fig:PCA_hom_vs_nmi} for spectral methods and in \Cref{fig:SNE_hom_vs_nmi} for neighbor embedding ones. 
+	\begin{figure*}[h!]
+		\begin{center}
+			\centerline{\includegraphics[width=\columnwidth]{figures/DistR/scatter_plots/legend.pdf}}\vspace{-1mm}
+			\centerline{\includegraphics[width=\columnwidth]{figures/DistR/scatter_plots/kmeansscatterplot_PCA_mean_sum_percentile_normalized_by_dataset.pdf}
+			}
+			\caption{Trade-off between homogeneity vs silhouette scores using PCA model across various numbers of prototypes $n$. The illustration follows the same principal than \cref{fig:trade_off}}
+			\label{fig:PCA_hom_vs_nmi}
+		\end{center}
+		\vspace{-0.8cm}
+	\end{figure*}
+	\begin{figure*}[h!]
+		\begin{center}
+			\centerline{\includegraphics[width=\columnwidth]{figures/DistR/scatter_plots/legend.pdf}}\vspace{-1mm}
+			\centerline{\includegraphics[width=\columnwidth]{figures/DistR/scatter_plots/kmeansscatterplot_t-SNE_mean_sum_percentile_normalized_by_dataset.pdf}
+			}
+			\caption{Trade-off between homogeneity vs silhouette scores using t-SNE model across various numbers of prototypes $n$. The illustration follows the same principal than \cref{fig:trade_off}}
+			\label{fig:SNE_hom_vs_nmi}
+		\end{center}
+		\vspace{-0.8cm}
+	\end{figure*}
+	\newpage
+
+
+\begin{comment}
+	\subsection{Assessing clustering performances with NMI}
+	To complement our analysis, we also propose to assess clustering performances using the Normalized Mutual Information (NMI) score \cite{kvaalseth2017normalized}.
+	
+	$\mathcal{N}$ (NMI) scores are provided in \cref{tab:nmi_scores} and $\overline{\mathcal{SN}}$ scores in \cref{tab:SN_scores}. For each table, each value displayed is the one obtained with the best configuration (best choice of hyperparameters) maximizing the score of interest.
+	
+	\textbf{Analysis.} For $\overline{\mathcal{SN}}$, our approaches obtain the best results for $80\%$ of the considered datasets and affinities, showing consistency with the results obtained in \cref*{tab:benchmark_distdr} with $\overline{\mathcal{SH}}$.
+\end{comment}
+
+
+
+\subsection{Computation time comparison}\label{sec:compute_time}
+
+We compare in the following the computation time for all methods benchmarked in Table 1 when using a spectral method and a SNE method. All experiments were done on a server using a GPU (Tesla V100-SXM2-32GB) and composed of 18 cores Intel(R) Xeon(R) Gold 6240 CPU @ 2.60GHz. All DR steps benefit from our GPU compatible implementation, while spectral clustering (SC) was performed on CPU using scikit-learn implementation running on CPUs.\\ Notice that to run our experiments we precomputed and saved SC steps for the maximum number of prototypes ran on the input structure $C_X(\mX)$, for all benchmarked methods e.g CDR used for clustering or DistR and COOT used for initialization of the transport plans. As DRC performs SC over learned embeddings using $C_Z(\mZ)$ it cannot be precomputed, so we include the time of performing SC for all $n$ for all methods to achieve a fair comparison. Results for three datasets of increasing sample sizes SNA1, ZEISEL and MNIST (See Appendix E.1) are reported in Figure \ref{fig:runtimes1} with pre-computation and in Figure \ref{fig:runtimes2}  without.
+
+\begin{figure}[h!]
+    \begin{center}
+        \includegraphics[width=\columnwidth]{figures/DistR/runtimes/IP_dim_10_runtimes_runtimes_with_precomputing.pdf}
+        \includegraphics[width=\columnwidth]{figures/DistR/runtimes/SNE_dim_2_runtimes_runtimes_with_precomputing.pdf}
+    \end{center}
+    \caption{\label{fig:runtimes2}Computation time comparison depending on the number of prototypes $n$ for all methods over 3 datasets, for 5 different initializations, while precomputing spectral clustering on the input structure $C_X(\mX)$.}
+\end{figure}
+\begin{figure}[h!]
+    \begin{center}
+        \includegraphics[width=\columnwidth]{figures/DistR/runtimes/IP_dim_10_runtimes_runtimes_without_precomputing.pdf}
+        \includegraphics[width=\columnwidth]{figures/DistR/runtimes/SNE_dim_2_runtimes_runtimes_without_precomputing.pdf}
+    \end{center}
+    \caption{\label{fig:runtimes1}Computation time comparison depending on the number of prototypes $n$ for all methods over 3 datasets, for 5 different initializations,  \underline{without} precomputing spectral clustering on the input structure $C_X(\mX)$.}
+\end{figure}
+
+Overall our DistR models are competitive with all benchmarked methods in terms of computation time too and can be run (and further validated) in a few seconds using a GPU after precomputing the spectral embeddings for medium size dataset (N=10000 for MNIST), by efficiently leveraging low-rank kernels often used in the DR literature.
+
+
+
+\subsection{Proofs of concepts with hyperbolic kernels}\label{sec:hyperbolic}
+
+Hyperbolic spaces \cite{Chami21, Fan_2022_CVPR, Guo22, Lin23} are of particular interest as they can capture hierarchical structures more effectively than Euclidean spaces and mitigate the curse of dimensionality by producing representations with lower distortion rates. For instance, \cite{Guo22} adapted t-SNE by using the Poincaré distance and by changing the Student's t-distribution with a more general hyperbolic Cauchy distribution.  Notions of projection subspaces can also be adapted, \eg \cite{Chami21} use horospheres as one-dimensional subspaces. To match our experiments with the neighbor embeddings in Euclidean settings, we adapt the \emph{Symmetric Entropic Affinity} (SEA) from \cite{van2023snekhorn} for $\mC_X$ and the scalar-normalized student similarity for $\mC_Z$ \cite{van2008visualizing}, by simply changing the Euclidean distance by an hyperbolic distance.
+
+
+\paragraph{Implementation details.} Computations in Hyperbolic spaces are done with \texttt{Geoopt}~\cite{geoopt2020kochurov} and the RAdam optimizer \cite{becigneul2018riemannian} replaces Adam. A Wrapped Normal distribution in Hyperbolic spaces~\cite{Nagano19} is used to initialize $\mZ$ in the hyperbolic setting.
+All the computations were conducted in the Lorentz model~\cite{Nickel18}, which is less prone to numerical errors. As such, we used the associated distance function to form $\mC_Z$. After optimization, results are projected back to the Poincaré ball for visualization purposes. In this hyperbolic context, we adopted the formulation of~\cite{Guo22} which generalizes Student's t-distribution by Hyperbolic Cauchy distributions (denoted as H-Student in the results). Notice that \cite{Guo22} considered weighted sums of DR objective depending respectively on $L_2$ and $L_{KL}$, including 2 additional hyperparamaters, plus various validated curvature levels for the inner hyperbolic distances. In the following experiments, we only kept $L_{KL}$ for comparison with the Euclidean SNE-based methods illustrated in \Cref{sec:exps} and previous Sections of \ref{sec:appendix_exps}, while validating the same hyperparameters and setting the space curvature to $1$. The silhouette score was adapted to this kernel considering the Hyperbolic distance instead of the Euclidean one, and we implemented a Hyperbolic Kmeans whose barycenters are estimated using the RAdam optimizer to compute the NMI scores.
+
+\paragraph{Results.} We first report in \Cref{fig:trade_off_hyp} a relative comparison of the best trade-off between local and global metrics achieved by all methods. Similarly to visualizations of the main paper, we considered for each method and dataset, the model maximizing the sum of the two normalized metrics to account for their different ranges. DistR, being once again present on the top-right of all plots, provides on average the most discriminant
+low-dimensional representations endowed with a simple geometry, seconded by
+C$\rightarrow$DR. 
+
+\begin{figure*}[h!]
+	\begin{center}
+		\centerline{\includegraphics[width=0.8\columnwidth]{figures/DistR/scatter_plots/legend.pdf}}\vspace{-1mm}
+		\centerline{
+			\includegraphics[width=0.3\columnwidth]{figures/DistR/scatter_plots/scatterplot_modelselectionmax_sum_t-HSNE_percentile_bestmodels_normalized_by_datasetV2.pdf}
+			\includegraphics[width=0.3\columnwidth]{figures/DistR/scatter_plots/kmeansscatterplot_modelselectionmax_sum_t-HSNE_percentile_bestmodels_normalized_by_datasetV2.pdf}
+		}
+		\caption{Best trade-off between homogeneity vs silhouette (2 first plots), and homogeneity vs NMI (2 last plots). Scores are normalized in $\left[0, 1\right]$ via min-max scaling over a dataset. Small markers represent scores for 5 runs for a given dataset, while big ones are their mean. For each method we illustrate the 20-80\% percentiles of normalized scores as a colored surface.
+		}
+		\vspace{-0.5cm}
+		\label{fig:trade_off_hyp}
+	\end{center}
+	\vspace{-0.3cm}
+\end{figure*}
+
+Then we report in \Cref{fig:sensitivity_hyp} absolute performances for all methods and all datasets across various $n$, as done in \Cref{sec:full_sensitivity}. We can observe that both DistR and C$\rightarrow$DR achieve fairly high NMI and homogeneity scores across all settings, while DistR performs significantly better on average across the tested number of prototypes $n$.  However, DR$\rightarrow$C struggles significantly to learn both globally and individually discriminant prototypes. Notice that DR$\rightarrow$C's homogeneity scores are significantly lower on average than both benchmarked Euclidean kernels. This mitigates drastically the significance of the silhouette scores computed for this method, letting essentially DistR and C$\rightarrow$DR to compare. Even though DistR outperforms consistently C$\rightarrow$DR w.r.t silhouette scores, these scores remain significantly lower than with the other t-SNE kernels. As the latter is equivalent to a null curvature, this indicates that further fine-tuning of the curvature within these hyperbolic kernels could be beneficial. Nevertheless, these results confirm the versatility of our DistR approach, capable of operating on non-Euclidean geometries.
+
+\begin{figure*}[h!]
+	\begin{center}
+		\centerline{\includegraphics[width=0.9\columnwidth]{figures/DistR/sensitivity_hyp_dim_2/full_sensitivity.pdf}}
+		\caption{Scores ($\times 100$) with respect to the number of prototypes (in $\R^{10}$) produced by DistR using the Hyperbolic Student model.}
+		\label{fig:sensitivity_hyp}
+	\end{center}
+	\vspace{-0.8cm}
+\end{figure*} \newpage
+

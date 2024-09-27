@@ -9,10 +9,12 @@ This chapter is based on material from the following publication:
 \end{center}
 \end{mdframed}
 
-This work adresses \Cref{prob:probabilistic_models} 
-Due to a lack of clear probabilistic foundations, these properties remain mostly empirical. This gap between theory and practice is detrimental as practitioners may rely on strategies that are not optimal for their use case.
-While recent software developments are making these methods more scalable \cite{chan2018t,pezzotti2019gpgpu,linderman2019fast} and further expanding their use, the need for a well-established probabilistic framework is becoming more prominent.
-In this work, we define the generative probabilistic model that encompasses current embedding methods, while establishing new links with the well-established PCA model.
+
+This work addresses \Cref{prob:probabilistic_models} and focuses on extending the latent variable perspective to neighbor embedding methods. The goal is twofold: first, to provide a stronger theoretical understanding of these methods. Due to the lack of clear probabilistic foundations, the properties of neighbor embedding algorithms remain largely empirical. This gap between theory and practice can be problematic, as practitioners may adopt suboptimal strategies for their specific use cases.  
+While recent software developments have made these methods more scalable \citep{chan2018t,pezzotti2019gpgpu,linderman2019fast}, including our toolbox \emph{TorchDR} \citep{vanassel2024torchdr}, which further broadens their applicability, the need for a well-defined probabilistic framework is increasingly critical.  
+In this work, we define a generative probabilistic model that unifies current embedding methods and establish new connections with the well-known PCA model discussed in \Cref{sec:dr_proba_modelling}.  
+Second, this work aims to facilitate further extensions of these models by providing mechanisms to incorporate structural priors, a direction we explore in \Cref{sec:supp_material_gc}.
+
 
 \paragraph{Outline.} 
 The rationale of our framework is to suppose that the observations $\Xb$ and $\Zb$ are structured by two latent graphs with $\Wb_{X}$ and $\Wb_{Z}$ standing for their $N$-square weight matrices.
@@ -21,9 +23,9 @@ As the goal of DR is to preserve the input's structure in the latent space, we p
 In this work, our main contributions are as follows.
 
 \begin{itemize}
+    \item We show in \Cref{sec:pca_graph_coupling} that for Gaussian MRFs, when adapting graph coupling to precision matrices with suitable conjugate priors, one is able to recover PCA embeddings as solutions of the coupling problem in its continuous version (\cref{PCA_graph_coupling}).
     \item We show that SNE, t-SNE, LargeVis and UMAP are all instances of graph coupling and characterized by different choices of prior for discrete latent structuring graphs (\cref{sec:GC_unified}). We demonstrate that such graphs essentially capture conditional independencies among rows through a pairwise Markov Random Field (MRF) model whose construction can be found in \cref{sec:graph_structure}.
     \item We uncover the intrinsic probabilistic property explaining why such methods perform poorly on conserving the large-scale structure of the data as a consequence of the degeneracy of the MRF when shift-invariant kernels are used (\cref{prop:integrability_pairwise_MRF}). Such degeneracy induces the loss of the relative positions of clusters corresponding to the connected components of the posterior latent graphs whose distributions are identified (\cref{prop:posterior_W}). These findings are highlighted by a new initialization of the embeddings (\cref{sec:towards_large_scale}).
-    \item We show that for Gaussian MRFs, when adapting graph coupling to precision matrices with suitable priors, PCA appears as a natural extension of the coupling problem in its continuous version (\cref{PCA_graph_coupling}). Such a model does not suffer from the aforementioned degeneracy hence preserves the large-scale structure.
 \end{itemize}
 
 

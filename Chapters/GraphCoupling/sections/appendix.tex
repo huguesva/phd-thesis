@@ -1,32 +1,32 @@
 % Appendix Template
 
-\section{Appendix}
+\section{Supplementary Material}\label{sec:supp_material_gc}
 
 \subsection{Proof of \Cref{PCA_graph_coupling}}
 
 \PCAgraphcoupling*
 
 \begin{proof}
-We consider the following hierarchical model, for $\nu_{X}, \nu_{Z} \geq n$:
+We consider the following hierarchical model, for $\nu_{X}, \nu_{Z} \geq N$:
 \begin{align*}
-    \bm{\Theta}_{X} &\sim  \mathcal{W}(\nu_{X}, \bm{I}_n) \\
+    \bm{\Theta}_{X} &\sim  \mathcal{W}(\nu_{X}, \bm{I}_N) \\
     \mathrm{vec}(\X) | \bm{\Theta}_{X} &\sim \mathcal{N}(\bm{0}, \bm{\Theta}_{X}^{-1} \otimes \bm{I}_p) \\
-    \bm{\Theta}_{Z} &\sim  \mathcal{W}(\nu_{Z}, \bm{I}_n) \\
+    \bm{\Theta}_{Z} &\sim  \mathcal{W}(\nu_{Z}, \bm{I}_N) \\
     \mathrm{vec}(\Z) | \bm{\Theta}_{Z} &\sim \mathcal{N}(\bm{0}, \bm{\Theta}_{Z}^{-1} \otimes \bm{I}_q) \:.
 \end{align*}
 With this at hand, the posteriors for $\bm{\Theta}_X$ and $\bm{\Theta}_Z$ can be derived in closed form: 
 \begin{align*}
-    \bm{\Theta}_{X} | \X &\sim  \mathcal{W}(\nu_{X}+p, \left(\bm{I}_n + \X \X^\top\right)^{-1}) \\
-    \bm{\Theta}_{Z} | \Z &\sim  \mathcal{W}(\nu_{Z} + q, \left(\bm{I}_n + \Z \Z^\top\right)^{-1}) \:.
+    \bm{\Theta}_{X} | \X &\sim  \mathcal{W}(\nu_{X}+p, \left(\bm{I}_N + \X \X^\top\right)^{-1}) \\
+    \bm{\Theta}_{Z} | \Z &\sim  \mathcal{W}(\nu_{Z} + q, \left(\bm{I}_N + \Z \Z^\top\right)^{-1}) \:.
 \end{align*}
 
 Keeping terms of $-\mathbb{E}_{\bm{\Theta}_{X}}[\log \mathbb{P}(\bm{\Theta}_{Z} = \bm{\Theta}_{X}| \Z )| \X]$ that depends on $\Z$, one has the optimization problem:
 \begin{align*}
-    \min_{\Z \in \mathbb{R}^{n \times q}} \quad \frac{\nu_{X}+p}{2}\operatorname{tr}\left(\Z^\top(\bm{I}_n +  \X\X^\top)^{-1}\Z\right) - \frac{\nu_{Z}+q}{2}\log |\bm{I}_n +  \Z\Z^\top|
+    \min_{\Z \in \mathbb{R}^{n \times q}} \quad \frac{\nu_{X}+p}{2}\operatorname{tr}\left(\Z^\top(\bm{I}_N +  \X\X^\top)^{-1}\Z\right) - \frac{\nu_{Z}+q}{2}\log |\bm{I}_N +  \Z\Z^\top|
 \end{align*}
-Consider the eigendecomposition of the sample covariance matrices: $\X\X^\top = \bm{V D} \bm{V}^\top$ and $\Z\Z^\top = \bm{U \Lambda} \bm{U}^\top$ where $\bm{D}=\operatorname{diag}(\bm{d})$ and $\bm{\Lambda}=\operatorname{diag}(\bm{\lambda})$ such that $d_1 \geq ... \geq d_n$ and $\lambda_1 \geq ... \geq \lambda_n$. Denoting $\gamma = (\nu_{X}+q)/(\nu_{Z}+p)$, we consider the following problem:
+Consider the eigendecomposition of the sample covariance matrices: $\X\X^\top = \bm{V D} \bm{V}^\top$ and $\Z\Z^\top = \bm{U \Lambda} \bm{U}^\top$ where $\bm{D}=\operatorname{diag}(\bm{d})$ and $\bm{\Lambda}=\operatorname{diag}(\bm{\lambda})$ such that $d_1 \geq ... \geq d_N$ and $\lambda_1 \geq ... \geq \lambda_N$. Denoting $\gamma = (\nu_{X}+q)/(\nu_{Z}+p)$, we consider the following problem:
 \begin{align}
-   \min_{\bm{U} \in \mathcal{O}(n), \bm{\Lambda}} \quad & \operatorname{tr}\left(\bm{U} \bm{\Lambda} \bm{U}^\top \bm{V} (\bm{I}_n + \bm{D})^{-1} \bm{V}^\top\right) - \gamma \log |\bm{I}_n + \bm{\Lambda}| \label{eq:optim_eigenvalues_eigenvectors} \\
+   \min_{\bm{U} \in \mathcal{O}(N), \bm{\Lambda}} \quad & \operatorname{tr}\left(\bm{U} \bm{\Lambda} \bm{U}^\top \bm{V} (\bm{I}_N + \bm{D})^{-1} \bm{V}^\top\right) - \gamma \log |\bm{I}_N + \bm{\Lambda}| \label{eq:optim_eigenvalues_eigenvectors} \\
     \textrm{s.t.} \quad & \bm{\Lambda} \succcurlyeq \bm{0} \label{eq:positive_definite_constraint}\\
     & \operatorname{rank}(\bm{\Lambda}) \leq q \label{eq:rank_constraint}
 \end{align}
@@ -34,23 +34,23 @@ Note that the above problem is non-convex because of the rank constraint (\ref{e
 
 First, we focus on finding the optimal eigenvectors. To that extent, let us denote, $\bm{R} = \bm{U}^\top\bm{V}$. Only the left term in (\ref{eq:optim_eigenvalues_eigenvectors}) depends on $\bm{R}$. The optimization problem for eigenvectors writes:
 \begin{align}
-   \min_{\bm{R} \in \mathcal{O}(n)} \quad & \operatorname{tr}\left(\bm{R}^\top \bm{\Lambda} \bm{R} (\bm{I}_n + \bm{D})^{-1} \right) \label{eq:optim_eigenvalues_eigenvectors}
+   \min_{\bm{R} \in \mathcal{O}(N)} \quad & \operatorname{tr}\left(\bm{R}^\top \bm{\Lambda} \bm{R} (\bm{I}_N + \bm{D})^{-1} \right) \label{eq:optim_eigenvalues_eigenvectors}
 \end{align}
-The objective (\ref{eq:optim_eigenvalues_eigenvectors}) can be expressed as: $\sum_{(i,j) \in \integ{n}^2} \lambda_i (1 + d_j)^{-1} R_{ij}^2$. Now one can notice that since $\bm{R}$ is orthogonal, $\bm{R} \odot \bm{R}$ is doubly stochastic (\textit{i.e.}\ sum of coefficients on each row and column is equal to one). Therefore thanks to the Birkhoff–von Neumann theorem, there exists $\theta_1, ..., \theta_L \geq 0$, $\sum_{\ell \in \integ{L}} \theta_\ell = 1$ and permutation matrices $\bm{P}_1, ..., \bm{P}_L$ such that:
+The objective (\ref{eq:optim_eigenvalues_eigenvectors}) can be expressed as: $\sum_{(i,j) \in \integ{N}^2} \lambda_i (1 + d_j)^{-1} R_{ij}^2$. Now one can notice that since $\bm{R}$ is orthogonal, $\bm{R} \odot \bm{R}$ is doubly stochastic (\textit{i.e.}\ sum of coefficients on each row and column is equal to one). Therefore thanks to the Birkhoff–von Neumann theorem, there exists $\theta_1, ..., \theta_L \geq 0$, $\sum_{\ell \in \integ{L}} \theta_\ell = 1$ and permutation matrices $\bm{P}_1, ..., \bm{P}_L$ such that:
 $$\bm{R} \odot \bm{R} = \sum_{\ell \in \integ{L}} \theta_\ell \bm{P}_\ell$$
-where for all $\ell \in \integ{L}$, there exists a permutation $\sigma_\ell$ of $\integ{n}$ such that $P_{\ell,ij} = \ind_{\sigma_{\ell}(i) = j}$ for $(i,j) \in \integ{n}^2$. 
+where for all $\ell \in \integ{L}$, there exists a permutation $\sigma_\ell$ of $\integ{N}$ such that $P_{\ell,ij} = \ind_{\sigma_{\ell}(i) = j}$ for $(i,j) \in \integ{N}^2$. 
 
-With this at hand, objective (\ref{eq:optim_eigenvalues_eigenvectors}) writes: $\sum_{\ell \in \integ{L}} \theta_\ell \sum_{i \in \integ{n}} \lambda_i (1 + d_{\sigma_\ell(i)})^{-1}$. There exists a permutation $\sigma^\star$ such that the quantity $\sum_{i \in \integ{n}} \lambda_i (1 + d_{\sigma_\ell(i)})^{-1}$ is minimal. Note that the identity permutation \textit{i.e.}\ for $i \in \integ{n}$, $ \sigma(i) = i$ is optimal in this case as the $(\lambda_i)_{i \in \integ{n}}$ and the $(d_i)_{i \in \integ{n}}$ are in decreasing order. Then choosing for $\ell \in \integ{L}$, $\theta_\ell = \ind_{\sigma_\ell = \sigma^\star}$ minimizes the latter quantity. Therefore the solution of (\ref{eq:optim_eigenvalues_eigenvectors}) $\bm{R}^{\star}$ is such that for $(i,j) \in \integ{n}^2$, $R^\star_{ij} = \pm \ind_{\sigma^\star(i)=j}$. Thus an optimum in $\bm{U}$ of $\ref{eq:optim_eigenvalues_eigenvectors}$ is such that $\bm{U}^\star = \bm{V} \bm{R}^\star$. 
+With this at hand, objective (\ref{eq:optim_eigenvalues_eigenvectors}) writes: $\sum_{\ell \in \integ{L}} \theta_\ell \sum_{i \in \integ{N}} \lambda_i (1 + d_{\sigma_\ell(i)})^{-1}$. There exists a permutation $\sigma^\star$ such that the quantity $\sum_{i \in \integ{N}} \lambda_i (1 + d_{\sigma_\ell(i)})^{-1}$ is minimal. Note that the identity permutation \textit{i.e.}\ for $i \in \integ{N}$, $ \sigma(i) = i$ is optimal in this case as the $(\lambda_i)_{i \in \integ{N}}$ and the $(d_i)_{i \in \integ{N}}$ are in decreasing order. Then choosing for $\ell \in \integ{L}$, $\theta_\ell = \ind_{\sigma_\ell = \sigma^\star}$ minimizes the latter quantity. Therefore the solution of (\ref{eq:optim_eigenvalues_eigenvectors}) $\bm{R}^{\star}$ is such that for $(i,j) \in \integ{N}^2$, $R^\star_{ij} = \pm \ind_{\sigma^\star(i)=j}$. Thus an optimum in $\bm{U}$ of $\ref{eq:optim_eigenvalues_eigenvectors}$ is such that $\bm{U}^\star = \bm{V} \bm{R}^\star$. 
 
 Hence $\bm{U} = \bm{V}$, in particular, is optimal. We will choose this $\bm{U}$ in what follows as the sign of the axes do not influence the characterization of the final result in $\Z$ as a PCA embedding. Such a choice gives $\Z \Z^\top = \bm{V} \bm{\Lambda} \bm{V}^\top$. 
 
-Now it remains to find the optimal eigenvalues $(\lambda_i)_{i \in \integ{n}}$. The rank constraint (\ref{eq:rank_constraint}) can be easily dealt with: since the eigenvalues are sorted in decreasing order, the constraint implies that for $i \geq q$, $\lambda_i=0$.  Thus the eigenvalue problem can be formulated in $\mathbb{R}^q$:
+Now it remains to find the optimal eigenvalues $(\lambda_i)_{i \in \integ{N}}$. The rank constraint (\ref{eq:rank_constraint}) can be easily dealt with: since the eigenvalues are sorted in decreasing order, the constraint implies that for $i \geq q$, $\lambda_i=0$.  Thus the eigenvalue problem can be formulated in $\mathbb{R}^q$:
 \begin{align}
     \min_{\bm{\lambda} \in \mathbb{R}^q} \quad & \bm{\lambda}^\top (\bm{1} + \bm{d})^{-1} - \gamma \bm{1}^\top \log (\bm{1} + \bm{\lambda}) \label{eq:objective_lambda}\\
     \textrm{s.t.} \quad & \forall i \in [q], \quad  \lambda_i \geq 0 , \quad \lambda_1 \geq ... \geq \lambda_q \label{eq:feasibility_lambda}
 \end{align}
 where (\ref{eq:feasibility_lambda}) accounts for (\ref{eq:positive_definite_constraint}). The above is convex. (\ref{eq:objective_lambda}) is minimized for $\bm{\lambda} = \gamma (\bm{1} + \bm{d}) - \bm{1}$. Taking the feasibility constraint (\ref{eq:feasibility_lambda}) into account one has a solution $\bm{\lambda}^*$ such that:
-$$\forall i \in \integ{n}, \quad 
+$$\forall i \in \integ{N}, \quad 
 \lambda_i^* = \left\{
     \begin{array}{ll}
         \max(0, \gamma(1 + d_i) - 1) \quad &\mbox{if} \quad i \leq q \\
@@ -66,13 +66,13 @@ Note that this solution is not unique if there are repeated eigenvalues. Notice 
 \integrabilitypairwiseMRF*
 
 \begin{proof}
-$\W \in \mathcal{S}_W$ is the weight matrix of a graph with $R$ connected components $\{C_1, ..., C_R\}$ partitioning $\integ{n}$. Since $k$ is upper bounded by a constant, there exists $M_+ > 1$ that upper bounds $k$. Let $\bm{\mathcal{T}}$ be the adjacency matrix of a spanning forest of $\W$, since each edge of $\W$ is bounded by $n$, one has:
+$\W \in \mathcal{S}_W$ is the weight matrix of a graph with $R$ connected components $\{C_1, ..., C_R\}$ partitioning $\integ{N}$. Since $k$ is upper bounded by a constant, there exists $M_+ > 1$ that upper bounds $k$. Let $\bm{\mathcal{T}}$ be the adjacency matrix of a spanning forest of $\W$, since each edge of $\W$ is bounded by $N$, one has:
 \begin{align}
-    \int f_{k}(\X, \W) \lambda_{\mathcal{S}_{C}}(d\X) &= \int \prod_{(i,j) \in \integ{n}^2} k(\mathbf{x}_{i} - \mathbf{x}_{j})^{W_{ij}} \lambda_{\mathcal{S}_{C}}(d\X) \nonumber \\
-    &\leq M_+^{n^{3}} \int \prod_{(i,j) \in \integ{n}^2} k(\mathbf{x}_{i} - \mathbf{x}_{j})^{\mathcal{T}_{ij}} \lambda_{\mathcal{S}_{C}}(d\X) \nonumber \\
-    &\leq M_+^{n^{3}} \prod_{r \in \integ{R}} \int \prod_{(i,j) \in C_{r}^2} k(\mathbf{x}_{i} - \mathbf{x}_{j})^{\mathcal{T}_{ij}} \lambda_{\mathcal{S}_{C}}(d\X) \:. \label{bound_MRF_product_CC}
+    \int f_{k}(\X, \W) \lambda_{\mathcal{S}_{C}}(d\X) &= \int \prod_{(i,j) \in \integ{N}^2} k(\mathbf{x}_{i} - \mathbf{x}_{j})^{W_{ij}} \lambda_{\mathcal{S}_{C}}(d\X) \nonumber \\
+    &\leq M_+^{N^{3}} \int \prod_{(i,j) \in \integ{N}^2} k(\mathbf{x}_{i} - \mathbf{x}_{j})^{\mathcal{T}_{ij}} \lambda_{\mathcal{S}_{C}}(d\X) \nonumber \\
+    &\leq M_+^{N^{3}} \prod_{r \in \integ{R}} \int \prod_{(i,j) \in C_{r}^2} k(\mathbf{x}_{i} - \mathbf{x}_{j})^{\mathcal{T}_{ij}} \lambda_{\mathcal{S}_{C}}(d\X) \:. \label{bound_MRF_product_CC}
 \end{align}
-Let $r \in \integ{R}$. The spanning tree corresponding to the $r^{th}$ connected component called $\bm{\mathcal{T}}^r$ has exactly $n_r-1$ edges. There exists a leaf node $\ell \in \integ{n}$ of $\bm{\mathcal{T}}^r$ and let $\tilde{\ell}$ be the node linked to it. Consider a bijective map $\sigma \colon C_r \backslash \{\ell\} \to \integ{n_r - 1}$ such that $\sigma(\tilde{\ell}) = 1$ and for $(i,j) \in (C_r \backslash \{\ell\})^2$, $\sigma(i) \leq \sigma(j)$ implies that node $i$ has a shorter path on $\overline{\bm{\mathcal{T}}^r}$\footnote{Symmetrized version \textit{i.e.}\ $\overline{\bm{\mathcal{T}}^r} = \bm{\mathcal{T}}^r + \bm{(\mathcal{T}}^r)^\top$.} to $\ell$ than node $j$. There exists a bijective map $e \colon \integ{2:n_r - 1} \to \integ{n_r - 2}$ such that for $i \in \integ{2:n_R-1}$, $\overline{\bm{\mathcal{T}}^r}_{\sigma^{-1}(i), \sigma^{-1}(e(i))} > 0$ and node $\sigma^{-1}(e(i))$ has a shorter path on $\overline{\bm{\mathcal{T}}^r}$ to node $\ell$ than node $\sigma^{-1}(i)$.
+Let $r \in \integ{R}$. The spanning tree corresponding to the $r^{th}$ connected component called $\bm{\mathcal{T}}^r$ has exactly $n_r-1$ edges, where $n_r$ is the number of nodes in this connected component. There exists a leaf node $\ell \in \integ{N}$ of $\bm{\mathcal{T}}^r$ and let $\tilde{\ell}$ be the node linked to it. Consider a bijective map $\sigma \colon C_r \backslash \{\ell\} \to \integ{n_r - 1}$ such that $\sigma(\tilde{\ell}) = 1$ and for $(i,j) \in (C_r \backslash \{\ell\})^2$, $\sigma(i) \leq \sigma(j)$ implies that node $i$ has a shorter path on $\overline{\bm{\mathcal{T}}^r}$\footnote{Symmetrized version \textit{i.e.}\ $\overline{\bm{\mathcal{T}}^r} = \bm{\mathcal{T}}^r + \bm{(\mathcal{T}}^r)^\top$.} to $\ell$ than node $j$. There exists a bijective map $e \colon \integ{2:n_r - 1} \to \integ{n_r - 2}$ such that for $i \in \integ{2:n_R-1}$, $\overline{\bm{\mathcal{T}}^r}_{\sigma^{-1}(i), \sigma^{-1}(e(i))} > 0$ and node $\sigma^{-1}(e(i))$ has a shorter path on $\overline{\bm{\mathcal{T}}^r}$ to node $\ell$ than node $\sigma^{-1}(i)$.
 
 Recall that since $\X \in \mathcal{S}_{C}$ one has: $\sum_{i \in C_r} \mathbf{x}_i = 0$ hence $\mathbf{x}_{\ell} = - \sum_{i \neq \ell} \mathbf{x}_i$. Let us now consider the linear map $\phi^r$ such that:
 \begin{align*}
@@ -134,62 +134,62 @@ using the Fubini Tonelli theorem. The result follows from $\lambda_{\mathbb{R}^p
 \posteriorW
 
 \begin{proof}
-Let $\mathcal{P} \in \{B, D, E\}$, $k$ be a valid kernel (assumptions of \cref{prop:integrability_pairwise_MRF}) with $\K_{X} = (k(\mathbf{x}_{i} - \mathbf{x}_{j}))_{(i,j) \in \integ{n}^2}$ and $\bm{\pi} \in \mathbb{R}_+^{n \times n}$. Let $\W \sim \mathbb{P}_{\mathcal{P},k}^{\varepsilon}(\cdot \: ; \bm{\pi},1)$. Inversion of conditional with Bayes rule gives:
+Let $\mathcal{P} \in \{B, D, E\}$, $k$ be a valid kernel (assumptions of \cref{prop:integrability_pairwise_MRF}) with $\K_{X} = (k(\mathbf{x}_{i} - \mathbf{x}_{j}))_{(i,j) \in \integ{N}^2}$ and $\bm{\pi} \in \mathbb{R}_+^{n \times n}$. Let $\W \sim \mathbb{P}_{\mathcal{P},k}^{\varepsilon}(\cdot \: ; \bm{\pi},1)$. Inversion of conditional with Bayes rule gives:
 \begin{align}
     \forall \mW \in \mathcal{S}_{W}, \quad \mathbb{P}(\W | \bm{X}) \propto
     \mathcal{C}_{k}^{\varepsilon}(\W)^{-1} f^{\varepsilon}(\X, \W) f_{k}(\X, \W) \mathbb{P}^{\varepsilon}_{\mathcal{P},k}(\W; \bm{\pi}, 1) \label{inversion_Conditional}
 \end{align}
 where the prior reads:
 \begin{align}
-    \mathbb{P}_{\mathcal{P},k}^{\varepsilon}(\mW; \bm{\pi}, 1) \propto \mathcal{C}^{\varepsilon}_k(\W) \Omega_{\mathcal{P}}(\W) \prod_{(i,j) \in \integ{n}^2} \pi_{ij}^{W_{ij}} \:.
+    \mathbb{P}_{\mathcal{P},k}^{\varepsilon}(\mW; \bm{\pi}, 1) \propto \mathcal{C}^{\varepsilon}_k(\W) \Omega_{\mathcal{P}}(\W) \prod_{(i,j) \in \integ{N}^2} \pi_{ij}^{W_{ij}} \:.
 \end{align}
 Hence the joint normalizing constant simplifies such that:
 \begin{align}
     \forall \mW \in \mathcal{S}_{W}, \quad \mathbb{P}(\W | \bm{X}) &\propto
-    f^{\varepsilon}(\X, \W) \Omega_{\mathcal{P}}(\W) \prod_{(i,j) \in \integ{n}^2} \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \\
-    &\xrightarrow[\varepsilon \to 0]{} \Omega_{\mathcal{P}}(\W) \prod_{(i,j) \in \integ{n}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}}
+    f^{\varepsilon}(\X, \W) \Omega_{\mathcal{P}}(\W) \prod_{(i,j) \in \integ{N}^2} \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \\
+    &\xrightarrow[\varepsilon \to 0]{} \Omega_{\mathcal{P}}(\W) \prod_{(i,j) \in \integ{N}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}}
 \end{align}
 which ends the proof. As a complement, we now explicit the simple forms taken by the posterior limit graph in each case.
 
 \paragraph{$B$-Prior.}
 Recall that in this case the prior reads:
 \begin{align*}
-    \mathbb{P}_{B}^{\varepsilon}(\mW; \bm{\pi},1) &\propto \mathcal{C}_{k}^{\varepsilon}(\mW) \prod_{(i,j) \in \integ{n}^2} \pi_{ij}^{W_{ij}} \ind_{W_{ij} \leq 1} \:.
+    \mathbb{P}_{B}^{\varepsilon}(\mW; \bm{\pi},1) &\propto \mathcal{C}_{k}^{\varepsilon}(\mW) \prod_{(i,j) \in \integ{N}^2} \pi_{ij}^{W_{ij}} \ind_{W_{ij} \leq 1} \:.
 \end{align*}
 Therefore the posterior limit graph has the distribution:
 \begin{align*}
     \mathbb{P}_{B}(\W ;\bm{\pi} \odot \bm{K}_{X})
-    &= \frac{\prod_{(i,j) \in \integ{n}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{ij} \leq 1}}{\sum_{\W \in \mathcal{S}_{W}} \prod_{(i,j) \in \integ{n}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{ij} \leq 1}} \\
-    &= \prod_{(i,j) \in \integ{n}^2}  \left(\frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{1+\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}\right)^{W_{ij}} \left(\frac{1}{1+\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}\right)^{1-W_{ij}} \ind_{W_{ij} \leq 1} \:.
+    &= \frac{\prod_{(i,j) \in \integ{N}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{ij} \leq 1}}{\sum_{\W \in \mathcal{S}_{W}} \prod_{(i,j) \in \integ{N}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{ij} \leq 1}} \\
+    &= \prod_{(i,j) \in \integ{N}^2}  \left(\frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{1+\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}\right)^{W_{ij}} \left(\frac{1}{1+\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}\right)^{1-W_{ij}} \ind_{W_{ij} \leq 1} \:.
 \end{align*}
 
-This distribution amounts to: $\forall (i,j) \in \integ{n}^2, \quad \W_{ij} \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{B}\left( \frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{1+\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)} \right)$.
+This distribution amounts to: $\forall (i,j) \in \integ{N}^2, \quad \W_{ij} \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{B}\left( \frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{1+\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)} \right)$.
 
 \paragraph{$D$-Prior.} The prior writes:
 \begin{align*}
-    \mathbb{P}_{D}^{\varepsilon}(\mW; \bm{\pi}, 1) &\propto \mathcal{C}_{k}^{\varepsilon}(\mW) \prod_{(i,j) \in \integ{n}^2} \pi_{ij}^{W_{ij}} \ind_{W_{i+} = 1} \:.
+    \mathbb{P}_{D}^{\varepsilon}(\mW; \bm{\pi}, 1) &\propto \mathcal{C}_{k}^{\varepsilon}(\mW) \prod_{(i,j) \in \integ{N}^2} \pi_{ij}^{W_{ij}} \ind_{W_{i+} = 1} \:.
 \end{align*}
 The distribution of the posterior limit then becomes:
 \begin{align*}
-    \mathbb{P}_{D}(\W ;\bm{\pi} \odot \bm{K}_{X}) &= \frac{\prod_{(i,j) \in \integ{n}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{i+} = 1}}{\sum_{\W \in \mathcal{S}_{W}} \prod_{(i,j) \in \integ{n}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{i+} = 1}} \\
-    &= \frac{\prod_{(i,j) \in \integ{n}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{i+} = 1}}{\prod_{i \in \integ{n}} \sum_{\ell \in \integ{n}} \pi_{i\ell} k(\mathbf{x}_i - \mathbf{x}_{\ell})} \\
-    &= \prod_{(i,j) \in \integ{n}^2} \left(\frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{\sum_{\ell \in \integ{n}} \pi_{i\ell} k(\mathbf{x}_i - \mathbf{x}_{\ell})}\right)^{W_{ij}} \ind_{W_{i+} = 1} \:.
+    \mathbb{P}_{D}(\W ;\bm{\pi} \odot \bm{K}_{X}) &= \frac{\prod_{(i,j) \in \integ{N}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{i+} = 1}}{\sum_{\W \in \mathcal{S}_{W}} \prod_{(i,j) \in \integ{N}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{i+} = 1}} \\
+    &= \frac{\prod_{(i,j) \in \integ{N}^2}  \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{i+} = 1}}{\prod_{i \in \integ{N}} \sum_{\ell \in \integ{N}} \pi_{i\ell} k(\mathbf{x}_i - \mathbf{x}_{\ell})} \\
+    &= \prod_{(i,j) \in \integ{N}^2} \left(\frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{\sum_{\ell \in \integ{N}} \pi_{i\ell} k(\mathbf{x}_i - \mathbf{x}_{\ell})}\right)^{W_{ij}} \ind_{W_{i+} = 1} \:.
 \end{align*}
 
-This distribution amounts to: $\forall i \in \integ{n}, \quad \W_{i} \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{M}\left(1, \left(\frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{\sum_{\ell \in \integ{n}} \pi_{i\ell} k(\mathbf{x}_i - \mathbf{x}_{\ell})}\right)_{j \in \integ{n}}\right)$.
+This distribution amounts to: $\forall i \in \integ{N}, \quad \W_{i} \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{M}\left(1, \left(\frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{\sum_{\ell \in \integ{N}} \pi_{i\ell} k(\mathbf{x}_i - \mathbf{x}_{\ell})}\right)_{j \in \integ{N}}\right)$.
 
 \paragraph{$E$-Prior.}
 In this case the prior reads:
 \begin{align*}
-    \mathbb{P}_{E}^{\varepsilon}(\mW; \bm{\pi}, 1) &\propto \mathcal{C}_{k}^{\varepsilon}(\mW) \prod_{(i,j) \in \integ{n}^2} \frac{\pi_{ij}^{W_{ij}}}{W_{ij}!} \ind_{W_{++} = n} \:.
+    \mathbb{P}_{E}^{\varepsilon}(\mW; \bm{\pi}, 1) &\propto \mathcal{C}_{k}^{\varepsilon}(\mW) \prod_{(i,j) \in \integ{N}^2} \frac{\pi_{ij}^{W_{ij}}}{W_{ij}!} \ind_{W_{++} = n} \:.
 \end{align*}
 Finally, deriving the distribution of the posterior graph limit:
 \begin{align*}
-    \mathbb{P}_{E}(\W ;\bm{\pi} \odot \bm{K}_{X}) &= \frac{\prod_{(i,j) \in \integ{n}^2}  (W_{ij}!)^{-1}\left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{++} = n}}{\sum_{\W \in \mathcal{S}_{W}} \prod_{(i,j) \in \integ{n}^2} (W_{ij}!)^{-1} \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{++} = n}} \\
-    &= n! \prod_{(i,j) \in \integ{n}^2} (W_{ij})^{-1} \left(\frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{\sum_{(\ell,t) \in \integ{n}^2} \pi_{\ell t} k(\mathbf{x}_{\ell} - \mathbf{x}_t)}\right)^{W_{ij}} \ind_{W_{++} = n} \:.
+    \mathbb{P}_{E}(\W ;\bm{\pi} \odot \bm{K}_{X}) &= \frac{\prod_{(i,j) \in \integ{N}^2}  (W_{ij}!)^{-1}\left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{++} = n}}{\sum_{\W \in \mathcal{S}_{W}} \prod_{(i,j) \in \integ{N}^2} (W_{ij}!)^{-1} \left(\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)\right)^{W_{ij}} \ind_{W_{++} = n}} \\
+    &= N! \prod_{(i,j) \in \integ{N}^2} (W_{ij})^{-1} \left(\frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{\sum_{(\ell,t) \in \integ{N}^2} \pi_{\ell t} k(\mathbf{x}_{\ell} - \mathbf{x}_t)}\right)^{W_{ij}} \ind_{W_{++} = n} \:.
 \end{align*}
 
-This distribution amounts to: $\W \sim \mathcal{M}\left(n, \left(\frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{\sum_{(\ell,t) \in \integ{n}^2} \pi_{\ell t} k(\mathbf{x}_{\ell} - \mathbf{x}_t)}\right)_{(i,j) \in \integ{n}^2}\right)$.
+This distribution amounts to: $\W \sim \mathcal{M}\left(N, \left(\frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{\sum_{(\ell,t) \in \integ{N}^2} \pi_{\ell t} k(\mathbf{x}_{\ell} - \mathbf{x}_t)}\right)_{(i,j) \in \integ{N}^2}\right)$.
 \end{proof}
 
 

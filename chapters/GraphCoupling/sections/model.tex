@@ -1,4 +1,6 @@
-\section{PCA as Graph Coupling}
+\section{PCA as Graph Coupling}\label{sec:pca_graph_coupling}
+
+\todo{REMARK : far from iid assumption}
 
 As we argue that the inability of SNE-like methods to reproduce the coarse-grain dependencies of the input in the latent space is due to the degeneracy of the conditional (\ref{eq:proba_perp}), a natural solution would be to consider graphical models that are well defined and integrable on the entire definition spaces of $\Xb$ and $\Zb$. For simplicity, we consider the Gaussian model and leave the extension to other kernels for future works. Note that in this case, integrability translates into the precision matrix being full-rank. As we see with the following, the natural extension of our framework to such models leads to a well-established PCA algorithm. In the following, for a continuous variable $\bm{\Theta}_{Z}$, $\mathbb{P}(\bm{\Theta}_{Z} = \cdot)$ denotes its density.
 
