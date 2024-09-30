@@ -17,7 +17,7 @@ where $\mX \in \mathbb{R}^{N \times p}$ represents the data matrix, $\mZ \in \ma
 In this model, the $\vx_i$'s are independent since the samples in both $\mZ$ and $\mE$ are assumed to be independent. The relationship between $\mX$ and $\mZ$ can be simply expressed as the independent linear models: $\vx_i = \mW \vz_i + \ve_i$ for any $i$.
 
 \begin{remark}
-    Real-world data typically contain noise that exhibits some form of structure. To address this, several extensions of the PPCA model have been developed to relax the i.i.d. assumption, as we will do in \Cref{chapter:GraphCoupling}. For example, \cite{zhao2014robust} proposed a mixture of Gaussian noise, while \cite{kalaitzis2011residual} introduced additional fixed effects based on known covariates. In particular, \cite{allen2014generalized} modeled the noise structure using a matrix normal distribution, incorporating known covariance matrices for both rows and columns (see \Cref{memo:matrix_normal}). This method is especially relevant to the contributions of \Cref{chapter:GraphCoupling}.
+    Real-world data typically contain noise that exhibits some form of structure. To address this, several extensions of the PPCA model have been developed to relax the i.i.d. assumption, as we will do in \Cref{chapter:GraphCoupling}. For example, \cite{zhao2014robust} proposed a mixture of Gaussian noise, while \cite{kalaitzis2011residual} introduced additional fixed effects based on known covariates. In particular, \cite{allen2014generalized} modeled the noise structure using a matrix normal distribution, incorporating known covariance matrices for both rows and columns. This method is especially relevant to the contributions of \Cref{chapter:GraphCoupling}.
 \end{remark}
 
 
