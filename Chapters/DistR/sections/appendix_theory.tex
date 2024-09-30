@@ -1,4 +1,4 @@
-\section{Supplementary Material}
+\section{Proofs}
 
 \textbf{Outline of the supplementary material:}
 \begin{itemize}
@@ -6,8 +6,7 @@
 	\item \Cref{sec:srGW_divergence_supp}: provide the definition of weak isomorphism in the GW framework, proofs regarding the characterization of the generalized srGW discrepancy as a divergence, mentioned in \Cref{sec:DDR_ob} of the main paper.
 	\item \Cref{sec:srGW_concavity_supp}: proof of \cref{theo:srgw_bary_concavity} on the clustering properties of srGW barycenters.
 	\item \Cref{sec:algorithms}: Algorithmic details for DistR under generic and low-rank settings.
-	\item \Cref{sec:appendix_exps}: Several additional information and results regarding the experiments detailed in \Cref{sec:exps} of the main paper. \ref{sec:implementation_details} provides details on methods' implementation, validation of hyperparameters, datasets and metrics. \Cref{sec:coot_exp} compares DistR with COOT clustering. \Cref{sec:full_sensitivity} reports complete scores on all datasets. \Cref{sec:supp_hom_vs_sil} and \ref{sec:supp_hom_vs_nmi} study homogeneity vs silhouette and homogeneity vs kmeans NMI scores for various numbers of prototypes. \Cref{sec:compute_time} compares computation time across methods. And finally, \Cref{sec:hyperbolic} detail our proofs of concepts with hyperbolic DR kernels.
-
+	% \item \Cref{sec:appendix_exps}: Several additional information and results regarding the experiments detailed in \Cref{sec:exps} of the main paper. \ref{sec:implementation_details} provides details on methods' implementation, validation of hyperparameters, datasets and metrics. \Cref{sec:coot_exp} compares DistR with COOT clustering. \Cref{sec:full_sensitivity} reports complete scores on all datasets. \Cref{sec:supp_hom_vs_sil} and \ref{sec:supp_hom_vs_nmi} study homogeneity vs silhouette and homogeneity vs kmeans NMI scores for various numbers of prototypes. \Cref{sec:compute_time} compares computation time across methods. And finally, \Cref{sec:hyperbolic} detail our proofs of concepts with hyperbolic DR kernels.
 \end{itemize}
 
 \subsection{Proof of results in \Cref{sec:DR_as_OT}}\label{sec:DR_as_OT_supp}
@@ -174,7 +173,7 @@ It remains to prove the second point of \cref{theo:main_theo} as stated below.
 			&-\sum_{ijkl} [\simiX(\mX)]_{ik}\log([\mK_\mZ]_{jl}) T_{ij} T_{kl}\,,
 		\end{split}
 	\end{equation}
-	where $a_\mX, b_\mZ$ are terms that do not depend on $\mT$. Since the problem is quadratic the concavity only depends on the term $-\sum_{ijkl} [\simiX(\mX)]_{ik}\log([\mK_\mZ]_{jl}) T_{ij} T_{kl} = -\tr(\simiX(\mX) \mT^\top \log(\mK_\mZ) \mT)$. From \cite{maron2018probably} we know that the function $\mT \to -\tr(\simiX(\mX) \mT^\top \log(\mK_\mZ) \mT)$ is concave on $\gU(\frac{1}{N} \one_N, \frac{1}{N} \one_N)$ when $\simiX(\mX)$ is CPD and $\log(\mW_\mZ)$ is CPD. This concludes the proof.	
+	where $a_\mX, b_\mZ$ are terms that do not depend on $\mT$. Since the problem is quadratic the concavity only depends on the term $-\sum_{ijkl} [\simiX(\mX)]_{ik}\log([\mK_\mZ]_{jl}) T_{ij} T_{kl} = -\tr(\simiX(\mX) \mT^\top \log(\mK_\mZ) \mT)$. From \citep{maron2018probably} we know that the function $\mT \to -\tr(\simiX(\mX) \mT^\top \log(\mK_\mZ) \mT)$ is concave on $\gU(\frac{1}{N} \one_N, \frac{1}{N} \one_N)$ when $\simiX(\mX)$ is CPD and $\log(\mW_\mZ)$ is CPD. This concludes the proof.	
 \end{proof}
 
 \subsubsection{Necessary and sufficient condition \label{sec:necessary_and_sufficient}}
@@ -589,7 +588,7 @@ To prove the theorem we will first prove that the function $G: \mT \to \min_{\ov
 	\begin{equation}
 		G((1-\lambda) \mP + \lambda \mQ) \geq (1-\lambda) G(\mP) + \lambda G(\mQ)\,,
 	\end{equation}
-	and hence $G$ is concave on $\gU_n(\vh_X)$. This proves \cref{theo:srgw_bary_concavity}. Indeed the minimization of $\mT \in \gU_n(\vh_X) \to \min_{\overline{\mC}} E_{L}(\simiX(\mX), \overline{\mC}, \mT)$ is a minimization of a concave function over a polytope, hence admits an extremity of $\gU_n(\vh_X)$ as minimizer. But these extremities are membership matrices as they can be described as $\{\diag(\vh_X) \mP: \mP \in \{0,1\}^{N \times n}, \mP^\top \one_n = \one_N\}$ \cite{cao2022centrosymmetric}.
+	and hence $G$ is concave on $\gU_n(\vh_X)$. This proves \cref{theo:srgw_bary_concavity}. Indeed the minimization of $\mT \in \gU_n(\vh_X) \to \min_{\overline{\mC}} E_{L}(\simiX(\mX), \overline{\mC}, \mT)$ is a minimization of a concave function over a polytope, hence admits an extremity of $\gU_n(\vh_X)$ as minimizer. But these extremities are membership matrices as they can be described as $\{\diag(\vh_X) \mP: \mP \in \{0,1\}^{N \times n}, \mP^\top \one_n = \one_N\}$ \citep{cao2022centrosymmetric}.
 \end{proof}
 
 
@@ -630,99 +629,3 @@ To prove the theorem we will first prove that the function $G: \mT \to \min_{\ov
 	\end{equation}
 	For the CND case is suffices to use that $\mC$ is CND if and only if $-\mC$ is CPD and that $\tr\left((\mP-\mQ)^\top \mC (\mP-\mQ)\mC\right)= \tr\left((\mP-\mQ)^\top (-\mC) (\mP-\mQ)(-\mC)\right)$ which concludes the proof. 
 \end{proof}
-
-
-\subsection{Algorithmic details}\label{sec:algorithms}
-
-We detail in the following the algorithms mentioned in Section \ref{sec:DDR} to address the semi-relaxed GW divergence computation in our Block Coordinate Descent algorithm for the DistR problem. We begin with details on the computation of an equivalent objective function and its gradient, potentially under low-rank assumptions over structures $\mC$ and $\overline{\mC}$.
-
-\subsubsection{Objective function and gradient computation.}\label{subsec:GWloss} 
-
-\paragraph{Problem statement.} Let consider any matrices $\mC \in \R^{n \times n}$, $\overline{\mC} \in \R^{m \times m}$, and a probability vector $\vh \in \Sigma_n$. In all our use cases,  we considered inner losses $L: \R \times \R \rightarrow \R_+$ which can be decomposed following Proposition 1 in \cite{peyre2016gromov}. Namely we assume the existence of functions $f_1, f_2, h_1, h_2$ such that 
-\begin{equation}\label{eq:loss_decomposition}
-\forall a, b \in \Omega^2, \quad L(a, b) = f_1(a) + f_2(b) - h_1(a) h_2(b)
-\end{equation}
-More specifically we considered
-\begin{equation} \tag{L2}\label{eq:L2_loss}
-\begin{split}
-	L_2(a,b) = (a-b)^2 &\implies f_1(a) = a^2, \: f_2(b) = b^2, \: h_1(a) = a, \: h_2(b) = 2b \\
-	L_{KL}(a,b ) = a \log \frac{a}{b} - a +b &\implies f_1(a) = a \log a -a, \: f_2(b) = b, \: h_1(a) = a, \: h_2(b) = \log b \\
-\end{split}
-\end{equation}
-In this setting, we proposed to solve for the equivalent problem to $\srGW_L$ :
-\begin{equation}\label{eq:srgw_eqpb}\tag{srGW-2}
-\min_{\mT \in \mathcal{U}_n(\vh)} F(\mT)
-\end{equation}
-where the objective function reads as 
-\begin{equation}\label{eq:expressionF}
-\begin{split}
-	F(\mT) &:= \scalar{F_1(\overline{\mC}, \mT) - F_2(\mC, \overline{\mC}, \mT)}{\mT} \\ 
-	&= \scalar{\bm{1}_N \bm{1}_N^\top \mT f_2(\overline{\mC})}{ \mT} - \scalar{h_1(\mC) \mT h_2(\overline{\mC})^\top}{\mT}
-\end{split}
-\end{equation}
-
-Problem \ref{eq:srgw_eqpb} is usually a non-convex QP with Hessian $\mathcal{H} = f_2(\overline{\mC}) \otimes \bm{1}\bm{1}^\top - h_2(\overline{\mC}) \otimes_K h_1(\mC)$. In all cases this equivalent form is interesting as it avoids computing the constant term $\scalar{f_1(\mC)}{\vh \vh^\top} $ that requires $O(N^2)$ operations in all cases.
-
-The gradient of $F$ w.r.t $\mT$ then reads as 
-\begin{equation}\label{eq:srgw_gradient}
-\nabla_{\mT} F(\mC, \overline{\mC}, \mT) = F_1(\overline{\mC}, \mT) +  F_1(\overline{\mC}^\top, \mT) - F_2(\mC, \overline{\mC}, \mT) -F_2(\mC^\top, \overline{\mC}^\top, \mT) 
-\end{equation}
-When $C_X(\mX)$ and $C_Z(\mZ)$ are symmetric, which is the case in all our experiments,  this gradient reduces to $\nabla_{\mT} F = 2(F_1 - F_2)$.
-
-\paragraph{Low-rank factorization.} Inspired from the work of \cite{scetbon2022linear}, we propose implementations of $\srGW$ that can leverage the low-rank nature of $\mC_X(\mX)$ and $\mC_Z(\mZ)$. Let us assume that both structures can be exactly decomposed as follows, $\mC_X(\mX) = \mA_1 \mA_2^\top$ where $\mA_1, \mA_2 \in \R^{N \times r}$ and $\mC_Z(\mZ) = \mB_1 \mB_2^\top$ with $\mB_1, \mB_2 \in \R^{n \times s}$, such that $r << N$ and $s << n$, can differ respectively from respective dimensions $p$ and $d$ (\eg for used squared Euclidean distance matrices $r=p+2$ and $s=d +2$ ). For both inner losses $L$ we make use of the following factorization:
-
-\underline{$L=L_2$}: Computing the first term $F_1$ coming for the optimized second marginal can benefit from being factored if $d^2 << n$. Indeed, as $f_2(\mC_Z(\mZ)) = \mC_Z(\mZ)^2 = (\mB_1 \mB_2^\top) \odot (\mB_1 \mB_2^\top)$, one can use the flattened out product operator described in \cite[Section 5]{scetbon2022linear}, to compute $\mC_Z(\mZ)^2 \mT^\top \bm{1}_N = \vx$ in $O(min(n^2, ns^2))$. This way $F_1(\mT)$ results from stacking $N$ times $\vx$ in $O(1)$ operations for a total number of computions of $N + O(min(n^2, ns^2))$.%Hence computing $F_2(\cdot, \cdot, \mT)$,  following this paranthesis $\bm{1}_N (( \mT \bm{1}_n)^\top) f_2(\overline{\mC})^\top)$ in $O(Nn + n^2)$ operation.
-And its scalar product with $\mT$ to compute the loss comes down to $O(Nn)$ additional operations. \\
-Then computing $F_2(\mT)$ and its scalar product with $\mT$ can be done following the development of \cite[Section 3]{scetbon2022linear} for the corresponding GW problem, in $O(Nn(r + s) + rs(N+n))$ operations. So the overall complexity at is $O(Nn(r + s) + rs(N+n) + min(n^2, ns^2))$.
-
-
-\underline{$L=L_{KL}$}: In this setting $f_2(\mC_Z(\mZ)) = \mC_Z(\mZ)$ and $h_1(\mC_X(\mX)) = \mC_X(\mX)$ naturally preserves the low-rank nature of input matrices, but $h_2(\mC_Z(\mZ)) = \log(\mC_Z(\mZ))$ does not. So computing the first term $F_1$, can be performed following this paranthesis order $\bm{1}_N ((  \bm{1}_N^\top \mT) \mA_1)) \mA_2^\top) $ in $O(N(n + s))$ operations. While the second term $F_2$ should be computed following this order $\mA_1 ((\mA_2^\top \mT)  \log(\mC_Z(\mZ)))$ in $O(Nnr + rn^2)$ operations. While their respective scalar product can be computed in $O(Nn)$. So the overall complexity is $O(Nnr + n^2r)$.\\
-Notice that in the gaussian kernel case for neighbor embedding methods, where $[\mC_Z(\mZ)]_{ij} = \exp(-\|\vz_i-\vz_j\|_2^2)$ up to some normalization. We have $[h_2(\mC_Z(\mZ))]_{ij} = -\|\vz_i-\vz_j\|_2^2$ which admits a low-rank factorization such that we can recover the complexity illustrated above for $L=L_2$.
-
-\subsubsection{Solvers.}
-We develop next our extension of both the Mirror Descent and Conditional Gradient solvers first introduced in \cite{vincent2021semi}, for any inner loss $L$ that decomposes as in \eqref{eq:loss_decomposition} .
-
-\paragraph{Mirror Descent algorithm.} This solver comes down to solve for the \emph{exact} srGW problem using mirror-descent scheme w.r.t the KL geometry. At each iteration $(i)$, the solver comes down to, first computing the gradient $\nabla_{\mT}F(\mT^{(i)})$ given in \eqref{eq:srgw_gradient} evaluated in $\mT^{(i)}$, then updating the transport plan using the following closed-form solution to a KL projection:
-
-\begin{equation}
-\mT^{(i+1)} \leftarrow \diag\left( \frac{\vh}{\mK^{(i)}\bm{1}_n} \right) \mK^{(i)}
-\end{equation}
-where $\mK^{(i)} = \exp \left(\ \nabla_{\mT}F(\mT^{(i)}) - \varepsilon \log(\mT^{(i)})  \right)$ and $\varepsilon > 0$ is an hyperparameter to tune. Proposition 3 and Lemma 7 in \cite[Chapter 6]{vincent2023optimal} provides that the Mirror-Descent algorithm converges to a stationary point non-asymptotically when $L=L_2$. A quick inspection of the proof suffices to see that this convergence holds for any losses $L$ satisfying \eqref{eq:loss_decomposition}, up to adaptation of constants involved in the Lemma.
-
-\paragraph{Conditional Gradient algorithm.} This algorithm, known to converge to local optimum \cite{lacoste2016convergence}, iterates over the 3 steps summarized in Algorithm \ref{alg:CGsolver}:
-.\begin{algorithm}[H]
-\caption{CG solver for $\srGW_L$\label{alg:CGsolver}}
-\begin{algorithmic}[1]
-	\REPEAT
-	\STATE $\mF^{(i)}\leftarrow $  Compute gradient  w.r.t $\mT$ of \eqref{eq:srgw_gradient}.
-	\STATE $\mX^{(i)}\leftarrow \min_{\substack{\mX\bm{1}_m =\vh\\ \mX \geq 0}} \scalar{\mX}{\mF^{(i)}} $%: Solve independent subproblems on rows of $\mG^{(t)}$. 
-	\STATE $\mT^{(i+1)} \leftarrow (1-\gamma^\star)\mT^{(i)} + \gamma^\star \mX^{(i)}$   with $\gamma^\star \in [0,1]$ from exact-line search.
-	\UNTIL{convergence.}
-\end{algorithmic}
-\end{algorithm}
-
-This algorithm consists in solving at each
-iteration $(i)$ a linearization $\scalar{\mX}{\mF^{(i)}}$ of the problem \eqref{eq:srgw_eqpb}
-where $\mF(\mT^{(i)})$ is the gradient of the objective in \eqref{eq:srgw_gradient}.  The solution of the linearized problem provides a \emph{descent direction} $\mX^{(i) }-\mT^{(i)}$, and a line-search whose optimal step can be found in closed form to
-update the current solution $\mT^{(i)}$. We detail in the following this line-search step for any loss that can be decomposed as in \eqref{eq:loss_decomposition}. It comes down for any $\mT \in \mathcal{U}_n(\vh)$, to solve the following problem:
-\begin{equation}
-\gamma = \argmin_{\gamma \in [0,1]} g(\gamma) := F(\mT + \gamma (\mX - \mT))
-\end{equation}
-Observe that this objective function can be developed as a second order polynom $g(\gamma) = a \gamma^2 + b \gamma +c$. To find an optimal $\gamma$ it suffices to express coefficients $a$ and $b$ to conclude using Algorithm 2 in \cite{vayer2018optimal}.
-
-
-Denoting $\mX^\top \bm{1}_n = \vq_X$ and $\mT^\top \bm{1}_n = \vq_T$ and following \eqref{eq:expressionF}, we have
-\begin{equation}
-\begin{split}
-	a &= \scalar{ \bm{1}_{n} (\vq_X - \vq_T)^\top f_2(\overline{\mC})^\top - h_1(\mC) (\mX- \mT) h_2(\overline{\mC})^\top}{\mX - \mT} \\
-	&= \scalar{F_1(\mX) - F_1(\mT) - F_2(\mX) + \mF(\mT)}{\mX - \mT} 
-\end{split}
-\end{equation}
-
-Finally the coefficient $b$ of the linear term is
-\begin{equation}
-\begin{split}
-	b &=  \langle  F_1(\mT) - F_2(\mT) , \mX-\mT \rangle + \langle  F_1(\mX - \mT) - F_2(\mX- \mT), \mT  \rangle \\
-\end{split}
-\end{equation}
-

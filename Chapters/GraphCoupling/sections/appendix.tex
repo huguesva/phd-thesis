@@ -1,8 +1,7 @@
 % Appendix Template
 
-\section{Supplementary Material}\label{sec:supp_material_gc}
 
-\subsection{Towards Capturing Large-Scale Dependencies}\label{sec:towards_large_scale}
+\section{Towards Capturing Large-Scale Dependencies}\label{sec:towards_large_scale}
 
 In this section, we investigate the ability of neighbor embedding methods to faithfully represent the global structure in low dimensions. To do so, we provide a new initialization procedure to alleviate the large-scale deficiency of graph coupling when degenerate MRFs are used.
 
@@ -37,7 +36,7 @@ In this section, we investigate the ability of neighbor embedding methods to fai
     \label{fig:graphical_model_hierarchical}
 \end{figure}
 
-\subsubsection{Hierarchical Graph Coupling}\label{sec:hierarchical_modelling}
+\subsection{Hierarchical Graph Coupling}\label{sec:hierarchical_modelling}
 
 The goal of this section is to show that global structure in SNE-like embeddings can be improved by structuring the CCs' positions. We consider the following hierarchical model for $\Xb$, where $\mathcal{P}_{X} \in \{B,D,E\}$, $k_x$ satisfies the assumptions of \cref{prop:integrability_pairwise_MRF} and $\nu_{X} \geq n$:
 \begin{align*}
@@ -53,13 +52,15 @@ The same model is considered for $\Wb_{Z}$, $\bm{\Theta}_{Z}$ and $\Zb$, choosin
 \end{align}
 where (\ref{eq:loss_LW}) is the usual coupling criterion of $\Wb_X$ and $\Wb_Z$ capturing intra-CC variability while (\ref{eq:add_term_Coupling}) is a penalty resulting from the Gaussian structure on $\mathcal{S}_{M}$. Constructed as such, the above objective allows a trade-off between local and global structure preservation. Following current trends in DR \citep{kobak2021initialization}, we propose to take care of the global structure first \textit{i.e.}\ focusing on (\ref{eq:add_term_Coupling}) before (\ref{eq:loss_LW}). The difficulty of dealing with (\ref{eq:add_term_Coupling}) lies in the hierarchical construction of the graph and the Gaussian precision (see \cref{fig:graphical_model_hierarchical}). We state the following result.
 
-\begin{wrapfigure}[17]{R}{0.5\textwidth}
-\begin{center}
-\centerline{\includegraphics[width=0.5\columnwidth]{figures/GraphCoupling/tSNE_truth.png}}
-\caption{Left: MNIST t-SNE (perp: 30) embeddings initialized with i.i.d $\mathcal{N}(0,1)$ coordinates. Middle: using these t-SNE embeddings, mean coordinates for each digit are represented. Right: we compute a matrix of mean input coordinates for each of the $10$ digits and embed it using PCA. For t-SNE embeddings, the positions of clusters vary across different runs and don't visually match the PCA embeddings of input mean vectors (right plot).}
-\label{fig:tSNE-clusters-truth}
-\end{center}
-\end{wrapfigure}
+% \begin{figure*}
+% \begin{center}
+% % \begin{wrapfigure}[17]{R}{0.5\textwidth}
+% \centerline{\includegraphics[width=0.8\columnwidth]{figures/GraphCoupling/tSNE_truth.png}}
+% \caption{Left: MNIST t-SNE (perp: 30) embeddings initialized with i.i.d $\mathcal{N}(0,1)$ coordinates. Middle: using these t-SNE embeddings, mean coordinates for each digit are represented. Right: we compute a matrix of mean input coordinates for each of the $10$ digits and embed it using PCA. For t-SNE embeddings, the positions of clusters vary across different runs and don't visually match the PCA embeddings of input mean vectors (right plot).}
+% \label{fig:tSNE-clusters-truth}
+% \end{center}
+% % \end{wrapfigure}
+% \end{figure*}
 
 \begin{corollary}\label{corollary_ccPCA}
 Let $\Wb_{X} \in \mathcal{S}_{W}$, $\bm{L} = L(\overline{\Wb}_{X})$ and $\mathcal{S}^q_{M}= (\ker \bm{L}) \otimes \mathbb{R}^q$, then for all $\varepsilon > 0$, given the above hierarchical model, the solution of the problem:
@@ -73,22 +74,166 @@ Note that while (\ref{eq:loss_LW}) approximates the objective of SNE-like method
 
 From this observation, we propose a simple heuristic to minimize (\ref{eq:add_term_Coupling}) that consists in computing a PCA embedding of $\mathbb{E}_{\mathbb{P}_{\mathcal{P}_X}(\cdot;\Kb_{X})}\left[ \Ub_{[:R]}\Ub_{[R]}^\top \right]\Xb$. The distribution of the connected components of the posterior of $\Wb_{X}$ being intractable, we resort to a Monte-Carlo estimation of the above expectation. The latter procedure called \textit{ccPCA} aims at recovering the inter-CC structure that is filtered by SNE-like methods. \textit{ccPCA} may then be used as initialization for optimizing (\ref{eq:loss_LW}) which is done by running the DR method corresponding to the graph priors at hand (\cref{sec:retrieving_DR_methods}). This second step essentially consists in refining the intra-CC structure. 
 
-\subsubsection{Experiments with \textit{ccPCA}}\label{sec:ccPCA}
+\subsection{Experiments}\label{sec:ccPCA}
 
-\begin{figure*}[t]
+% \begin{figure*}[t]
+% \begin{center}
+% \centerline{\includegraphics[width=\columnwidth]{figures/GraphCoupling/cluster_positions.png}}
+% \caption{Top: MNIST embeddings produced by PCA, Laplacian eigenmaps, \textit{ccPCA} and finally t-SNE launched after the previous three embeddings to improve the fine-grain structure. Bottom: mean coordinates for each digit using the embeddings of the first row. The color legend is the same as in \cref{fig:tSNE-clusters-truth}. t-SNE was trained during $1000$ iterations using default parameters with the openTSNE implementation \citep{polivcar2019opentsne}.}
+% \label{fig:methods_embeddings}
+% \end{center}
+% \end{figure*}
+
+% \Cref{fig:tSNE-clusters-truth} shows that a t-SNE embedding of a balanced MNIST dataset of 10000 samples \citep{deng2012mnist} with isotropic Gaussian initialization performs poorly in conserving the relative positions of clusters. As each digit cluster contains approximately $1000$ points, with a perplexity of $30$, sampling an edge across digit clusters in the graph posterior $\mathbb{P}_{\mathcal{P}_X}(\cdot;\Kb_{X})$ is very unlikely. Recall that the perplexity value \citep{maaten2008tSNE} corresponds to the approximate number of effective neighbors of each point. Hence images of different digits are with very high probability in different CCs of the graph posterior and their CC-wise means are not coupled as discussed in \cref{sec:interpretations}. 
+
+% These strategies are tested (\cref{fig:methods_embeddings}) together with \textit{ccPCA}. This shows that 
+% \textit{ccPCA} manages to retrieve the digits that mostly support the large-scale variability as measured by the peripheral positioning of digits $0$ (blue), $2$ (green), $6$ (pink) and $7$ (grey) given by the right side of \cref{fig:tSNE-clusters-truth}. Other perplexity values for \textit{ccPCA} are explored in appendix \ref{sec:other_perp} while the experimental setup is detailed in appendix \Cref{sec:setup_ccpca}. 
+In this section, we perform quantitative evaluations of \textit{ccPCA} for both t-SNE and UMAP on various datasets using K-ary neighborhood criteria. 
+We find that using \textit{ccPCA} as initialization is in general more reliable than PCA and Laplacian eigenmaps for preserving global structure using both t-SNE and UMAP. 
+
+Compared to PCA, \textit{ccPCA} manages to aggregate points into clusters, thus filtering the intra-cluster variability and focusing solely on the inter-cluster structure. Compared to Laplacian eigenmaps which perform well at identifying clusters but suffer from the same deficiency as t-SNE for positioning them, \textit{ccPCA} retains more of the coarse-grain structure. These observations support our unifying probabilistic framework and the theoretical results about the MRF degeneracy which are the leading contributions of this article. The \textit{ccPCA} initialization appears as a first stepping stone towards more grounded DR methods based on the probabilistic model presented in this article.
+
+
+\subsubsection{Experimental setup}\label{sec:setup_ccpca}
+
+\paragraph{Implementation of existing methods.} For t-SNE, we rely on the openTSNE implementation \citep{polivcar2019opentsne} for both computing the kernel $\mK_{\scaleto{X}{4pt}}$ with appropriate bandwidths and running the tSNE algorithm. We keep the training default parameters and $1000$ iterations of gradient descent. For all experiments, the default perplexity of $30$ was used to set the kernel bandwidths. For UMAP, we use the default Python implementation of \citep{mcinnes2018umap} with default parameters. For PCA and Laplacian eigenmaps, the scikit-learn implementation is used \citep{pedregosa2011scikit} with default parameters as well. 
+
+\paragraph{\textit{ccPCA}.} The pseudo code of the algorithm is given in \cref{algo:ccPCA}. CCs' memberships (\textit{i.e.}\ eigenvectors $\bm{U}_{\scaleto{[R]}{5pt}}$) are computed using igraph \citep{csardi2006igraph}. Regarded the time complexity of ccPCA, one can sample the posterior graph with constant time if $\mathcal{P}_{\scaleto{X}{4pt}} = E$, linear time if $\mathcal{P}_{\scaleto{X}{4pt}} = D$ and quadratic time if $\mathcal{P}_{\scaleto{X}{4pt}} = B$. Moreover, computing $\bm{U}_{\scaleto{[R]}{5pt}}$ can be done with linear complexity \textit{w.r.t.}\ the number of nodes. Hence the time complexity is $O(M \times N)$ for $E$ and $D$ priors and $O(M \times N^2)$ for the $B$ prior, where $N$ is the number of Monte Carlo samples. In practice we found that $M\approx 100$ Monte Carlo samples produce a consistent \textit{ccPCA} embedding for $N \approx 10000$. Note that the time complexity of PCA is $O(\min(p^3,N^3))$ where $p$ is the dimensionality (\textit{i.e.}\ number of columns) of $\X$. Hence in most common applications involving images or biological sequencing data (where $p$ is very large), the additional time complexity brought by \textit{ccPCA} compared to PCA is negligible.
+
+\vspace{0.5cm}
+
+\begin{algorithm}[H]
+  \caption{\textit{ccPCA}}
+  \label{alg:3CPCA}
+\begin{algorithmic}
+  \STATE {\bfseries Input:} $\mK_{\scaleto{X}{4pt}}$, $\mathcal{P}_{\scaleto{X}{4pt}}$, $M$
+  \FOR{$\ell=1$ {\bfseries to} $M$}
+  \STATE Sample $\W^{\ell} \sim  \mathbb{P}_{\scaleto{\mathcal{P}_{\scaleto{X}{4pt}}}{5pt}}(\cdot ; \mK_{\scaleto{X}{4pt}})$
+  \STATE Compute CCs' memberships $\bm{U}^{\ell}_{\scaleto{[R]}{5pt}}$ of $\W^{\ell}$
+  \ENDFOR
+  \STATE {\bfseries Output:} PCA of $\left(N^{-1}\sum_{\ell \in \integ{N}} \bm{U}^{\ell}_{\scaleto{[R]}{5pt}} \bm{U}_{\scaleto{[R]}{5pt}}^{\ell\:T} \right) \X$
+\end{algorithmic}
+\label{algo:ccPCA}
+\end{algorithm}
+
+All experiments are performed on a
+machine with four Intel Core i5 processors and 16 GB memory.
+
+\subsubsection{\textit{ccPCA} with Varying Perplexity Values}\label{sec:other_perp}
+
+Recall that the \textit{ccPCA} algorithm retrieves the same latent graph as neighbor embedding methods. As shown in \cref{sec:retrieving_DR_methods}, these graphs' distributions depend on the type of prior considered, and take simple forms as follows, when $\bm{\pi}_{\scaleto{X}{4pt}} = \bm{1}$ :
+\begin{itemize}
+    \item if $\mathcal{P} = B$, $\forall (i,j) \in \integ{N}^2, \: W_{ij} \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{B}\left(K_{\scaleto{X}{4pt},ij}/(1 + K_{\scaleto{X}{4pt},ij}) \right)$
+    \item if $\mathcal{P} = D$, $\forall i \in \integ{N}, \: \W_{i} \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{M}\left(1, \mK_{\scaleto{X}{4pt},i}/K_{\scaleto{X}{4pt},i+} \right)$
+    \item if $\mathcal{P} = E$, $\W \sim \mathcal{M}\left(n, \mK_{\scaleto{X}{4pt}}/ K_{\scaleto{X}{4pt},++} \right)$
+\end{itemize}
+and $\mK_{\scaleto{X}{4pt}}$ is the kernel matrix evaluated on the data such that:
+$$\forall (i,j) \in \integ{N}^2, \quad \mK_{\scaleto{X}{4pt},ij} = k((\vx_i - \vx_j)/\tau_{i})$$
+where $\bm{\tau} \in \mathbb{R}^n$ is set using an heuristic depending on the method considered \citep{maaten2008tSNE, mcinnes2018umap, tang2016visualizing}. In \cref{fig:ccPCA_perp}, we focus on the effect of the kernel bandwidths on \textit{ccPCA}, choosing the example of t-SNE.
+
+\begin{figure*}[h]
+\vskip 0.2in
 \begin{center}
-\centerline{\includegraphics[width=\columnwidth]{figures/GraphCoupling/cluster_positions.png}}
-\caption{Top: MNIST embeddings produced by PCA, Laplacian eigenmaps, \textit{ccPCA} and finally t-SNE launched after the previous three embeddings to improve the fine-grain structure. Bottom: mean coordinates for each digit using the embeddings of the first row. The color legend is the same as in \cref{fig:tSNE-clusters-truth}. t-SNE was trained during $1000$ iterations using default parameters with the openTSNE implementation \citep{polivcar2019opentsne}.}
-\label{fig:methods_embeddings}
+\centerline{\includegraphics[width=\columnwidth]{figures/GraphCoupling/multi_perp.png}}
+\caption{\textit{ccPCA} launched for different values of the perplexity parameter. The latter determines the kernel bandwidths and can be interpreted as the number of effective neighbors of each point \citep{maaten2008tSNE}. As the perplexity grows, the probability of connecting different clusters of digit by sampling through the graph posterior $\mathbb{P}_{\scaleto{\mathcal{P}_X}{4pt}}(\cdot;\mK_{\scaleto{X}{4pt}})$ increases. Therefore clusters are less and less identifiable as the perplexity increases.}
+\label{fig:ccPCA_perp}
 \end{center}
 \end{figure*}
 
-\Cref{fig:tSNE-clusters-truth} shows that a t-SNE embedding of a balanced MNIST dataset of 10000 samples \citep{deng2012mnist} with isotropic Gaussian initialization performs poorly in conserving the relative positions of clusters. As each digit cluster contains approximately $1000$ points, with a perplexity of $30$, sampling an edge across digit clusters in the graph posterior $\mathbb{P}_{\mathcal{P}_X}(\cdot;\Kb_{X})$ is very unlikely. Recall that the perplexity value \citep{maaten2008tSNE} corresponds to the approximate number of effective neighbors of each point. Hence images of different digits are with very high probability in different CCs of the graph posterior and their CC-wise means are not coupled as discussed in \cref{sec:interpretations}. To remedy this in practice, PCA or Laplacian eigenmaps are usually used as initialization \citep{kobak2021initialization}. 
+From \cref{fig:ccPCA_perp}, one can notably notice that using a high perplexity leads to a more connected graph and therefore a PCA-like embedding with less degeneracy and no clustering effect. Recall that \textit{ccPCA} computes the same clusters as t-SNE through the CCs of the latent MRF and manage to position t-SNE clusters by focusing on their relative positions (that are filtered by t-SNE). In the case of a connected graph (high perplexity), \textit{ccPCA} will show little advantage over classical PCA since there will not be any cluster to position. Note that this discussion can be extended to other neighbor embedding methods equivalently. Therefore, our probabilistic framework allows us to indentify which part of information is filtered by the posterior graphs with given kernel bandwidth.
 
-These strategies are tested (\cref{fig:methods_embeddings}) together with \textit{ccPCA}. This shows that 
-\textit{ccPCA} manages to retrieve the digits that mostly support the large-scale variability as measured by the peripheral positioning of digits $0$ (blue), $2$ (green), $6$ (pink) and $7$ (grey) given by the right side of \cref{fig:tSNE-clusters-truth}. Other perplexity values for \textit{ccPCA} are explored in appendix \ref{sec:other_perp} while the experimental setup is detailed in appendix \Cref{sec:setup_ccpca}. In \Cref{sec:quantitative_evaluation}, we perform quantitative evaluations of \textit{ccPCA} for both t-SNE and UMAP on various datasets using K-ary neighborhood criteria. We find that using \textit{ccPCA} as initialization is in general more reliable than PCA and Laplacian eigenmaps for preserving global structure using both t-SNE and UMAP. 
+\subsubsection{Quantitative Evaluation of \textit{ccPCA}}\label{sec:quantitative_evaluation}
 
-Compared to PCA, \textit{ccPCA} manages to aggregate points into clusters, thus filtering the intra-cluster variability and focusing solely on the inter-cluster structure. Compared to Laplacian eigenmaps which perform well at identifying clusters but suffer from the same deficiency as t-SNE for positioning them, \textit{ccPCA} retains more of the coarse-grain structure. These observations support our unifying probabilistic framework and the theoretical results about the MRF degeneracy which are the leading contributions of this article. The \textit{ccPCA} initialization appears as a first stepping stone towards more grounded DR methods based on the probabilistic model presented in this article.
+For quantitative assessment of \textit{ccPCA}, we focused on t-SNE \citep{maaten2008tSNE} and UMAP \citep{mcinnes2018umap} which are the most popular neighbor embedding methods. Note that for these algorithms the initialization is crucial for the global structure of the embeddings as shown in \citep{kobak2021initialization}. In addition to MNIST \citep{deng2012mnist}, we considered the datasets cifar-10, cifar-100 \citep{krizhevsky2009cifar}, fashion-MNIST \citep{xiao2017fashion} as well as the CD8+ T lymphocytes single cell RNA-seq dataset from \citep{kurd2020early}.
+
+We used the quantitative criterion of \citep{lee2015multi} to assess the quality of the embeddings. As mentionned in this paper, the use of this criterion appears as the general consensus in dimension reduction, a field in which building meaningful criteria is tedious. The criterion measures the rescaled average agreement between the K-ary neighbourhoods in the input and output spaces. It is constructed as follows.
+
+We first define the following quantities for $(i,j) \in \integ{N}^2$,
+$\rho_{ij} = \mid \{ k: ||\vx_i - \vx_k ||^2_2 < ||\vx_i - \vx_j ||^2_2 \} \mid, r_{ij} = \mid \{ k: ||\vz_i - \vz_k ||^2_2 < ||\vz_i - \vz_j ||^2_2 \} \mid, \nu_i^K = \{ j : 1 \leq \rho_{ij} \leq K \} \text{ and } \gamma_i^K = \{ j : 1 \leq r_{ij} \leq K \}$. The average K-ary neighbourhood preservation is rescaled to indicate the improvement over a random embedding such that:
+\begin{align}\label{def_R}
+R_{N}(K) = \frac{(N-1) Q_{N}(K) - K }{N-1-K}
+\end{align}
+where $Q_{N}(K) = \frac{1}{KN} \sum_{i=1}^N \mid \nu_i^K \cap \gamma_i^K \mid$, $N$ is the number of data points and $K$ is the hyperparameter that adjusts the scale at which we are looking.
+
+To focus on large-scale structure, K was chosen as either N/4 or N/2. As summarized by \citep{kobak2021initialization}, current practice consists in using PCA or Laplacian eigenmaps as initialization for these algorithms, thus we compare to these strategies. Results are displayed in \cref{tSNE_quantitative_results} and \cref{UMAP_quantitative_results}, each entry being an average over 5 random seeds, with standard deviation displayed below each entry. Note that when not specified, tSNE and UMAP are initialized with an isotropic Gaussian variable. 
+
+These results show that using \textit{ccPCA} is a reliable alternative to PCA and Laplacian eigenmaps for reproducing large-scale neighborhoods.
+
+\vspace{2cm}
+
+\begin{table}[H]
+\caption{$100 \times R_{N}(K)$ (\ref{def_R}) for embeddings produced using t-SNE with various initializations.}
+\begin{footnotesize}
+\begin{center}
+\begin{tabular}{lcccccccc}
+\toprule
+& \multicolumn{2}{c}{tSNE} & \multicolumn{2}{c}{PCA + tSNE} & \multicolumn{2}{c}{LE + tSNE} & \multicolumn{2}{c}{ccPCA + tSNE} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+K of K-ary & {N/4} & {N/2}  & {N/4} & {N/2} & {N/4} & {N/2} & {N/4} & {N/2} \\
+\midrule
+MNIST & 18.7 & 7.4 & 28.4 & 21.9 & 26.7 & 18.5 & $\bm{31.3}$ & $\bm{28.5}$ \\
+& $\pm 2.2$ & $\pm 5.1$ & $\pm 0.3$ & $\pm 0.2$ & $\pm 0.7$ & $\pm 0.4$ & $\pm 0.4$ & $\pm 1.2$ 
+\vspace{0.1cm}
+\\
+cifar-10 & 20.3 & 16.4 & $\bm{36.9}$ & 41.9 & 25.8 & 24.1 & 36.4 & $\bm{43.4}$ \\
+& $\pm 3.2$ & $\pm 4.8$ & $\pm 0.6$ & $\pm 1.1$ & $\pm 0.6$ & $\pm 1.5$ & $\pm 0.4$ & $\pm 1.6$
+\vspace{0.1cm}
+\\
+cifar-100 & 21.6 & 18.2 & 38.1 & $\bm{47.5}$ & 23.3 & 26.5 & $\bm{39.6}$ & 43.6 \\
+& $\pm 3.6$ & $\pm 5.5$ & $\pm 0.4$ & $\pm 0.4$ & $\pm 1.5$ & $\pm 1.8$ & $\pm 0.7$ & $\pm 1.1$
+\vspace{0.1cm}
+\\
+fashion-MNIST & 27.2 & 12.3 & 36.9 & 28.5 & 32.0 & 25.1 & $\bm{41.6}$ & $\bm{35.7}$ \\
+& $\pm 4.3$ & $\pm 7.8$ & $\pm 0.1$ & $\pm 0.2$ & $\pm 0.8$ & $\pm 2.2$ & $\pm 0.9$ & $\pm 1.5$
+\vspace{0.1cm}
+\\
+Single Cell data & 25.7 & 22.4 & 37.7 & 29.0 & 28.1 & 31.5 & $\bm{40.1}$ & $\bm{34.6}$ \\
+& $\pm 4.8$ & $\pm 10.6$ & $\pm 2.7$ & $\pm 4.7$ & $\pm 1.5$ & $\pm 1.4$ & $\pm 1.7$ & $\pm 2.6$
+\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{footnotesize}
+\label{tSNE_quantitative_results}
+\end{table}
+
+\begin{table}[H]
+\caption{$100 \times R_{N}(K)$ (\ref{def_R}) for embeddings produced using UMAP with various initializations.}
+\begin{footnotesize}
+\begin{center}
+\begin{tabular}{lcccccccc}
+\toprule
+& \multicolumn{2}{c}{UMAP} & \multicolumn{2}{c}{PCA + UMAP} & \multicolumn{2}{c}{LE + UMAP} & \multicolumn{2}{c}{ccPCA + UMAP} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+K of K-ary & {N/4} & {N/2}  & {N/4} & {N/2} & {N/4} & {N/2} & {N/4} & {N/2} \\
+\midrule
+MNIST & 29.5 & 22.7 & $\bm{36.6}$ & 31.1 & 34.6 & 24.9 & 33.4 & $\bm{32.3}$ \\
+& $\pm 1.4$ & $\pm 2.2$ & $\pm 0.2$ & $\pm 0.5$ & $\pm 0.2$ & $\pm 0.7$ & $\pm 0.3$ & $\pm 0.5$ 
+\vspace{0.1cm}
+\\
+cifar-10 & 39.2 & 47.6 & 44.3 & $\bm{53.4}$ & 44.2 & 52.6 & $\bm{44.6}$ & 53.2\\
+& $\pm 2.6$ & $\pm 1.1$ & $\pm 0.2$ & $\pm 0.1$ & $\pm 0.1$ & $\pm 0.2$ & $\pm 0.2$ & $\pm 0.2$ 
+\vspace{0.1cm}
+\\
+cifar-100 & 41.6 & 42.2 & 45.4 & 45.2 & 44.2 & 43.4 & $\bm{49.9}$ & $\bm{52.9}$\\
+& $\pm 1.8$ & $\pm 0.9$ & $\pm 0.2$ & $\pm 0.1$ & $\pm 0.3$ & $\pm 0.1$ & $\pm 0.4$ & $\pm 0.6$ 
+\vspace{0.1cm}
+\\
+fashion-MNIST & 48.7 & 33.6 & 56.2 & 54.3 & 58.1 & 53.4 & $\bm{58.9}$ & $\bm{55.8}$ \\
+& $\pm 2.6$ & $\pm 9.5$ & $\pm 0.5$ & $\pm 0.6$ & $\pm 0.5$ & $\pm 0.6$ & $\pm 0.5$ & $\pm 0.3$ 
+\vspace{0.1cm}
+\\
+Single Cell data & 39.5 & 34.3 & 52.3 & 47.2 & $\bm{55.9}$ & 45.7 & 53.6 & $\bm{53.9}$\\
+& $\pm 1.4$ & $\pm 6.1$ & $\pm 0.8$ & $\pm 6.9$ & $\pm 0.3$ & $\pm 0.9$ & $\pm 0.3$ & $\pm 1.3$ 
+\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{footnotesize}
+\label{UMAP_quantitative_results}
+\end{table}
+
+\section{Proofs}
 
 \subsection{Proof of \Cref{PCA_graph_coupling}}
 
@@ -216,7 +361,7 @@ using the Fubini Tonelli theorem. The result follows from $\lambda_{\mathbb{R}^p
 \end{proof}
 
 
-\subsubsection{Proof of \Cref{prop:posterior_W}}
+\subsection{Proof of \Cref{prop:posterior_W}}
 \label{proof:posterior_limit}
 
 \posteriorW
@@ -280,7 +425,7 @@ Finally, deriving the distribution of the posterior graph limit:
 This distribution amounts to: $\W \sim \mathcal{M}\left(N, \left(\frac{\pi_{ij} k(\mathbf{x}_i - \mathbf{x}_j)}{\sum_{(\ell,t) \in \integ{N}^2} \pi_{\ell t} k(\mathbf{x}_{\ell} - \mathbf{x}_t)}\right)_{(i,j) \in \integ{N}^2}\right)$.
 \end{proof}
 
-\subsubsection{Proof of \Cref{corollary_ccPCA}}
+\subsection{Proof of \Cref{corollary_ccPCA}}
 
 With the presented hierarchical model (\cref{fig:graphical_model_hierarchical}), the coupling problem is the following:
 \begin{align}\label{eq:optim_corollary}
@@ -296,146 +441,3 @@ Let us denote $\bar{\Z} = \bm{U}_{\scaleto{[R]}{5pt}}^\top\Z \in \mathbb{R}^{R \
 According to \cref{PCA_graph_coupling}, the solution of problem (\ref{eq:small_dim_optim_corollary}) is such that there exists $\bm{R}$ orthogonal, $\bar{\Z}^\star = \bm{V}_{[:,q]} \bm{S}_{[q,q]} \bm{R}$ where $\bar{\X}\bar{\X}^\top = \bm{V} \bm{S}^2 \bm{V}^\top$ is the eigendecomposition in an orthogonal basis of the among-row covariance matrix of $\bar{\X}$. Note that the solution does not depend on $\varepsilon$.
 
 Therefore (\ref{eq:optim_corollary}) is solved for $\Z^\star = \bm{U}_{\scaleto{[:R]}{5pt}}\bm{V}_{[:,q]} \bm{S}_{[q,q]} \bm{R}$. One can notice that since the singular value decomposition (\textit{i.e.}\ SVD) of $\bm{U}_{\scaleto{[R]}{5pt}}^\top\X$ takes the form $\bm{V}\bm{S}\bm{B}$ where $\bm{B}$ is an semi-orthogonal matrix of size $p$, then $\bm{U}_{\scaleto{[:R]}{5pt}}\bm{U}_{\scaleto{[R]}{5pt}}^\top\X = \bm{U}_{\scaleto{[:R]}{5pt}}\bm{V}\bm{S}\bm{B}$. Noticing that $\bm{V}' = \bm{U}_{\scaleto{[:R]}{5pt}}\bm{V}$ is orthogonal, one has that $\bm{V}' \bm{S}\bm{B}$ is a compact SVD of $\bm{U}_{\scaleto{[:R]}{5pt}}\bm{U}_{\scaleto{[R]}{5pt}}^\top\X$. Therefore, since $\Z^\star = \bm{V}' \bm{S}$, $\Z^\star$ is a PCA embedding of $\bm{U}_{\scaleto{[:R]}{5pt}}\bm{U}_{\scaleto{[R]}{5pt}}^\top\X$.
-
-
-\subsection{Experiments with \textit{ccPCA}}\label{sec:ccpca_exps}
-
-\subsubsection{Experimental setup}\label{sec:setup_ccpca}
-
-\paragraph{Implementation of existing methods.} For t-SNE, we rely on the openTSNE implementation \citep{polivcar2019opentsne} for both computing the kernel $\mK_{\scaleto{X}{4pt}}$ with appropriate bandwidths and running the tSNE algorithm. We keep the training default parameters and $1000$ iterations of gradient descent. For all experiments, the default perplexity of $30$ was used to set the kernel bandwidths. For UMAP, we use the default Python implementation of \citep{mcinnes2018umap} with default parameters. For PCA and Laplacian eigenmaps, the scikit-learn implementation is used \citep{pedregosa2011scikit} with default parameters as well. 
-
-\paragraph{\textit{ccPCA}.} The pseudo code of the algorithm is given in \cref{algo:ccPCA}. CCs' memberships (\textit{i.e.}\ eigenvectors $\bm{U}_{\scaleto{[R]}{5pt}}$) are computed using igraph \citep{csardi2006igraph}. Regarded the time complexity of ccPCA, one can sample the posterior graph with constant time if $\mathcal{P}_{\scaleto{X}{4pt}} = E$, linear time if $\mathcal{P}_{\scaleto{X}{4pt}} = D$ and quadratic time if $\mathcal{P}_{\scaleto{X}{4pt}} = B$. Moreover, computing $\bm{U}_{\scaleto{[R]}{5pt}}$ can be done with linear complexity \textit{w.r.t.}\ the number of nodes. Hence the time complexity is $O(M \times N)$ for $E$ and $D$ priors and $O(M \times N^2)$ for the $B$ prior, where $N$ is the number of Monte Carlo samples. In practice we found that $M\approx 100$ Monte Carlo samples produce a consistent \textit{ccPCA} embedding for $N \approx 10000$. Note that the time complexity of PCA is $O(\min(p^3,N^3))$ where $p$ is the dimensionality (\textit{i.e.}\ number of columns) of $\X$. Hence in most common applications involving images or biological sequencing data (where $p$ is very large), the additional time complexity brought by \textit{ccPCA} compared to PCA is negligible.
-
-\vspace{0.5cm}
-
-\begin{algorithm}[H]
-  \caption{\textit{ccPCA}}
-  \label{alg:3CPCA}
-\begin{algorithmic}
-  \STATE {\bfseries Input:} $\mK_{\scaleto{X}{4pt}}$, $\mathcal{P}_{\scaleto{X}{4pt}}$, $M$
-  \FOR{$\ell=1$ {\bfseries to} $M$}
-  \STATE Sample $\W^{\ell} \sim  \mathbb{P}_{\scaleto{\mathcal{P}_{\scaleto{X}{4pt}}}{5pt}}(\cdot ; \mK_{\scaleto{X}{4pt}})$
-  \STATE Compute CCs' memberships $\bm{U}^{\ell}_{\scaleto{[R]}{5pt}}$ of $\W^{\ell}$
-  \ENDFOR
-  \STATE {\bfseries Output:} PCA of $\left(N^{-1}\sum_{\ell \in \integ{N}} \bm{U}^{\ell}_{\scaleto{[R]}{5pt}} \bm{U}_{\scaleto{[R]}{5pt}}^{\ell\:T} \right) \X$
-\end{algorithmic}
-\label{algo:ccPCA}
-\end{algorithm}
-
-All experiments are performed on a
-machine with four Intel Core i5 processors and 16 GB memory.
-
-\subsubsection{\textit{ccPCA} with Varying Perplexity Values}\label{sec:other_perp}
-
-Recall that the \textit{ccPCA} algorithm retrieves the same latent graph as neighbor embedding methods. As shown in \cref{sec:retrieving_DR_methods}, these graphs' distributions depend on the type of prior considered, and take simple forms as follows, when $\bm{\pi}_{\scaleto{X}{4pt}} = \bm{1}$ :
-\begin{itemize}
-    \item if $\mathcal{P} = B$, $\forall (i,j) \in \integ{N}^2, \: W_{ij} \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{B}\left(K_{\scaleto{X}{4pt},ij}/(1 + K_{\scaleto{X}{4pt},ij}) \right)$
-    \item if $\mathcal{P} = D$, $\forall i \in \integ{N}, \: \W_{i} \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{M}\left(1, \mK_{\scaleto{X}{4pt},i}/K_{\scaleto{X}{4pt},i+} \right)$
-    \item if $\mathcal{P} = E$, $\W \sim \mathcal{M}\left(n, \mK_{\scaleto{X}{4pt}}/ K_{\scaleto{X}{4pt},++} \right)$
-\end{itemize}
-and $\mK_{\scaleto{X}{4pt}}$ is the kernel matrix evaluated on the data such that:
-$$\forall (i,j) \in \integ{N}^2, \quad \mK_{\scaleto{X}{4pt},ij} = k((\X_{i} - \X_{j})/\tau_{i})$$
-where $\bm{\tau} \in \mathbb{R}^n$ is set using an heuristic depending on the method considered \citep{maaten2008tSNE, mcinnes2018umap, tang2016visualizing}. In \cref{fig:ccPCA_perp}, we focus on the effect of the kernel bandwidths on \textit{ccPCA}, choosing the example of t-SNE.
-
-\begin{figure*}[h]
-\vskip 0.2in
-\begin{center}
-\centerline{\includegraphics[width=\columnwidth]{figures/GraphCoupling/multi_perp.png}}
-\caption{\textit{ccPCA} launched for different values of the perplexity parameter. The latter determines the kernel bandwidths and can be interpreted as the number of effective neighbors of each point \citep{maaten2008tSNE}. As the perplexity grows, the probability of connecting different clusters of digit by sampling through the graph posterior $\mathbb{P}_{\scaleto{\mathcal{P}_X}{4pt}}(\cdot;\mK_{\scaleto{X}{4pt}})$ increases. Therefore clusters are less and less identifiable as the perplexity increases.}
-\label{fig:ccPCA_perp}
-\end{center}
-\end{figure*}
-
-From \cref{fig:ccPCA_perp}, one can notably notice that using a high perplexity leads to a more connected graph and therefore a PCA-like embedding with less degeneracy and no clustering effect. Recall that \textit{ccPCA} computes the same clusters as t-SNE through the CCs of the latent MRF and manage to position t-SNE clusters by focusing on their relative positions (that are filtered by t-SNE). In the case of a connected graph (high perplexity), \textit{ccPCA} will show little advantage over classical PCA since there will not be any cluster to position. Note that this discussion can be extended to other neighbor embedding methods equivalently. Therefore, our probabilistic framework allows us to indentify which part of information is filtered by the posterior graphs with given kernel bandwidth.
-
-\subsubsection{Quantitative Evaluation of \textit{ccPCA}}\label{sec:quantitative_evaluation}
-
-For quantitative assessment of \textit{ccPCA}, we focused on t-SNE \citep{maaten2008tSNE} and UMAP \citep{mcinnes2018umap} which are the most popular neighbor embedding methods. Note that for these algorithms the initialization is crucial for the global structure of the embeddings as shown in \citep{kobak2021initialization}. In addition to MNIST \citep{deng2012mnist}, we considered the datasets cifar-10, cifar-100 \citep{krizhevsky2009cifar}, fashion-MNIST \citep{xiao2017fashion} as well as the CD8+ T lymphocytes single cell RNA-seq dataset from \citep{kurd2020early}.
-
-We used the quantitative criterion of \citep{lee2015multi} to assess the quality of the embeddings. As mentionned in this paper, the use of this criterion appears as the general consensus in dimension reduction, a field in which building meaningful criteria is tedious. The criterion measures the rescaled average agreement between the K-ary neighbourhoods in the input and output spaces. It is constructed as follows.
-
-We first define the following quantities for $(i,j) \in \integ{N}^2$,
-$\rho_{ij} = \mid \{ k: ||\X_{i} - \X_k ||^2_2 < ||\X_{i} - \X_j ||^2_2 \} \mid, r_{ij} = \mid \{ k: ||\Z_{i} - \Z_k ||^2_2 < ||\Z_{i} - \Z_j ||^2_2 \} \mid, \nu_i^K = \{ j : 1 \leq \rho_{ij} \leq K \} \text{ and } \gamma_i^K = \{ j : 1 \leq r_{ij} \leq K \}$. The average K-ary neighbourhood preservation is rescaled to indicate the improvement over a random embedding such that:
-\begin{align}\label{def_R}
-R_{N}(K) = \frac{(N-1) Q_{N}(K) - K }{N-1-K}
-\end{align}
-where $Q_{N}(K) = \frac{1}{KN} \sum_{i=1}^N \mid \nu_i^K \cap \gamma_i^K \mid$, $N$ is the number of data points and $K$ is the hyperparameter that adjusts the scale at which we are looking.
-
-To focus on large-scale structure, K was chosen as either N/4 or N/2. As summarized by \citep{kobak2021initialization}, current practice consists in using PCA or Laplacian eigenmaps as initialization for these algorithms, thus we compare to these strategies. Results are displayed in \cref{tSNE_quantitative_results} and \cref{UMAP_quantitative_results}, each entry being an average over 5 random seeds, with standard deviation displayed below each entry. Note that when not specified, tSNE and UMAP are initialized with an isotropic Gaussian variable. 
-
-These results show that using \textit{ccPCA} is a reliable alternative to PCA and Laplacian eigenmaps for reproducing large-scale neighborhoods.
-
-\vspace{2cm}
-
-\begin{table}[h]
-\caption{$100 \times R_{N}(K)$ (\ref{def_R}) for embeddings produced using t-SNE with various initializations.}
-\begin{footnotesize}
-\begin{center}
-\begin{tabular}{lcccccccc}
-\toprule
-& \multicolumn{2}{c}{tSNE} & \multicolumn{2}{c}{PCA + tSNE} & \multicolumn{2}{c}{LE + tSNE} & \multicolumn{2}{c}{ccPCA + tSNE} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
-K of K-ary & {N/4} & {N/2}  & {N/4} & {N/2} & {N/4} & {N/2} & {N/4} & {N/2} \\
-\midrule
-MNIST & 18.7 & 7.4 & 28.4 & 21.9 & 26.7 & 18.5 & $\bm{31.3}$ & $\bm{28.5}$ \\
-& $\pm 2.2$ & $\pm 5.1$ & $\pm 0.3$ & $\pm 0.2$ & $\pm 0.7$ & $\pm 0.4$ & $\pm 0.4$ & $\pm 1.2$ 
-\vspace{0.1cm}
-\\
-cifar-10 & 20.3 & 16.4 & $\bm{36.9}$ & 41.9 & 25.8 & 24.1 & 36.4 & $\bm{43.4}$ \\
-& $\pm 3.2$ & $\pm 4.8$ & $\pm 0.6$ & $\pm 1.1$ & $\pm 0.6$ & $\pm 1.5$ & $\pm 0.4$ & $\pm 1.6$
-\vspace{0.1cm}
-\\
-cifar-100 & 21.6 & 18.2 & 38.1 & $\bm{47.5}$ & 23.3 & 26.5 & $\bm{39.6}$ & 43.6 \\
-& $\pm 3.6$ & $\pm 5.5$ & $\pm 0.4$ & $\pm 0.4$ & $\pm 1.5$ & $\pm 1.8$ & $\pm 0.7$ & $\pm 1.1$
-\vspace{0.1cm}
-\\
-fashion-MNIST & 27.2 & 12.3 & 36.9 & 28.5 & 32.0 & 25.1 & $\bm{41.6}$ & $\bm{35.7}$ \\
-& $\pm 4.3$ & $\pm 7.8$ & $\pm 0.1$ & $\pm 0.2$ & $\pm 0.8$ & $\pm 2.2$ & $\pm 0.9$ & $\pm 1.5$
-\vspace{0.1cm}
-\\
-Single Cell data & 25.7 & 22.4 & 37.7 & 29.0 & 28.1 & 31.5 & $\bm{40.1}$ & $\bm{34.6}$ \\
-& $\pm 4.8$ & $\pm 10.6$ & $\pm 2.7$ & $\pm 4.7$ & $\pm 1.5$ & $\pm 1.4$ & $\pm 1.7$ & $\pm 2.6$
-\\
-\bottomrule
-\end{tabular}
-\end{center}
-\end{footnotesize}
-\label{tSNE_quantitative_results}
-\end{table}
-
-\begin{table}[h]
-\caption{$100 \times R_{N}(K)$ (\ref{def_R}) for embeddings produced using UMAP with various initializations.}
-\begin{footnotesize}
-\begin{center}
-\begin{tabular}{lcccccccc}
-\toprule
-& \multicolumn{2}{c}{UMAP} & \multicolumn{2}{c}{PCA + UMAP} & \multicolumn{2}{c}{LE + UMAP} & \multicolumn{2}{c}{ccPCA + UMAP} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
-K of K-ary & {N/4} & {N/2}  & {N/4} & {N/2} & {N/4} & {N/2} & {N/4} & {N/2} \\
-\midrule
-MNIST & 29.5 & 22.7 & $\bm{36.6}$ & 31.1 & 34.6 & 24.9 & 33.4 & $\bm{32.3}$ \\
-& $\pm 1.4$ & $\pm 2.2$ & $\pm 0.2$ & $\pm 0.5$ & $\pm 0.2$ & $\pm 0.7$ & $\pm 0.3$ & $\pm 0.5$ 
-\vspace{0.1cm}
-\\
-cifar-10 & 39.2 & 47.6 & 44.3 & $\bm{53.4}$ & 44.2 & 52.6 & $\bm{44.6}$ & 53.2\\
-& $\pm 2.6$ & $\pm 1.1$ & $\pm 0.2$ & $\pm 0.1$ & $\pm 0.1$ & $\pm 0.2$ & $\pm 0.2$ & $\pm 0.2$ 
-\vspace{0.1cm}
-\\
-cifar-100 & 41.6 & 42.2 & 45.4 & 45.2 & 44.2 & 43.4 & $\bm{49.9}$ & $\bm{52.9}$\\
-& $\pm 1.8$ & $\pm 0.9$ & $\pm 0.2$ & $\pm 0.1$ & $\pm 0.3$ & $\pm 0.1$ & $\pm 0.4$ & $\pm 0.6$ 
-\vspace{0.1cm}
-\\
-fashion-MNIST & 48.7 & 33.6 & 56.2 & 54.3 & 58.1 & 53.4 & $\bm{58.9}$ & $\bm{55.8}$ \\
-& $\pm 2.6$ & $\pm 9.5$ & $\pm 0.5$ & $\pm 0.6$ & $\pm 0.5$ & $\pm 0.6$ & $\pm 0.5$ & $\pm 0.3$ 
-\vspace{0.1cm}
-\\
-Single Cell data & 39.5 & 34.3 & 52.3 & 47.2 & $\bm{55.9}$ & 45.7 & 53.6 & $\bm{53.9}$\\
-& $\pm 1.4$ & $\pm 6.1$ & $\pm 0.8$ & $\pm 6.9$ & $\pm 0.3$ & $\pm 0.9$ & $\pm 0.3$ & $\pm 1.3$ 
-\\
-\bottomrule
-\end{tabular}
-\end{center}
-\end{footnotesize}
-\label{UMAP_quantitative_results}
-\end{table}
-

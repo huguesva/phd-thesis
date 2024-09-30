@@ -71,6 +71,11 @@ One can also consider $\mathcal{H}_{E,E}$ but as detailed in \citep{maaten2008tS
 Interestingly, any other feasible combination of the presented priors relates to an existing method.
 \end{remark}
 
+\begin{remark}
+    The normalization in $[\Qb^{B}]_{ij} = [\Kb_Z]_{ij} / (1+[\Kb_Z]_{ij})$ differs from the kernel presented in the original papers of LargeVis and UMAP, which was simply the unnormalized student kernel $[\Kb_Z]_{ij}$. Interestingly, recent adaptations of these methods\footnote{see \eg the pull request \#856 in the UMAP GitHub repository.} recommend using the normalization $\Qb^{B}$ for enhanced stability and improved embedding results. This adjustment now aligns perfectly with our framework.
+\end{remark}
+
+
 \subsection{Interpretations}\label{sec:interpretations}
 
 \begin{table}[]
@@ -96,7 +101,7 @@ Interestingly, any other feasible combination of the presented priors relates to
     \label{priors_methods}
 \end{table}
 
-As we have seen in \cref{sec:retrieving_DR_methods}, SNE-like methods can all be derived from the graph coupling framework.  What characterizes each of them is the choice of priors considered for the latent structuring graphs. To the best of our knowledge, the presented framework is the first that manages to unify all these DR algorithms. Such a framework opens many perspectives for improving upon current practices as we discuss in \cref{sec:towards_large_scale} and \cref{Perspectives}. 
+As we have seen in \cref{sec:retrieving_DR_methods}, SNE-like methods can all be derived from the graph coupling framework.  What characterizes each of them is the choice of priors considered for the latent structuring graphs. To the best of our knowledge, the presented framework is the first that manages to unify all these DR algorithms. Such a framework opens many perspectives for improving upon current practices as we discuss in \cref{sec:towards_large_scale}. 
 We now focus on a few insights that our work provides about the empirical performances of these methods. 
 
 \paragraph{Repulsion \& Attraction.}
@@ -115,3 +120,13 @@ To gain intuition, consider that $\mW_{X}$ is observed. As we showed in \cref{se
 Hence, PCA differs in that we impose a full-rank constraint on the precision $\bm{\Theta}$. Concerning the priors, in both cases we choose the ones that are conjugate to the conditionals: (\ref{eq:X_given_theta}) and (\ref{eq:Z_given_theta}) for PCA, as done when constructing the prior for neighbor embedding methods (definition \ref{def:prior_W}). In the full-rank setting, the prior simply amounts to a well-known Wishart distribution denoted by $\mathcal{W}$. 
 
 To the best of our knowledge, it is the first time such a link is uncovered between PCA and SNE-like methods. In contrast with the latter, PCA is well-known for its ability to preserve global structure while being significantly less efficient at identifying clusters \citep{anowar2021conceptual}. As suspected in \cref{sec:interpretations}, the degeneracy of the conditional distribution given the graph provides insights to determine the distance preservation properties of the embeddings. We propose in \cref{sec:hierarchical_modelling} to combine both graph coupling approaches to strike a balance between global and local structure preservation.
+
+
+\paragraph{Graph coupling in self-supervised learning.}
+The graph coupling approach introduced here can be applied beyond the scope of dimensionality reduction. \citet{tan2023contrastive} built on top of our model to derive a probabilistic model for self-supervised learning methods such as SimCLR \citep{chen2020simple} and CLIP \citep{radford2021learning}. In their case, the explicit kernel $\mK_{X}$ between input data points is replaced by a predefined similarity graph that encodes the augmentation process.
+
+\paragraph{Perspectives.}
+Our work offers many perspectives, among which the possibility to enrich the probabilistic model with more suited graph priors. Currently considered priors are simply the ones that are conjugate to the MRFs thus they are mostly designed to yield a tractable coupling objective. However they may not be optimal and could be modified to capture targeted features, \textit{e.g.}\ communities, in the input data, and give adapted representations in the latent space. The graph coupling approach could also be extended to more general latent structures governing the joint distribution of observations.
+Finally, the probabilistic model could be leveraged to tackle hyper-parameter calibration, especially kernel bandwidths that have a great influence on the quality of the representations and are currently tuned using heuristics with unclear motivations.
+
+

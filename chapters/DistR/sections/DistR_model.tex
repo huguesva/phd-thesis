@@ -50,7 +50,7 @@ point is therefore linked to a unique prototype/cluster.
 \begin{equation*}\tag{srGW} \label{eq:srGW}
 	\min_{\mT \in \gU_n(\vh_X)} E_L(\simiX(\mX), \simiZ(\mZ), \mT) \:,
 \end{equation*}
-where $\gU_n(\vh_X) := \left\{ \mT \in \R_{+}^{N \times n}: \mT \one_n = \vh_X\right\}$. To efficiently address \cref{eq:Dist-DR}, we first observe that this equivalence holds for any inner divergence $L$ with a straightforward adaptation of the proof by \citet{vincent2021semi}.
+where $\gU_n(\vh_X) := \left\{ \mT \in \R_{+}^{N \times n}: \mT \one_n = \vh_X\right\}$. To efficiently address \cref{eq:Dist-DR}, we first observe that this equivalence holds for any inner divergence $L$ with a straightforward adaptation of the proof by \citep{vincent2021semi}.
 %We complete our analysis with the following result.
 %\begin{proposition}\label{prop:srgw_divergence}
 %	For any divergence $L$, \ref{eq:srGW} vanishes iif there exists $\vh_Z \in \Sigma_n$  such that $(\mC_X(\mX), \vh_X)$ and $(\mC_Z(\mX), \vh_Z)$ are weakly isomorphic. \tv{vraiment besoin d'une prop ? comme ona pas def weakly isom, juste un commentaire ?}
@@ -103,19 +103,8 @@ srGWB. In contrast, \cref{eq:Dist-DR} looks for minimizing over $\overline{\mC}
 \in \{\simiZ(\mZ): \mZ \in \R^{N \times d}\}$. For instance, choosing $\simiZ(\mZ) = \mZ \mZ^\top$ in \cref{eq:Dist-DR} is
 equivalent to enforcing $\operatorname{rank}(\overline{\mC}) \leq d$ in
 \cref{eq:srGBW}.
-\begin{figure*}[t!]
-	\begin{center}
-		\centerline{\includegraphics[width=\columnwidth]{figures/DistR/DistDR_embed.pdf}}
-		\caption{Examples of 2-dimensional embeddings produced by DistR using the SEA similarity for $\simiX$ 
-		and the Student's kernel for $\simiZ$. The latter computed in $\R^2$ for the first three datasets and the Poincaré ball for the last one.
-		Displayed images are medoids for each cluster \ie $\argmax_i [\mC_X(\mX)\mT_{:,k}]_i$ for cluster $k$. The area of image $k$ is proportional to $[\vh_Z]_k$.
-		}
-		\label{fig:visu_gwdr}
-	\end{center}
-	\vspace{-0.8cm}
-\end{figure*}
 
-We establish below that srGWB is of particular interest for clustering. The motivation for this arises from the findings of \citet{chen2023gromov}, which demonstrate that when $\simiX(\mX)$ is positive semi-definite and $\mT$ is \emph{constrained} to belong to the set of membership matrices (as opposed to couplings in $\gU_n(\vh)$), \cref{eq:srGBW} is equivalent to a kernel K-means whose samples are weighted by $\vh_X$ \citep{dhillon2004kernel, dhillon2007weighted}. These additional constraints are in fact unnecessary since we show below that the original srGWB problem admits membership matrices as the optimal coupling for a broader class of $\simiX(\mX)$ input matrices (see proofs in appendix \ref{sec:srGW_concavity}).%by demonstrating that the constraint on $\mT$ to be a membership matrix is, in fact, unnecessary. We show below that the original srGWB problem admits  membership matrices as optimal coupling for a broader class of input matrices $\simiX(\mX)$ (see proofs in Appendix \ref{sec:srGW_concavity}).
+We establish below that srGWB is of particular interest for clustering. The motivation for this arises from the findings of \citep{chen2023gromov}, which demonstrate that when $\simiX(\mX)$ is positive semi-definite and $\mT$ is \emph{constrained} to belong to the set of membership matrices (as opposed to couplings in $\gU_n(\vh)$), \cref{eq:srGBW} is equivalent to a kernel K-means whose samples are weighted by $\vh_X$ \citep{dhillon2004kernel, dhillon2007weighted}. These additional constraints are in fact unnecessary since we show below that the original srGWB problem admits membership matrices as the optimal coupling for a broader class of $\simiX(\mX)$ input matrices (see proofs in appendix \ref{sec:srGW_concavity}).%by demonstrating that the constraint on $\mT$ to be a membership matrix is, in fact, unnecessary. We show below that the original srGWB problem admits  membership matrices as optimal coupling for a broader class of input matrices $\simiX(\mX)$ (see proofs in Appendix \ref{sec:srGW_concavity}).
 % seminal result in this direction from  considered $\mC_X(\mX)$ PSD and the combinatorial (Monge) counterpart of the \ref{eq:srGBW} problem. 
 \begin{restatable}{theorem}{baryconcavity}
 	\label{theo:srgw_bary_concavity}
@@ -125,7 +114,7 @@ We establish below that srGWB is of particular interest for clustering. The moti
 % The sufficient condition in Theorem \ref{theo:srgw_bary_concavity} is satisfied for existing DR methods (\Cref{sec:dr_methods}), \emph{e.g} when $\mC_X$ outputs a PSD, NSD or a squared Euclidean distance matrix . 
 % Notice that we also establish a corollary of \Cref{theo:srgw_bary_concavity} providing an analog result when masses on $\overline{\mC}$ are not optimized. 
 %These relations and \Cref{theo:srgw_bary_concavity} further legitimize the use of GW projections for clustering and allow us to expect OT plans of \ref{eq:Dist-DR} to be close to providing a hard-clustering of $\mX$. \tv{a reformuler}
-\Cref{theo:srgw_bary_concavity} and relations proven in \citet{chen2023gromov} provide that  \cref{eq:srGBW} is equivalent to the aforementioned kernel K-means when $\mC_X(\mX)$ is positive semi-definite. Moreover, as the (hard) clustering property holds for more generic types of matrices, namely CPD and CND, srGWB stands out as a fully-fledged clustering method.
+\Cref{theo:srgw_bary_concavity} and relations proven in \citep{chen2023gromov} provide that  \cref{eq:srGBW} is equivalent to the aforementioned kernel K-means when $\mC_X(\mX)$ is positive semi-definite. Moreover, as the (hard) clustering property holds for more generic types of matrices, namely CPD and CND, srGWB stands out as a fully-fledged clustering method.
 Although these results do not apply directly to DistR, we argue that they further legitimize the use of GW projections for clustering. Interestingly, we also observe in practice that the couplings obtained by DistR are always membership matrices, regardless of $\simiZ$. Further research will be carried out to better understand this phenomenon. 
 %and allow us to believe that the OT of DistR are close to providing hard clustering. We point out that it was always the case in our experiments.
 %When $\vh$ is uniform, these extremities are membership matrices up to a factor $\frac{1}{N}$ \cite[Theorem 1]{cao2022centrosymmetric}. 
@@ -136,7 +125,7 @@ Although these results do not apply directly to DistR, we argue that they furthe
 
 \subsection{Computation}\label{sec:computation_GW}
 
-DistR is a non-convex problem that we propose to tackle using a Block Coordinate Descent algorithm (BCD, \citealt{tseng2001convergence}) guaranteed to converge to local optimum \citep{grippo2000convergence, Lyu2023bmm}. The BCD alternates between the two following steps. First, we optimize in $\mZ$ for a fixed transport plan using gradient descent with adaptive learning rates \citep{kingma2014adam}. Then we solve for a srGW problem given $\mZ$. To this end, we benchmarked both the Conditional Gradient and Mirror Descent algorithms proposed by \citet{vincent2021semi}, extended to support losses $L_2$ and $L_{\KL}$.
+DistR is a non-convex problem that we propose to tackle using a Block Coordinate Descent algorithm (BCD, \citealt{tseng2001convergence}) guaranteed to converge to local optimum \citep{grippo2000convergence, Lyu2023bmm}. The BCD alternates between the two following steps. First, we optimize in $\mZ$ for a fixed transport plan using gradient descent with adaptive learning rates \citep{kingma2014adam}. Then we solve for a srGW problem given $\mZ$. To this end, we benchmarked both the Conditional Gradient and Mirror Descent algorithms proposed by \citep{vincent2021semi}, extended to support losses $L_2$ and $L_{\KL}$.
 
 Following Proposition 1 in \citep{peyre2016gromov}, a vanilla implementation leads to $\mathcal{O}(n N^2 + n^2N)$ operations to compute the loss or its gradient. In many DR methods, $\mC_X(\mX)$ or $\mC_Z(\mZ)$, or their transformations within the loss $L$, admit explicit low-rank factorizations. Including \emph{e.g.} matrices involved in spectral methods and other similarity matrices derived from squared Euclidean distance matrices \citep{scetbon2022linear}. In these settings, we exploit these factorizations to reduce the computational complexity of our solvers down to $\mathcal{O}(Nn(p + d) + (N + m)pd + n^2)$ when $L=L_2$, and $O(Nnd + n^2d)$ when $L = L_{\KL}$. We refer the reader interested in these algorithmic details to Appendix \ref{sec:algorithms}.
 %By leveraging the low-rank natures of structures $\mC_X(\mX)$ and $\mC_Z(\mZ)$ encountered in many DR methods, or of their transformations within $L$, the computational complexity can be reduced up to $\mathcal{O}(Nn(p + d) + (N + m)pd)$ \tv{a discuter plus : c'dst linear ! + quelle genre de low rank + citer cutu}. \citep{scetbon2022linear} - We refer the reader interested in these algorithmic details to Appendix X \tv{attention}.

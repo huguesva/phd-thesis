@@ -2,6 +2,7 @@
 
 We report in the following subsections of this section:
 \begin{itemize}
+	\item \ref{sec:algorithms}: details on the algorithms used in our experiments.
 	\item \ref{sec:implementation_details}: implementation details, validation of hyperparameters, datasets and metrics.
 	\item \ref{sec:coot_exp}: comparison with COOT clustering.
 	\item \ref{sec:full_sensitivity}: complete scores on all datasets.
@@ -11,20 +12,117 @@ We report in the following subsections of this section:
 	\item \ref{sec:hyperbolic}: Proofs of concepts with hyperbolic DR kernels.
 \end{itemize}
 
+
+\subsection{Algorithmic details}\label{sec:algorithms}
+
+We detail in the following the algorithms mentioned in Section \ref{sec:DDR} to address the semi-relaxed GW divergence computation in our Block Coordinate Descent algorithm for the DistR problem. We begin with details on the computation of an equivalent objective function and its gradient, potentially under low-rank assumptions over structures $\mC$ and $\overline{\mC}$.
+
+\subsubsection{Objective function and gradient computation.}\label{subsec:GWloss} 
+
+\paragraph{Problem statement.} Let consider any matrices $\mC \in \R^{n \times n}$, $\overline{\mC} \in \R^{m \times m}$, and a probability vector $\vh \in \Sigma_n$. In all our use cases,  we considered inner losses $L: \R \times \R \rightarrow \R_+$ which can be decomposed following Proposition 1 in \citep{peyre2016gromov}. Namely we assume the existence of functions $f_1, f_2, h_1, h_2$ such that 
+\begin{equation}\label{eq:loss_decomposition}
+\forall a, b \in \Omega^2, \quad L(a, b) = f_1(a) + f_2(b) - h_1(a) h_2(b)
+\end{equation}
+More specifically we considered
+\begin{equation} \tag{L2}\label{eq:L2_loss}
+\begin{split}
+	L_2(a,b) = (a-b)^2 &\implies f_1(a) = a^2, \: f_2(b) = b^2, \: h_1(a) = a, \: h_2(b) = 2b \\
+	L_{KL}(a,b ) = a \log \frac{a}{b} - a +b &\implies f_1(a) = a \log a -a, \: f_2(b) = b, \: h_1(a) = a, \: h_2(b) = \log b \\
+\end{split}
+\end{equation}
+In this setting, we proposed to solve for the equivalent problem to $\srGW_L$ :
+\begin{equation}\label{eq:srgw_eqpb}\tag{srGW-2}
+\min_{\mT \in \mathcal{U}_n(\vh)} F(\mT)
+\end{equation}
+where the objective function reads as 
+\begin{equation}\label{eq:expressionF}
+\begin{split}
+	F(\mT) &:= \scalar{F_1(\overline{\mC}, \mT) - F_2(\mC, \overline{\mC}, \mT)}{\mT} \\ 
+	&= \scalar{\bm{1}_N \bm{1}_N^\top \mT f_2(\overline{\mC})}{ \mT} - \scalar{h_1(\mC) \mT h_2(\overline{\mC})^\top}{\mT}
+\end{split}
+\end{equation}
+
+Problem \ref{eq:srgw_eqpb} is usually a non-convex QP with Hessian $\mathcal{H} = f_2(\overline{\mC}) \otimes \bm{1}\bm{1}^\top - h_2(\overline{\mC}) \otimes_K h_1(\mC)$. In all cases this equivalent form is interesting as it avoids computing the constant term $\scalar{f_1(\mC)}{\vh \vh^\top} $ that requires $O(N^2)$ operations in all cases.
+
+The gradient of $F$ w.r.t $\mT$ then reads as 
+\begin{equation}\label{eq:srgw_gradient}
+\nabla_{\mT} F(\mC, \overline{\mC}, \mT) = F_1(\overline{\mC}, \mT) +  F_1(\overline{\mC}^\top, \mT) - F_2(\mC, \overline{\mC}, \mT) -F_2(\mC^\top, \overline{\mC}^\top, \mT) 
+\end{equation}
+When $C_X(\mX)$ and $C_Z(\mZ)$ are symmetric, which is the case in all our experiments,  this gradient reduces to $\nabla_{\mT} F = 2(F_1 - F_2)$.
+
+\paragraph{Low-rank factorization.} Inspired from the work of \citep{scetbon2022linear}, we propose implementations of $\srGW$ that can leverage the low-rank nature of $\mC_X(\mX)$ and $\mC_Z(\mZ)$. Let us assume that both structures can be exactly decomposed as follows, $\mC_X(\mX) = \mA_1 \mA_2^\top$ where $\mA_1, \mA_2 \in \R^{N \times r}$ and $\mC_Z(\mZ) = \mB_1 \mB_2^\top$ with $\mB_1, \mB_2 \in \R^{n \times s}$, such that $r << N$ and $s << n$, can differ respectively from respective dimensions $p$ and $d$ (\eg for used squared Euclidean distance matrices $r=p+2$ and $s=d +2$ ). For both inner losses $L$ we make use of the following factorization:
+
+\underline{$L=L_2$}: Computing the first term $F_1$ coming for the optimized second marginal can benefit from being factored if $d^2 << n$. Indeed, as $f_2(\mC_Z(\mZ)) = \mC_Z(\mZ)^2 = (\mB_1 \mB_2^\top) \odot (\mB_1 \mB_2^\top)$, one can use the flattened out product operator described in \cite[Section 5]{scetbon2022linear}, to compute $\mC_Z(\mZ)^2 \mT^\top \bm{1}_N = \vx$ in $O(min(n^2, ns^2))$. This way $F_1(\mT)$ results from stacking $N$ times $\vx$ in $O(1)$ operations for a total number of computions of $N + O(min(n^2, ns^2))$.%Hence computing $F_2(\cdot, \cdot, \mT)$,  following this paranthesis $\bm{1}_N (( \mT \bm{1}_n)^\top) f_2(\overline{\mC})^\top)$ in $O(Nn + n^2)$ operation.
+And its scalar product with $\mT$ to compute the loss comes down to $O(Nn)$ additional operations. \\
+Then computing $F_2(\mT)$ and its scalar product with $\mT$ can be done following the development of \cite[Section 3]{scetbon2022linear} for the corresponding GW problem, in $O(Nn(r + s) + rs(N+n))$ operations. So the overall complexity at is $O(Nn(r + s) + rs(N+n) + min(n^2, ns^2))$.
+
+
+\underline{$L=L_{KL}$}: In this setting $f_2(\mC_Z(\mZ)) = \mC_Z(\mZ)$ and $h_1(\mC_X(\mX)) = \mC_X(\mX)$ naturally preserves the low-rank nature of input matrices, but $h_2(\mC_Z(\mZ)) = \log(\mC_Z(\mZ))$ does not. So computing the first term $F_1$, can be performed following this paranthesis order $\bm{1}_N ((  \bm{1}_N^\top \mT) \mA_1)) \mA_2^\top) $ in $O(N(n + s))$ operations. While the second term $F_2$ should be computed following this order $\mA_1 ((\mA_2^\top \mT)  \log(\mC_Z(\mZ)))$ in $O(Nnr + rn^2)$ operations. While their respective scalar product can be computed in $O(Nn)$. So the overall complexity is $O(Nnr + n^2r)$.\\
+Notice that in the gaussian kernel case for neighbor embedding methods, where $[\mC_Z(\mZ)]_{ij} = \exp(-\|\vz_i-\vz_j\|_2^2)$ up to some normalization. We have $[h_2(\mC_Z(\mZ))]_{ij} = -\|\vz_i-\vz_j\|_2^2$ which admits a low-rank factorization such that we can recover the complexity illustrated above for $L=L_2$.
+
+\subsubsection{Solvers.}
+We develop next our extension of both the Mirror Descent and Conditional Gradient solvers first introduced in \citep{vincent2021semi}, for any inner loss $L$ that decomposes as in \eqref{eq:loss_decomposition} .
+
+\paragraph{Mirror Descent algorithm.} This solver comes down to solve for the \emph{exact} srGW problem using mirror-descent scheme w.r.t the KL geometry. At each iteration $(i)$, the solver comes down to, first computing the gradient $\nabla_{\mT}F(\mT^{(i)})$ given in \eqref{eq:srgw_gradient} evaluated in $\mT^{(i)}$, then updating the transport plan using the following closed-form solution to a KL projection:
+
+\begin{equation}
+\mT^{(i+1)} \leftarrow \diag\left( \frac{\vh}{\mK^{(i)}\bm{1}_n} \right) \mK^{(i)}
+\end{equation}
+where $\mK^{(i)} = \exp \left(\ \nabla_{\mT}F(\mT^{(i)}) - \varepsilon \log(\mT^{(i)})  \right)$ and $\varepsilon > 0$ is an hyperparameter to tune. Proposition 3 and Lemma 7 in \cite[Chapter 6]{vincent2023optimal} provides that the Mirror-Descent algorithm converges to a stationary point non-asymptotically when $L=L_2$. A quick inspection of the proof suffices to see that this convergence holds for any losses $L$ satisfying \eqref{eq:loss_decomposition}, up to adaptation of constants involved in the Lemma.
+
+\paragraph{Conditional Gradient algorithm.} This algorithm, known to converge to local optimum \citep{lacoste2016convergence}, iterates over the 3 steps summarized in Algorithm \ref{alg:CGsolver}:
+.\begin{algorithm}[H]
+\caption{CG solver for $\srGW_L$\label{alg:CGsolver}}
+\begin{algorithmic}[1]
+	\REPEAT
+	\STATE $\mF^{(i)}\leftarrow $  Compute gradient  w.r.t $\mT$ of \eqref{eq:srgw_gradient}.
+	\STATE $\mX^{(i)}\leftarrow \min_{\substack{\mX\bm{1}_m =\vh\\ \mX \geq 0}} \scalar{\mX}{\mF^{(i)}} $%: Solve independent subproblems on rows of $\mG^{(t)}$. 
+	\STATE $\mT^{(i+1)} \leftarrow (1-\gamma^\star)\mT^{(i)} + \gamma^\star \mX^{(i)}$   with $\gamma^\star \in [0,1]$ from exact-line search.
+	\UNTIL{convergence.}
+\end{algorithmic}
+\end{algorithm}
+
+This algorithm consists in solving at each
+iteration $(i)$ a linearization $\scalar{\mX}{\mF^{(i)}}$ of the problem \eqref{eq:srgw_eqpb}
+where $\mF(\mT^{(i)})$ is the gradient of the objective in \eqref{eq:srgw_gradient}.  The solution of the linearized problem provides a \emph{descent direction} $\mX^{(i) }-\mT^{(i)}$, and a line-search whose optimal step can be found in closed form to
+update the current solution $\mT^{(i)}$. We detail in the following this line-search step for any loss that can be decomposed as in \eqref{eq:loss_decomposition}. It comes down for any $\mT \in \mathcal{U}_n(\vh)$, to solve the following problem:
+\begin{equation}
+\gamma = \argmin_{\gamma \in [0,1]} g(\gamma) := F(\mT + \gamma (\mX - \mT))
+\end{equation}
+Observe that this objective function can be developed as a second order polynom $g(\gamma) = a \gamma^2 + b \gamma +c$. To find an optimal $\gamma$ it suffices to express coefficients $a$ and $b$ to conclude using Algorithm 2 in \citep{vayer2018optimal}.
+
+
+Denoting $\mX^\top \bm{1}_n = \vq_X$ and $\mT^\top \bm{1}_n = \vq_T$ and following \eqref{eq:expressionF}, we have
+\begin{equation}
+\begin{split}
+	a &= \scalar{ \bm{1}_{n} (\vq_X - \vq_T)^\top f_2(\overline{\mC})^\top - h_1(\mC) (\mX- \mT) h_2(\overline{\mC})^\top}{\mX - \mT} \\
+	&= \scalar{F_1(\mX) - F_1(\mT) - F_2(\mX) + \mF(\mT)}{\mX - \mT} 
+\end{split}
+\end{equation}
+
+Finally the coefficient $b$ of the linear term is
+\begin{equation}
+\begin{split}
+	b &=  \langle  F_1(\mT) - F_2(\mT) , \mX-\mT \rangle + \langle  F_1(\mX - \mT) - F_2(\mX- \mT), \mT  \rangle \\
+\end{split}
+\end{equation}
+
+
+
 \subsection{Experimental setting}\label{sec:implementation_details}
 
-\textbf{Sequential methods.} We detail in the following the sequential methods DR$\to$C and C$\to$DR considered in our benchmark. DR$\to$C representations are constructed by first running the DR method (\Cref{sec:dr_methods}) associated with $(L, \mC_X, \mC_Z)$ thus obtaining an intermediate representation $\widetilde{\mZ} \in \R^{N \times d}$. Then, spectral clustering \cite{von2007tutorial} on the similarity matrix $\mC_Z(\widetilde{\mZ})$ is performed to compute a cluster assignment matrix $\widetilde{\mT} \in \R^{N \times n}$. The final reduced representation in $\R^{n \times d}$ is the average of each point per cluster, \ie the collection of the centroids, which is formally $\diag(\tilde{\vh})^{-1} \widetilde{\mT}^\top \widetilde{\mZ} \in \R^{n \times d}$ where $\tilde{\vh} = \widetilde{\mT}^\top \one_N$.
+\paragraph{Sequential methods.} We detail in the following the sequential methods DR$\to$C and C$\to$DR considered in our benchmark. DR$\to$C representations are constructed by first running the DR method (\Cref{sec:dr_methods}) associated with $(L, \mC_X, \mC_Z)$ thus obtaining an intermediate representation $\widetilde{\mZ} \in \R^{N \times d}$. Then, spectral clustering \cite{von2007tutorial} on the similarity matrix $\mC_Z(\widetilde{\mZ})$ is performed to compute a cluster assignment matrix $\widetilde{\mT} \in \R^{N \times n}$. The final reduced representation in $\R^{n \times d}$ is the average of each point per cluster, \ie the collection of the centroids, which is formally $\diag(\tilde{\vh})^{-1} \widetilde{\mT}^\top \widetilde{\mZ} \in \R^{n \times d}$ where $\tilde{\vh} = \widetilde{\mT}^\top \one_N$.
 For C$\to$DR, a cluster assignment matrix $\widehat{\mT} \in \R^{N \times n}$ is first computed using spectral clustering on $\mC_X(\mX)$.
 Then, the cluster centroid $\diag(\hat{\vh})^{-1} \widehat{\mT}^\top \mX$, where $\hat{\vh} = \widehat{\mT}^\top \bm{1}_N$, is passed as input to the DR method associated with $(L, \mC_X, \mC_Z)$.
 
-\textbf{Implementation.} 
+\paragraph{Implementation.} 
 Throughout, the spectral clustering implementation of \texttt{scikit-learn} \cite{pedregosa2011scikit} is used to perform either the clustering steps or the initialization of transport plans. 
 For all methods, $\mZ$ is initialized from \emph{i.i.d.} sampling of the standard Gaussian distribution $\mathcal{N}(0,1)$ and further optimized using \texttt{PyTorch}'s automatic differentiation \cite{paszke2017automatic} with Adam optimizer \cite{kingma2014adam}. OT-based solvers are built upon the \texttt{POT} \cite{flamary2021pot} library.
 k-Means is performed using the \texttt{scikit-learn}~\cite{pedregosa2011scikit} implementation.
 
-\textbf{Validated hyperparameters.} For the SEA based similarities, we validated \texttt{perplexity} across the set $\{20, 50, 100, 150, 200, 250\}$. For all kernels, the number of output samples $n$ spans a set of $10$ values, starting at the number of classes in the data and incrementing in steps of $20$. For the computation of $\mT$ in DistR (see \Cref{sec:DDR_ob}), we benchmark our Conditional Gradient solver, and the Mirror Descent algorithm whose hyperparameter $\varepsilon$ is validated in the two first values within the set $\{10^{i}\}_{i=-3}^3$ leading to stable optimization.
+\paragraph{Validated hyperparameters.} For the SEA based similarities, we validated \texttt{perplexity} across the set $\{20, 50, 100, 150, 200, 250\}$. For all kernels, the number of output samples $n$ spans a set of $10$ values, starting at the number of classes in the data and incrementing in steps of $20$. For the computation of $\mT$ in DistR (see \Cref{sec:DDR_ob}), we benchmark our Conditional Gradient solver, and the Mirror Descent algorithm whose hyperparameter $\varepsilon$ is validated in the two first values within the set $\{10^{i}\}_{i=-3}^3$ leading to stable optimization.
 
-\textbf{Datasets.}
+\paragraph{Datasets.}
 We provide details about the datasets used in our study. 
 For image datasets, we use COIL-20\footnote{\url{https://www1.cs.columbia.edu/CAVE/software/softlib/coil-100.php}} \cite{nene1996columbia}, MNIST and fashion-MNIST\footnote{taken from Torchvision \cite{marcel2010torchvision}.} \cite{xiao2017fashion}. Regarding single-cell genomics datasets, we rely on PBMC 3k\footnote{downloaded from Scanpy \cite{wolf2018scanpy}.} \cite{wolf2018scanpy}, SNAREseq\footnote{\url{https://github.com/rsinghlab/SCOT}} chromatin and gene expression \cite{chen2019high} and the scRNA-seq dataset\footnote{\url{https://github.com/solevillar/scGeneFit-python}} from \cite{zeisel2015cell} with two hierarchical levels of label. 
 Dimensions are provided in \Cref{tab:dataset_details}
@@ -109,7 +207,8 @@ We complete the results shown in \Cref{sec:exps} by providing the scores obtaine
 		\caption{Scores ($\times 100$) with respect to the number of prototypes (in $\R^2$) produced by DistR using the t-SNE model: SEA similarity for $\simiX$ \cite{van2023snekhorn}, Student's kernel for $\simiZ$ and loss $L_{\KL}$.}
 	\label{fig:sensitivity_sne}
 	\end{center}
-\end{figure*}\newpage
+\end{figure*}
+% \newpage
 
 \begin{figure*}[h!]
 	\begin{center}
@@ -118,7 +217,8 @@ We complete the results shown in \Cref{sec:exps} by providing the scores obtaine
 	\label{fig:sensitivity_ip}
 	\end{center}
 	\vspace{-0.8cm}
-\end{figure*} \newpage
+\end{figure*} 
+% \newpage
 
 
 \subsection{Dynamics between homogeneity and silhouette scores across numbers of prototypes}\label{sec:supp_hom_vs_sil}
@@ -143,7 +243,8 @@ For each method depending on some hyperparameters, models performing the best on
 		\end{center}
 		\vspace{-0.8cm}
 	\end{figure*}
-	\newpage
+	% \newpage
+
 	\subsection{Dynamics between homogeneity and NMI scores across numbers of prototypes}\label{sec:supp_hom_vs_nmi}
 	For each method depending on some hyperparameters, models performing the best on average across all numbers of prototypes are illustrated in \Cref{fig:PCA_hom_vs_nmi} for spectral methods and in \Cref{fig:SNE_hom_vs_nmi} for neighbor embedding ones. 
 	\begin{figure*}[h!]
@@ -166,7 +267,7 @@ For each method depending on some hyperparameters, models performing the best on
 		\end{center}
 		\vspace{-0.8cm}
 	\end{figure*}
-	\newpage
+	% \newpage
 
 
 \begin{comment}

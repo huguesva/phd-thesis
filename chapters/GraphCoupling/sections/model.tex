@@ -1,7 +1,7 @@
 \section{PCA as Graph Coupling}\label{sec:pca_graph_coupling}
 
 
-We start by considering the most canonical MRF which is the multivariate Gaussian model. Note that in this case, integrability translates into the precision matrix being full-rank. As we see with the following, the natural extension of our framework to such models leads to a well-established PCA algorithm. In the following, for a continuous variable $\bm{\Theta}_{Z}$, $\mathbb{P}(\bm{\Theta}_{Z} = \cdot)$ denotes its density.
+We begin by considering the most canonical Markov Random Field (MRF), the multivariate Gaussian model. To emphasize dependencies among the samples, we employ a covariance structure in the form of a Kronecker product between the row and column covariances. For simplicity, we assume an identity matrix for the column covariance, though any covariance structure could be used. For the row precision matrix, we adopt the conjugate prior to this MRF likelihood, which is the well-known Wishart distribution. As we will demonstrate, the natural adaptation of our framework to this model results in the widely recognized PCA embedding solution. In what follows, for a continuous variable $\bm{\Theta}_{Z}$, $\mathbb{P}(\bm{\Theta}_{Z} = \cdot)$ denotes its density.
 
 \begin{restatable}{theorem}{PCAgraphcoupling}
 \label{PCA_graph_coupling}
@@ -19,11 +19,11 @@ is a PCA embedding of $\Xb$ with $q$ components (\Cref{def:PCA_embedding}). When
 
 Note that unlike usual constructions of PCA or probabilistic PCA \citep{tipping1999probabilistic}, in the above the linear relation between $\Xb$ and $\Zb$ is recovered by solving the graph coupling problem and not explicitly stated beforehand. 
 
-\section {Shift-Invariant Pairwise MRF to Model Row Dependencies} \label{sec:graph_structure}
+\section {Shift-Invariant Pairwise MRF to Model Sample Dependencies} \label{sec:graph_structure}
 
-We now consider other types of MRFs, characterized by discrete structuring graphs. We follow the same methodology as in \Cref{sec:pca_graph_coupling}. Specifically, we first define an MRF conditioned on the data given a graph, and then construct a prior for the graph that is conjugate with this conditional distribution.
+We now consider other types of MRFs, characterized by discrete structuring graphs and more general potential functions. We follow the same methodology as in \Cref{sec:pca_graph_coupling}. Specifically, we first define an MRF conditioned on the data given a graph, and then construct a prior for the graph that is conjugate with this conditional distribution.
 
-Therefore let us start by defining the distribution of the observations given a graph. The latter takes the form of a pairwise MRF model which as we show is improper (\textit{i.e.}\ not integrable on $\mathbb{R}^{N \times p}$) when shift-invariant kernels are used. We consider a fixed directed graph $\mW \in \mathcal{S}_{W}$ where:
+Let us start by defining the distribution of the observations given a graph. The latter takes the form of a pairwise MRF model which as we show is improper (\textit{i.e.}\ not integrable on $\mathbb{R}^{N \times p}$) when shift-invariant kernels are used. We consider a fixed directed graph $\mW \in \mathcal{S}_{W}$ where:
 $$\mathcal{S}_{W} = \left\{\mW \in \mathbb{N}^{N \times N} \mid \forall (i,j) \in \integ{N}^2, W_{ii}=0, W_{ij} \leq n \right\}$$
 Throughout, $(E, \mathcal{B}(E), \lambda_E)$ denotes a measure space where $\mathcal{B}(E)$ is the Borel $\sigma$-algebra on $E$ and $\lambda_E$ is the Lebesgue measure on $E$.
 
@@ -78,7 +78,7 @@ Kernels may have node-specific bandwidths $\bm{\tau}$, set during a pre-processi
 
 \subsection{Uninformative Model for CC-wise Means}
 
-We showed that the MRF (\ref{eq:unnormalized_MRF}) is only integrable on $\mathcal{S}_{C}$, the definition of which depends on the connectivity structure of $\mW$. As we now demonstrate, the latter MRF can be seen as a limit of proper distributions on $\mathbb{R}^{n \times p}$, see \textit{e.g.}\ \cite{rue2005gaussian} for a similar construction in the Gaussian case. 
+We showed that the MRF (\ref{eq:unnormalized_MRF}) is only integrable on $\mathcal{S}_{C}$, the definition of which depends on the connectivity structure of $\mW$. As we now demonstrate, the latter MRF can be seen as a limit of proper distributions on $\mathbb{R}^{n \times p}$, see \textit{e.g.}\ \citep{rue2005gaussian} for a similar construction in the Gaussian case. 
 We introduce the Borel function $f^{\varepsilon}(\cdot, \mW) \colon \mathbb{R}^{n \times p} \to \mathbb{R}_+$ for $\varepsilon > 0$ such that for all $\Xb \in \mathbb{R}^{n \times p}$, $f^{\varepsilon}(\Xb, \mW) = f^{\varepsilon}(\Xb_{M}, \mW)$. To allow $f^{\varepsilon}$ to become arbitrarily non-informative, we assume that for all $\mW \in \mathcal{S}_{W}$, $f^\varepsilon(\cdot, \mW)$ is $\lambda_{\mathcal{S}_{M}}$-integrable for all $\varepsilon \in \mathbb{R}^*_+$ and $f^{\varepsilon}(\cdot, \mW) \xrightarrow[\varepsilon \to 0]{} 1$ almost everywhere.
 We now define the conditional distribution on $(\mathcal{S}_{M}, \mathcal{B}(\mathcal{S}_{M}))$ as follows:
 \begin{align}\label{eq:proba_parallel}
