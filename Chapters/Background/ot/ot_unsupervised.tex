@@ -1,0 +1,64 @@
+\subsection{OT for unsupervised representation learning}
+
+Throughout, we denote by $\nu_{\mX} = \frac{1}{N} \sum_i \delta_{\vx_i}$ the empirical data measure where $(\vx_1, \ldots, \vx_N)$ are the input data samples.
+
+
+\subsubsection{Projection Tasks are Wasserstein Variational Problems}
+
+
+As described in Proposition 32,  In PCA, this distribution \(\pi_h\) is given by the best low-dimensional projection of
+\(\pi\), and in K-means, \(\pi_h\) by the best discrete distribution of \(K\) centroids.
+
+Notable examples of such tasks are K-means and PCA. In the former, \(\ell\) is defined by
+\[
+\ell(\mathbf{x}, h = (\vm_1, \cdots, \vm_K)) = \min_{i \in [K]} \|\mathbf{x} - \vm_i\|_2^2 = \|\mathbf{x} - P_h(\mathbf{x})\|_2^2
+\]
+where \(P_h(\mathbf{x})\) is the projection of \(\mathbf{x}\) on its closest centroid. In the latter, \(P_h(\mathbf{x})\) is the projection of \(\mathbf{x}\) on the linear subspace spanned by \(h\). These two problems are actually related to a wider class of problems, namely \(k\)-dimensional coding schemes which are particular types of compression-type tasks. As described in Maurer and Pontil (2010),
+
+
+We are going to see in the next result that the above compression-type tasks can be interpreted as finding a “simple” distribution $\nu_h = P_h \# \nu$ that best describes the data distribution $\nu$ in the sense of the Wasserstein distance.
+
+\begin{lemma}[\cite{Canas12}]
+    Let $\mathcal{S} \subseteq \mathcal{X}$, $p \in [1, +\infty)$, and $\pi \in \mathcal{P}_p(\mathcal{X})$. Consider $P_{\mathcal{S}} : \mathcal{X} \to \mathcal{S}$, measurable, such that $D(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x})) \leq D(\mathbf{x}, \mathbf{y})$ for all $\mathbf{x} \in \mathcal{X}$ and $\mathbf{y} \in \mathcal{S}$. Then 
+    \[
+    \mathbb{E}_{\mathbf{x} \sim \pi} \left[ D(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x}))^p \right] = W_p^p(\pi, P_{\mathcal{S}} \# \pi).
+    \]
+    Moreover, for any $\nu \in \mathcal{P}_p(\mathcal{X})$ such that $\mathrm{supp}(\nu) \subseteq \mathcal{S}$, we have
+    \[
+    W_p(\pi, P_{\mathcal{S}} \# \pi) \leq W_p(\pi, \nu).
+    \]
+\end{lemma}
+
+\begin{proof}
+    The proof is adapted from \citep{Canas12}.
+
+    Considering the admissible coupling $\gamma = (\mathrm{id} \times P_{\mathcal{S}}) \# \pi \in \Pi(\pi, P_{\mathcal{S}} \# \pi)$, then
+    \[
+    W_p^p(\pi, P_{\mathcal{S}} \# \pi) \leq \int D^p(\mathbf{x}, \mathbf{y}) d\gamma(\mathbf{x}, \mathbf{y}) = \int D^p(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x})) d\pi(\mathbf{x}) = \mathbb{E}_{\mathbf{x} \sim \pi} \left[ D(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x}))^p \right].
+    \tag{88}
+    \]
+    
+    Conversely, if $\gamma^*$ is an optimal coupling for $W_p(\pi, P_{\mathcal{S}} \# \pi)$, then for all $(\mathbf{x}, \mathbf{y}) \in \mathrm{supp}(\gamma^*)$, we have that $\mathbf{y} \in \mathrm{supp}(P_{\mathcal{S}} \# \pi)$ by definition of a coupling, which means that $\mathbf{y} \in \mathcal{S}$. Hence, by hypothesis, $D^p(\mathbf{x}, \mathbf{y}) \geq D^p(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x}))$. Therefore,
+    \[
+    W_p^p(\pi, P_{\mathcal{S}} \# \pi) = \int D^p(\mathbf{x}, \mathbf{y}) d\gamma^*(\mathbf{x}, \mathbf{y}) \geq \int D^p(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x})) d\gamma^*(\mathbf{x}, \mathbf{y}) = \int D^p(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x})) d\pi(\mathbf{x}).
+    \tag{89}
+    \]
+    
+    Hence $W_p^p(\pi, P_{\mathcal{S}} \# \pi) \geq \mathbb{E}_{\mathbf{x} \sim \pi} \left[ D(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x}))^p \right]$. The last inequality can be proved in the same way by considering an optimal coupling $\gamma^*$ between $\pi$ and $\nu$:
+    \[
+    W_p^p(\pi, \nu) = \int D^p(\mathbf{x}, \mathbf{y}) d\gamma^*(\mathbf{x}, \mathbf{y}) \overset{\mathrm{supp}(\nu) \subseteq \mathcal{S}}{\geq} \int D^p(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x})) d\gamma^*(\mathbf{x}, \mathbf{y})
+    \]
+    \[
+    = \int D^p(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x})) d\pi(\mathbf{x}) = \mathbb{E}_{\mathbf{x} \sim \pi} \left[ D(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x}))^p \right] = W_p^p(\pi, P_{\mathcal{S}} \# \pi).
+    \tag{90}
+    \]
+\end{proof}
+
+
+\subsubsection{Gromov-Wasserstein OT for unsupervised learning}
+
+
+
+\begin{prob}{Extending the scope of OT for unsupervised learning}\label{prob:ot_unsupervised}
+    This is exactly the objective of the probabilistic graph coupling model introduced in \Cref{chapter:DistR}.
+\end{prob}

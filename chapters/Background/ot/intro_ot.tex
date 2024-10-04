@@ -1,99 +1,125 @@
 \section{The Distributional Perspective}\label{sec:dist_perspective_dr}
 
-In this section, we treat both the data samples and their embeddings as distribution. We introduce the theory of optimal transport (OT) which plays a crucial role in thsi thesis. OT tools offer a distance to compare two probability distributions by leveragign a ground cost defined on the underlying psace.
+In this section, we propose to treat both data samples and their embeddings as probability distributions. We introduce the theory of Optimal Transport (OT) \citep{villani2009optimal,peyre2019computational}, which plays a central role in this thesis. OT offers an elegant approach for quantifying the distance between two distributions, specifically a source and a target, while leveraging the geometry of the underlying spaces. It can be seen as a canonical way to lift a ground distance between points to a distance between measures supported on these points. We begin by outlining the classical formulation of OT, where a well-defined cost is assigned between individual source and target samples, and then expand the presentation to cases where the source and target distributions lie in incomparable spaces. While the classical setting is useful for defining meaningful affinities within a domain, the latter approach becomes particularly relevant when modeling the embedding process from high-dimensional to low-dimensional spaces as an OT problem.
 
-\paragraph{Lagrangian viewpoint.}
-
-Optimal Transport (OT) \citep{villani2009optimal,peyre2019computational} is a popular
-framework for comparing probability distributions and is at the core of \Cref{chapter:SNEkhorn} and \Cref{chapter:DistR} of this thesis.
 
 \subsection{Comparing Distributions with Optimal Transport}\label{sec:background_ot}
 
-\hva{
-Lien DR et OT:
-\begin{itemize}
-    \item minimal Wasserstein estimators (Rosasco et papier de Vayer/Gribonval.)
-    \item liens clustering - Gromov (papier de Chen).
-\end{itemize}   
-}
+The first mathematical formulation of the optimal transport (OT) problem was introduced by Gaspard Monge in his 1781 \textit{Mémoire} \citep{monge1781memoire}. In this work, Monge sought to determine the most efficient allocation strategy for transporting a pile of sand, treated as a collection of granular particles, from one location (\emph{déblais}) to another (\emph{remblais}). This problem naturally provides a framework for comparing distributions, which can be viewed as collections of potentially infinitely many particles.
+
+\paragraph{Lagrangian viewpoint.} We start by considering discrete probability measures which can be expressed as finite sums of Dirac masses. Specifically, a discrete measure with weights $\vh \in \Sigma_N$ where $\Sigma_N := \{\vh \in \R_+^N \mid \sum_i h_i = 1\}$, along with the corresponding support $\{\vx_1, \ldots, \vx_N\}$, can be written as
+\[
+\nu = \sum_i h_i \delta_{\vx_i}
+\]
+where $\delta_{\vx_i}$ denotes the Dirac measure centered at $\vx_i$ for each $i \in \integ{N}$. Here, \(h_i\) represents the weight associated with the support point \(\vx_i\) in the distribution.
+
+\paragraph{Comparing histograms with OT.}
+Let $X_S = \{ \bm{x}_i^S \in \R^d \}_{i=1}^{N_S}$ and $X_T = \{ \bm{x}_i^T \in \R^d \}_{i=1}^{N_T}$ denote respectively the source (\emph{déblais}) and target (\emph{remblais}) point locations. Let  \(\mu_S = \sum_{i \in \integ{N_S}} a_i \delta_{\vx^S_i}\) and \(\mu_T = \sum_{j \in \integ{N_T}} b_j \delta_{\vx^T_j}\), with $\va \in \Sigma_{N_S}$ and $\vb \in \Sigma_{N_T}$, denote respectively the source and target discrete probability measures or \emph{histograms} that we wish to compare. The original optimal transport problem can be formulated as follows: \emph{how can we transfer the total mass of \(\mu_S\) onto \(\mu_T\) in such a way that the overall transfer cost is minimized?}
+
+In the original Monge formulation, the transfer of mass is modeled by a mapping, known as the Monge map, which assigns each point \(\vx^S_i\) in the support of \(\mu_S\) to a point \(\vx^T_j\) in the support of \(\mu_T\), thereby transporting the mass from \(\mu_S\) to \(\mu_T\). To define the overall transport cost, we introduce a ground cost function \(c: (\vx, \vy) \in \text{supp}(\mu_S) \times \text{supp}(\mu_T) \to \mathbb{R}_+\). The total transport cost is then the sum of the ground costs for each unit of mass moved according to the map \(T\). Thus, the Monge problem is formulated as
+\begin{align}
+    \label{eq:monge_pb}
+    \tag{Monge}
+    M(\mu_S, \mu_T) \coloneqq \inf_{T_{\#}\mu_S = \mu_T} \sum_{\bm{x} \in \text{supp}(\mu_S)} c(\bm{x}, T(\bm{x}))
+\end{align}
+where \(T_{\#}\mu_S = \sum_{i=1}^{N_S} a_i \delta_{T(\vx_i^S)}\) represents the push-forward of \(\mu_S\) under the map \(T\).
+
+First note that it might not exist any map \(T\) that pushes forward \(\mu_S\) to \(\mu_T\) \ie satisfying $T_{\#}\mu_S = \mu_T$. Moreover, the \ref{eq:monge_pb} problem is highly non-linear in \(T\) and the set of admissible maps is not convex, making it difficult to analyze. 
+
+
+To address these issues, Kantorovich introduced a relaxation of the Monge problem by considering the set of all possible couplings between \(\mu_S\) and \(\mu_T\), denoted by \(\Pi(\mu_S, \mu_T)\). The Kantorovich formulation of OT is then given by
+
+
+\begin{mem1}{Primer on OT for continuous distributions}
+    We consider two Polish spaces $\mathcal{X}$ and $\mathcal{Y}$ such that we can define a cost function $c_{\mathcal{X} \mathcal{Y}} : \mathcal{X} \times \mathcal{Y} \to \R_+$. Let $\mu_S \in \mathcal{P}(\mathcal{X})$ and $\mu_T \in \mathcal{P}(\mathcal{Y})$ be two probability measures that we aim to compare.
+
+    \paragraph{Monge formulation.}
+    The original formulation \citep{monge1781memoire} of OT seeks the map $T$ satisfying $T_{\#}\mu_S = \nu_T$ that minimizes the transportation cost given by
+    \begin{align}\label{eq:monge_pb_continuous}
+        M(\mu_S, \mu_T) \coloneqq \inf_{T_{\#}\mu_S = \mu_T} \int_{\mathcal{X}} c_{\mathcal{X} \mathcal{Y}}(\bm{x}, T(\bm{x})) \mathrm{d}\mu(\bm{x}) \:.
+    \end{align}
+    The above formulation is highly non-linear in $T$ and the set of admissible maps $T$ is not convex hindering an easy analysis. Moreover, the existence of an optimal map $T$ is not guaranteed in general \citep{santambrogio2015optimal}.
+    
+    \paragraph{Kantorovich relaxation.} To resolve this, a popular relaxation by \citep{kantorovich1942translocation} consists of optimizing instead over the space of probabilistic couplings with marginals $\mu_S$ and $\mu_T$ denoted by $\Pi(\mu_S, \mu_T)$. 
+    The latter is defined as the probability distributions on $(\mathcal{X} \times \mathcal{Y})$ whose marginals are $\mu$ and $\nu$:
+    \begin{align}
+        \Pi(\mu_S, \mu_T) = \left\{ \gamma \in \mathcal{P}(\mathcal{X} \times \mathcal{Y}) : (\pi_{\mathcal{X}})_\# \gamma = \mu_S, (\pi_{\mathcal{Y}})_\# \gamma = \mu_T \right\} \:.
+    \end{align}
+    Then the Kantorovich formulation of OT is then given by
+    \begin{align}\label{eq:Wasserstein}
+        W(\mu_S, \mu_T) \coloneqq \inf_{\pi \in \Pi(\mu_S, \mu_T)} \int_{\mathcal{X} \times \mathcal{Y}} c_{\mathcal{X} \mathcal{Y}}(\bm{x}, \bm{y}) \mathrm{d}\pi(\bm{x}, \bm{y}) \:.
+    \end{align}
+    This formulation is a convex optimization problem and the infimum is well
+    defined under mild assumptions \citep{santambrogio2015optimal}. If the optimal
+    coupling $\pi^\star$ is supported on a \emph{deterministic} function, \ie
+    $\pi^\star$ is of the form $(\mathrm{id} \times T^\star)\# \mu_S$, then
+    $T^\star$ solves \eqref{eq:monge_pb}. This holds under the assumption that one
+    of the inputs is absolutely continuous with respect to the Lebesgue measure
+    for $c_{\mathcal{X} \mathcal{Y}}(\bm{x}, \bm{y}) = h(\bm{x} - \bm{y})$ with
+    $h$ strictly convex \citep{gangbo1996geometry}.
+    
+    \end{mem1}
+
+\begin{mem1}{Metric properties of the Wasserstein distance}
+    
+\end{mem1}
+
+
+\subsubsection{Unregularized Optimal Transport}
+
 
 We first introduce the discrete OT problem before presenting regularized formulations and associated algorithms.
-All the notations are presented in \cref{sec:notations}.
 % \subsection{Discrete Optimal Transport}
-Let $X_S = \{ \bm{x}_i^S \in \R^d \}_{i=1}^{N_S}$ and $X_T = \{ \bm{x}_i^T \in \R^d \}_{i=1}^{N_T}$ denote the sets of respectively source and target point locations. The discrete \emph{Monge-Kantorovitch} problem \cite{kantorovich1942transfer} focuses on the optimal allocation strategy to transport the empirical measure $\mu_S = \sum_{i=1}^{N_S} a_i  \delta_{\bm{x}_i^S}$ onto $\mu_T = \sum_{i=1}^{N_T} b_i  \delta_{\bm{x}_i^T}$ where $\bm{a} \in \Delta^{N_S}$ and $\bm{b} \in \Delta^{N_T}$. It consists in computing a \emph{coupling} $\mP \in \R_{+}^{N_S \times N_T}$ \ie a joint probability measure over $X_S \times X_T$ solving the linear program
+ The discrete \emph{Monge-Kantorovitch} problem \citep{kantorovich1942transfer} focuses on the optimal allocation strategy to transport the empirical measure $\mu_S = \sum_{i=1}^{N_S} a_i  \delta_{\bm{x}_i^S}$ onto $\mu_T = \sum_{i=1}^{N_T} b_i  \delta_{\bm{x}_i^T}$ where $\bm{a} \in \Sigma^{N_S}$ and $\bm{b} \in \Sigma^{N_T}$. It consists in computing a \emph{coupling} $\mT \in \R_{+}^{N_S \times N_T}$ \ie a joint probability measure over $X_S \times X_T$ solving the linear program
 \begin{equation}
     \tag{OT}
     \label{eq:OT}
-    \min_{\mP \in \Pi(\bm{a}, \bm{b})} \: \langle \mP, \mC \rangle
+    \min_{\mT \in \Pi(\bm{a}, \bm{b})} \: \langle \mT, \mC \rangle
 \end{equation}
-where $\Pi(\bm{a}, \bm{b})$ is the transport polytope with marginals $(\bm{a}, \bm{b})$ and the \emph{cost matrix} $\mathbf{C} \in \R_+^{N_S \times N_T}$ encodes the pairwise distances between the source and target samples. One can typically consider the squared Euclidean distance $C_{ij} = \|\bm{x}^S_{i}-\bm{x}^T_{j}\|_2^2$ or any Riemannian distance over a manifold \cite{villani2009optimal}.
+where $\gU(\va, \vb)$ is the transport polytope with marginals $(\bm{a}, \bm{b})$ that is $\gU(\va, \vb) \coloneqq \left\{ \mT \in \R_+^{N \times n} \mid \mT \mathbf{1}_n = \va, \mT^\top \mathbf{1}_N = \vb \right\}$ and the \emph{cost matrix} $\mathbf{C} \in \R_+^{N_S \times N_T}$ encodes the pairwise distances between the source and target samples. One can typically consider the squared Euclidean distance $C_{ij} = \|\bm{x}^S_{i}-\bm{x}^T_{j}\|_2^2$ or any Riemannian distance over a manifold \citep{villani2009optimal}.
+
+For discrete measures, the Monge and Kantorovich formulations are equivalent when $\mu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\bm{x}_i}$ and $\nu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\bm{y}_i}$. In this case, the solution of \eqref{eq:Wasserstein} corresponds to an extremal point of the polytope of doubly stochastic matrices \citep{bertsimas1997introduction}. This implies that there is no splitting of mass, meaning that each row of the optimal solution $\mT^\star$ contains exactly one non-zero coefficient.
 
 
-\begin{mem1}{OT}
-AAAA
+\paragraph{Solving exact OT.} Minimum-cost Network Flow algorithm. 
 
-\paragraph{Monge formulation.}
-We consider two Polish spaces $\mathcal{X}$ and $\mathcal{Y}$ such that we can define a cost function $c_{\mathcal{X} \mathcal{Y}} : \mathcal{X} \times \mathcal{Y} \to \R_+$. Let $\mu \in \mathcal{P}(\mathcal{X})$ and $\nu \in \mathcal{P}(\mathcal{Y})$ be two probability measures that we aim to compare.
-The original formulation \citep{monge1781memoire} of OT seeks the map $T$ satisfying $T_{\#}\mu = \nu$ that minimizes the transportation cost given by
-\begin{align}\label{eq:monge_pb}
-	M(\mu, \nu) \coloneqq \inf_{T_{\#}\mu = \nu} \int_{\mathcal{X}} c_{\mathcal{X} \mathcal{Y}}(\bm{x}, T(\bm{x})) \mathrm{d}\mu(\bm{x}) \:.
-\end{align}
-The above formulation is highly non-linear in $T$ and the set of admissible maps $T$ is not convex hindering an easy analysis. Moreover, the existence of an optimal map $T$ is not guaranteed in general.
 
-\paragraph{Kantorovich relaxation.} To resolve this, a popular relaxation by \citep{kantorovich1942translocation} consists of optimizing instead over the space of probabilistic couplings with marginals $\mu$ and $\nu$
-\begin{align}\label{eq:Wasserstein}
-	W(\mu, \nu) \coloneqq \inf_{\pi \in \Pi(\mu, \nu)} \int_{\mathcal{X} \times \mathcal{Y}} c_{\mathcal{X} \mathcal{Y}}(\bm{x}, \bm{y}) \mathrm{d}\pi(\bm{x}, \bm{y}) \:.
-\end{align}
-This formulation is a convex optimization problem and the infimum is well
-defined under mild assumptions \citep{santambrogio2015optimal}. If the optimal
-coupling $\pi^\star$ is supported on a \emph{deterministic} function, \ie
-$\pi^\star$ is of the form $(\mathrm{id} \times T^\star)\# \mu$, then
-$T^\star$ solves \eqref{eq:monge_pb}. This holds under the assumption that one
-of the inputs is absolutely continuous with respect to the Lebesgue measure
-for $c_{\mathcal{X} \mathcal{Y}}(\bm{x}, \bm{y}) = h(\bm{x} - \bm{y})$ with
-$h$ strictly convex \citep{gangbo1996geometry}. In the case of discrete
-measures, the equivalence holds if $\mu = \frac{1}{N} \sum_{i \in \integ{N}}
-\delta_{\bm{x}_i}$ and $\nu = \frac{1}{N} \sum_{i \in \integ{N}}
-\delta_{\bm{y}_i}$ as the solution of \eqref{eq:Wasserstein} is reached at an
-extremal point of the polytope of doubly stochastic matrices
-\citep{bertsimas1997introduction}.
 
-\end{mem1}
 
 
 \subsubsection{Regularized Optimal Transport}
 
 % \subsection{Strictly Convex Optimal Transport}
-To enable faster algorithmic resolution as well as smoother solutions, one can rely on a strictly convex regularizer $\psi : \R^{N_s} \to \R$. It amounts to solving $\min_{\mP \in \Pi(\bm{a}, \bm{b})} \: \langle \mP, \C \rangle + \varepsilon^\star \sum_i \psi(\mP_{i:})$ where $\varepsilon^\star > 0$. 
+To enable faster algorithmic resolution as well as smoother solutions, one can rely on a strictly convex regularizer $\psi : \R^{N_s} \to \R$. It amounts to solving $\min_{\mT \in \Pi(\bm{a}, \bm{b})} \: \langle \mT, \C \rangle + \varepsilon^\star \sum_i \psi(\mT_{i:})$ where $\varepsilon^\star > 0$. 
 Interestingly, regularized OT can also be framed using a convex constraint as follows
 \begin{align}\label{eq:cot}
-    \min_{\mP \in \Pi(\bm{a}, \bm{b})} \: \langle \mP, \mC \rangle \quad \text{s.t.} \quad  \mP \in \overline{\mathcal{B}}(\eta)
+    \min_{\mT \in \Pi(\bm{a}, \bm{b})} \: \langle \mT, \mC \rangle \quad \text{s.t.} \quad  \mT \in \overline{\mathcal{B}}(\eta)
     \tag{ROT}
 \end{align}
-where $\overline{\mathcal{B}}(\eta) \coloneqq \{ \mP \: \text{s.t.} \: \sum_i \psi(\mP_{i:}) \leq \eta \}$. Note that the previously introduced $\varepsilon^\star$ is the optimal dual variable associated with the constraint $\overline{\mathcal{B}}(\eta)$ in the above equivalent formulation. 
+where $\overline{\mathcal{B}}(\eta) \coloneqq \{ \mT \: \text{s.t.} \: \sum_i \psi(\mT_{i:}) \leq \eta \}$. Note that the previously introduced $\varepsilon^\star$ is the optimal dual variable associated with the constraint $\overline{\mathcal{B}}(\eta)$ in the above equivalent formulation. 
 Throughout, we make the following assumption on $\psi$.
 \begin{assumption}\label{assumption_psi}
     Let $\psi: \mathrm{dom}(\psi) \to \R \cup \{\infty\}$ be strictly convex and differentiable on the interior of its domain $\mathrm{dom}(\psi) \subset \R^{N_S}_+$.
 \end{assumption}
 
-In what follows, we denote by $\psi(\mP) = (\psi(\mP_{1:}), ..., \psi(\mP_{N_S:}))^\top$.
-We introduce $\psi^*:= \mathbf{p} \to \sup_{\mathbf{q} \in \mathrm{dom}(\psi)} \langle \mathbf{p}, \mathbf{q} \rangle - \psi(\mathbf{q})$ the convex conjugate of $\psi$ \cite{rockafellar1997convex}.
-Note that when $\psi$ is strictly convex, this supremum is uniquely achieved and from Danskin's theorem \cite{danskin1966theory}: $\nabla \psi^*(\bm{p}) = \argmax_{\mathbf{q} \in \mathrm{dom}(\psi)} \langle \mathbf{p}, \mathbf{q} \rangle - \psi(\mathbf{q})$. 
-We show in \cref{sec:proof_global} that when $\varepsilon^\star > 0$, \textit{i.e.}\ when the constraint $\mP \in \overline{\mathcal{B}}(\eta)$ is active, \eqref{eq:cot} is solved for $\mP^\star = \nabla \psi^*((\mC - \bm{\lambda}^\star \oplus \bm{\mu}^\star) / \varepsilon^\star)$ \footnote{We use the notation $\nabla \psi^*(\mP) \coloneqq (\nabla \psi^*(\mP_{1:}), ..., \nabla \psi^*(\mP_{N_S:}))^\top$.} where $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ solve the following dual problem 
+In what follows, we denote by $\psi(\mT) = (\psi(\mT_{1:}), ..., \psi(\mT_{N_S:}))^\top$.
+We introduce $\psi^*:= \mathbf{p} \to \sup_{\mathbf{q} \in \mathrm{dom}(\psi)} \langle \mathbf{p}, \mathbf{q} \rangle - \psi(\mathbf{q})$ the convex conjugate of $\psi$ \citep{rockafellar1997convex}.
+Note that when $\psi$ is strictly convex, this supremum is uniquely achieved and from Danskin's theorem \citep{danskin1966theory}: $\nabla \psi^*(\bm{p}) = \argmax_{\mathbf{q} \in \mathrm{dom}(\psi)} \langle \mathbf{p}, \mathbf{q} \rangle - \psi(\mathbf{q})$. 
+We show in \cref{sec:proof_global} that when $\varepsilon^\star > 0$, \textit{i.e.}\ when the constraint $\mT \in \overline{\mathcal{B}}(\eta)$ is active, \eqref{eq:cot} is solved for $\mT^\star = \nabla \psi^*((\mC - \bm{\lambda}^\star \oplus \bm{\mu}^\star) / \varepsilon^\star)$ \footnote{We use the notation $\nabla \psi^*(\mT) \coloneqq (\nabla \psi^*(\mT_{1:}), ..., \nabla \psi^*(\mT_{N_S:}))^\top$.} where $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ solve the following dual problem 
 % of \eqref{eq:cot}
 \begin{align}
     \max_{\bm{\lambda}, \bm{\mu}, \varepsilon>0}  \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle + \varepsilon \Big(\sum_i \psi^*((\mC_{i:} - \lambda_i \bm{1} - \bm{\mu}) / \varepsilon) - \eta \Big) \:.
     \tag{Dual-ROT}
 \end{align}
-The above objective is concave thus the problem can be solved exactly using \textit{e.g.}\ BFGS \cite{liu1989limited} or ADAM \cite{kingma2014adam}.
+The above objective is concave thus the problem can be solved exactly using \textit{e.g.}\ BFGS \citep{liu1989limited} or ADAM \citep{kingma2014adam}.
 % \paragraph{Projection-based approach.} 
 As a complementary view, one can also frame \eqref{eq:cot} as a $\psi$-Bregman projection over a convex set. The $\psi$-Bregman divergence is defined as 
 \begin{align}
-    D_\psi(\mP, \mQ) := \psi(\mP) - \psi(\mQ) - \langle \mP - \mQ, \nabla \psi(\mQ) \rangle \:.
+    D_\psi(\mT, \mQ) := \psi(\mT) - \psi(\mQ) - \langle \mT - \mQ, \nabla \psi(\mQ) \rangle \:.
 \end{align}
 The solution of \eqref{eq:cot} can then be expressed as
-$\mP^\star = \operatorname{Proj}^{D_\psi}_{\Pi(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)}(\mK_\sigma)$
-where $\mK_\sigma \coloneqq \nabla \psi^*(- \mC / \sigma)$ for any $\sigma < \varepsilon^\star$ (see \cref{sec:proof_global} for details). The key benefit of the above result is that it enables solving \eqref{eq:cot} with alternating Bregman projection schemes \cite{benamou2015iterative}.
+$\mT^\star = \operatorname{Proj}^{D_\psi}_{\Pi(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)}(\mK_\sigma)$
+where $\mK_\sigma \coloneqq \nabla \psi^*(- \mC / \sigma)$ for any $\sigma < \varepsilon^\star$ (see \cref{sec:proof_global} for details). The key benefit of the above result is that it enables solving \eqref{eq:cot} with alternating Bregman projection schemes \citep{benamou2015iterative}.
 % \begin{align}
 %     \max_{\bm{\lambda}, \bm{\mu}, \varepsilon > 0} \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle + \varepsilon \left\langle \bm{1}, \psi^*\left((\C - \bm{\lambda} \oplus \bm{\mu}) / \varepsilon \right) - \eta \bm{1} \right\rangle \:.
 %     \tag{Dual-ROT}
@@ -102,12 +128,12 @@ where $\mK_\sigma \coloneqq \nabla \psi^*(- \mC / \sigma)$ for any $\sigma < \va
 In this work, we focus specifically on 
 certain Bregman divergences: the Kullback Leibler ($\KL$) divergence and the squared Euclidean distance.
 % with associated $\ell_2$ norm.
-The first reads $D_{\KL}(\mP | \mQ) = \langle \mP, \log \left(\mP \oslash \mQ \right) - \bm{1} \bm{1}^\top \rangle$ with associated negative entropy $\psi_{\KL}(\mathbf{p}) = \langle \mathbf{p}, \log \mathbf{p} - 1 \rangle$. In this case, \eqref{eq:cot} boils down to entropic OT and solved for $\operatorname{Proj}^{\KL}_{\Pi(\bm{a}, \bm{b})}(\mK_{\varepsilon^\star})$ where $\mK_{\varepsilon^\star} = \nabla \psi_{\KL}^{*}(-\mC / \varepsilon^\star) = \exp(-\mC / \varepsilon^\star)$ is a Gibbs kernel. This projection is well-known as the \emph{static Schrödinger bridge} \cite{leonard2013survey} referring to statistical physics where it first appeared \cite{schrodinger1931umkehrung}, and can be computed efficiently using the Sinkhorn algorithm \cite{cuturi2013sinkhorn}. For the squared Euclidean distance, we define $\psi_{2}(\mathbf{p}) = \frac{1}{2} \| \mathbf{p} \|^2_2$. The associated problem \eqref{prop:cot} is usually referred to as quadratic OT \cite{lorenz2021quadratically} and can yield sparse OT plans unlike entropic.
+The first reads $D_{\KL}(\mT | \mQ) = \langle \mT, \log \left(\mT \oslash \mQ \right) - \bm{1} \bm{1}^\top \rangle$ with associated negative entropy $\psi_{\KL}(\mathbf{p}) = \langle \mathbf{p}, \log \mathbf{p} - 1 \rangle$. In this case, \eqref{eq:cot} boils down to entropic OT and solved for $\operatorname{Proj}^{\KL}_{\Pi(\bm{a}, \bm{b})}(\mK_{\varepsilon^\star})$ where $\mK_{\varepsilon^\star} = \nabla \psi_{\KL}^{*}(-\mC / \varepsilon^\star) = \exp(-\mC / \varepsilon^\star)$ is a Gibbs kernel. This projection is well-known as the \emph{static Schrödinger bridge} \citep{leonard2013survey} referring to statistical physics where it first appeared \citep{schrodinger1931umkehrung}, and can be computed efficiently using the Sinkhorn algorithm \citep{cuturi2013sinkhorn}. For the squared Euclidean distance, we define $\psi_{2}(\mathbf{p}) = \frac{1}{2} \| \mathbf{p} \|^2_2$. The associated problem \eqref{prop:cot} is usually referred to as quadratic OT \citep{lorenz2021quadratically} and can yield sparse OT plans unlike entropic.
 
 % In this work, we focus on a specific class of Bregman divergences called \emph{$\alpha$-divergences} or \emph{Rényi divergences}.
-% The \emph{Rényi divergence} \cite{renyi1961measures} for $\mP, \mQ \in \R_+^{N_S \times N_T}$ reads
+% The \emph{Rényi divergence} \citep{renyi1961measures} for $\mT, \mQ \in \R_+^{N_S \times N_T}$ reads
 % \begin{align}
 %     D_{\alpha} (\mathbf{P} | \mathbf{Q}) = \frac{1}{\alpha-1} \log \left\langle \mathbf{P}^{\odot \alpha}, \mathbf{Q}^{\odot(1-\alpha)}\right\rangle
 %     \tag{$D_\alpha$}
 % \end{align}
-% where throughout we adopt the conventions that $0/0 = 0$, $0 \log(0) = 0$ and $x/0 = \infty$ for $x > 0$. In the context of Bregman divergence, it corresponds to choosing $\psi = \operatorname{H}_\alpha$, the related \emph{Rényi entropy} (or \emph{$\alpha$-entropy})\cite{ben1978renyi}, where for a vector $\p \in \mathbb{R}^{N_T}_+$, $\operatorname{H}_{\alpha}(\mathbf{p}) = \frac{1}{1-\alpha} \log \left\langle \mathbf{p}^{\odot \alpha}, \mathbf{1} \right\rangle$ with $\bm{1}$ being the all-one vector. Note that these definitions can be extended to $\alpha = 0$, $1$, and $+\infty$ by continuity. Of special note is the limit $\alpha \to 1$
+% where throughout we adopt the conventions that $0/0 = 0$, $0 \log(0) = 0$ and $x/0 = \infty$ for $x > 0$. In the context of Bregman divergence, it corresponds to choosing $\psi = \operatorname{H}_\alpha$, the related \emph{Rényi entropy} (or \emph{$\alpha$-entropy})\citep{ben1978renyi}, where for a vector $\p \in \mathbb{R}^{N_T}_+$, $\operatorname{H}_{\alpha}(\mathbf{p}) = \frac{1}{1-\alpha} \log \left\langle \mathbf{p}^{\odot \alpha}, \mathbf{1} \right\rangle$ with $\bm{1}$ being the all-one vector. Note that these definitions can be extended to $\alpha = 0$, $1$, and $+\infty$ by continuity. Of special note is the limit $\alpha \to 1$

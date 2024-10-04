@@ -9,6 +9,8 @@ It is usually impossible to define a meaningful transportation cost from two spa
 This occurs when considering ambient Euclidean spaces of different dimensions \ie $\mathcal{X} \subseteq \R^p$ and $\mathcal{Z} \subseteq \R^d$ with $p \neq d$ which is precisely the context of dimensionality reduction.
 We first introduce the general GW problem before highlighting its utility to compare distributions in incomparable spaces.
 
+In this work, we leverage the GW discrepancy to extend classical DR approaches, framing them as the projection of a distribution onto a space of lower dimensionality. 
+
 \paragraph{Gromov-Wasserstein (GW).} The GW framework \citep{memoli2011gromov,sturm2012space} comprises a collection of OT methods designed to compare distributions by examining the pairwise relations \emph{within each domain}. For two matrices $\mC \in \R^{N \times N}$, $\overline{\mC} \in \R^{n \times n}$, and weights $\vh \in \Sigma_N, \overline{\vh} \in \Sigma_n$, the GW discrepancy is defined as
 \begin{equation}
 \label{eq:gw_pb} 
@@ -28,6 +30,5 @@ In this formulation, both pairs $(\mC, \vh)$ and $(\overline{\mC}, \overline{\vh
 
 From a distributional perspective, GW can also be viewed as a distance between distributions that do not belong to the same metric space. For two discrete probability distributions $\mu_X = \sum_{i=1}^N [\vh_X]_i \delta_{\vx_i} \in \gP_N(\R^{p}), \mu_Z =\sum_{i=1}^n [\vh_Z]_i \delta_{\vz_i} \in \gP_n(\R^d)$ and pairwise similarity matrices $\simiX$ and $\simiZ$ associated with the supports $\mX = (\vx_1, \cdots, \vx_n)^\top$ and $\mZ = (\vz_1, \cdots, \vz_n)^\top$, the quantity $\GW_L (\simiX, \simiZ, \vh_X, \vh_Z)$ is a measure of dissimilarity or discrepancy between $\mu_X, \mu_Z$. Specifically, when $L=L_2$, and $\simiX, \simiZ$ are pairwise distance matrices, GW defines a proper distance between $\mu_X$ and $\mu_Z$ with respect to measure preserving isometries\footnote{With weaker assumptions on $\simiX, \simiZ$, GW defines a pseudo-metric \textit{w.r.t.} a different notion of isomorphism \citep{chowdhury2019gromov}. See Appendix \ref{sec:srGW_divergence} for more details.} \citep{memoli2011gromov}. 
 
+\paragraph{Gromov-Wasserstein for machine learning.}
 Due to its versatile properties, notably in comparing distributions over different domains,  the GW problem has found many applications in machine learning, \textit{e.g.,} for 3D meshes alignment \citep{solomon2016entropic,ezuz2017gwcnn}, NLP \citep{alvarez2018gromov}, (co-)clustering  \citep{peyre2016gromov, redko2020co}, single-cell analysis \citep{demetci2020gromov}, neuroimaging \citep{thual2022aligning}, graph representation learning \citep{xu2020gromov, vincent2021online, liu2022robust, vincent2022template, pmlr-v202-zeng23c} and partitioning \citep{xu2019scalable, chowdhury2021generalized}.
-
-In this work, we leverage the GW discrepancy to extend classical DR approaches, framing them as the projection of a distribution onto a space of lower dimensionality. 
