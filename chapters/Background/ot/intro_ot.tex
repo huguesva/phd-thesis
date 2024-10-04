@@ -16,7 +16,10 @@ where $\delta_{\vx_i}$ denotes the Dirac measure centered at $\vx_i$ for each $i
 \paragraph{Comparing histograms with OT.}
 Let $X_S = \{ \bm{x}_i^S \in \R^d \}_{i=1}^{N_S}$ and $X_T = \{ \bm{x}_i^T \in \R^d \}_{i=1}^{N_T}$ denote respectively the source (\emph{déblais}) and target (\emph{remblais}) point locations. Let  \(\mu_S = \sum_{i \in \integ{N_S}} a_i \delta_{\vx^S_i}\) and \(\mu_T = \sum_{j \in \integ{N_T}} b_j \delta_{\vx^T_j}\), with $\va \in \Sigma_{N_S}$ and $\vb \in \Sigma_{N_T}$, denote respectively the source and target discrete probability measures or \emph{histograms} that we wish to compare. The original optimal transport problem can be formulated as follows: \emph{how can we transfer the total mass of \(\mu_S\) onto \(\mu_T\) in such a way that the overall transfer cost is minimized?}
 
-In the original Monge formulation, the transfer of mass is modeled by a mapping, known as the Monge map, which assigns each point \(\vx^S_i\) in the support of \(\mu_S\) to a point \(\vx^T_j\) in the support of \(\mu_T\), thereby transporting the mass from \(\mu_S\) to \(\mu_T\). To define the overall transport cost, we introduce a ground cost function \(c: (\vx, \vy) \in \text{supp}(\mu_S) \times \text{supp}(\mu_T) \to \mathbb{R}_+\). The total transport cost is then the sum of the ground costs for each unit of mass moved according to the map \(T\). Thus, the Monge problem is formulated as
+\subsubsection{Unregularized Optimal Transport}
+
+\paragraph{Monge formulation.}
+In the original Monge formulation, the transfer of mass is modeled by a mapping, known as the Monge map, which assigns each point \(\vx^S_i\) in the support of \(\mu_S\) to a point \(\vx^T_j\) in the support of \(\mu_T\), thereby transporting the mass from \(\mu_S\) to \(\mu_T\). To define the overall transport cost, we introduce a ground cost function \(c: (\vx, \vy) \in \text{supp}(\mu_S) \times \text{supp}(\mu_T) \to \mathbb{R}_+\). One can typically consider the squared Euclidean distance $(\vx, \vy) \mapsto \| \vx - \vy \|_2^2$ or any Riemannian distance over a manifold \citep{villani2009optimal} depending on the underlying spaces of $\text{supp}(\mu_S) \times \text{supp}(\mu_T)$. The total transport cost is then the sum of the ground costs for each unit of mass moved according to the map \(T\). Thus, the Monge problem is formulated as
 \begin{align}
     \label{eq:monge_pb}
     \tag{Monge}
@@ -24,28 +27,43 @@ In the original Monge formulation, the transfer of mass is modeled by a mapping,
 \end{align}
 where \(T_{\#}\mu_S = \sum_{i=1}^{N_S} a_i \delta_{T(\vx_i^S)}\) represents the push-forward of \(\mu_S\) under the map \(T\).
 
-First note that it might not exist any map \(T\) that pushes forward \(\mu_S\) to \(\mu_T\) \ie satisfying $T_{\#}\mu_S = \mu_T$. Moreover, the \ref{eq:monge_pb} problem is highly non-linear in \(T\) and the set of admissible maps is not convex, making it difficult to analyze. 
+First, note that there may not always exist a map \(T\) that pushes \(\mu_S\) forward to \(\mu_T\), i.e., satisfying \(T_{\#}\mu_S = \mu_T\). Moreover, the Monge problem \eqref{eq:monge_pb} is highly non-linear in \(T\), and the set of admissible maps is not convex, which makes it challenging to analyze. To gain intuition about the complexity of the problem, consider the case where \(N_S = N_T = N\) for some \(N \in \mathbb{N}\), and \(\va = \vb = \frac{1}{N} \mathbf{1}_N\). Here, mass conservation implies that the map \(T\) defines a bijection on \(\{1, \ldots, N\}\). Solving the OT problem in this case involves finding the optimal permutation in the enormous space of \(N!\) possible outcomes. This combinatorial complexity renders the Monge problem intractable in practice. These difficulties have contributed to the transportation problem remaining an open mathematical challenge for nearly two centuries.
 
+
+\paragraph{Kantorovich relaxation.}
+
+To resolve this, a popular relaxation by \citep{kantorovich1942translocation} consists of optimizing instead over the space of probabilistic couplings with marginals $\mu_S$ and $\mu_T$ denoted by $\Pi(\mu_S, \mu_T)$. 
+    The latter is defined as the probability distributions on $(\mathcal{X} \times \mathcal{Y})$ whose marginals are $\mu$ and $\nu$:
+
+
+For discrete measures, the Monge and Kantorovich formulations are equivalent when $\mu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\bm{x}_i}$ and $\nu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\bm{y}_i}$. In this case, the solution of \eqref{eq:Wasserstein} corresponds to an extremal point of the polytope of doubly stochastic matrices \citep{bertsimas1997introduction}. This implies that there is no splitting of mass, meaning that each row of the optimal solution $\mT^\star$ contains exactly one non-zero coefficient.
 
 To address these issues, Kantorovich introduced a relaxation of the Monge problem by considering the set of all possible couplings between \(\mu_S\) and \(\mu_T\), denoted by \(\Pi(\mu_S, \mu_T)\). The Kantorovich formulation of OT is then given by
+
+We first introduce the discrete OT problem before presenting regularized formulations and associated algorithms.
+% \subsection{Discrete Optimal Transport}
+ The discrete \emph{Monge-Kantorovitch} problem \citep{kantorovich1942transfer} focuses on the optimal allocation strategy to transport the empirical measure $\mu_S = \sum_{i=1}^{N_S} a_i  \delta_{\bm{x}_i^S}$ onto $\mu_T = \sum_{i=1}^{N_T} b_i  \delta_{\bm{x}_i^T}$ where $\bm{a} \in \Sigma^{N_S}$ and $\bm{b} \in \Sigma^{N_T}$. It consists in computing a \emph{coupling} $\mT \in \R_{+}^{N_S \times N_T}$ \ie a joint probability measure over $X_S \times X_T$ solving the linear program
+\begin{equation}
+    \tag{OT}
+    \label{eq:OT}
+    \min_{\mT \in \gU(\va, \vb)} \: \langle \mT, \mC \rangle
+\end{equation}
+where $\gU(\va, \vb)$ is the transport polytope with marginals $(\bm{a}, \bm{b})$ that is $\gU(\va, \vb) \coloneqq \left\{ \mT \in \R_+^{N_S \times N_T} \mid \mT \mathbf{1}_n = \va, \mT^\top \mathbf{1}_N = \vb \right\}$ and the \emph{cost matrix} $\mathbf{C} \in \R_+^{N_S \times N_T}$ encodes the pairwise distances between the source and target samples. 
+
+\paragraph{Solving exact OT.} Minimum-cost Network Flow algorithm. 
 
 
 \begin{mem1}{Primer on OT for continuous distributions}
     We consider two Polish spaces $\mathcal{X}$ and $\mathcal{Y}$ such that we can define a cost function $c_{\mathcal{X} \mathcal{Y}} : \mathcal{X} \times \mathcal{Y} \to \R_+$. Let $\mu_S \in \mathcal{P}(\mathcal{X})$ and $\mu_T \in \mathcal{P}(\mathcal{Y})$ be two probability measures that we aim to compare.
 
-    \paragraph{Monge formulation.}
-    The original formulation \citep{monge1781memoire} of OT seeks the map $T$ satisfying $T_{\#}\mu_S = \nu_T$ that minimizes the transportation cost given by
+    The original Monge formulation \citep{monge1781memoire} of OT seeks the map $T$ satisfying $T_{\#}\mu_S = \nu_T$ that minimizes the transportation cost given by
     \begin{align}\label{eq:monge_pb_continuous}
-        M(\mu_S, \mu_T) \coloneqq \inf_{T_{\#}\mu_S = \mu_T} \int_{\mathcal{X}} c_{\mathcal{X} \mathcal{Y}}(\bm{x}, T(\bm{x})) \mathrm{d}\mu(\bm{x}) \:.
+        M(\mu_S, \mu_T) \coloneqq \inf_{T_{\#}\mu_S = \mu_T} \int_{\mathcal{X}} c_{\mathcal{X} \mathcal{Y}}(\bm{x}, T(\bm{x})) \mathrm{d}\mu_S(\bm{x}) \:.
     \end{align}
-    The above formulation is highly non-linear in $T$ and the set of admissible maps $T$ is not convex hindering an easy analysis. Moreover, the existence of an optimal map $T$ is not guaranteed in general \citep{santambrogio2015optimal}.
+    The existence of an optimal map $T$ is not guaranteed in general \citep{santambrogio2015optimal}.
     
-    \paragraph{Kantorovich relaxation.} To resolve this, a popular relaxation by \citep{kantorovich1942translocation} consists of optimizing instead over the space of probabilistic couplings with marginals $\mu_S$ and $\mu_T$ denoted by $\Pi(\mu_S, \mu_T)$. 
-    The latter is defined as the probability distributions on $(\mathcal{X} \times \mathcal{Y})$ whose marginals are $\mu$ and $\nu$:
-    \begin{align}
-        \Pi(\mu_S, \mu_T) = \left\{ \gamma \in \mathcal{P}(\mathcal{X} \times \mathcal{Y}) : (\pi_{\mathcal{X}})_\# \gamma = \mu_S, (\pi_{\mathcal{Y}})_\# \gamma = \mu_T \right\} \:.
-    \end{align}
-    Then the Kantorovich formulation of OT is then given by
+    The relaxation by \citep{kantorovich1942translocation} consists of optimizing instead over the space of probabilistic couplings with marginals $\mu_S$ and $\mu_T$ denoted by $\Pi(\mu_S, \mu_T)$. The latter is defined as the probability distributions on $(\mathcal{X} \times \mathcal{Y})$ whose marginals are $\mu$ and $\nu$ that is $\Pi(\mu_S, \mu_T) = \left\{ \gamma \in \mathcal{P}(\mathcal{X} \times \mathcal{Y}) : (\pi_{\mathcal{X}})_\# \gamma = \mu_S, (\pi_{\mathcal{Y}})_\# \gamma = \mu_T \right\}$.
+    The Kantorovich formulation of OT is then given by
     \begin{align}\label{eq:Wasserstein}
         W(\mu_S, \mu_T) \coloneqq \inf_{\pi \in \Pi(\mu_S, \mu_T)} \int_{\mathcal{X} \times \mathcal{Y}} c_{\mathcal{X} \mathcal{Y}}(\bm{x}, \bm{y}) \mathrm{d}\pi(\bm{x}, \bm{y}) \:.
     \end{align}
@@ -63,27 +81,6 @@ To address these issues, Kantorovich introduced a relaxation of the Monge proble
 \begin{mem1}{Metric properties of the Wasserstein distance}
     
 \end{mem1}
-
-
-\subsubsection{Unregularized Optimal Transport}
-
-
-We first introduce the discrete OT problem before presenting regularized formulations and associated algorithms.
-% \subsection{Discrete Optimal Transport}
- The discrete \emph{Monge-Kantorovitch} problem \citep{kantorovich1942transfer} focuses on the optimal allocation strategy to transport the empirical measure $\mu_S = \sum_{i=1}^{N_S} a_i  \delta_{\bm{x}_i^S}$ onto $\mu_T = \sum_{i=1}^{N_T} b_i  \delta_{\bm{x}_i^T}$ where $\bm{a} \in \Sigma^{N_S}$ and $\bm{b} \in \Sigma^{N_T}$. It consists in computing a \emph{coupling} $\mT \in \R_{+}^{N_S \times N_T}$ \ie a joint probability measure over $X_S \times X_T$ solving the linear program
-\begin{equation}
-    \tag{OT}
-    \label{eq:OT}
-    \min_{\mT \in \Pi(\bm{a}, \bm{b})} \: \langle \mT, \mC \rangle
-\end{equation}
-where $\gU(\va, \vb)$ is the transport polytope with marginals $(\bm{a}, \bm{b})$ that is $\gU(\va, \vb) \coloneqq \left\{ \mT \in \R_+^{N \times n} \mid \mT \mathbf{1}_n = \va, \mT^\top \mathbf{1}_N = \vb \right\}$ and the \emph{cost matrix} $\mathbf{C} \in \R_+^{N_S \times N_T}$ encodes the pairwise distances between the source and target samples. One can typically consider the squared Euclidean distance $C_{ij} = \|\bm{x}^S_{i}-\bm{x}^T_{j}\|_2^2$ or any Riemannian distance over a manifold \citep{villani2009optimal}.
-
-For discrete measures, the Monge and Kantorovich formulations are equivalent when $\mu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\bm{x}_i}$ and $\nu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\bm{y}_i}$. In this case, the solution of \eqref{eq:Wasserstein} corresponds to an extremal point of the polytope of doubly stochastic matrices \citep{bertsimas1997introduction}. This implies that there is no splitting of mass, meaning that each row of the optimal solution $\mT^\star$ contains exactly one non-zero coefficient.
-
-
-\paragraph{Solving exact OT.} Minimum-cost Network Flow algorithm. 
-
-
 
 
 
@@ -124,6 +121,11 @@ where $\mK_\sigma \coloneqq \nabla \psi^*(- \mC / \sigma)$ for any $\sigma < \va
 %     \max_{\bm{\lambda}, \bm{\mu}, \varepsilon > 0} \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle + \varepsilon \left\langle \bm{1}, \psi^*\left((\C - \bm{\lambda} \oplus \bm{\mu}) / \varepsilon \right) - \eta \bm{1} \right\rangle \:.
 %     \tag{Dual-ROT}
 % \end{align}
+
+\begin{remark}
+    Constrained OT formulations Benamou , memory limit on the GPU 
+\end{remark}
+
 
 In this work, we focus specifically on 
 certain Bregman divergences: the Kullback Leibler ($\KL$) divergence and the squared Euclidean distance.
