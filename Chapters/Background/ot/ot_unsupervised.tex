@@ -1,6 +1,6 @@
 \subsection{OT for unsupervised representation learning}
 
-Throughout, we denote by $\nu_{\mX} = \frac{1}{N} \sum_i \delta_{\vx_i}$ the empirical data measure where $(\vx_1, \ldots, \vx_N)$ are the input data samples.
+Throughout, we denote by $\nu = \frac{1}{N} \sum_i \delta_{\vx_i}$ the empirical data measure where $(\vx_1, \ldots, \vx_N)$ are the input data samples.
 
 
 \subsubsection{Projection Tasks are Wasserstein Variational Problems}
@@ -11,47 +11,43 @@ As described in Proposition 32,  In PCA, this distribution \(\pi_h\) is given by
 
 Notable examples of such tasks are K-means and PCA. In the former, \(\ell\) is defined by
 \[
-\ell(\mathbf{x}, h = (\vm_1, \cdots, \vm_K)) = \min_{i \in [K]} \|\mathbf{x} - \vm_i\|_2^2 = \|\mathbf{x} - P_h(\mathbf{x})\|_2^2
+\ell(\mathbf{x}, h = (\vm_1, \cdots, \vm_K)) = \min_{i \in [K]} \|\mathbf{x} - \vm_i\|_2^2 = \|\mathbf{x} - P_{\gH}(\mathbf{x})\|_2^2
 \]
-where \(P_h(\mathbf{x})\) is the projection of \(\mathbf{x}\) on its closest centroid. In the latter, \(P_h(\mathbf{x})\) is the projection of \(\mathbf{x}\) on the linear subspace spanned by \(h\). These two problems are actually related to a wider class of problems, namely \(k\)-dimensional coding schemes which are particular types of compression-type tasks. As described in Maurer and Pontil (2010),
+where \(P_{\gH}(\mathbf{x})\) is the projection of \(\mathbf{x}\) on its closest centroid. In the latter, \(P_{\gH}(\mathbf{x})\) is the projection of \(\mathbf{x}\) on the linear subspace spanned by \(h\). These two problems are actually related to a wider class of problems, namely \(k\)-dimensional coding schemes which are particular types of compression-type tasks. As described in Maurer and Pontil (2010),
 
 
-We are going to see in the next result that the above compression-type tasks can be interpreted as finding a “simple” distribution $\nu_h = P_h \# \nu$ that best describes the data distribution $\nu$ in the sense of the Wasserstein distance.
+We are going to see in the next result that the above compression-type tasks can be interpreted as finding a “simple” distribution $\nu_h = P_{\gH} \# \nu$ that best describes the data distribution $\nu$ in the sense of the Wasserstein distance.
 
-\begin{lemma}[\cite{Canas12}]
-    Let $\mathcal{S} \subseteq \mathcal{X}$, $p \in [1, +\infty)$, and $\pi \in \mathcal{P}_p(\mathcal{X})$. Consider $P_{\mathcal{S}} : \mathcal{X} \to \mathcal{S}$, measurable, such that $D(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x})) \leq D(\mathbf{x}, \mathbf{y})$ for all $\mathbf{x} \in \mathcal{X}$ and $\mathbf{y} \in \mathcal{S}$. Then 
-    \[
-    \mathbb{E}_{\mathbf{x} \sim \pi} \left[ D(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x}))^p \right] = W_p^p(\pi, P_{\mathcal{S}} \# \pi).
-    \]
-    Moreover, for any $\nu \in \mathcal{P}_p(\mathcal{X})$ such that $\mathrm{supp}(\nu) \subseteq \mathcal{S}$, we have
-    \[
-    W_p(\pi, P_{\mathcal{S}} \# \pi) \leq W_p(\pi, \nu).
-    \]
+Nice treatment can also be found in \citep{vayer2023controlling}.
+
+The following result inspired by \citep{Canas12}.
+
+\begin{lemma}
+    \begin{align}
+        \min_{\mT \in \gU(\frac{1}{N} \one_N, \vh)} \: \langle \mT, \mC \rangle = \frac{1}{N} \sum_{i \in \integ{N}} c(\mathbf{x}_i, P_{\gH}(\mathbf{x}_i))
+    \end{align}
 \end{lemma}
 
 \begin{proof}
-    The proof is adapted from \citep{Canas12}.
+Recall that $\nu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\vx_i}$ is the empirical data measure. Then the distribution of the data projected onto the space $\gH$ by $P_{\gH}$ reads
+\begin{align}
+    P_{\gH} \# \nu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{P_{\gH}(\vx_{i})} = \sum_{j \in \integ{n}} h_j \delta_{\vy_{j}}
+\end{align} 
+where $\vh \in \Sigma_n$ and $\{\vy_j \}_{j \in \integ{n}} = \text{supp}\left( \{P_{\gH}(\vx_{i}) \}_{i \in \integ{N}} \right)$. We define the cost matrix $\mC = \left( c(\vx_i, \vy_j) \right)_{ij} \in \R_+^{N \times n}$ and we denote by $\mT^\star \coloneqq \argmin_{\mT \in \gU(\frac{1}{N} \one_N, \vh)} \: \langle \mT, \mC \rangle$.
 
-    Considering the admissible coupling $\gamma = (\mathrm{id} \times P_{\mathcal{S}}) \# \pi \in \Pi(\pi, P_{\mathcal{S}} \# \pi)$, then
-    \[
-    W_p^p(\pi, P_{\mathcal{S}} \# \pi) \leq \int D^p(\mathbf{x}, \mathbf{y}) d\gamma(\mathbf{x}, \mathbf{y}) = \int D^p(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x})) d\pi(\mathbf{x}) = \mathbb{E}_{\mathbf{x} \sim \pi} \left[ D(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x}))^p \right].
-    \tag{88}
-    \]
-    
-    Conversely, if $\gamma^*$ is an optimal coupling for $W_p(\pi, P_{\mathcal{S}} \# \pi)$, then for all $(\mathbf{x}, \mathbf{y}) \in \mathrm{supp}(\gamma^*)$, we have that $\mathbf{y} \in \mathrm{supp}(P_{\mathcal{S}} \# \pi)$ by definition of a coupling, which means that $\mathbf{y} \in \mathcal{S}$. Hence, by hypothesis, $D^p(\mathbf{x}, \mathbf{y}) \geq D^p(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x}))$. Therefore,
-    \[
-    W_p^p(\pi, P_{\mathcal{S}} \# \pi) = \int D^p(\mathbf{x}, \mathbf{y}) d\gamma^*(\mathbf{x}, \mathbf{y}) \geq \int D^p(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x})) d\gamma^*(\mathbf{x}, \mathbf{y}) = \int D^p(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x})) d\pi(\mathbf{x}).
-    \tag{89}
-    \]
-    
-    Hence $W_p^p(\pi, P_{\mathcal{S}} \# \pi) \geq \mathbb{E}_{\mathbf{x} \sim \pi} \left[ D(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x}))^p \right]$. The last inequality can be proved in the same way by considering an optimal coupling $\gamma^*$ between $\pi$ and $\nu$:
-    \[
-    W_p^p(\pi, \nu) = \int D^p(\mathbf{x}, \mathbf{y}) d\gamma^*(\mathbf{x}, \mathbf{y}) \overset{\mathrm{supp}(\nu) \subseteq \mathcal{S}}{\geq} \int D^p(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x})) d\gamma^*(\mathbf{x}, \mathbf{y})
-    \]
-    \[
-    = \int D^p(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x})) d\pi(\mathbf{x}) = \mathbb{E}_{\mathbf{x} \sim \pi} \left[ D(\mathbf{x}, P_{\mathcal{S}}(\mathbf{x}))^p \right] = W_p^p(\pi, P_{\mathcal{S}} \# \pi).
-    \tag{90}
-    \]
+We define $\mathbf{\Gamma} = \left( \Gamma_{ij} \right)_{ij} \in \R_+^{N \times n}$ such that $\Gamma_{ij} = \frac{1}{N}$ if $\vy_j = P_{\gH}(\vx_i)$ and $\Gamma_{ij} = 0$ otherwise.
+Then, given that $\mathbf{\Gamma} \in \gU(\frac{1}{N} \one_N, \vh)$ we have that
+\begin{align}
+    \langle \mT^\star, \mC \rangle \leq \langle \mC, \mathbf{\Gamma} \rangle = \frac{1}{N} \sum_{i \in \integ{N}} c(\mathbf{x}_i, P_{\gH}(\mathbf{x}_i)) \:.
+\end{align}
+
+Conversely, since $\{\vy_j \}_{j \in \integ{n}} = \text{supp}\left( \{P_{\gH}(\vx_{i}) \}_{i \in \integ{N}} \right)$ we have in particular that for any $i \in \integ{n}$, $\vy_i \in \gH$. Thus by definition of $P_{\gH}$ we have for any $(i,j)$ that $c(\vx_i, \vy_j) \geq c(\vx_i, P_{\gH}(\vx_i))$ and therefore
+\begin{align}
+    \langle \mT^\star, \mC \rangle = \sum_{ij} c(\vx_i, \vy_j) T^\star_{ij} \geq \sum_{ij} c(\vx_i, P_{\gH}(\vx_i)) T^\star_{ij} = \sum_{i} c(\vx_i, P_{\gH}(\vx_i)) \sum_j T^\star_{ij} \:. 
+\end{align}
+Since $\mT^\star \in \gU(\frac{1}{N} \one_N, \vh)$, we have that $\sum_j T^\star_{ij} = \frac{1}{N}$ for all $i \in \integ{N}$, which implies the other inequality.
+
+
 \end{proof}
 
 
