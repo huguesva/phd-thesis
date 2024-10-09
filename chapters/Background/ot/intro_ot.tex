@@ -72,14 +72,14 @@ In the Kantorovich formulation, the set $\gU(\va, \vb)$ forms a convex polytope,
     \end{mem1}
 
 \begin{mem1}{Metric properties of the Wasserstein distance}
-    When \( c = d_{\gX}^p \), the Wasserstein distance \( W \) defined in \Cref{eq:Wasserstein} forms a proper metric between probability measures on \( \mathcal{X} \), known as the \( p \)-Wasserstein distance \citep{villani2009optimal}. A key advantage of Wasserstein distances is their capacity to compare probability measures while taking into account the geometry of the underlying space, as dictated by the ground cost \( c \). This contrasts with commonly used f-divergences \citep{csiszar1967information}, such as the Total Variation (TV) norm or Kullback-Leibler (KL) divergence, which only perform pointwise comparisons of the two density functions. Another crucial aspect of the Wasserstein distance is its ability to compare distributions with non-overlapping supports and quantify the dissimilarity between these supports. Additionally, the Wasserstein distance is closely related to weak convergence, as convergence in Wasserstein distance \( W(\mu_n,\mu) \xrightarrow{n \to +\infty} 0 \) is equivalent to the weak convergence of measures, meaning that for any continuous and bounded function $f$: $\int_{\gX} f \mathrm{d}\mu_n \xrightarrow{n \to +\infty} \int_{\gX} f \mathrm{d}\mu$ \citep{villani2009optimal}.
+    When \( c = d_{\gX}^p \), the Wasserstein distance \( W \) defined in \Cref{eq:Wasserstein} forms a proper metric between probability measures on \( \mathcal{X} \), known as the \( p \)-Wasserstein distance \citep{villani2009optimal}. A key advantage of Wasserstein distances is their capacity to compare probability measures while taking into account the geometry of the underlying space, as dictated by the ground cost \( c \). This contrasts with commonly used f-divergences \citep{csiszar1967information}, such as the Total Variation (TV) norm or Kullback-Leibler (KL) divergence, which only perform pointwise comparisons of the two density functions. Another crucial aspect of the Wasserstein distance is its ability to compare distributions with non-overlapping supports and quantify the dissimilarity between these supports. A consequence is that the Wasserstein distance is closely related to weak convergence, as convergence in Wasserstein distance \( W(\mu_n,\mu) \xrightarrow{n \to +\infty} 0 \) is equivalent to the weak convergence of measures, meaning that for any continuous and bounded function $f$: $\int_{\gX} f \mathrm{d}\mu_n \xrightarrow{n \to +\infty} \int_{\gX} f \mathrm{d}\mu$ \citep{villani2009optimal}.
 \end{mem1}
 
 
 \subsubsection{Regularized Optimal Transport}
 
 % \subsection{Strictly Convex Optimal Transport}
-To enable faster algorithmic resolution as well as smoother solutions, one can rely on a strictly convex regularizer $\psi : \R^{N_s} \to \R$. It amounts to solving $\min_{\mT \in \gU(\bm{a}, \bm{b})} \: \langle \mT, \C \rangle + \varepsilon^\star \sum_i \psi(\mT_{i:})$ where $\varepsilon^\star > 0$. The regularizer $\Psi$ is typically related to the notion of \emph{generalized entropy} and encourages the mass transported from each source sample to be more dispersed compared to the non regularized OT formulation of \Cref{eq:OT}.
+To enable faster algorithmic resolution as well as smoother solutions, one can rely on a strictly convex regularizer $\psi : \R^{N_s} \to \R$. It amounts to solving $\min_{\mT \in \gU(\bm{a}, \bm{b})} \: \langle \mT, \C \rangle + \varepsilon^\star \sum_i \psi(\mT_{i:})$ where $\varepsilon^\star > 0$. The regularizer $\Psi$ is typically related to the notion of \emph{generalized entropy} \citep{blondel2020learning} and encourages the mass transported from each source sample to be more dispersed compared to the non regularized OT formulation of \Cref{eq:OT}.
 
 We now introduce a slightly unconventional perspective on regularized optimal transport (OT), which is equivalent to the penalized objective and will serve as the foundation for \Cref{chap:snekhorn}.
 Interestingly, regularized OT can also be framed using a convex constraint as follows
@@ -101,7 +101,7 @@ Note that when $\psi$ is strictly convex, this supremum is uniquely achieved and
     D_\psi(\mT, \mQ) := \psi(\mT) - \psi(\mQ) - \langle \mT - \mQ, \nabla \psi(\mQ) \rangle \:.
 \end{align} 
 
-This result provides two possible approaches to solving the problem: optimization via the primal variables using a projection-based strategy, or through the dual variables using standard convex optimization techniques.
+The following proposition offers valuable insights into solving the regularized optimal transport (OT) problem using two key strategies: optimization via the primal variables using a projection-based method, or through the dual variables using standard convex optimization techniques.
 
 \begin{proposition}\label{prop:cot}
     Let $\psi : \R^{N_S} \to \R$ satisfy \cref{assumption_psi}. Let $(\bm{a}, \bm{b}, \eta)$ be such that $\gU(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)$ has an interior point and let $\mT^\star$ be a solution of
@@ -112,30 +112,30 @@ This result provides two possible approaches to solving the problem: optimizatio
     Let $\varepsilon^\star$ be an optimal dual variable associated with $\mT \in \overline{\mathcal{B}}(\eta)$.
     If $\varepsilon^\star > 0$, then
     \begin{itemize}[leftmargin=*, labelsep=0.1em]
-        \item for any $0 < \sigma \leq \varepsilon^\star$, it holds $\mT^\star = \operatorname{Proj}^{D_\psi}_{\gU(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)}(\mK_\sigma)$
-        where $\mK_\sigma \coloneqq \nabla \psi^*(-\mC/ \sigma)$.
+        \item for any $0 < \sigma \leq \varepsilon^\star$, it holds, where $\mK_\sigma \coloneqq \nabla \psi^*(-\mC/ \sigma)$, 
+        \begin{align}\label{eq:proj-rot}\tag{Proj-ROT}
+            \mT^\star = \operatorname{Proj}^{D_\psi}_{\gU(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)}(\mK_\sigma) \:.
+        \end{align}
         \item One also has $\mT^\star = \nabla \psi^*((\mC - \bm{\lambda}^\star \oplus \bm{\mu}^\star) / \varepsilon^\star)$
         where $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ solve
-        \begin{align}
+        \begin{align}\label{eq:dual-rot}
             \max_{\bm{\lambda}, \bm{\mu}, \varepsilon>0}  \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle + \varepsilon \Big(\sum_i \psi^*((\C_{i:} - \lambda_i \bm{1} - \bm{\mu}) / \varepsilon) - \eta \Big) \:.
         \tag{Dual-ROT}
         \end{align}
     \end{itemize}
 \end{proposition}
 
-We present a detailed proof for pedagogical purposes, as it employs tools that will be essential throughout this thesis. While the result has not been explicitly stated in this form elsewhere, it draws upon standard derivations commonly found in the OT literature, such as those in \citep{peyre2019computational}.
-\begin{proof}
-    We first prove the first point related to the primal based formulation of the problem as a single bregman projection. Then we consider the derivation of the dual formulation.
+We present a detailed proof for pedagogical purposes, as it employs tools that will be essential throughout this thesis. While the result has not been explicitly stated in this form elsewhere, it draws upon standard derivations commonly found in the OT literature, such as those in \citep{peyre2019computational}. We start by considering the first point related to the primal based formulation of the problem as a single bregman projection. Then we consider the derivation of the dual formulation.
 
-    \vspace{0.5cm}
-    \textbf{\underline{$\ast$ Part I : Proof of the Bregman projection formulation.}}
+\paragraph{$\ast$ Bregman Projection Formulation.}
 
+\begin{proof}    
+    % \vspace{0.5cm}
+    % \textbf{\underline{$\ast$ Part I : Proof of the Bregman projection formulation.}}
     Simplifying the constant terms $\operatorname{Proj}^{D_\psi}_{\gU(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)}(\mK_\varepsilon)$ boils down to the following problem
     \begin{align}
-        \min_{\mT} \quad &\sum_i \psi(\mT_{i:}) - \langle \mT, \nabla \psi(\mK_\sigma) \rangle \\
-        \text{s.t.} \quad &\sum_i \psi(\mT_{i:}) \leq \eta \\
-        & \mT \bm{1} = \bm{a}, \quad \mT^\top \bm{1} = \bm{b} \\
-        & \mT \in \R_+^{n \times n} \:.
+        \min_{\mT \in \gU(\va, \vb)} \quad &\sum_i \psi(\mT_{i:}) - \langle \mT, \nabla \psi(\mK_\sigma) \rangle \\
+        \text{s.t.} \quad &\sum_i \psi(\mT_{i:}) \leq \eta \:.
     \end{align}
     This problem is convex and strictly feasible. Strong duality holds thanks to Slater's constraint qualification. Therefore the KKT conditions \citep{boyd2004convex} are necessary and sufficient conditions for optimality.
     The Lagrangian can be expressed as
@@ -160,17 +160,9 @@ We present a detailed proof for pedagogical purposes, as it employs tools that w
         \C + \varepsilon^\star \nabla \psi(\mT^\star) -  \bm{\rho}^\star \oplus \bm{\kappa}^{\star} - \mathbf{\Lambda}^\star = \bm{0} \:.
     \end{align}
     Focusing on the original Bregman projection problem, we can then consider
-    \begin{align}
-        \left\{
-        \begin{array}{ll}
-            \bm{\lambda} &= \bm{\rho}^\star / \sigma \\
-            \bm{\mu} &= \bm{\kappa}^\star / \sigma \\
-            \nu &= \varepsilon^\star / \sigma - 1 \\
-            \mathbf{\Omega} &= \mathbf{\Lambda}^\star / \sigma \\
-            \mT &= \mT^\star \:.
-        \end{array}
-    \right.
-    \end{align}
+    \[
+    \bm{\lambda} = \bm{\rho}^\star / \sigma, \quad \bm{\mu} = \bm{\kappa}^\star / \sigma, \quad \nu = \varepsilon^\star / \sigma - 1, \quad \mathbf{\Omega} = \mathbf{\Lambda}^\star / \sigma, \quad \mT = \mT^\star.
+    \]
     With the above choice, 
     \begin{itemize}
         \item  $(\mT, \nu, \bm{\lambda}, \bm{\mu}, \mathbf{\Omega})$ satisfies the first order optimality condition.
@@ -179,9 +171,22 @@ We present a detailed proof for pedagogical purposes, as it employs tools that w
         \item $\varepsilon^\star \neq 0$ thus by complementary slackeness $\psi(\mT^\star) = \eta$ hence complementary slackness is also verified for $\mT$ since $\mT = \mT^\star$.
     \end{itemize}
     Therefore the KKT conditions are met hence $(\mT, \nu, \bm{\lambda}, \bm{\mu}, \mathbf{\Omega}) = (\mT^\star, \nu^\star, \bm{\lambda}^\star, \bm{\mu}^\star, \mathbf{\Omega}^\star)$ and $\mT^\star = \mT^\star$.
+\end{proof}
 
-\vspace{0.5cm}
-\textbf{\underline{$\ast$ Part II : Dual problem.}}
+Interpreting the problem as a $\psi$-Bregman projection over a convex set as done in \Cref{eq:proj-rot} gives the advantage of employing alternating Bregman projection schemes \citep{benamou2015iterative}. This approach involves decomposing the convex set into an intersection of convex subsets for which projection is straightforward, and then alternating these projections cyclically until convergence. Convergence to the projection onto the intersection is guaranteed if the sets are affine. If the sets are not affine, such as $\overline{\mathcal{B}}(\eta)$, we can introduce auxiliary variables to slightly modify the updates while still ensuring convergence \citep{censor1998dykstra}. This approach is known as \emph{Dykstra's algorithm} \citep{dykstra1983algorithm}.
+
+We propose to solve the above using a mirror descent algorithm that consists in the following update of the primal variable $\mP$:
+\begin{align}
+  \mP_{t+1} &= \argmin_{\mP \in \Pi(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)} \: \scalar{\mP}{\mC} + \frac{1}{\gamma_t} D_{\psi}(\mP, \mP_t) \\
+  &= \argmin_{\mP \in \Pi(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)} \: \psi(\mP) - \scalar{\mP}{\nabla \psi(\mP_t) - \gamma_t \mC} \\
+  &= \operatorname{Proj}^{D_\psi}_{\Pi(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)}(\nabla \psi^*(\nabla \psi(\mP_t) - \gamma_t \mC)) \:.
+\end{align}
+
+\paragraph{$\ast$ Dual problem.}
+
+\begin{proof}
+% \vspace{0.5cm}
+% \textbf{\underline{$\ast$ Part II : Dual problem.}}
 
 The optimal dual variables $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ solve the following problem 
 \begin{align}
@@ -193,7 +198,7 @@ The optimal dual variables $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\st
     \label{eq:dual-ROT}
 \end{align}
 In ($\star$) we have used that $\psi^*(\bm{x}) = \sup_{\bm{y} \bm{\geq} \bm{0}} \langle \bm{x}, \bm{y} \rangle - \psi(\bm{y})$.
-From Danskin's theorem \cite{danskin1966theory}, one can recover the solution of the primal
+From Danskin's theorem \citep{danskin1966theory}, one can recover the solution of the primal
 \begin{align}
     \forall i, \: \mT^\star_{i:} = \nabla \psi^*((\mC_{i:} - \lambda^\star_i \bm{1} - \bm{\mu}^\star) / \varepsilon^\star) \:.
 \end{align}
@@ -202,28 +207,28 @@ where $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ are the solution
 
 \end{proof}
 
+
+
+
+Second, using the dual formulation of \Cref{eq:dual-ROT}, which is convex like any dual problem (as it involves maximizing a concave objective), one can leverage any convex optimization solver, such as stochastic gradient descent (SGD), BFGS \citep{liu1989limited}, or ADAM \citep{kingma2014adam}, to solve the problem exactly.
+
 \begin{mem1}{Relation with the Sinkhorn Algorithm}
-    As highlighted earlier, in the optimal transport (OT) literature, the spread constraint governed by the function $\psi$ is often managed through a fixed dual variable, $\varepsilon^\star$. To establish connections with known approaches, we now consider $\varepsilon^\star$ as fixed. The most commonly used Bregman divergence for optimal transport is the Kullback-Leibler (KL) divergence, defined as $D_{\KL}(\mT | \mQ) = \langle \mT, \log \left( \mT \oslash \mQ \right) - \bm{1} \bm{1}^\top \rangle$, with the associated negative entropy $\psi_{\KL}(\mathbf{p}) = \langle \mathbf{p}, \log \mathbf{p} - 1 \rangle$. In this case, \eqref{eq:cot} simplifies to entropic OT.
+    As highlighted earlier, in the optimal transport (OT) literature, the spread constraint governed by the function $\psi$ is often handled via a fixed dual variable, $\varepsilon^\star$. To establish connections with existing approaches, we now assume $\varepsilon^\star$ is fixed. The most commonly used Bregman divergence for optimal transport is the Kullback-Leibler (KL) divergence, defined as
+    \[
+    D_{\KL}(\mT \| \mQ) = \langle \mT, \log \left( \mT \oslash \mQ \right) - \bm{1} \bm{1}^\top \rangle,
+    \]
+    with the associated negative entropy $\psi_{\KL}(\mathbf{p}) = \langle \mathbf{p}, \log \mathbf{p} - 1 \rangle$.
+    In this case, \eqref{eq:cot} simplifies to the widely popular entropic OT \citep{cuturi2013sinkhorn}.
+
     
     \paragraph{Primal formulation.}
-    solved by $\operatorname{Proj}^{\KL}{\gU(\bm{a}, \bm{b})}(\mK{\varepsilon^\star})$, where $\mK_{\varepsilon^\star} = \nabla \psi_{\KL}^{*}(-\mC / \varepsilon^\star) = \exp(-\mC / \varepsilon^\star)$ is a Gibbs kernel. This projection is well-known as the \emph{static Schrödinger bridge} \citep{leonard2013survey}, originally appearing in statistical physics \citep{schrodinger1931umkehrung}. Such projection can be computed using alternating Bregman projections, whose convergence has been well-studied \cite{censor1998dykstra, benamou2015iterative}. As we generally do not have access to a closed form for the projection onto the transport polytope $\Pi(\bm{a}, \bm{b})$, one can simply alternate the projections onto $\Pi(\bm{a})$ and $\Pi(\bm{b})$ separately, leading to the seminal Sinkhorn algorithm introduced by \cite{cuturi2013sinkhorn}.
+    In this case, the primal-based formulation of the problem can be expressed as the Bregman projection $\operatorname{Proj}^{\KL}_{\gU(\bm{a}, \bm{b})}(\mK_{\varepsilon^\star})$, where $\mK_{\varepsilon^\star} = \nabla \psi_{\KL}^{*}(-\mC / \varepsilon^\star) = \exp(-\mC / \varepsilon^\star)$ is a Gibbs kernel. This projection is well-known as the \emph{static Schrödinger bridge} \citep{leonard2013survey}, originally appearing in statistical physics \citep{schrodinger1931umkehrung}.  As we generally do not have access to a closed form for the projection onto the transport polytope $\gU(\bm{a}, \bm{b})$, one can simply alternate the projections onto $\gU(\bm{a})$ and $\gU(\bm{b})$ separately, leading to the seminal Sinkhorn algorithm introduced by \cite{cuturi2013sinkhorn}.
     The two updates read:
 
     \paragraph{Dual formulation.}
 
 \end{mem1}
 
-
-The above objective is concave thus the problem can be solved exactly using \textit{e.g.}\ BFGS \citep{liu1989limited} or ADAM \citep{kingma2014adam}.
-% \paragraph{Projection-based approach.} 
-As a complementary view, one can also frame \eqref{eq:cot} as a $\psi$-Bregman projection over a convex set. 
-The solution of \eqref{eq:cot} can then be expressed as
-$\mT^\star = \operatorname{Proj}^{D_\psi}_{\gU(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)}(\mK_\sigma)$
-where $\mK_\sigma \coloneqq \nabla \psi^*(- \mC / \sigma)$ for any $\sigma < \varepsilon^\star$ (see \cref{sec:proof_global} for details). The key benefit of the above result is that it enables solving \eqref{eq:cot} with alternating Bregman projection schemes \citep{benamou2015iterative}.
-% \begin{align}
-%     \max_{\bm{\lambda}, \bm{\mu}, \varepsilon > 0} \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle + \varepsilon \left\langle \bm{1}, \psi^*\left((\C - \bm{\lambda} \oplus \bm{\mu}) / \varepsilon \right) - \eta \bm{1} \right\rangle \:.
-%     \tag{Dual-ROT}
-% \end{align}
 
 \begin{remark}{(Primal or Dual in practice)}
     Constrained OT formulations Benamou , memory limit on the GPU 
