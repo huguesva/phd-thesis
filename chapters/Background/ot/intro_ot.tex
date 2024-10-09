@@ -72,7 +72,7 @@ In the Kantorovich formulation, the set $\gU(\va, \vb)$ forms a convex polytope,
     \end{mem1}
 
 \begin{mem1}{Metric properties of the Wasserstein distance}
-    When \( c = d_{\gX}^p \), the Wasserstein distance \( W \) defined in \Cref{eq:Wasserstein} forms a proper metric between probability measures on \( \mathcal{X} \), known as the \( p \)-Wasserstein distance \citep{villani2009optimal}. A key advantage of Wasserstein distances is their capacity to compare probability measures while taking into account the geometry of the underlying space, as dictated by the ground cost \( c \). This contrasts with commonly used f-divergences \citep{csiszar1967information}, such as the Total Variation (TV) norm or Kullback-Leibler (KL) divergence, which only perform pointwise comparisons of the two density functions. Another crucial aspect of the Wasserstein distance is its ability to compare distributions with non-overlapping supports and quantify the dissimilarity between these supports. A consequence is that the Wasserstein distance is closely related to weak convergence, as convergence in Wasserstein distance \( W(\mu_n,\mu) \xrightarrow{n \to +\infty} 0 \) is equivalent to the weak convergence of measures, meaning that for any continuous and bounded function $f$: $\int_{\gX} f \mathrm{d}\mu_n \xrightarrow{n \to +\infty} \int_{\gX} f \mathrm{d}\mu$ \citep{villani2009optimal}.
+    When \( c = d_{\gX}^p \), the Wasserstein distance \( W \) defined in \Cref{eq:Wasserstein} forms a proper metric between probability measures on \( \mathcal{X} \), known as the \( p \)-Wasserstein distance \citep{villani2009optimal}. A key advantage of Wasserstein distances is their capacity to compare probability measures while taking into account the geometry of the underlying space, as dictated by the ground cost \( c \). This contrasts with commonly used f-divergences \citep{csiszar1967information}, such as the Total Variation (TV) norm or Kullback-Leibler (KL) divergence, which only perform pointwise comparisons of the two density functions. Another crucial aspect of the Wasserstein distance is its ability to compare distributions with non-overlapping supports and quantify the dissimilarity between these supports. A consequence is that the Wasserstein distance is closely related to weak convergence. Indeed, convergence in Wasserstein distance \( W(\mu_n,\mu) \xrightarrow{n \to +\infty} 0 \) is equivalent to the weak convergence of measures, meaning that for any continuous and bounded function $f$: $\int_{\gX} f \mathrm{d}\mu_n \xrightarrow{n \to +\infty} \int_{\gX} f \mathrm{d}\mu$ \citep{villani2009optimal}.
 \end{mem1}
 
 
@@ -125,7 +125,7 @@ The following proposition offers valuable insights into solving the regularized 
     \end{itemize}
 \end{proposition}
 
-We present a detailed proof for pedagogical purposes, as it employs tools that will be essential throughout this thesis. While the result has not been explicitly stated in this form elsewhere, it draws upon standard derivations commonly found in the OT literature, such as those in \citep{peyre2019computational}. We start by considering the first point related to the primal based formulation of the problem as a single bregman projection. Then we consider the derivation of the dual formulation.
+We present a detailed proof for pedagogical purposes, as it employs tools that will be essential throughout this thesis. While the result has not been explicitly stated in this exact form elsewhere, it draws upon standard derivations commonly found in the OT literature, such as those in \citep{peyre2019computational}. We start by considering the first point related to the primal based formulation of the problem as a single Bregman projection. Then we consider the derivation of the dual formulation.
 
 \paragraph{$\ast$ Bregman Projection Formulation.}
 
@@ -173,16 +173,20 @@ We present a detailed proof for pedagogical purposes, as it employs tools that w
     Therefore the KKT conditions are met hence $(\mT, \nu, \bm{\lambda}, \bm{\mu}, \mathbf{\Omega}) = (\mT^\star, \nu^\star, \bm{\lambda}^\star, \bm{\mu}^\star, \mathbf{\Omega}^\star)$ and $\mT^\star = \mT^\star$.
 \end{proof}
 
-Interpreting the problem as a $\psi$-Bregman projection over a convex set as done in \Cref{eq:proj-rot} gives the advantage of employing alternating Bregman projection schemes \citep{benamou2015iterative}. This approach involves decomposing the convex set into an intersection of convex subsets for which projection is straightforward, and then alternating these projections cyclically until convergence. Convergence to the projection onto the intersection is guaranteed if the sets are affine. If the sets are not affine, such as $\overline{\mathcal{B}}(\eta)$, we can introduce auxiliary variables to slightly modify the updates while still ensuring convergence \citep{censor1998dykstra}. This approach is known as \emph{Dykstra's algorithm} \citep{dykstra1983algorithm}.
+Interpreting the problem as a $\psi$-Bregman projection over a convex set as done in \Cref{eq:proj-rot} gives the advantage of employing alternating Bregman projection schemes \citep{benamou2015iterative}. This approach involves decomposing the convex set into an intersection of convex subsets for which projection is straightforward, and then alternating these projections cyclically until convergence. Convergence to the projection onto the intersection is guaranteed if the sets are affine. If the sets are not affine, such as $\overline{\mathcal{B}}(\eta)$, we can introduce auxiliary variables to slightly modify the updates while still ensuring convergence \citep{censor1998dykstra}. This approach is known as \emph{Dykstra's algorithm} \citep{dykstra1983algorithm}. Overall, this framework of Bregman projections is highly flexible and allows for the easy incorporation of various convex constraints by simply applying the corresponding projections \citep{benamou2015iterative}.
 
-We propose to solve the above using a mirror descent algorithm that consists in the following update of the primal variable $\mP$:
-\begin{align}
-  \mP_{t+1} &= \argmin_{\mP \in \Pi(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)} \: \scalar{\mP}{\mC} + \frac{1}{\gamma_t} D_{\psi}(\mP, \mP_t) \\
-  &= \argmin_{\mP \in \Pi(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)} \: \psi(\mP) - \scalar{\mP}{\nabla \psi(\mP_t) - \gamma_t \mC} \\
-  &= \operatorname{Proj}^{D_\psi}_{\Pi(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)}(\nabla \psi^*(\nabla \psi(\mP_t) - \gamma_t \mC)) \:.
-\end{align}
+\begin{remark}
+    The aforementioned characterization as a projection holds under the condition $0 < \sigma \leq \varepsilon^\star$. Intuitively, this condition ensures that the intiial point $\mK_\sigma$ lies outside the set $\overline{\mathcal{B}}(\eta)$ so that the constraint is active when projecting.
+    It is important to note that there is a more general method that does not require a well-chosen initial point. This method is based on mirror descent under the geometry induced by the Bregman divergence $D_\psi$. At each iteration, it involves solving a projection problem, relying on Bregman or Dykstra depending on whether all the convex sets are affine. The primal variable $\mT$ is updated as follows, where $\gamma_t$ is the step size at time $t$ and $\gC$ is the convex set of interest:
+    \begin{align}
+    \mT_{t+1} &= \argmin_{\mT \in \gC} \: \langle \mT, \mC \rangle + \frac{1}{\gamma_t} D_{\psi}(\mT, \mT_t), \\
+    &= \argmin_{\mT \in \gC} \: \psi(\mT) - \langle \mT, \nabla \psi(\mT_t) - \gamma_t \mC \rangle, \\
+    &= \operatorname{Proj}^{D_\psi}_{\gC}(\nabla \psi^*(\nabla \psi(\mT_t) - \gamma_t \mC)).
+    \end{align}
+\end{remark}    
 
-\paragraph{$\ast$ Dual problem.}
+
+\paragraph{$\ast$ Dual Problem.}
 
 \begin{proof}
 % \vspace{0.5cm}
@@ -207,10 +211,7 @@ where $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ are the solution
 
 \end{proof}
 
-
-
-
-Second, using the dual formulation of \Cref{eq:dual-ROT}, which is convex like any dual problem (as it involves maximizing a concave objective), one can leverage any convex optimization solver, such as stochastic gradient descent (SGD), BFGS \citep{liu1989limited}, or ADAM \citep{kingma2014adam}, to solve the problem exactly.
+Using the dual formulation of \Cref{eq:dual-ROT}, which is convex like any dual problem, as it involves maximizing a concave objective, one can leverage any convex optimization solver, such as stochastic gradient descent (SGD), BFGS \citep{liu1989limited}, or ADAM \citep{kingma2014adam}, to solve the problem exactly.
 
 \begin{mem1}{Relation with the Sinkhorn Algorithm}
     As highlighted earlier, in the optimal transport (OT) literature, the spread constraint governed by the function $\psi$ is often handled via a fixed dual variable, $\varepsilon^\star$. To establish connections with existing approaches, we now assume $\varepsilon^\star$ is fixed. The most commonly used Bregman divergence for optimal transport is the Kullback-Leibler (KL) divergence, defined as
@@ -222,18 +223,29 @@ Second, using the dual formulation of \Cref{eq:dual-ROT}, which is convex like a
 
     
     \paragraph{Primal formulation.}
-    In this case, the primal-based formulation of the problem can be expressed as the Bregman projection $\operatorname{Proj}^{\KL}_{\gU(\bm{a}, \bm{b})}(\mK_{\varepsilon^\star})$, where $\mK_{\varepsilon^\star} = \nabla \psi_{\KL}^{*}(-\mC / \varepsilon^\star) = \exp(-\mC / \varepsilon^\star)$ is a Gibbs kernel. This projection is well-known as the \emph{static Schrödinger bridge} \citep{leonard2013survey}, originally appearing in statistical physics \citep{schrodinger1931umkehrung}.  As we generally do not have access to a closed form for the projection onto the transport polytope $\gU(\bm{a}, \bm{b})$, one can simply alternate the projections onto $\gU(\bm{a})$ and $\gU(\bm{b})$ separately, leading to the seminal Sinkhorn algorithm introduced by \cite{cuturi2013sinkhorn}.
-    The two updates read:
+    In this case, the primal-based formulation of the problem can be expressed as the Bregman projection $\operatorname{Proj}^{\KL}_{\gU(\bm{a}, \bm{b})}(\mK_{\varepsilon^\star})$, where $\mK_{\varepsilon^\star} = \nabla \psi_{\KL}^{*}(-\mC / \varepsilon^\star) = \exp(-\mC / \varepsilon^\star)$ is a Gibbs kernel. This projection is well-known as the \emph{static Schrödinger bridge} \citep{leonard2013survey}, originally appearing in statistical physics \citep{schrodinger1931umkehrung}.  As we generally do not have access to a closed form for the projection onto the transport polytope $\gU(\bm{a}, \bm{b})$, one can simply alternate the projections onto $\{ \mT \in \gU(\bm{a}) \}$ and $\{ \mT^\top \in \gU(\bm{b}) \}$ separately where $\gU(\vh)$ is the set of discrete couplings with one marginal, defined as $\gU(\vh) = \left\{\mT \mid T_{ij} \geq 0, \: \mT \mathbf{1}_n = \vh \right\}$. It leads to the seminal Sinkhorn algorithm introduced by \cite{cuturi2013sinkhorn}.
+    The $\KL$ projection on $\gU(\vh)$ simply reads
+    \begin{align}
+        \operatorname{Proj}^{\KL}_{\gU(\vh)}(\mT) = \left(\left(\vh \oslash \mT \one  \right) \one^\top \right) \odot \mT
+    \end{align}
+    and the Sinkhorn algorithm in the primal simply alternates projections such that alternatively $\{ \mT \in \gU(\bm{a}) \}$ and $\{ \mT^\top \in \gU(\bm{b}) \}$ until convergence.
 
-    \paragraph{Dual formulation.}
-
+    \paragraph{Dual formulation.} Again considering a fixed dual variable $\varepsilon^\star$, the dual problem \eqref{eq:dual-ROT} can be adressed using a block coordinate strategy on the dual variables $(\bm{\lambda}, \bm{\mu})$. Indeed for a fixed $\bm{\mu}$ one has a closed form solution for $\bm{\lambda}$ and vice versa. This dual ascent strategy can be understood as a Sinkhorn algorithm in log domain:
+    \begin{align}
+        \bm{\lambda}^{(t+1)} &= \varepsilon^\star \log \mathbf{a} - \varepsilon^\star \log \left( \mathbf{K}_{\varepsilon^\star} e^{\bm{\mu}^{(t)} / \varepsilon^\star} \right), \\
+        \bm{\mu}^{(t+1)} &= \varepsilon^\star \log \mathbf{b} - \varepsilon^\star \log \left( \mathbf{K}^\top_{\varepsilon^\star} e^{\bm{\lambda}^{(t+1)} / \varepsilon^\star} \right).
+    \end{align}
+    These updates are numerically stable, as they rely on the \emph{logsumexp} operator.
 \end{mem1}
 
-
-\begin{remark}{(Primal or Dual in practice)}
-    Constrained OT formulations Benamou , memory limit on the GPU 
-\end{remark} 
-
+\begin{remark}{(OT on the GPU)}
+    For common choices of regularizers $\Psi$ (e.g., Shannon entropy or $\ell_\alpha$-norms), both formulations \Cref{eq:proj-rot} and \Cref{eq:dual-rot} rely heavily on matrix reductions, which are easily parallelizable and can be significantly accelerated when computed on a GPU.
+    
+    As highlighted previously, the primal formulation of \Cref{eq:proj-rot} is appealing because it allows for easily adapting the OT problem by incorporating new constraints in the alternating projection scheme. However, working in the primal space can be limiting in terms of memory when using a GPU. Indeed, when both $N_S \times N_T$ exceed a dimensionality on the order of $10^8$, it is likely that the full transport plan $\mT$ will not fit entirely in the GPU memory.
+    
+    The dual formulation of \Cref{eq:dual-ROT} is particularly useful in this regard, as it allows for symbolic encoding. This means only the dual variables and the formula to reconstruct the OT plan from the input data and these dual variables need to be stored. The OT plan is then accessed only through reductions when necessary, without ever being fully reconstructed in GPU memory. This can be efficiently implemented using the \emph{KeOps} package \citep{charlier2021kernel}.
+\end{remark}
+    
 \begin{remark}
     Another widely used convex regularizer is the squared Euclidean distance, defined as $\psi_{2}(\mathbf{p}) = \frac{1}{2} \| \mathbf{p} \|^2_2$. The corresponding problem \eqref{prop:cot} is commonly referred to as quadratic OT \citep{lorenz2021quadratically} and, unlike the entropic regularization, can result in sparse OT plans. However, this sparsity often results in a slight reduction in computational efficiency, particularly when executed on a GPU.
 \end{remark}
