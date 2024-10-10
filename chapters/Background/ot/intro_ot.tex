@@ -38,7 +38,7 @@ The Kantorovich formulation of OT is then given by the following linear program
 \begin{equation}
     \tag{OT}
     \label{eq:OT}
-    \min_{\mT \in \gU(\va, \vb)} \: \langle \mT, \mC \rangle
+    W_c(\mu_S, \mu_T) \coloneqq \min_{\mT \in \gU(\va, \vb)} \: \langle \mT, \mC \rangle
 \end{equation}
 where $\gU(\va, \vb)$ is the transport polytope with marginals $(\bm{a}, \bm{b})$ that is $\gU(\va, \vb) \coloneqq \left\{ \mT \in \R_+^{N_S \times N_T} \mid \mT \mathbf{1}_n = \va, \mT^\top \mathbf{1}_N = \vb \right\}$ and the \emph{cost matrix} $\mathbf{C} \in \R_+^{N_S \times N_T}$ such that $C_{ij} = c(\vx_i^S, \vx_j^T)$ encodes the pairwise distances between the source and target samples. 
 
@@ -228,7 +228,7 @@ Using the dual formulation of \Cref{eq:dual-ROT}, which is convex like any dual 
     \begin{align}
         \operatorname{Proj}^{\KL}_{\gU(\vh)}(\mT) = \left(\left(\vh \oslash \mT \one  \right) \one^\top \right) \odot \mT
     \end{align}
-    and the Sinkhorn algorithm in the primal simply alternates projections such that alternatively $\{ \mT \in \gU(\bm{a}) \}$ and $\{ \mT^\top \in \gU(\bm{b}) \}$ until convergence.
+    and the Sinkhorn algorithm in the primal simply alternates projections onto $\{ \mT \in \gU(\bm{a}) \}$ and $\{ \mT^\top \in \gU(\bm{b}) \}$ until convergence.
 
     \paragraph{Dual formulation.} Again considering a fixed dual variable $\varepsilon^\star$, the dual problem of \Cref{eq:dual-ROT} can be adressed using a block coordinate strategy on the dual variables $(\bm{\lambda}, \bm{\mu})$. Indeed for a fixed $\bm{\mu}$ one has a closed form solution for $\bm{\lambda}$ and vice versa. This dual ascent strategy can be understood as a Sinkhorn algorithm in log domain:
     \begin{align}

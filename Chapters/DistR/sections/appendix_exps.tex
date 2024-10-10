@@ -111,22 +111,22 @@ Finally the coefficient $b$ of the linear term is
 
 \subsection{Experimental setting}\label{sec:implementation_details}
 
-\paragraph{Sequential methods.} We detail in the following the sequential methods DR$\to$C and C$\to$DR considered in our benchmark. DR$\to$C representations are constructed by first running the DR method (\Cref{sec:dr_methods}) associated with $(L, \mC_X, \mC_Z)$ thus obtaining an intermediate representation $\widetilde{\mZ} \in \R^{N \times d}$. Then, spectral clustering \cite{von2007tutorial} on the similarity matrix $\mC_Z(\widetilde{\mZ})$ is performed to compute a cluster assignment matrix $\widetilde{\mT} \in \R^{N \times n}$. The final reduced representation in $\R^{n \times d}$ is the average of each point per cluster, \ie the collection of the centroids, which is formally $\diag(\tilde{\vh})^{-1} \widetilde{\mT}^\top \widetilde{\mZ} \in \R^{n \times d}$ where $\tilde{\vh} = \widetilde{\mT}^\top \one_N$.
+\paragraph{Sequential methods.} We detail in the following the sequential methods DR$\to$C and C$\to$DR considered in our benchmark. DR$\to$C representations are constructed by first running the DR method associated with $(L, \mC_X, \mC_Z)$ thus obtaining an intermediate representation $\widetilde{\mZ} \in \R^{N \times d}$. Then, spectral clustering \citep{von2007tutorial} on the similarity matrix $\mC_Z(\widetilde{\mZ})$ is performed to compute a cluster assignment matrix $\widetilde{\mT} \in \R^{N \times n}$. The final reduced representation in $\R^{n \times d}$ is the average of each point per cluster, \ie the collection of the centroids, which is formally $\diag(\tilde{\vh})^{-1} \widetilde{\mT}^\top \widetilde{\mZ} \in \R^{n \times d}$ where $\tilde{\vh} = \widetilde{\mT}^\top \one_N$.
 For C$\to$DR, a cluster assignment matrix $\widehat{\mT} \in \R^{N \times n}$ is first computed using spectral clustering on $\mC_X(\mX)$.
 Then, the cluster centroid $\diag(\hat{\vh})^{-1} \widehat{\mT}^\top \mX$, where $\hat{\vh} = \widehat{\mT}^\top \bm{1}_N$, is passed as input to the DR method associated with $(L, \mC_X, \mC_Z)$.
 
 \paragraph{Implementation.} 
-Throughout, the spectral clustering implementation of \texttt{scikit-learn} \cite{pedregosa2011scikit} is used to perform either the clustering steps or the initialization of transport plans. 
-For all methods, $\mZ$ is initialized from \emph{i.i.d.} sampling of the standard Gaussian distribution $\mathcal{N}(0,1)$ and further optimized using \texttt{PyTorch}'s automatic differentiation \cite{paszke2017automatic} with Adam optimizer \cite{kingma2014adam}. OT-based solvers are built upon the \texttt{POT} \cite{flamary2021pot} library.
-k-Means is performed using the \texttt{scikit-learn}~\cite{pedregosa2011scikit} implementation.
+Throughout, the spectral clustering implementation of \texttt{scikit-learn} \citep{pedregosa2011scikit} is used to perform either the clustering steps or the initialization of transport plans. 
+For all methods, $\mZ$ is initialized from \emph{i.i.d.} sampling of the standard Gaussian distribution $\mathcal{N}(0,1)$ and further optimized using \texttt{PyTorch}'s automatic differentiation \citep{paszke2017automatic} with Adam optimizer \citep{kingma2014adam}. OT-based solvers are built upon the \texttt{POT} \citep{flamary2021pot} library.
+k-Means is performed using the \texttt{scikit-learn}~\citep{pedregosa2011scikit} implementation.
 
 \paragraph{Validated hyperparameters.} For the SEA based similarities, we validated \texttt{perplexity} across the set $\{20, 50, 100, 150, 200, 250\}$. For all kernels, the number of output samples $n$ spans a set of $10$ values, starting at the number of classes in the data and incrementing in steps of $20$. For the computation of $\mT$ in DistR (see \Cref{sec:DDR_ob}), we benchmark our Conditional Gradient solver, and the Mirror Descent algorithm whose hyperparameter $\varepsilon$ is validated in the two first values within the set $\{10^{i}\}_{i=-3}^3$ leading to stable optimization.
 
 \paragraph{Datasets.}
 We provide details about the datasets used in our study. 
-For image datasets, we use COIL-20\footnote{\url{https://www1.cs.columbia.edu/CAVE/software/softlib/coil-100.php}} \cite{nene1996columbia}, MNIST and fashion-MNIST\footnote{taken from Torchvision \cite{marcel2010torchvision}.} \cite{xiao2017fashion}. Regarding single-cell genomics datasets, we rely on PBMC 3k\footnote{downloaded from Scanpy \cite{wolf2018scanpy}.} \cite{wolf2018scanpy}, SNAREseq\footnote{\url{https://github.com/rsinghlab/SCOT}} chromatin and gene expression \cite{chen2019high} and the scRNA-seq dataset\footnote{\url{https://github.com/solevillar/scGeneFit-python}} from \cite{zeisel2015cell} with two hierarchical levels of label. 
+For image datasets, we use COIL-20\footnote{\url{https://www1.cs.columbia.edu/CAVE/software/softlib/coil-100.php}} \citep{nene1996columbia}, MNIST and fashion-MNIST\footnote{taken from Torchvision \citep{marcel2010torchvision}.} \citep{xiao2017fashion}. Regarding single-cell genomics datasets, we rely on PBMC 3k\footnote{downloaded from Scanpy \citep{wolf2018scanpy}.} \citep{wolf2018scanpy}, SNAREseq\footnote{\url{https://github.com/rsinghlab/SCOT}} chromatin and gene expression \citep{chen2019high} and the scRNA-seq dataset\footnote{\url{https://github.com/solevillar/scGeneFit-python}} from \citep{zeisel2015cell} with two hierarchical levels of label. 
 Dimensions are provided in \Cref{tab:dataset_details}
-When the dimensionality of a dataset exceeds $50$, we pre-process it by applying a PCA in dimension $50$, as done in practice \cite{van2008visualizing}.
+When the dimensionality of a dataset exceeds $50$, we pre-process it by applying a PCA in dimension $50$, as done in practice \citep{van2008visualizing}.
 
 \begin{table}[h!] \vspace{-5mm}
 \centering
@@ -148,7 +148,7 @@ When the dimensionality of a dataset exceeds $50$, we pre-process it by applying
 \end{tabular}}
 \end{table}
 
-\textbf{Scores.} The homogeneity and NMI scores are taken from \texttt{Torchmetrics} \cite{detlefsen2022torchmetrics}. The other scores used in the experiments are computed as follows.
+\textbf{Scores.} The homogeneity and NMI scores are taken from \texttt{Torchmetrics} \citep{detlefsen2022torchmetrics}. The other scores used in the experiments are computed as follows.
 
 \textit{i) Silhouette}: The first step is to associate a label with each prototype $\vz_k$ defined by the $y$ maximizing $\sum_{i \in \integ{N}} T_{ik} \bm{1}_{y_i = y}$ where $y_i$ is the class label of the input data point $\vx_i$. Then, to incorporate the relative importance $w_i = \left[\vh_Z\right]_i$ of each prototype $\vz_i$, we define the \emph{weighted} mean intra-cluster and nearest-cluster distances that read 
 	\begin{equation}
@@ -159,17 +159,17 @@ When the dimensionality of a dataset exceeds $50$, we pre-process it by applying
 		S(\mZ, \mY, \vw) = \sum_{i \in \integ{N}} w_i s_i(\mZ, \mY, \vw) \:.
 	\end{equation}
 
-\textit{ii) k-means}: We first run the k-means algorithm on the prototypes $\{\vz_k\}_{k \in \integ{n}}$ giving us the predicted label $\tilde{y}_k$ for each $k \in \integ{n}$. The predicted label for each input data point $i \in \integ{N}$ is then given by its prototype's predicted label \ie $\hat{y}_i = \tilde{y}_{\arg \max_k T_{ik}}$. Then we compute the NMI score \cite{kvaalseth2017normalized} between $(\hat{y}_i)_{i \in \integ{N}}$ and the ground-truth class labels $(y_i)_{i \in \integ{N}}$.
+\textit{ii) k-means}: We first run the k-means algorithm on the prototypes $\{\vz_k\}_{k \in \integ{n}}$ giving us the predicted label $\tilde{y}_k$ for each $k \in \integ{n}$. The predicted label for each input data point $i \in \integ{N}$ is then given by its prototype's predicted label \ie $\hat{y}_i = \tilde{y}_{\arg \max_k T_{ik}}$. Then we compute the NMI score \citep{kvaalseth2017normalized} between $(\hat{y}_i)_{i \in \integ{N}}$ and the ground-truth class labels $(y_i)_{i \in \integ{N}}$.
 
 \subsection{Comparison with COOT clustering}\label{sec:coot_exp}
 
-The CO-Optimal-Transport (COOT) problem, proposed in \cite{redko2020co}, is as follows,
+The CO-Optimal-Transport (COOT) problem, proposed in \citep{redko2020co}, is as follows,
 \begin{align}\tag{COOT}
 	\label{eq:coot_pb}
 	\min_{\mT_r \in \gU(\vh_r, \overline{\vh}_r)} \min_{ \mT_c \in \gU(\vh_c, \overline{\vh}_c)} \: \sum_{ijkl} (X_{ik} - Z_{jl})^2 [\mT_r]_{ij} [\mT_c]_{kl} \,,
 \end{align}
 where $\vh_r \in \Sigma_N$, $\overline{\vh}_r \in \Sigma_n$, $\vh_c \in \Sigma_p$ and $\overline{\vh}_c \in \Sigma_d$. 
-One can seek to optimize the above objective with respect to $\mZ$ to obtain a competitor method to DistR. This problem is called COOT clustering in \cite{redko2020co}. In the latter, $\mT_r$ then plays the role of a soft clustering matrix of the rows of $\mX$ while $\mT_c$ can be seen as a soft clustering matrix of its columns. The above is thus a linear DR model.
+One can seek to optimize the above objective with respect to $\mZ$ to obtain a competitor method to DistR. This problem is called COOT clustering in \citep{redko2020co}. In the latter, $\mT_r$ then plays the role of a soft clustering matrix of the rows of $\mX$ while $\mT_c$ can be seen as a soft clustering matrix of its columns. The above is thus a linear DR model.
 
 
 \begin{table}[h!]
@@ -204,7 +204,7 @@ We complete the results shown in \Cref{sec:exps} by providing the scores obtaine
 \begin{figure*}[h!]
 	\begin{center}
 		\centerline{\includegraphics[width=0.9\columnwidth]{figures/DistR/sensitivity_SNE_dim_2/full_sensitivity.pdf}}
-		\caption{Scores ($\times 100$) with respect to the number of prototypes (in $\R^2$) produced by DistR using the t-SNE model: SEA similarity for $\simiX$ \cite{van2023snekhorn}, Student's kernel for $\simiZ$ and loss $L_{\KL}$.}
+		\caption{Scores ($\times 100$) with respect to the number of prototypes (in $\R^2$) produced by DistR using the t-SNE model: SEA similarity for $\simiX$ \citep{van2023snekhorn}, Student's kernel for $\simiZ$ and loss $L_{\KL}$.}
 	\label{fig:sensitivity_sne}
 	\end{center}
 \end{figure*}
@@ -213,7 +213,7 @@ We complete the results shown in \Cref{sec:exps} by providing the scores obtaine
 \begin{figure*}[h!]
 	\begin{center}
 		\centerline{\includegraphics[width=0.9\columnwidth]{figures/DistR/sensitivity_IP_dim_10/full_sensitivity.pdf}}
-		\caption{Scores ($\times 100$) with respect to the number of prototypes (in $\R^{10}$) produced by DistR using the PCA model: $\langle, \rangle_{\R^p}$ similarity for $\simiX$ \cite{van2023snekhorn}, $\langle, \rangle_{\R^d}$ for $\simiZ$ and loss $L_{2}$.}
+		\caption{Scores ($\times 100$) with respect to the number of prototypes (in $\R^{10}$) produced by DistR using the PCA model: $\langle, \rangle_{\R^p}$ similarity for $\simiX$ \citep{van2023snekhorn}, $\langle, \rangle_{\R^d}$ for $\simiZ$ and loss $L_{2}$.}
 	\label{fig:sensitivity_ip}
 	\end{center}
 	\vspace{-0.8cm}
@@ -272,7 +272,7 @@ For each method depending on some hyperparameters, models performing the best on
 
 \begin{comment}
 	\subsection{Assessing clustering performances with NMI}
-	To complement our analysis, we also propose to assess clustering performances using the Normalized Mutual Information (NMI) score \cite{kvaalseth2017normalized}.
+	To complement our analysis, we also propose to assess clustering performances using the Normalized Mutual Information (NMI) score \citep{kvaalseth2017normalized}.
 	
 	$\mathcal{N}$ (NMI) scores are provided in \cref{tab:nmi_scores} and $\overline{\mathcal{SN}}$ scores in \cref{tab:SN_scores}. For each table, each value displayed is the one obtained with the best configuration (best choice of hyperparameters) maximizing the score of interest.
 	
@@ -306,11 +306,11 @@ Overall our DistR models are competitive with all benchmarked methods in terms o
 
 \subsection{Proofs of concepts with hyperbolic kernels}\label{sec:hyperbolic}
 
-Hyperbolic spaces \cite{Chami21, Fan_2022_CVPR, Guo22, Lin23} are of particular interest as they can capture hierarchical structures more effectively than Euclidean spaces and mitigate the curse of dimensionality by producing representations with lower distortion rates. For instance, \cite{Guo22} adapted t-SNE by using the Poincaré distance and by changing the Student's t-distribution with a more general hyperbolic Cauchy distribution.  Notions of projection subspaces can also be adapted, \eg \cite{Chami21} use horospheres as one-dimensional subspaces. To match our experiments with the neighbor embeddings in Euclidean settings, we adapt the \emph{Symmetric Entropic Affinity} (SEA) from \cite{van2023snekhorn} for $\mC_X$ and the scalar-normalized student similarity for $\mC_Z$ \cite{van2008visualizing}, by simply changing the Euclidean distance by an hyperbolic distance.
+Hyperbolic spaces \citep{Chami21, Fan_2022_CVPR, Guo22, Lin23} are of particular interest as they can capture hierarchical structures more effectively than Euclidean spaces and mitigate the curse of dimensionality by producing representations with lower distortion rates. For instance, \citep{Guo22} adapted t-SNE by using the Poincaré distance and by changing the Student's t-distribution with a more general hyperbolic Cauchy distribution.  Notions of projection subspaces can also be adapted, \eg \citep{Chami21} use horospheres as one-dimensional subspaces. To match our experiments with the neighbor embeddings in Euclidean settings, we adapt the \emph{Symmetric Entropic Affinity} (SEA) from \citep{van2023snekhorn} for $\mC_X$ and the scalar-normalized student similarity for $\mC_Z$ \citep{van2008visualizing}, by simply changing the Euclidean distance by an hyperbolic distance.
 
 
-\paragraph{Implementation details.} Computations in Hyperbolic spaces are done with \texttt{Geoopt}~\cite{geoopt2020kochurov} and the RAdam optimizer \cite{becigneul2018riemannian} replaces Adam. A Wrapped Normal distribution in Hyperbolic spaces~\cite{Nagano19} is used to initialize $\mZ$ in the hyperbolic setting.
-All the computations were conducted in the Lorentz model~\cite{Nickel18}, which is less prone to numerical errors. As such, we used the associated distance function to form $\mC_Z$. After optimization, results are projected back to the Poincaré ball for visualization purposes. In this hyperbolic context, we adopted the formulation of~\cite{Guo22} which generalizes Student's t-distribution by Hyperbolic Cauchy distributions (denoted as H-Student in the results). Notice that \cite{Guo22} considered weighted sums of DR objective depending respectively on $L_2$ and $L_{KL}$, including 2 additional hyperparamaters, plus various validated curvature levels for the inner hyperbolic distances. In the following experiments, we only kept $L_{KL}$ for comparison with the Euclidean SNE-based methods illustrated in \Cref{sec:exps} and previous Sections of \ref{sec:appendix_exps}, while validating the same hyperparameters and setting the space curvature to $1$. The silhouette score was adapted to this kernel considering the Hyperbolic distance instead of the Euclidean one, and we implemented a Hyperbolic Kmeans whose barycenters are estimated using the RAdam optimizer to compute the NMI scores.
+\paragraph{Implementation details.} Computations in Hyperbolic spaces are done with \texttt{Geoopt}~\citep{geoopt2020kochurov} and the RAdam optimizer \citep{becigneul2018riemannian} replaces Adam. A Wrapped Normal distribution in Hyperbolic spaces~\citep{Nagano19} is used to initialize $\mZ$ in the hyperbolic setting.
+All the computations were conducted in the Lorentz model~\citep{Nickel18}, which is less prone to numerical errors. As such, we used the associated distance function to form $\mC_Z$. After optimization, results are projected back to the Poincaré ball for visualization purposes. In this hyperbolic context, we adopted the formulation of~\citep{Guo22} which generalizes Student's t-distribution by Hyperbolic Cauchy distributions (denoted as H-Student in the results). Notice that \citep{Guo22} considered weighted sums of DR objective depending respectively on $L_2$ and $L_{KL}$, including 2 additional hyperparamaters, plus various validated curvature levels for the inner hyperbolic distances. In the following experiments, we only kept $L_{KL}$ for comparison with the Euclidean SNE-based methods illustrated in \Cref{sec:exps} and previous Sections of \ref{sec:appendix_exps}, while validating the same hyperparameters and setting the space curvature to $1$. The silhouette score was adapted to this kernel considering the Hyperbolic distance instead of the Euclidean one, and we implemented a Hyperbolic Kmeans whose barycenters are estimated using the RAdam optimizer to compute the NMI scores.
 
 \paragraph{Results.} We first report in \Cref{fig:trade_off_hyp} a relative comparison of the best trade-off between local and global metrics achieved by all methods. Similarly to visualizations of the main paper, we considered for each method and dataset, the model maximizing the sum of the two normalized metrics to account for their different ranges. DistR, being once again present on the top-right of all plots, provides on average the most discriminant
 low-dimensional representations endowed with a simple geometry, seconded by

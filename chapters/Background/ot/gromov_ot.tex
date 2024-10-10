@@ -1,5 +1,14 @@
 \subsection{Optimal Transport Across Spaces : Gromov-Wasserstein Formulation}
 
+\begin{figure}[!t]
+	\begin{center}
+	\centerline{\includegraphics[width=0.4\columnwidth]{figures/spiral.pdf}}
+	\caption{Illustration of the matching obtained from solving \Cref{eq:gw_pb} between two distributions organized as clusters on a spiral: $\nu \in \gP(\mathbb{R}^3)$ and $\mu \in \gP(\mathbb{R}^2)$. The connectivities are based on the Euclidean distances between the locations of the respective distributions. The optimal transport matrix $\mT$ is represented by dashed lines. Taken from \citep{vayer2020contribution}.}
+	\label{fig:GW_illustration}
+	\end{center}
+	\vskip -0.3in
+\end{figure}
+
 Classical OT methods require defining a meaningful transportation cost between the supports of the two distributions. 
 This is however impossible in the context of dimensionality reduction where the two spaces $\R^p$ and $\R^d$ have different dimensions, and are thus not part of a common ground metric space. We review in this section the Gromov-Wasserstein formulation of OT aiming at comparing distributions \emph{across incomparable spaces}.
 

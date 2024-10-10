@@ -18,22 +18,7 @@ These aspects are determinant in many real-world applications, such as cell biol
 Ideally, the reduced representation should align with the intrinsic dimensionality of the data, which broadly refers to the minimum number of parameters needed to capture its essential characteristics.
 
 
-\paragraph{Dimensionality reduction and clustering.}
-When faced with the question of extracting
-interpretable representations, from a dataset $\mX = (\vx_1, ..., \vx_N) ^\top
-\in \R^{N \times p}$ of $N$ samples in $\R^p$, the machine learning community
-has proposed a variety of methods. Among them, dimensionality reduction (DR) algorithms have been widely used to summarize data in a low-dimensional space
-$\mZ = (\vz_1, ..., \vz_N) ^\top \in \R^{N \times d}$ with $d \ll p$, allowing
-for visualization of every individual points for small enough $d$ \citep{agrawal2021minimum,van2009dimensionality}.
-Another major approach is to cluster the data into $n$ groups, with $n$
-typically much smaller than $N$, and to summarize these groups through their centroids \citep{saxena2017review,ezugwu2022comprehensive}.
-%by clusteres defined as  centroids or groups of samples. 
-Clustering is particularly interpretable since it provides a
-smaller number of points that can be easily inspected. %visualized or interpreted. 
-The cluster assignments can also be analyzed. %but also assignment of each original point to a cluster. 
-Both DR and clustering follow a
-similar philosophy of summarization and reduction of the dataset using a smaller size representation.
-% matrix. 
+
 
 
 

@@ -1,55 +1,50 @@
 \subsection{OT for unsupervised representation learning}
 
-Throughout, we denote by $\nu = \frac{1}{N} \sum_i \delta_{\vx_i}$ the empirical data measure where $(\vx_1, \ldots, \vx_N)$ are the input data samples.
-
+Interestingly, many common unsupervised learning techniques can be framed using optimal transport (OT). We will illustrate the existing connections and highlight the limitations, which will be addressed in \Cref{chapter:DistR}. Throughout this section, we denote the empirical data measure as $\nu = \frac{1}{N} \sum_i \delta_{\vx_i}$, where $(\vx_1, \ldots, \vx_N)$ are the input data samples.
 
 \subsubsection{Projection Tasks are Wasserstein Variational Problems}
 
+In this section, we will demonstrate that both PCA and k-means can be reformulated as a Wasserstein variational problem, where the objective is to find the distribution of the projected data that is closest in the sense of the Wasserstein distance. This result is inspired by \citep{Canas12}.
 
-As described in Proposition 32,  In PCA, this distribution \(\pi_h\) is given by the best low-dimensional projection of
-\(\pi\), and in K-means, \(\pi_h\) by the best discrete distribution of \(K\) centroids.
+We consider a cost function $c : \mathcal{X} \times \mathcal{X} \to \R_+$ and introduce $P_{\gU}$, the projection operator onto the space $\gU$, such that $P_{\gU} \circ P_{\gU} = P_{\gU}$ and $c(\vx, P_{\gU}(\vx)) \leq c(\vx, P_{\gU}(\vx'))$ for any $(\vx, \vx') \in \gU^2$. For k-means, $\gU$ is the set of centroids $\{\vm_1, \ldots, \vm_K\}$, and $P_{\gU}(\vx)$ is the closest centroid to $\vx$. For PCA, $\gU$ is the linear subspace spanned by the principal components of the data, and $P_{\gU}(\vx)$ is the projection of $\vx$ onto this subspace (see \Cref{memo:PCA}).
 
-Notable examples of such tasks are K-means and PCA. In the former, \(\ell\) is defined by
-\[
-\ell(\mathbf{x}, h = (\vm_1, \cdots, \vm_K)) = \min_{i \in [K]} \|\mathbf{x} - \vm_i\|_2^2 = \|\mathbf{x} - P_{\gH}(\mathbf{x})\|_2^2
-\]
-where \(P_{\gH}(\mathbf{x})\) is the projection of \(\mathbf{x}\) on its closest centroid. In the latter, \(P_{\gH}(\mathbf{x})\) is the projection of \(\mathbf{x}\) on the linear subspace spanned by \(h\). These two problems are actually related to a wider class of problems, namely \(k\)-dimensional coding schemes which are particular types of compression-type tasks. As described in Maurer and Pontil (2010),
+Both methods amount to minimizing a criterion of the form $\frac{1}{N} \sum_{i=1}^N c(\vx_i, P_{\gU}(\vx_i))$ where $c$ is the squared Euclidean distance.
 
-
-We are going to see in the next result that the above compression-type tasks can be interpreted as finding a “simple” distribution $\nu_h = P_{\gH} \# \nu$ that best describes the data distribution $\nu$ in the sense of the Wasserstein distance.
-
-Nice treatment can also be found in \citep{vayer2023controlling}.
-
-The following result inspired by \citep{Canas12}.
+Interestingly, one can show that this objective can be reformulated as a Wasserstein variational problem, where the goal is to make the projected data measure as close as possible to the empirical data measure in terms of the Wasserstein distance. We provide a detailed proof in the discrete setting. This derivation is similar to those found in \citep{Canas12} and \citep{vayer2023controlling}.
 
 \begin{lemma}
+    For the operator $W$ defined for discrete measures in \Cref{eq:Wasserstein}, one has:
     \begin{align}
-        \min_{\mT \in \gU(\frac{1}{N} \one_N, \vh)} \: \langle \mT, \mC \rangle = \frac{1}{N} \sum_{i \in \integ{N}} c(\mathbf{x}_i, P_{\gH}(\mathbf{x}_i))
+        W_c(\nu, P_{\gU} \# \nu) = \frac{1}{N} \sum_{i \in \integ{N}} c(\mathbf{x}_i, P_{\gU}(\mathbf{x}_i)) \:.
     \end{align}
 \end{lemma}
 
 \begin{proof}
-Recall that $\nu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\vx_i}$ is the empirical data measure. Then the distribution of the data projected onto the space $\gH$ by $P_{\gH}$ reads
+Recall that $\nu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\vx_i}$ is the empirical data measure. Then the distribution of the data projected onto the space $\gU$ by $P_{\gU}$ reads
 \begin{align}
-    P_{\gH} \# \nu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{P_{\gH}(\vx_{i})} = \sum_{j \in \integ{n}} h_j \delta_{\vy_{j}}
+    P_{\gU} \# \nu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{P_{\gU}(\vx_{i})} = \sum_{j \in \integ{n}} h_j \delta_{\vy_{j}}
 \end{align} 
-where $\vh \in \Sigma_n$ and $\{\vy_j \}_{j \in \integ{n}} = \text{supp}\left( \{P_{\gH}(\vx_{i}) \}_{i \in \integ{N}} \right)$. We define the cost matrix $\mC = \left( c(\vx_i, \vy_j) \right)_{ij} \in \R_+^{N \times n}$ and we denote by $\mT^\star \coloneqq \argmin_{\mT \in \gU(\frac{1}{N} \one_N, \vh)} \: \langle \mT, \mC \rangle$.
+where $\vh \in \Sigma_n$ and $\{\vy_j \}_{j \in \integ{n}} = \text{supp}\left( \{P_{\gU}(\vx_{i}) \}_{i \in \integ{N}} \right)$. We define the cost matrix $\mC = \left( c(\vx_i, \vy_j) \right)_{ij} \in \R_+^{N \times n}$ and we denote by $\mT^\star \coloneqq \argmin_{\mT \in \gU(\frac{1}{N} \one_N, \vh)} \: \langle \mT, \mC \rangle$.
 
-We define $\mathbf{\Gamma} = \left( \Gamma_{ij} \right)_{ij} \in \R_+^{N \times n}$ such that $\Gamma_{ij} = \frac{1}{N}$ if $\vy_j = P_{\gH}(\vx_i)$ and $\Gamma_{ij} = 0$ otherwise.
+We define $\mathbf{\Gamma} = \left( \Gamma_{ij} \right)_{ij} \in \R_+^{N \times n}$ such that $\Gamma_{ij} = \frac{1}{N}$ if $\vy_j = P_{\gU}(\vx_i)$ and $\Gamma_{ij} = 0$ otherwise.
 Then, given that $\mathbf{\Gamma} \in \gU(\frac{1}{N} \one_N, \vh)$ we have that
 \begin{align}
-    \langle \mT^\star, \mC \rangle \leq \langle \mC, \mathbf{\Gamma} \rangle = \frac{1}{N} \sum_{i \in \integ{N}} c(\mathbf{x}_i, P_{\gH}(\mathbf{x}_i)) \:.
+    \langle \mT^\star, \mC \rangle \leq \langle \mC, \mathbf{\Gamma} \rangle = \frac{1}{N} \sum_{i \in \integ{N}} c(\mathbf{x}_i, P_{\gU}(\mathbf{x}_i)) \:.
 \end{align}
 
-Conversely, since $\{\vy_j \}_{j \in \integ{n}} = \text{supp}\left( \{P_{\gH}(\vx_{i}) \}_{i \in \integ{N}} \right)$ we have in particular that for any $i \in \integ{n}$, $\vy_i \in \gH$. Thus by definition of $P_{\gH}$ we have for any $(i,j)$ that $c(\vx_i, \vy_j) \geq c(\vx_i, P_{\gH}(\vx_i))$ and therefore
+Conversely, since $\{\vy_j \}_{j \in \integ{n}} = \text{supp}\left( \{P_{\gU}(\vx_{i}) \}_{i \in \integ{N}} \right)$ we have in particular that for any $i \in \integ{n}$, $\vy_i \in \gU$. Thus by definition of $P_{\gU}$ we have for any $(i,j)$ that $c(\vx_i, \vy_j) \geq c(\vx_i, P_{\gU}(\vx_i))$ and therefore
 \begin{align}
-    \langle \mT^\star, \mC \rangle = \sum_{ij} c(\vx_i, \vy_j) T^\star_{ij} \geq \sum_{ij} c(\vx_i, P_{\gH}(\vx_i)) T^\star_{ij} = \sum_{i} c(\vx_i, P_{\gH}(\vx_i)) \sum_j T^\star_{ij} \:. 
+    \langle \mT^\star, \mC \rangle = \sum_{ij} c(\vx_i, \vy_j) T^\star_{ij} \geq \sum_{ij} c(\vx_i, P_{\gU}(\vx_i)) T^\star_{ij} = \sum_{i} c(\vx_i, P_{\gU}(\vx_i)) \sum_j T^\star_{ij} \:. 
 \end{align}
 Since $\mT^\star \in \gU(\frac{1}{N} \one_N, \vh)$, we have that $\sum_j T^\star_{ij} = \frac{1}{N}$ for all $i \in \integ{N}$, which implies the other inequality.
 
-
 \end{proof}
 
+This projection in the Wasserstein sense can be understood as a barycenter over a single measure \citep{agueh2011barycenters}. The algorithmic resolution, similar to the computation of barycenters, involves a block coordinate strategy where one alternates between optimizing the coupling $\mT$, thus computing the Wasserstein distance for a fixed $\gU$, and updating $\gU$ \citep{cuturi2014fast}. 
+
+Note that more general forms of $\gU$ and $P_{\gU}$ can be considered to extend beyond PCA or k-means. Along the same lines, \citep{sandler2011nonnegative} proposed the Wasserstein non-negative matrix factorization model, while \citep{schmitz2018wasserstein} suggested encoding $P_{\gU}$ as a Wasserstein barycenter of learned basis histograms.
+
+Valuable extensions can also be derived by altering the constraints of OT problems, leading to balanced clustering \citep{de2023balanced}, or by introducing regularization (e.g., entropy), resulting in soft clustering formulations \citep{ferraro2020soft}.
 
 \subsubsection{Gromov-Wasserstein OT for unsupervised learning}
 
