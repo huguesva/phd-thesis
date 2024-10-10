@@ -1,23 +1,17 @@
 \subsection{Optimal Transport Across Spaces : Gromov-Wasserstein Formulation}
 
 Classical OT methods require defining a meaningful transportation cost between the supports of the two distributions. 
-This is however difficult in the context of dimensionality reduction where the two spaces $\R^p$ and $\R^d$ have different dimensions.
+This is however impossible in the context of dimensionality reduction where the two spaces $\R^p$ and $\R^d$ have different dimensions, and are thus not part of a common ground metric space. We review in this section the Gromov-Wasserstein formulation of OT aiming at comparing distributions \emph{across incomparable spaces}.
 
-We review in this section the Gromov-Wasserstein formulation of OT aiming at comparing distributions ‘‘across spaces''.
+In this thesis, we will leverage the GW discrepancy to extend classical DR approaches, framing them as the GW projection of a distribution onto a space of lower dimensionality. 
 
-It is usually impossible to define a meaningful transportation cost from two spaces $\mathcal{X}$ and $\mathcal{Z}$ that are not part of a common ground metric space
-This occurs when considering ambient Euclidean spaces of different dimensions \ie $\mathcal{X} \subseteq \R^p$ and $\mathcal{Z} \subseteq \R^d$ with $p \neq d$ which is precisely the context of dimensionality reduction.
-We first introduce the general GW problem before highlighting its utility to compare distributions in incomparable spaces.
-
-In this work, we leverage the GW discrepancy to extend classical DR approaches, framing them as the projection of a distribution onto a space of lower dimensionality. 
-
-\paragraph{Gromov-Wasserstein (GW).} The GW framework \citep{memoli2011gromov,sturm2012space} comprises a collection of OT methods designed to compare distributions by examining the pairwise relations \emph{within each domain}. For two matrices $\mC \in \R^{N \times N}$, $\overline{\mC} \in \R^{n \times n}$, and weights $\vh \in \Sigma_N, \overline{\vh} \in \Sigma_n$, the GW discrepancy is defined as
+\paragraph{Gromov-Wasserstein (GW).} The GW framework \citep{memoli2011gromov,sturm2012space} comprises a collection of OT methods designed to compare distributions by examining the pairwise relations \emph{within each domain}. For two matrices $\mP \in \R^{N \times N}$, $\overline{\mP} \in \R^{n \times n}$, and weights $\va \in \Sigma_N, \vb \in \Sigma_n$, the GW discrepancy is defined as
 \begin{equation}
 \label{eq:gw_pb} 
 \tag{GW}
 \begin{split}
-	&\GW_L (\mC, \overline{\mC}, \vh, \overline{\vh}) \coloneqq \min_{\mT \in \gU(\vh, \overline{\vh})} E_L(\mC, \overline{\mC}, \mT)\,, \\
-	&\text{where} \quad E_L(\mC, \overline{\mC}, \mT) \coloneqq \sum_{ijkl}  L(C_{ij}, \overline{C}_{kl}) T_{ik} T_{jl}\,,
+	&\GW_L (\mP, \overline{\mP}, \va, \vb) \coloneqq \min_{\mT \in \gU(\va, \vb)} E_L(\mP, \overline{\mP}, \mT)\,, \\
+	&\text{where} \quad E_L(\mP, \overline{\mP}, \mT) \coloneqq \sum_{ijkl}  L(P_{ij}, \overline{P}_{kl}) T_{ik} T_{jl} \:.
 \end{split}
 \end{equation}
 % \end{align}
@@ -25,10 +19,58 @@ In this work, we leverage the GW discrepancy to extend classical DR approaches, 
 %\sum_{\substack{(i,j) \in \integ{N}^2 \\ (k,l) \in \integ{n}^2}}
 %where  $L:\R \times \R \rightarrow \R_+$ is a loss 
 % \footnote[1]{our definition of $L_{\mathrm{KL}}$ differs from \citep{peyre2016gromov} where the generalized Kullback-Leibler divergence is considered.}
-and $\gU(\vh, \overline{\vh}) = \left\{ \mT \in \R_+^{N \times n} : \mT \bm{1}_n = \vh, \mT^\top \bm{1}_N = \overline{\vh} \right\}$ is the set of couplings between $\vh$ and $\overline{\vh}$.
-In this formulation, both pairs $(\mC, \vh)$ and $(\overline{\mC}, \overline{\vh})$ can be interpreted as graphs with corresponding connectivity matrices $\mC, \overline \mC$, and where nodes are weighted by histograms $\vh, \overline \vh$. \Cref{eq:gw_pb} is thus a \emph{quadratic problem} (in $\mT$) which consists in finding a soft-assignment matrix $\mT$ that aligns the nodes of the two graphs in a way that preserves their pairwise connectivities. 
+% and $\gU(\va, \vb) = \left\{ \mT \in \R_+^{N \times n} : \mT \bm{1}_n = \va, \mT^\top \bm{1}_N = \vb \right\}$ is the set of couplings between $\va$ and $\vb$.
+In this formulation, both pairs $(\mP, \va)$ and $(\overline{\mP}, \vb)$ can be interpreted as graphs with corresponding connectivity matrices $\mP, \overline \mP$, and where nodes are weighted by histograms $\va, \overline \va$. \Cref{eq:gw_pb} is thus a \emph{quadratic problem} (in $\mT$) which consists in finding a soft-assignment matrix $\mT$ that aligns the nodes of the two graphs in a way that preserves their pairwise connectivities. 
 
-From a distributional perspective, GW can also be viewed as a distance between distributions that do not belong to the same metric space. For two discrete probability distributions $\mu_X = \sum_{i=1}^N [\vh_X]_i \delta_{\vx_i} \in \gP_N(\R^{p}), \mu_Z =\sum_{i=1}^n [\vh_Z]_i \delta_{\vz_i} \in \gP_n(\R^d)$ and pairwise similarity matrices $\simiX$ and $\simiZ$ associated with the supports $\mX = (\vx_1, \cdots, \vx_n)^\top$ and $\mZ = (\vz_1, \cdots, \vz_n)^\top$, the quantity $\GW_L (\simiX, \simiZ, \vh_X, \vh_Z)$ is a measure of dissimilarity or discrepancy between $\mu_X, \mu_Z$. Specifically, when $L=L_2$, and $\simiX, \simiZ$ are pairwise distance matrices, GW defines a proper distance between $\mu_X$ and $\mu_Z$ with respect to measure preserving isometries\footnote{With weaker assumptions on $\simiX, \simiZ$, GW defines a pseudo-metric \textit{w.r.t.} a different notion of isomorphism \citep{chowdhury2019gromov}. See Appendix \ref{sec:srGW_divergence} for more details.} \citep{memoli2011gromov}. 
+\paragraph{Gromov-Wasserstein metric property.}
+From a distributional perspective, GW can also be viewed as a distance between distributions that do not belong to the same metric space. For two discrete probability distributions $\mu_X = \sum_{i=1}^N [\va_X]_i \delta_{\vx_i} \in \gP_N(\R^{p}), \mu_Z =\sum_{i=1}^n [\va_Z]_i \delta_{\vz_i} \in \gP_n(\R^d)$ and pairwise similarity matrices $\simiX$ and $\simiZ$ associated with the supports $\mX = (\vx_1, \cdots, \vx_N)^\top$ and $\mZ = (\vz_1, \cdots, \vz_n)^\top$, the quantity $\GW_L (\simiX, \simiZ, \va_X, \va_Z)$ is a measure of dissimilarity or discrepancy between $\mu_X, \mu_Z$. Specifically, when $L=L_2$, and $\simiX, \simiZ$ are pairwise distance matrices, GW defines a proper distance between $\mu_X$ and $\mu_Z$ (or more specifically their associated metric measured spaces) with respect to measure preserving isometries.
+
+\begin{remark}
+    Under weaker assumptions on $\simiX$ and $\simiZ$, \Cref{eq:gw_pb} defines a pseudo-metric with respect to a different notion of isomorphism. Two graphs $(\mP_1, \va_1)$ and $(\mP_2, \va_2)$ are said to be weakly isomorphic \citep{chowdhury2019gromov} if there exists a canonical representation $(\mP_c, \va_c)$ such that $\card(\supp(\va_c)) = p \leq \min(n, m)$ and matrices $\mM_1 \in \left\{0,1 \right\}^{n \times p}$ (resp. $\mM_2 \in \left\{0,1 \right\}^{m \times p}$) satisfying, for $k \in \left\{1, 2\right\}$:
+    \begin{equation}
+        \mP_k = \mM_k^\top \mP_c \mM_k \quad \text{and} \quad \va_k = \mM_k^\top \va_c \:.
+    \end{equation}
+\end{remark}
+
+
+\paragraph{Solving Gromov-Wasserstein.} The objective in \Cref{eq:gw_pb} can be expressed as 
+\begin{align}
+    \min_{\mT \in \gU(\va, \vb)} \langle \mL(\mP, \overline{\mP}) \otimes \mT, \mT \rangle \:,
+\end{align}
+where $\mL(\mP, \overline{\mP})$ is the tensor $L(P_{ij}, \overline{P}_{kl})_{ijkl}$ and $\otimes$ denotes the tensor-matrix multiplication such that $\mL \otimes \mT = (\sum_{kl} L_{ijkl} T_{kl})_{ij}$. The above optimization problem is a non convex quadratic program, which thus belongs to the class of NP-hard problems. 
+
+A naive evaluation of the cost is computationally expensive, requiring $\mathcal{O}(N^2n^2)$ operations. However, as shown in \citep{peyre2016gromov}, when the loss $L$ admits the following decomposition $L(a, b) = f_{1}(a) + f_{2}(b) - h_{1}(a) h_{2}(b)$, one has
+\[
+\mL(\mP, \overline{\mP}) \otimes \mT = c_{\mP, \overline{\mP}} - h_1(\mP) \mT h_2(\overline{\mP})^\top,
+\]
+where $c_{\mP, \overline{\mP}} = f_1(\mP) \va \mathbf{1}_n^\top + \mathbf{1}_N \vb^\top f_2(\overline{\mP})^\top$. This decomposition reduces the computational complexity to $\mathcal{O}(N^2n + n^2N)$ operations.
+
+As we have just demonstrated how to minimize linear objectives over the convex polytope $\gU(\va, \vb)$, it is natural to consider the Frank-Wolfe algorithm \citep{frank1956algorithm} to solve the problem of \Cref{eq:gw_pb}. The algorithm constructs a linear approximation of the objective function and then moves towards the minimizer of this linear function over the feasible domain. Minimizing the linear approximation corresponds to a classical linear optimal transport (OT) problem. Thus, the algorithm proceeds by iterating the following steps:
+\begin{enumerate}
+    \item[i)] Compute the gradient of the GW cost evaluated at the current estimate $\mT$:
+    \[
+        \nabla_{\mT} E_L(\mP, \overline{\mP}, \mT) = \mL(\mP, \overline{\mP}) \otimes \mT + \mL(\mP^\top, \overline{\mP}^\top) \otimes \mT
+    \]
+    
+    \item[ii)] Find a descent direction by minimizing the computed linearization of the problem:
+    \[
+    \mX^\star \in \argmin_{\mX \in \mathcal{U}(\va, \vb)} \langle \nabla_{\mT} E_L(\mP, \overline{\mP}, \mT), \mX \rangle
+    \]
+    which is a classical linear OT problem, with $\nabla_{\mT} E_L(\mP, \overline{\mP}, \mT)$ as the cost matrix.
+    
+    \item[iii)] Update the current estimate $\mT$ with a line search between $\mT$ and $\mX^\star$, which comes down to a constrained minimization of a second-degree polynomial function that admits a closed-form solution. We refer to \citep{vayer2020contribution} for details on the line search.
+\end{enumerate}
+
+Other popular solvers rely on mirror descent strategies. The most notable approaches utilize the $\KL$ geometry, such as the work of \cite{xu2019gromov}, which addresses the unregularized \Cref{eq:gw_pb} objective, or the work of \cite{peyre2016gromov}, which considers the following entropy-regularized problem:
+\begin{align}
+    \min_{\mT \in \gU(\va, \vb)} E_L(\mP, \overline{\mP}, \mT) - \varepsilon^\star \operatorname{H}(\mT) \:.
+\end{align}
+Interestingly, addressing the latter problem with mirror descent leads to the following update rule:
+\begin{align}
+    \mT^{(t+1)} \leftarrow \text{Proj}^{\KL}_{\gU(\va, \vb)} \left( \mT^{(t)} \odot e^{-\gamma^{(t)} \left( \nabla_{\mT} E_L(\mP, \overline{\mP}, \mT^{(t)}) - \varepsilon^\star \nabla_{\mT} H(\mT^{(t)}) \right)} \right),
+\end{align}
+where $\gamma^{(t)}$ is the step size at iteration $t$. The projection can then be handled using the Sinkhorn algorithm \citep{cuturi2013sinkhorn}, thus benefiting from the associated computational speedups, as discussed in \Cref{mem:sinkhorn}.
+
 
 \paragraph{Gromov-Wasserstein for machine learning.}
 Due to its versatile properties, notably in comparing distributions over different domains,  the GW problem has found many applications in machine learning, \textit{e.g.,} for 3D meshes alignment \citep{solomon2016entropic,ezuz2017gwcnn}, NLP \citep{alvarez2018gromov}, (co-)clustering  \citep{peyre2016gromov, redko2020co}, single-cell analysis \citep{demetci2020gromov}, neuroimaging \citep{thual2022aligning}, graph representation learning \citep{xu2020gromov, vincent2021online, liu2022robust, vincent2022template, pmlr-v202-zeng23c} and partitioning \citep{xu2019scalable, chowdhury2021generalized}.

@@ -177,12 +177,13 @@ Interpreting the problem as a $\psi$-Bregman projection over a convex set as don
 
 \begin{remark}
     The aforementioned characterization as a projection holds under the condition $0 < \sigma \leq \varepsilon^\star$. Intuitively, this condition ensures that the intiial point $\mK_\sigma$ lies outside the set $\overline{\mathcal{B}}(\eta)$ so that the constraint is active when projecting.
-    It is important to note that there is a more general method that does not require a well-chosen initial point. This method is based on mirror descent under the geometry induced by the Bregman divergence $D_\psi$. At each iteration, it involves solving a projection problem, relying on Bregman or Dykstra depending on whether all the convex sets are affine. The primal variable $\mT$ is updated as follows, where $\gamma_t$ is the step size at time $t$ and $\gC$ is the convex set of interest:
+    It is important to note that there is a more general method that does not require a well-chosen initial point. This method is based on mirror descent under the geometry induced by the Bregman divergence $D_\psi$. At each iteration, it involves solving a projection problem, relying on Bregman or Dykstra depending on whether all the convex sets are affine. We detail the update of the primal variable $\mT$ and show how it can be expressed as a projection under the Bregman divergence $D_\psi$.
     \begin{align}
-    \mT_{t+1} &= \argmin_{\mT \in \gC} \: \langle \mT, \mC \rangle + \frac{1}{\gamma_t} D_{\psi}(\mT, \mT_t), \\
-    &= \argmin_{\mT \in \gC} \: \psi(\mT) - \langle \mT, \nabla \psi(\mT_t) - \gamma_t \mC \rangle, \\
-    &= \operatorname{Proj}^{D_\psi}_{\gC}(\nabla \psi^*(\nabla \psi(\mT_t) - \gamma_t \mC)).
+    \mT^{(t+1)} &= \argmin_{\mT \in \gC} \: \langle \mT, \mC \rangle + \frac{1}{\gamma^{(t)}} D_{\psi}(\mT, \mT^{(t)}), \\
+    &= \argmin_{\mT \in \gC} \: \psi(\mT) - \langle \mT, \nabla \psi(\mT^{(t)}) - \gamma^{(t)} \mC \rangle, \\
+    &= \operatorname{Proj}^{D_\psi}_{\gC}(\nabla \psi^*(\nabla \psi(\mT^{(t)}) - \gamma^{(t)} \mC)) \:.
     \end{align}
+    In the above derivation, $\gamma^{(t)}$ is the step size at time $t$ and $\gC$ is the convex set of interest.
 \end{remark}    
 
 
@@ -213,14 +214,13 @@ where $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ are the solution
 
 Using the dual formulation of \Cref{eq:dual-ROT}, which is convex like any dual problem, as it involves maximizing a concave objective, one can leverage any convex optimization solver, such as stochastic gradient descent (SGD), BFGS \citep{liu1989limited}, or ADAM \citep{kingma2014adam}, to solve the problem exactly.
 
-\begin{mem1}{Relation with the Sinkhorn Algorithm}
+\begin{mem1}{Relation with the Sinkhorn Algorithm}\label{mem:sinkhorn}
     As highlighted earlier, in the optimal transport (OT) literature, the spread constraint governed by the function $\psi$ is often handled via a fixed dual variable, $\varepsilon^\star$. To establish connections with existing approaches, we now assume $\varepsilon^\star$ is fixed. The most commonly used Bregman divergence for optimal transport is the Kullback-Leibler (KL) divergence, defined as
     \[
     D_{\KL}(\mT \| \mQ) = \langle \mT, \log \left( \mT \oslash \mQ \right) - \bm{1} \bm{1}^\top \rangle,
     \]
-    with the associated negative entropy $\psi_{\KL}(\mathbf{p}) = \langle \mathbf{p}, \log \mathbf{p} - 1 \rangle$.
-    In this case, \eqref{eq:cot} simplifies to the widely popular entropic OT \citep{cuturi2013sinkhorn}.
-
+    with the associated negative entropy $\psi_{\KL}(\mathbf{p}) = \operatorname{H}(\vp) \coloneqq \langle \mathbf{p}, \log \mathbf{p} - 1 \rangle$.
+    In this case, \eqref{eq:cot} simplifies to the widely popular entropic OT \citep{cuturi2013sinkhorn}. Its popularity arises from the significant computational gains it enables, with a runtime complexity of $\gO(N_S \times N_T)$, compared to at least $\gO(N^3 \log N)$, when $N_S \sim N_T \sim N$, required by the network flow algorithm \citep{peyre2019computational}. Moreover, it is highly compatible with modern hardware (see \Cref{remark:ot_gpu}).
     
     \paragraph{Primal formulation.}
     In this case, the primal-based formulation of the problem can be expressed as the Bregman projection $\operatorname{Proj}^{\KL}_{\gU(\bm{a}, \bm{b})}(\mK_{\varepsilon^\star})$, where $\mK_{\varepsilon^\star} = \nabla \psi_{\KL}^{*}(-\mC / \varepsilon^\star) = \exp(-\mC / \varepsilon^\star)$ is a Gibbs kernel. This projection is well-known as the \emph{static Schrödinger bridge} \citep{leonard2013survey}, originally appearing in statistical physics \citep{schrodinger1931umkehrung}.  As we generally do not have access to a closed form for the projection onto the transport polytope $\gU(\bm{a}, \bm{b})$, one can simply alternate the projections onto $\{ \mT \in \gU(\bm{a}) \}$ and $\{ \mT^\top \in \gU(\bm{b}) \}$ separately where $\gU(\vh)$ is the set of discrete couplings with one marginal, defined as $\gU(\vh) = \left\{\mT \mid T_{ij} \geq 0, \: \mT \mathbf{1}_n = \vh \right\}$. It leads to the seminal Sinkhorn algorithm introduced by \cite{cuturi2013sinkhorn}.
@@ -230,20 +230,21 @@ Using the dual formulation of \Cref{eq:dual-ROT}, which is convex like any dual 
     \end{align}
     and the Sinkhorn algorithm in the primal simply alternates projections such that alternatively $\{ \mT \in \gU(\bm{a}) \}$ and $\{ \mT^\top \in \gU(\bm{b}) \}$ until convergence.
 
-    \paragraph{Dual formulation.} Again considering a fixed dual variable $\varepsilon^\star$, the dual problem \eqref{eq:dual-ROT} can be adressed using a block coordinate strategy on the dual variables $(\bm{\lambda}, \bm{\mu})$. Indeed for a fixed $\bm{\mu}$ one has a closed form solution for $\bm{\lambda}$ and vice versa. This dual ascent strategy can be understood as a Sinkhorn algorithm in log domain:
+    \paragraph{Dual formulation.} Again considering a fixed dual variable $\varepsilon^\star$, the dual problem of \Cref{eq:dual-ROT} can be adressed using a block coordinate strategy on the dual variables $(\bm{\lambda}, \bm{\mu})$. Indeed for a fixed $\bm{\mu}$ one has a closed form solution for $\bm{\lambda}$ and vice versa. This dual ascent strategy can be understood as a Sinkhorn algorithm in log domain:
     \begin{align}
-        \bm{\lambda}^{(t+1)} &= \varepsilon^\star \log \mathbf{a} - \varepsilon^\star \log \left( \mathbf{K}_{\varepsilon^\star} e^{\bm{\mu}^{(t)} / \varepsilon^\star} \right), \\
-        \bm{\mu}^{(t+1)} &= \varepsilon^\star \log \mathbf{b} - \varepsilon^\star \log \left( \mathbf{K}^\top_{\varepsilon^\star} e^{\bm{\lambda}^{(t+1)} / \varepsilon^\star} \right).
+        \forall i \in \integ{N_S}, \quad \lambda^{(t+1)}_i &= \varepsilon^\star \log a_i - \varepsilon^\star  \operatorname{LSE} \big((\bm{\mu}^{(t)} - \C_{i:}) / \varepsilon^\star \big), \\
+        \forall j \in \integ{N_T}, \quad \mu^{(t+1)}_j &= \varepsilon^\star \log b_j - \varepsilon^\star  \operatorname{LSE} \big((\bm{\lambda}^{(t+1)} - \C_{:j}) / \varepsilon^\star \big).
     \end{align}
-    These updates are numerically stable, as they rely on the \emph{logsumexp} operator.
+    where for a vector $\bm{\alpha}$, we use the notation
+    $\operatorname{LSE}(\bm{\alpha}) = \log \sum_{k} \exp (\alpha_k)$. These updates are numerically stable, as they rely on the \emph{logsumexp} operator $\operatorname{LSE}$.
 \end{mem1}
 
-\begin{remark}{(OT on the GPU)}
+\begin{remark}{(OT on the GPU)}\label{remark:ot_gpu}
     For common choices of regularizers $\Psi$ (e.g., Shannon entropy or $\ell_\alpha$-norms), both formulations \Cref{eq:proj-rot} and \Cref{eq:dual-rot} rely heavily on matrix reductions, which are easily parallelizable and can be significantly accelerated when computed on a GPU.
     
-    As highlighted previously, the primal formulation of \Cref{eq:proj-rot} is appealing because it allows for easily adapting the OT problem by incorporating new constraints in the alternating projection scheme. However, working in the primal space can be limiting in terms of memory when using a GPU. Indeed, when both $N_S \times N_T$ exceed a dimensionality on the order of $10^8$, it is likely that the full transport plan $\mT$ will not fit entirely in the GPU memory.
+    As highlighted previously, the primal formulation of \Cref{eq:proj-rot} is appealing because it allows for easily adapting the OT problem by incorporating new constraints in the alternating projection scheme. However, working in the primal space can be limiting in terms of memory when using a GPU. Indeed, when $N_S \times N_T$ exceeds a dimensionality on the order of $10^8$, it is likely that the full transport plan $\mT$ will not fit entirely in the GPU memory.
     
-    The dual formulation of \Cref{eq:dual-ROT} is particularly useful in this regard, as it allows for symbolic encoding. This means only the dual variables and the formula to reconstruct the OT plan from the input data and these dual variables need to be stored. The OT plan is then accessed only through reductions when necessary, without ever being fully reconstructed in GPU memory. This can be efficiently implemented using the \emph{KeOps} package \citep{charlier2021kernel}.
+    The dual formulation of \Cref{eq:dual-ROT} is particularly useful in this regard, as it allows for symbolic encoding. This means only the dual variables and the formula to reconstruct the OT plan from the input data and these dual variables need to be stored, thus leading to a memory complexity which is linear with respect to the sample size. The OT plan is then accessed only through reductions when necessary, without ever being fully reconstructed in GPU memory. This can be efficiently implemented using the \emph{KeOps} package \citep{charlier2021kernel}.
 \end{remark}
     
 \begin{remark}

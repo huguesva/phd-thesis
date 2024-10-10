@@ -222,100 +222,6 @@ Therefore we have
 
 \subsection{Proofs of the Optimal Transport Solutions}
 
-\subsubsection{Optimal Transport with Global Constraint}\label{sec:proof_global}
-
-\begin{proposition}\label{prop:cot}
-    Let $\psi : \R^{N_S} \to \R$ satisfy \cref{assumption_psi}. We define $\overline{\mathcal{B}}(\eta) \coloneqq \{ \mP \: \text{s.t.} \: \sum_i \psi(\mP_{i:}) \leq \eta \}$. Let $(\bm{a}, \bm{b}, \eta)$ be such that $\Pi(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)$ has an interior point and let $\mP^\star$ be a solution of
-\begin{align}
-    \min_{\mP \in \Pi(\bm{a}, \bm{b})} \: \langle \mP, \mC \rangle \quad \text{s.t.} \quad  \mP \in \overline{\mathcal{B}}(\eta) \:.
-    \tag{ROT}
-\end{align}
-    Let $\varepsilon^\star$ be an optimal dual variable associated with $\mP \in \overline{\mathcal{B}}(\eta)$.
-    If $\varepsilon^\star > 0$, then for any $0 < \sigma \leq \varepsilon^\star$, it holds $\mP^\star = \operatorname{Proj}^{D_\psi}_{\Pi(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)}(\mK_\sigma)$
-    where $\mK_\sigma \coloneqq \nabla \psi^*(-\mC/ \sigma)$.
-    One also has $\mP^\star = \nabla \psi^*((\mC - \bm{\lambda}^\star \oplus \bm{\mu}^\star) / \varepsilon^\star)$
-    where $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ solve
-    \begin{align}
-        \max_{\bm{\lambda}, \bm{\mu}, \varepsilon>0}  \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle + \varepsilon \Big(\sum_i \psi^*((\C_{i:} - \lambda_i \bm{1} - \bm{\mu}) / \varepsilon) - \eta \Big) \:.
-    \tag{Dual-ROT}
-    \end{align}
-\end{proposition}
-
-\begin{proof}
-    We first show that $\mP^\star = \operatorname{Proj}^{D_\psi}_{\Pi(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)}(\mK_\varepsilon)$ before focusing on the dual problem.
-
-    \paragraph{\underline{Part I : Proof of the Bregman projection.}}
-
-    Simplifying the constant terms $\operatorname{Proj}^{D_\psi}_{\Pi(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)}(\mK_\varepsilon)$ boils down to the following problem
-    \begin{align}
-        \min_{\mP} \quad &\sum_i \psi(\mP_{i:}) - \langle \mP, \nabla \psi(\mK_\sigma) \rangle \\
-        \text{s.t.} \quad &\sum_i \psi(\mP_{i:}) \leq \eta \\
-        & \mP \bm{1} = \bm{a}, \quad \mP^\top \bm{1} = \bm{b} \\
-        & \mP \in \R_+^{n \times n} \:.
-    \end{align}
-    This problem is convex and strictly feasible. Strong duality holds thanks to Slater's constraint qualification. Therefore the KKT conditions \citep{boyd2004convex} are necessary and sufficient conditions for optimality.
-    The Lagrangian can be expressed as
-    \begin{align}
-        \mathcal{L}(\mP, \nu, \bm{\lambda}, \bm{\mu}) &= \sum_i \psi(\mP_{i:}) - \langle \mP, \nabla \psi(\mK_\sigma) \rangle + \nu\Big(\sum_i \psi(\mP_{i:}) - \eta \Big) \\
-        &+ \langle \bm{\lambda}, \bm{a} - \mP \bm{1} \rangle + \langle \bm{\mu}, \bm{b} - \mP^\top \bm{1} \rangle - \langle \mathbf{\Omega}, \mP \rangle \:.
-    \end{align}
-    Any optimal primal-dual variables $(\mP^\star, \nu^\star, \bm{\lambda}^\star, \bm{\mu}^\star, \mathbf{\Omega}^\star)$ satisfies
-    \begin{align}
-            \nabla_{\mP} \mathcal{L}(\mP^\star,  \nu^\star, \bm{\lambda}^\star, \bm{\mu}^\star) &=  (\nu^\star + 1) \nabla \psi(\mP^\star) - \nabla \psi(\mK_\sigma) - \bm{\lambda}^\star \oplus \bm{\mu}^\star - \mathbf{\Omega}^\star = \bm{0} \:.
-    \end{align}
-    Note that by definition $\mK_\sigma = \nabla \psi^\star(-\mC/\epsilon)$ and thus $\nabla \psi(\mK_\sigma) = \nabla \psi[\nabla \psi^\star(-\mC/\sigma)] = -\mC / \sigma$ \citep{rockafellar1997convex}. Thus we have 
-    \begin{align}
-        \mC + \sigma (\nu^\star + 1) \nabla \psi(\mP^\star) -  \sigma \bm{\lambda}^\star \oplus \bm{\mu}^\star - \sigma \mathbf{\Omega}^\star= \bm{0} \:.
-    \end{align}
-    Similarly, for the optimal transport problem \eqref{prop:cot}
-    \begin{align}
-        \min_{\mT} \quad \langle \mT, \mC \rangle \quad \text{s.t.} \quad  \mT \in \Pi(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta) \:,
-    \end{align}
-    we get the optimality condition for optimal primal-dual variables $(\mT^\star, \varepsilon^\star, \bm{\rho}^\star, \bm{\kappa}^\star, \mathbf{\Lambda}^\star)$
-    \begin{align}
-        \C + \varepsilon^\star \nabla \psi(\mT^\star) -  \bm{\rho}^\star \oplus \bm{\kappa}^{\star} - \mathbf{\Lambda}^\star = \bm{0} \:.
-    \end{align}
-    Focusing on the original Bregman projection problem, we can then consider
-    \begin{align}
-        \left\{
-        \begin{array}{ll}
-            \bm{\lambda} &= \bm{\rho}^\star / \sigma \\
-            \bm{\mu} &= \bm{\kappa}^\star / \sigma \\
-            \nu &= \varepsilon^\star / \sigma - 1 \\
-            \mathbf{\Omega} &= \mathbf{\Lambda}^\star / \sigma \\
-            \mP &= \mT^\star \:.
-        \end{array}
-    \right.
-    \end{align}
-    With the above choice, 
-    \begin{itemize}
-        \item  $(\mP, \nu, \bm{\lambda}, \bm{\mu}, \mathbf{\Omega})$ satisfies the first order optimality condition.
-        \item $\mP = \mT^\star \in \Pi(\bm{a}, \bm{b}) \cap \mathcal{E}(\eta)$ thus the primal constraint is satisfied. 
-        \item $\sigma \leq \varepsilon^\star$ implies that $\nu \geq 0$ and $\mathbf{\Omega}$ has positive entries thereby dual constraints are satisfied. 
-        \item $\varepsilon^\star \neq 0$ thus by complementary slackeness $\psi(\mT^\star) = \eta$ hence complementary slackness is also verified for $\mP$ since $\mP = \mT^\star$.
-    \end{itemize}
-    Therefore the KKT conditions are met hence $(\mP, \nu, \bm{\lambda}, \bm{\mu}, \mathbf{\Omega}) = (\mP^\star, \nu^\star, \bm{\lambda}^\star, \bm{\mu}^\star, \mathbf{\Omega}^\star)$ and $\mP^\star = \mT^\star$.
-\end{proof}
-
-\paragraph{\underline{Part II : Proof of dual ascent.}}
-
-The optimal dual variables $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ solve the following problem 
-\begin{align}
-    &\max_{\bm{\lambda}, \bm{\mu}, \varepsilon > 0} \: \min_{\mP \bm{\geq} \bm{0}} \: \langle \mP, \mC \rangle + \langle \bm{\lambda}, \bm{a} - \mP \bm{1} \rangle + \langle \bm{\mu}, \bm{b} - \mP^\top \bm{1} \rangle + \varepsilon \Big(\sum_i \psi(\mP_{i:}) - \eta \Big) \\
-    = &\max_{\bm{\lambda}, \bm{\mu}, \varepsilon> 0} \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle - \varepsilon \eta + \min_{\mP \bm{\geq} \bm{0}} \: \langle \mP, \mC - \bm{\lambda}\bm{1}^\top - \bm{1}\bm{\mu}^\top \rangle + \varepsilon \sum_i \psi(\mP_{i:}) \\
-    = &\max_{\bm{\lambda}, \bm{\mu}, \varepsilon>0} \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle - \varepsilon \eta + \min_{\mP \bm{\geq} \bm{0}} \: \sum_i \langle \mP_{i:}, \mC_{i:} - \lambda_i \bm{1} - \bm{\mu} \rangle + \varepsilon \psi(\mP_{i:}) \\
-    \stackrel{(\star)}{=} &\max_{\bm{\lambda}, \bm{\mu}, \varepsilon>0}  \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle + \varepsilon \Big(\sum_i \psi^*((\mC_{i:} - \lambda_i \bm{1} - \bm{\mu}) / \varepsilon) - \eta \Big) \:.
-    \tag{Dual-ROT}
-    \label{eq:dual-ROT}
-\end{align}
-In ($\star$) we have used that $\psi^*(\bm{x}) = \sup_{\bm{y} \bm{\geq} \bm{0}} \langle \bm{x}, \bm{y} \rangle - \psi(\bm{y})$.
-From Danskin's theorem \citep{danskin1966theory}, one can recover the solution of the primal
-\begin{align}
-    \forall i, \: \mP^\star_{i:} = \nabla \psi^*((\mC_{i:} - \lambda^\star_i \bm{1} - \bm{\mu}^\star) / \varepsilon^\star) \:.
-\end{align}
-Using matrix notations yields $\mP^\star = \nabla \psi^*((\mC - \bm{\lambda}^\star \oplus \bm{\mu}^\star) / \varepsilon^\star)$
-where $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ are the solution of the dual problem \eqref{eq:dual-ROT}.
-
 \subsubsection{OT with Pointwise Constraints on Either Sources or Targets (OTARI-s and OTARI-t) : proof of \cref{prop:pcot}}\label{sec:proofs}
 
 \begin{proposition}
@@ -333,7 +239,7 @@ where $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ are the solution
 \end{proposition}
 
 \begin{proof}
-Again we break down the proof, focusing on the primal and then on the dual approach.
+We break down the proof, focusing on the primal and then on the dual approach.
 
 \paragraph{\underline{Part I : Proof of the Bregman projection.}}
 
