@@ -55,7 +55,7 @@ where $\gU_n(\vh_X) := \left\{ \mT \in \R_{+}^{N \times n}: \mT \one_n = \vh_X\r
 %\begin{proposition}\label{prop:srgw_divergence}
 %	For any divergence $L$, \ref{eq:srGW} vanishes iif there exists $\vh_Z \in \Sigma_n$  such that $(\mC_X(\mX), \vh_X)$ and $(\mC_Z(\mX), \vh_Z)$ are weakly isomorphic. \tv{vraiment besoin d'une prop ? comme ona pas def weakly isom, juste un commentaire ?}
 %\end{proposition}
-Additionally, we prove that $\srGW_L$ remains a divergence as soon as $L$ is itself a divergence. Consequently, $\srGW_L$ vanishes iff both measures are isomorphic in a weak sense \citep{chowdhury2019gromov}. We emphasize that taking a proper divergence $L$ is important (and basic assumptions on $\mX$), as it avoids some trivial solutions as detailed in Appendix \ref{sec:srGW_divergence}.
+Additionally, we prove that $\srGW_L$ remains a divergence as soon as $L$ is itself a divergence. Consequently, $\srGW_L$ vanishes iff both measures are isomorphic in a weak sense \citep{chowdhury2019gromov}. We emphasize that taking a proper divergence $L$ is important (and basic assumptions on $\mX$), as it avoids some trivial solutions as detailed in Appendix \ref{sec:proofs_distR}.
 
 %The latter notion may introduce trivial solutions into our \ref{eq:Dist-DR} problem which can be avoided with basic assumptions over $\mu_X$, always verified in our experiments, that we discuss .   
 
@@ -70,7 +70,7 @@ Additionally, we prove that $\srGW_L$ remains a divergence as soon as $L$ is its
 
 
 
-Interestingly, srGW projections, \textit{i.e.} optimizing only the weights $\vh_Z$ over simple fixed supports $\mZ$, have already remarkable representational capability. We illustrate this in \Cref{fig:visu_fixedsupport}, by considering projections of a real-world dataset over 2D grids of increasing resolutions. Setting $\mC_X(\mX) = \mX \mX^\top$ and $\mC_Z(\mX) = \mZ \mZ^\top$, we can see that those projections recover faithful coarsened representations of the embeddings learned using PCA. DistR aims to exploit the full potential of this divergence by learning a few optimal prototypes that best represent the dataset.
+Interestingly, srGW projections, \textit{i.e.} optimizing only the weights $\vh_Z$ over simple fixed supports $\mZ$, have already remarkable representational capability. We illustrate this in \Cref{fig:visu_fixedsupport}, by considering projections of a real-world dataset over 2D grids of increasing resolutions. Setting $\simiX(\mX) = \mX \mX^\top$ and $\simiZ(\mZ) = \mZ \mZ^\top$, we can see that those projections recover faithful coarsened representations of the embeddings learned using PCA. DistR aims to exploit the full potential of this divergence by learning a few optimal prototypes that best represent the dataset.
 
 %We can see that  thus providing a new alternative to standard \ref{eq:DR_criterion} by optimizing the weights $\vh_Z$ instead of the locations $\delta_{\vz_i}$.
 
@@ -93,7 +93,7 @@ In what follows, we call a coupling $\mT \in [0,1]^{N \times n}$ with a single n
 %and not only a target graph $(\overline{\mC}, \vh_Z)$. \tv{a reformuler}
 %  whose support would be let implicit,	
 % The latter problem, known as the \emph{srGW barycenter} \citep{vincent2021semi}, is however strongly connected to \ref{eq:Dist-DR}.
-We will see that a link can be drawn with kernel K-means using the analogy of \emph{GW barycenters}. More precisely the \emph{srGW barycenter} \citep{vincent2021semi} seeks for a closest target graph $(\overline{\mC}, \overline{\vh})$ from $(\mC_X, \vh_X)$ by solving
+We will see that a link can be drawn with kernel K-means using the analogy of \emph{GW barycenters}. More precisely the \emph{srGW barycenter} \citep{vincent2021semi} seeks for a closest target graph $(\overline{\mC}, \overline{\vh})$ from $(\simiX(\mX), \vh_X)$ by solving
 \begin{equation}\tag{srGWB}\label{eq:srGBW}
 	\min_{\overline{\mC} \in \R^{n \times n}} \min_{\mT \in \mathcal{U}_n(\vh_X)} E_L(\simiX(\mX), \overline{\mC}, \mT) \:.
 \end{equation} 
@@ -104,7 +104,7 @@ srGWB. In contrast, \cref{eq:Dist-DR} looks for minimizing over $\overline{\mC}
 equivalent to enforcing $\operatorname{rank}(\overline{\mC}) \leq d$ in
 \cref{eq:srGBW}.
 
-We establish below that srGWB is of particular interest for clustering. The motivation for this arises from the findings of \citep{chen2023gromov}, which demonstrate that when $\simiX(\mX)$ is positive semi-definite and $\mT$ is \emph{constrained} to belong to the set of membership matrices (as opposed to couplings in $\gU_n(\vh)$), \cref{eq:srGBW} is equivalent to a kernel K-means whose samples are weighted by $\vh_X$ \citep{dhillon2004kernel, dhillon2007weighted}. These additional constraints are in fact unnecessary since we show below that the original srGWB problem admits membership matrices as the optimal coupling for a broader class of $\simiX(\mX)$ input matrices (see proofs in appendix \ref{sec:srGW_concavity}).%by demonstrating that the constraint on $\mT$ to be a membership matrix is, in fact, unnecessary. We show below that the original srGWB problem admits  membership matrices as optimal coupling for a broader class of input matrices $\simiX(\mX)$ (see proofs in Appendix \ref{sec:srGW_concavity}).
+We establish below that srGWB is of particular interest for clustering. The motivation for this arises from the findings of \citep{chen2023gromov}, which demonstrate that when $\simiX(\mX)$ is positive semi-definite and $\mT$ is \emph{constrained} to belong to the set of membership matrices (as opposed to couplings in $\gU_n(\vh)$), \cref{eq:srGBW} is equivalent to a kernel K-means whose samples are weighted by $\vh_X$ \citep{dhillon2004kernel, dhillon2007weighted}. These additional constraints are in fact unnecessary since we show below that the original srGWB problem admits membership matrices as the optimal coupling for a broader class of $\simiX(\mX)$ input matrices (see proofs in appendix \ref{sec:proofs_distR}).%by demonstrating that the constraint on $\mT$ to be a membership matrix is, in fact, unnecessary. We show below that the original srGWB problem admits  membership matrices as optimal coupling for a broader class of input matrices $\simiX(\mX)$ (see proofs in Appendix \ref{sec:srGW_concavity}).
 % seminal result in this direction from  considered $\mC_X(\mX)$ PSD and the combinatorial (Monge) counterpart of the \ref{eq:srGBW} problem. 
 \begin{restatable}{theorem}{baryconcavity}
 	\label{theo:srgw_bary_concavity}
@@ -197,5 +197,5 @@ leverages the more expressive non-linear similarity functions of existing DR
 methods. Other joint DR-clustering approaches, such as \citep{liu2022joint},
 involve modeling latent variables by a mixture of distributions. In comparison,
 our framework is more versatile, as it can easily adapt to any $(L, \mC_X,
-\mC_Z)$ of existing DR methods (\Cref{sec:dr_methods}).
+\mC_Z)$ of existing DR methods.
 %\citep{collas2023entropic}

@@ -111,10 +111,6 @@ Finally the coefficient $b$ of the linear term is
 
 \subsection{Experimental setting}\label{sec:implementation_details}
 
-\paragraph{Sequential methods.} We detail in the following the sequential methods DR$\to$C and C$\to$DR considered in our benchmark. DR$\to$C representations are constructed by first running the DR method associated with $(L, \mC_X, \mC_Z)$ thus obtaining an intermediate representation $\widetilde{\mZ} \in \R^{N \times d}$. Then, spectral clustering \citep{von2007tutorial} on the similarity matrix $\mC_Z(\widetilde{\mZ})$ is performed to compute a cluster assignment matrix $\widetilde{\mT} \in \R^{N \times n}$. The final reduced representation in $\R^{n \times d}$ is the average of each point per cluster, \ie the collection of the centroids, which is formally $\diag(\tilde{\vh})^{-1} \widetilde{\mT}^\top \widetilde{\mZ} \in \R^{n \times d}$ where $\tilde{\vh} = \widetilde{\mT}^\top \one_N$.
-For C$\to$DR, a cluster assignment matrix $\widehat{\mT} \in \R^{N \times n}$ is first computed using spectral clustering on $\mC_X(\mX)$.
-Then, the cluster centroid $\diag(\hat{\vh})^{-1} \widehat{\mT}^\top \mX$, where $\hat{\vh} = \widehat{\mT}^\top \bm{1}_N$, is passed as input to the DR method associated with $(L, \mC_X, \mC_Z)$.
-
 \paragraph{Implementation.} 
 Throughout, the spectral clustering implementation of \texttt{scikit-learn} \citep{pedregosa2011scikit} is used to perform either the clustering steps or the initialization of transport plans. 
 For all methods, $\mZ$ is initialized from \emph{i.i.d.} sampling of the standard Gaussian distribution $\mathcal{N}(0,1)$ and further optimized using \texttt{PyTorch}'s automatic differentiation \citep{paszke2017automatic} with Adam optimizer \citep{kingma2014adam}. OT-based solvers are built upon the \texttt{POT} \citep{flamary2021pot} library.
@@ -148,18 +144,6 @@ When the dimensionality of a dataset exceeds $50$, we pre-process it by applying
 \end{tabular}}
 \end{table}
 
-\textbf{Scores.} The homogeneity and NMI scores are taken from \texttt{Torchmetrics} \citep{detlefsen2022torchmetrics}. The other scores used in the experiments are computed as follows.
-
-\textit{i) Silhouette}: The first step is to associate a label with each prototype $\vz_k$ defined by the $y$ maximizing $\sum_{i \in \integ{N}} T_{ik} \bm{1}_{y_i = y}$ where $y_i$ is the class label of the input data point $\vx_i$. Then, to incorporate the relative importance $w_i = \left[\vh_Z\right]_i$ of each prototype $\vz_i$, we define the \emph{weighted} mean intra-cluster and nearest-cluster distances that read 
-	\begin{equation}
-		a_i (\mZ, \mY, \vw)= \frac{\sum_{j\in \integ{N} \delta_{y_i =y_j} w_j d(\vz_j, \vz_j)}}{\sum_{j \in \integ{N} \delta_{y_i = y_j} w_j }} \quad \text{and} \quad b_i (\mZ, \mY, \vw)= \frac{\sum_{j \in \integ{N}} \delta_{y_j = k} w_j d(\vz_j, \vz_i)}{ \sum_{j \in \integ{N}} \delta_{y_j = k}w_j }
-	\end{equation}
-	such that the silhouette coefficient is $s_i(\mZ, \mY, \vw) = \frac{b_i - a_i}{\max(b_i, a_i)}$ and the final silhouette score reads as
-	\begin{equation}
-		S(\mZ, \mY, \vw) = \sum_{i \in \integ{N}} w_i s_i(\mZ, \mY, \vw) \:.
-	\end{equation}
-
-\textit{ii) k-means}: We first run the k-means algorithm on the prototypes $\{\vz_k\}_{k \in \integ{n}}$ giving us the predicted label $\tilde{y}_k$ for each $k \in \integ{n}$. The predicted label for each input data point $i \in \integ{N}$ is then given by its prototype's predicted label \ie $\hat{y}_i = \tilde{y}_{\arg \max_k T_{ik}}$. Then we compute the NMI score \citep{kvaalseth2017normalized} between $(\hat{y}_i)_{i \in \integ{N}}$ and the ground-truth class labels $(y_i)_{i \in \integ{N}}$.
 
 \subsection{Comparison with COOT clustering}\label{sec:coot_exp}
 
@@ -193,7 +177,7 @@ One can seek to optimize the above objective with respect to $\mZ$ to obtain a c
 	\vspace{0.2cm}
 	\caption{Best homogeneity scores for $n$ validated in a span up to $200$ with increments of $20$.}
 	\label{tab:coot_scores}
-	\vspace{-0.5cm}
+	% \vspace{-0.5cm}
 \end{table}
 In \Cref{tab:coot_scores}, we display the homogeneity values obtained with COOT along with the methods described \Cref{sec:exps}. Precisely, it measures to what extent the clustering given by $\mT_r$ groups points with the same ground truth label. One can notice that COOT falls short compared to its competitors that leverage affinity matrices as in state-of-the-art (non-linear) DR methods.
 
@@ -306,11 +290,11 @@ Overall our DistR models are competitive with all benchmarked methods in terms o
 
 \subsection{Proofs of concepts with hyperbolic kernels}\label{sec:hyperbolic}
 
-Hyperbolic spaces \citep{Chami21, Fan_2022_CVPR, Guo22, Lin23} are of particular interest as they can capture hierarchical structures more effectively than Euclidean spaces and mitigate the curse of dimensionality by producing representations with lower distortion rates. For instance, \citep{Guo22} adapted t-SNE by using the Poincaré distance and by changing the Student's t-distribution with a more general hyperbolic Cauchy distribution.  Notions of projection subspaces can also be adapted, \eg \citep{Chami21} use horospheres as one-dimensional subspaces. To match our experiments with the neighbor embeddings in Euclidean settings, we adapt the \emph{Symmetric Entropic Affinity} (SEA) from \citep{van2023snekhorn} for $\mC_X$ and the scalar-normalized student similarity for $\mC_Z$ \citep{van2008visualizing}, by simply changing the Euclidean distance by an hyperbolic distance.
+Hyperbolic spaces \citep{Chami21, Fan_2022_CVPR, Guo22, Lin23} are of particular interest as they can capture hierarchical structures more effectively than Euclidean spaces and mitigate the curse of dimensionality by producing representations with lower distortion rates. For instance, \citep{Guo22} adapted t-SNE by using the Poincaré distance and by changing the Student's t-distribution with a more general hyperbolic Cauchy distribution.  Notions of projection subspaces can also be adapted, \eg \citep{Chami21} use horospheres as one-dimensional subspaces. To match our experiments with the neighbor embeddings in Euclidean settings, we adapt the \emph{Symmetric Entropic Affinity} (SEA) from \Cref{chapter:SNEkhorn} for $\mP$ and the scalar-normalized student similarity for $\mQ$ \citep{van2008visualizing}, by simply changing the Euclidean distance by an hyperbolic distance.
 
 
 \paragraph{Implementation details.} Computations in Hyperbolic spaces are done with \texttt{Geoopt}~\citep{geoopt2020kochurov} and the RAdam optimizer \citep{becigneul2018riemannian} replaces Adam. A Wrapped Normal distribution in Hyperbolic spaces~\citep{Nagano19} is used to initialize $\mZ$ in the hyperbolic setting.
-All the computations were conducted in the Lorentz model~\citep{Nickel18}, which is less prone to numerical errors. As such, we used the associated distance function to form $\mC_Z$. After optimization, results are projected back to the Poincaré ball for visualization purposes. In this hyperbolic context, we adopted the formulation of~\citep{Guo22} which generalizes Student's t-distribution by Hyperbolic Cauchy distributions (denoted as H-Student in the results). Notice that \citep{Guo22} considered weighted sums of DR objective depending respectively on $L_2$ and $L_{KL}$, including 2 additional hyperparamaters, plus various validated curvature levels for the inner hyperbolic distances. In the following experiments, we only kept $L_{KL}$ for comparison with the Euclidean SNE-based methods illustrated in \Cref{sec:exps} and previous Sections of \ref{sec:appendix_exps}, while validating the same hyperparameters and setting the space curvature to $1$. The silhouette score was adapted to this kernel considering the Hyperbolic distance instead of the Euclidean one, and we implemented a Hyperbolic Kmeans whose barycenters are estimated using the RAdam optimizer to compute the NMI scores.
+All the computations were conducted in the Lorentz model~\citep{Nickel18}, which is less prone to numerical errors. As such, we used the associated distance function to form $\mC_Z$. After optimization, results are projected back to the Poincaré ball for visualization purposes. In this hyperbolic context, we adopted the formulation of~\citep{Guo22} which generalizes Student's t-distribution by Hyperbolic Cauchy distributions (denoted as H-Student in the results). Notice that \citep{Guo22} considered weighted sums of DR objective depending respectively on $L_2$ and $L_{KL}$, including 2 additional hyperparamaters, plus various validated curvature levels for the inner hyperbolic distances. In the following experiments, we only kept $L_{KL}$ for comparison with the Euclidean SNE-based methods illustrated in \Cref{sec:exps_distr} and previous Sections of \ref{sec:appendix_exps}, while validating the same hyperparameters and setting the space curvature to $1$. The silhouette score was adapted to this kernel considering the Hyperbolic distance instead of the Euclidean one, and we implemented a Hyperbolic Kmeans whose barycenters are estimated using the RAdam optimizer to compute the NMI scores.
 
 \paragraph{Results.} We first report in \Cref{fig:trade_off_hyp} a relative comparison of the best trade-off between local and global metrics achieved by all methods. Similarly to visualizations of the main paper, we considered for each method and dataset, the model maximizing the sum of the two normalized metrics to account for their different ranges. DistR, being once again present on the top-right of all plots, provides on average the most discriminant
 low-dimensional representations endowed with a simple geometry, seconded by
@@ -333,7 +317,7 @@ C$\rightarrow$DR.
 
 Then we report in \Cref{fig:sensitivity_hyp} absolute performances for all methods and all datasets across various $n$, as done in \Cref{sec:full_sensitivity}. We can observe that both DistR and C$\rightarrow$DR achieve fairly high NMI and homogeneity scores across all settings, while DistR performs significantly better on average across the tested number of prototypes $n$.  However, DR$\rightarrow$C struggles significantly to learn both globally and individually discriminant prototypes. Notice that DR$\rightarrow$C's homogeneity scores are significantly lower on average than both benchmarked Euclidean kernels. This mitigates drastically the significance of the silhouette scores computed for this method, letting essentially DistR and C$\rightarrow$DR to compare. Even though DistR outperforms consistently C$\rightarrow$DR w.r.t silhouette scores, these scores remain significantly lower than with the other t-SNE kernels. As the latter is equivalent to a null curvature, this indicates that further fine-tuning of the curvature within these hyperbolic kernels could be beneficial. Nevertheless, these results confirm the versatility of our DistR approach, capable of operating on non-Euclidean geometries.
 
-\begin{figure*}[h!]
+\begin{figure*}[h]
 	\begin{center}
 		\centerline{\includegraphics[width=0.9\columnwidth]{figures/DistR/sensitivity_hyp_dim_2/full_sensitivity.pdf}}
 		\caption{Scores ($\times 100$) with respect to the number of prototypes (in $\R^{10}$) produced by DistR using the Hyperbolic Student model.}

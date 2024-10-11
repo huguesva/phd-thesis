@@ -20,24 +20,7 @@ This chapter is based on material from the following publication:
 	\vskip -0.3in
 \end{figure}
 
-\paragraph{Dimensionality reduction and clustering.}
-When faced with the question of extracting
-interpretable representations, from a dataset $\mX = (\vx_1, ..., \vx_N) ^\top
-\in \R^{N \times p}$ of $N$ samples in $\R^p$, the machine learning community
-has proposed a variety of methods. Among them, dimensionality reduction (DR) algorithms have been widely used to summarize data in a low-dimensional space
-$\mZ = (\vz_1, ..., \vz_N) ^\top \in \R^{N \times d}$ with $d \ll p$, allowing
-for visualization of every individual points for small enough $d$ \citep{agrawal2021minimum,van2009dimensionality}.
-Another major approach is to cluster the data into $n$ groups, with $n$
-typically much smaller than $N$, and to summarize these groups through their centroids \citep{saxena2017review,ezugwu2022comprehensive}.
-%by clusteres defined as  centroids or groups of samples. 
-Clustering is particularly interpretable since it provides a
-smaller number of points that can be easily inspected. %visualized or interpreted. 
-The cluster assignments can also be analyzed. %but also assignment of each original point to a cluster. 
-Both DR and clustering follow a
-similar philosophy of summarization and reduction of the dataset using a smaller size representation.
-% matrix. 
-
-\paragraph{Two sides of the same coin.} As a matter of fact, methods from both families share many similitudes, %among which is
+This work addresses \Cref{prob:ot_unsupervised} and aims to provide a general formulation of unsupervised representation learning methods as an OT variational problem over a measure. Of particular interest are clustering and dimensionality reduction approaches, both of which are popular ways to summarize datasets. Interestingly, methods from both families share many similitudes, %among which is
 including the construction of a similarity graph between input samples. In clustering, many popular approaches design a reduced or coarsened version of the initial similarity graph while preserving some of its spectral properties~\citep{von2007tutorial, schaeffer2007graph}. 
 %attributes related to the graph spectrum 
 In DR, the goal is to solve the inverse problem of finding low-dimensional embeddings that generate a similarity graph close to the %initial
@@ -51,8 +34,8 @@ $\mu=\frac{1}{N}\sum_i\delta_{\vx_i}$.
 % instead of a data matrix. 
 This enables us to consider statistical measures of similarity such as Optimal Transport (OT), which is at the core of our work.
 On the one hand, OT and clustering are strongly related.
-The celebrated K-means approach can be seen as a particular case of minimal Wasserstein estimator where a distribution of $n$ Diracs is optimized \textit{w.r.t} their weights and positions \citep{Canas12}. Other connections between spectral clustering and the OT-based Gromov-Wasserstein (GW) distance have been recently developed in \citet{chowdhury2021generalized,chen2023gromov,vincent2021semi}. On the other hand, the link between DR and OT has not been explored yet. DR methods, when modeling data as distributions,
-usually focus on joint distribution between samples within each space separately, see \eg \citet{van2023snekhorn} or \citet{lu2019doubly}.
+The celebrated K-means approach can be seen as a particular case of minimal Wasserstein estimator where a distribution of $n$ Diracs is optimized \textit{w.r.t} their weights and positions \citep{Canas12}. Other connections between spectral clustering and the OT-based Gromov-Wasserstein (GW) distance have been recently developed in \citep{chowdhury2021generalized,chen2023gromov,vincent2021semi}. On the other hand, the link between DR and OT has not been explored yet. DR methods, when modeling data as distributions,
+usually focus on joint distribution between samples within each space separately, see \eg \Cref{chapter:SNEkhorn} of this thesis or \citep{lu2019doubly}.
 Consequently, they do not consider couplings to transport samples across spaces of varying dimensions. %To the best of our knowledge, DR methods, when modeling data as distributions,
 %focus on joint distribution between samples within each space separately, see \eg \citet{van2023snekhorn} or \citet{lu2019doubly}.
 %However, they do not consider couplings to transport samples across spaces of varying dimensions,% thus the link between DR and OT has not been explored yet.
@@ -84,7 +67,7 @@ to select both the dimensionality of the embedding $d$ (DR) but also the number 
 $n$ (Clustering).
 % hence providing jointly DR and clustering. 
 %Finally, we show in Section \ref{sec:exps} the practical interest and generality of our approach by evaluating its performance on a joint DR/Clustering task and comparing it to existing methods.
-Finally, we show in section \ref{sec:exps} the practical interest of our approach, which regularly outperforms its competitors for various joint DR/Clustering tasks.
+Finally, we show in section \ref{sec:exps_distr} the practical interest of our approach, which regularly outperforms its competitors for various joint DR/Clustering tasks.
 % \hva{à atténuer un peu:}
 % We also illustrate the generality by investigating particularly novel DR methods that optimize the GW divergence in an Eulerian way, with a reduced distribution of fixed support \nc{such as} regular grids (images) or on other supports that can encode prior knowledge.
 

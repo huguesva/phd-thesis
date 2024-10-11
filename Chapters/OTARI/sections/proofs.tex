@@ -19,8 +19,8 @@
 
     We first consider the negative Shannon entropy $\psi_{\KL}(\vp) = \scalar{\vp}{\log \vp - \bm{1}}$.
 
-    \paragraph{Projection onto $\Pi(\bm{a}) \cap \mathcal{B}_{\KL}(\xi)$.}
-    The $\KL$ projection of a matrix $\mK \in \R_+^{N_S \times N_T}$ onto $\Pi(\bm{a}) \cap \mathcal{B}_1(\xi)$ is the following problem.
+    \paragraph{Projection onto $\gU(\bm{a}) \cap \mathcal{B}_{\KL}(\xi)$.}
+    The $\KL$ projection of a matrix $\mK \in \R_+^{N_S \times N_T}$ onto $\gU(\bm{a}) \cap \mathcal{B}_1(\xi)$ is the following problem.
     \begin{align}
         \min_{\mP \in \R_+^{N_S \times N_T}} \quad &\langle \mP, \log (\mP \oslash \mK) - \bm{1}\bm{1}^\top \rangle \\
         \text{s.t.} \quad &\forall i \in \integ{N_S}, \: \psi_{\KL}(\mP_{i:}) \leq \eta \\
@@ -55,7 +55,7 @@
 
     Hence 
     \begin{align}
-        \operatorname{Proj}^{\KL}_{\Pi(\bm{a}) \cap \mathcal{B}_{\KL}(\xi)}(\mathbf{K}) = \diag(\mathbf{\Lambda} \mathbf{1})^{-1} \mathbf{\Lambda} \quad \text{with} \quad \mathbf{\Lambda} = \exp{(\diag(\bm{1} + \bm{\gamma}^\star)^{-1} \log \mathbf{K})}
+        \operatorname{Proj}^{\KL}_{\gU(\bm{a}) \cap \mathcal{B}_{\KL}(\xi)}(\mathbf{K}) = \diag(\mathbf{\Lambda} \mathbf{1})^{-1} \mathbf{\Lambda} \quad \text{with} \quad \mathbf{\Lambda} = \exp{(\diag(\bm{1} + \bm{\gamma}^\star)^{-1} \log \mathbf{K})}
     \end{align}
     where the optimal dual variable $\bm{\gamma}^\star \bm{\geq} \bm{0}$ can be found using any unidimensional root search method.
 
@@ -79,7 +79,7 @@
     We now consider $\psi_{\alpha}(\vp) = \| \vp \|_{\alpha}^{\alpha}$ for $\alpha>1$ and associated Bregman divergence $D_{\alpha}$.
     We break down the $\ell_{\alpha}$ and marginal ($\ell_1$) projections to retrieve closed-form expressions.
 
-    \paragraph{Projection onto $\Pi(\bm{a})$.} The $D_\alpha$ projection of a matrix $\mK \in \R_+^{N_S \times N_T}$ onto $\Pi(\bm{a})$ amounts to
+    \paragraph{Projection onto $\gU(\bm{a})$.} The $D_\alpha$ projection of a matrix $\mK \in \R_+^{N_S \times N_T}$ onto $\gU(\bm{a})$ amounts to
     \begin{align}
         \min_{\mP} \quad &\frac{1}{\alpha} \left\langle \mP^{\odot \alpha}, \bm{1} \right\rangle - \left\langle \mP, \mK^{\odot (\alpha-1)} \right\rangle \\
         \text{s.t.} \quad &\mP \bm{1} = \bm{a} \\
@@ -103,7 +103,7 @@
     \end{align}
 Therefore we have
     \begin{align}
-        \text{for } \alpha>1, \quad \operatorname{Proj}^{D_{\alpha}}_{\Pi(\bm{a})}(\mK) = \left[\bm{\lambda}^\star \bm{1}^\top + \mK^{\odot(\alpha-1)}\right]_+^{\odot 1/(\alpha-1)} \:.
+        \text{for } \alpha>1, \quad \operatorname{Proj}^{D_{\alpha}}_{\gU(\bm{a})}(\mK) = \left[\bm{\lambda}^\star \bm{1}^\top + \mK^{\odot(\alpha-1)}\right]_+^{\odot 1/(\alpha-1)} \:.
     \end{align}
 
     \paragraph{Projection onto $\mathcal{B}_\alpha(\xi)$.} The $D_\alpha$ projection of a matrix $\mK \in \R_+^{N_S \times N_T}$ onto $\mathcal{B}_\alpha(\xi)$ reduces to
@@ -161,8 +161,8 @@ Therefore we have
     % \hug{not sparse, maybe useless}
 
     % Finally, we consider $\psi_{\alpha}(\vp) = - \| \vp \|_{\alpha}^{\alpha}$ for $\alpha<1$.
-    % \paragraph{Projection onto $\Pi(\bm{a})$.}
-    % The $D_\alpha$ projection of a matrix $\mK \in \R_+^{N_S \times N_T}$ onto $\Pi(\bm{a})$ amounts to
+    % \paragraph{Projection onto $\gU(\bm{a})$.}
+    % The $D_\alpha$ projection of a matrix $\mK \in \R_+^{N_S \times N_T}$ onto $\gU(\bm{a})$ amounts to
     % \begin{align}
     %     \min_{\mP \in \R_+^{N_S \times N_T}} &\left\langle \mP, \mK^{\odot (\alpha-1)} \right\rangle - \frac{1}{\alpha} \left\langle \mP^{\odot \alpha}, \bm{1} \right\rangle \\
     %     \text{s.t.} \quad &\mP \bm{1} = \bm{a} \:.
@@ -175,9 +175,9 @@ Therefore we have
 
 %     For the Euclidean case, we break down the projection into $\ell_2$ norm and marginal projections. Starting with the marginal projection, we have the following expression \citep{lorenz2021quadratically}    
 % \begin{equation}
-%     \operatorname{Proj}^{\ell_2}_{\Pi(\bm{a})}(\mathbf{K}) = [\bm{\lambda}^\star \bm{1}^\top + \mathbf{K}]_+
+%     \operatorname{Proj}^{\ell_2}_{\gU(\bm{a})}(\mathbf{K}) = [\bm{\lambda}^\star \bm{1}^\top + \mathbf{K}]_+
 % \end{equation}
-%     where $\bm{\lambda}^\star$ is such that $[\bm{\lambda}^\star \bm{1}^\top + \mathbf{K}]_+ \in \Pi(\bm{a})$.
+%     where $\bm{\lambda}^\star$ is such that $[\bm{\lambda}^\star \bm{1}^\top + \mathbf{K}]_+ \in \gU(\bm{a})$.
 
 %     Focusing on the $\ell_2$ norm we have the following result.
 %     \begin{prop}
@@ -225,13 +225,13 @@ Therefore we have
 \subsubsection{OT with Pointwise Constraints on Either Sources or Targets (OTARI-s and OTARI-t) : proof of \cref{prop:pcot}}\label{sec:proofs}
 
 \begin{proposition}
-    Let $(\bm{a}, \bm{b}, \xi)$ be such that $\Pi(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)$ has an interior point and let $\mP^\star$ solve
+    Let $(\bm{a}, \bm{b}, \xi)$ be such that $\gU(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)$ has an interior point and let $\mP^\star$ solve
     \begin{align}
-      \min_{\mP \in \Pi(\bm{a}, \bm{b})} \: \langle \mP, \mC \rangle \quad \text{s.t.} \quad  \mP \in \mathcal{B}_\psi(\xi) \:.
+      \min_{\mP \in \gU(\bm{a}, \bm{b})} \: \langle \mP, \mC \rangle \quad \text{s.t.} \quad  \mP \in \mathcal{B}_\psi(\xi) \:.
       \tag{OTARI-s}
   \end{align}
   Let $\bm{\varepsilon}^\star$ be the optimal dual variable associated with the constraint $\mP \in \mathcal{B}_\psi(\xi)$.
-  If $\bm{\varepsilon}^\star \bm{>} \bm{0}$, then it holds $\mP^\star = \operatorname{Proj}^{D_\psi}_{\Pi(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)}(\mK_\varepsilon)$ for any $0 < \varepsilon \leq \min_i{\varepsilon_i^\star}$. Moreover it holds $\mP^\star = \nabla \psi^* \left(\diag(\bm{\varepsilon}^\star)^{-1} (\mC - \bm{\lambda}^\star \oplus \bm{\mu}^\star) \right)$ where $(\bm{\lambda}^\star, \bm{\mu}^\star, \bm{\varepsilon}^\star)$ solve the following dual
+  If $\bm{\varepsilon}^\star \bm{>} \bm{0}$, then it holds $\mP^\star = \operatorname{Proj}^{D_\psi}_{\gU(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)}(\mK_\varepsilon)$ for any $0 < \varepsilon \leq \min_i{\varepsilon_i^\star}$. Moreover it holds $\mP^\star = \nabla \psi^* \left(\diag(\bm{\varepsilon}^\star)^{-1} (\mC - \bm{\lambda}^\star \oplus \bm{\mu}^\star) \right)$ where $(\bm{\lambda}^\star, \bm{\mu}^\star, \bm{\varepsilon}^\star)$ solve the following dual
   \begin{align}
     \max_{\bm{\lambda}, \bm{\mu}, \bm{\varepsilon} \bm{>} \bm{0}} \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle + \left\langle \bm{\varepsilon}, \psi^*\left(\diag(\bm{\varepsilon})^{-1} (\mC - \bm{\lambda} \oplus \bm{\mu}) \right) - \psi(\mathbf{e}_\xi) \bm{1}  \right\rangle \:.
     \tag{Dual-OTARI-s}
@@ -257,7 +257,7 @@ We end the proof by following the same reasoning as for \cref{prop:cot}, choosin
 
 The optimization problem \eqref{eq:pcOT} writes
 \begin{align}
-    \min_{\mP \in \Pi(\bm{a}, \bm{b})} \: \langle \mP, \mC \rangle \quad \text{s.t.} \quad  \mP \in \mathcal{B}_\psi(\xi) \:.
+    \min_{\mP \in \gU(\bm{a}, \bm{b})} \: \langle \mP, \mC \rangle \quad \text{s.t.} \quad  \mP \in \mathcal{B}_\psi(\xi) \:.
 \end{align}
 Introducing the dual variables $\bm{\lambda} \in \mathbb{R}^n$ and $\bm{\mu} \in \mathbb{R}^n$ for the marginals and $\bm{\varepsilon} \in \mathbb{R}_+^{n}$ for the constraint $\mP \in \mathcal{B}_\psi(\xi)$. The problem can be formulated as
 \begin{align}

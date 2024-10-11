@@ -73,6 +73,8 @@ Therefore $\mZ^{\star}$ is a PCA embedding of the data $\mX$ in the sense of \Cr
 \paragraph{Motivations for probabilistic models.}  
 The probabilistic formulations of DR methods offer significant flexibility by allowing for different distributional assumptions and the integration of side information through the incorporation of priors. A prominent example is Bayesian PCA, introduced by \cite{bishop1998bayesian}, which provides a fully Bayesian treatment of the model by placing a prior on the parameters of the distribution of $\mW$. Learning these parameters through empirical Bayes leads to a heuristic for automatically determining a meaningful dimensionality for the embedding space. Additionally, \cite{zhao2006probabilistic} employs a multivariate Student-t distribution to model noise in the data, while \cite{wang2012probabilistic} utilizes a Laplace distribution, resulting in robust formulations that are less sensitive to outliers.
 
+\vspace{0.5cm}
 \begin{prob}{Extending the scope of latent variable DR models}\label{prob:probabilistic_models}
     Given the enhanced flexibility and various insights provided by latent variable models, it is a natural step to extend the probabilistic framework to encompass a wider range of DR methods. Ideally, this extension would integrate all the DR methods outlined in \Cref{sec:background_dr}. This is exactly the objective of the probabilistic graph coupling model introduced in \Cref{chapter:GraphCoupling}.
 \end{prob}
+\vspace{0.5cm}

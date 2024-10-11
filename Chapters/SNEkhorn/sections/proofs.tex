@@ -2,49 +2,49 @@
 
 \section{Proofs}\label{sec:proofs}
 
-\subsection{Euclidean Projection onto $\mathcal{S}$}\label{sec:sym_proj}
+% \subsection{Euclidean Projection onto $\mathcal{S}$}\label{sec:sym_proj}
 
-% \paragraph{Euclidean projection onto $\mathcal{S}$.}
-It amounts to the following problem.
-\begin{align}
-    \argmin_{\Pb \in \mathcal{S}} \: &\| \Pb - \K \|_2^2 \:.
-\end{align}
-With $\W \in \R^{n \times n}$, the Lagrangian takes the form: 
-\begin{equation}
-\mathcal{L}(\Pb, \W) = \| \Pb - \K \|_2^2 +\langle \W, \Pb -\Pb^{\top} \rangle \:.
-\end{equation}
-Cancelling the gradient of $\mathcal{L}$ with respect to $\Pb$ gives $2(\Pb^\star - \K) + \W - \W^\top = \bm{0}$. Thus $\Pb^\star = \K + \frac{1}{2} \left(\W^\top - \W \right)$. Using the symmetry constraint on $\Pb^\star$ yields $\Pb^\star = \frac{1}{2} \left(\K + \K^\top \right)$.
-Hence we have:
-\begin{equation}
-\argmin_{\Pb \in \mathcal{S}} \: \| \Pb -  \K \|_2^2 = \frac{1}{2} \left(\K + \K^\top \right) \:.
-\end{equation}
+% % \paragraph{Euclidean projection onto $\mathcal{S}$.}
+% It amounts to the following problem.
+% \begin{align}
+%     \argmin_{\Pb \in \mathcal{S}} \: &\| \Pb - \K \|_2^2 \:.
+% \end{align}
+% With $\W \in \R^{n \times n}$, the Lagrangian takes the form: 
+% \begin{equation}
+% \mathcal{L}(\Pb, \W) = \| \Pb - \K \|_2^2 +\langle \W, \Pb -\Pb^{\top} \rangle \:.
+% \end{equation}
+% Cancelling the gradient of $\mathcal{L}$ with respect to $\Pb$ gives $2(\Pb^\star - \K) + \W - \W^\top = \bm{0}$. Thus $\Pb^\star = \K + \frac{1}{2} \left(\W^\top - \W \right)$. Using the symmetry constraint on $\Pb^\star$ yields $\Pb^\star = \frac{1}{2} \left(\K + \K^\top \right)$.
+% Hence we have:
+% \begin{equation}
+% \argmin_{\Pb \in \mathcal{S}} \: \| \Pb -  \K \|_2^2 = \frac{1}{2} \left(\K + \K^\top \right) \:.
+% \end{equation}
 
-\subsection{From Symmetric Entropy-Constrained OT to Sinkhorn Iterations}\label{sec:proof_sinkhorn}
+% \subsection{From Symmetric Entropy-Constrained OT to Sinkhorn Iterations}\label{sec:proof_sinkhorn}
 
-In this section, we derive Sinkhorn iterations from the problem (\ref{eq:entropy_constrained_OT}). Let $\C \in \mathcal{D}$. We start by making the constraints explicit.
-\begin{align}
-    \min_{\Pb \in \R_+^{n \times n}} \quad &\langle \Pb, \C \rangle \\
-    \text{s.t.} \quad &\sum_{i \in \integ{n}} \operatorname{H}(\Pb_{i:}) \geq \eta \\
-    & \Pb \bm{1} = \bm{1}, \quad \Pb = \Pb^\top \:.
-\end{align}
-For the above convex problem the Lagrangian writes, where $\nu \in \mathbb{R}_+$, $\mathbf{f} \in \mathbb{R}^n$ and $\bm{\Gamma} \in \mathbb{R}^{n \times n}$:
-\begin{align}
-    \mathcal{L}(\Pb, \mathbf{f}, \nu, \bm{\Gamma}) &= \langle \Pb, \C \rangle + \Big\langle \nu, \eta - \sum_{i \in \integ{n}} \operatorname{H}(\Pb_i) \Big\rangle + 2\langle \mathbf{f}, \bm{1} - \Pb \bm{1} \rangle + \big\langle \bm{\Gamma}, \Pb - \Pb^\top \big\rangle \:.
-\end{align}
-Strong duality holds and the first order KKT condition gives for the optimal primal $\Pb^\star$ and dual $(\nu^\star, \mathbf{f}^\star, \bm{\Gamma}^\star)$ variables: 
-\begin{align}
-    \nabla_{\Pb} \mathcal{L}(\Pb^\star, \mathbf{f}^\star, \nu^\star, \bm{\Gamma}^\star) &= \C + \nu^\star \log{\Pb^\star} - 2\mathbf{f}^\star \bm{1}^\top + \bm{\Gamma}^\star - \bm{\Gamma}^{\star\top} = \bm{0} \:.
-\end{align}
-Since $\Pb^\star, \C \in \mathcal{S}$ we have $\bm{\Gamma}^\star - \bm{\Gamma}^{\star\top} = \mathbf{f}^\star \bm{1}^\top - \bm{1}\mathbf{f}^{\star \top}$. Hence $\C + \nu^\star \log{\Pb^\star} - \mathbf{f}^\star \oplus \mathbf{f}^\star = \bm{0}$. Suppose that $\nu^\star = 0$ then the previous reasoning implies that $\forall (i,j), C_{ij} = f_i^\star + f_j^\star$. Using that $\C \in \mathcal{D}$ we have $C_{ii} = C_{jj} = 0$ thus $\forall i,  f^\star_i = 0$ and thus this would imply that $\C = 0$ which is not allowed by hypothesis. Therefore $\nu^\star \neq 0$ and the entropy constraint is saturated at the optimum by complementary slackness. Isolating $\Pb^\star$ then yields:
-\begin{align}
-    \Pb^{\star} &= \exp{\left( (\mathbf{f}^\star \oplus \mathbf{f}^{\star} - \C) / \nu^\star \right)} \:.
-\end{align}
-$\Pb^\star$ must be primal feasible in particular $\Pb^\star \bm{1} = \bm{1}$. This constraint gives us the Sinkhorn fixed point relation for $\mathbf{f}^\star$:
-\begin{align}
-    \forall i \in \integ{n}, \quad [\mathbf{f}^\star]_i = - \nu^\star \operatorname{LSE} \big((\mathbf{f}^\star - \C_{:i}) / \nu^\star \big)\,,
-\end{align}
-where for a vector $\bm{\alpha}$, we use the notation
-$\operatorname{LSE}(\bm{\alpha}) = \log \sum_{k} \exp (\alpha_k)$.
+% In this section, we derive Sinkhorn iterations from the problem (\ref{eq:entropy_constrained_OT}). Let $\C \in \mathcal{D}$. We start by making the constraints explicit.
+% \begin{align}
+%     \min_{\Pb \in \R_+^{n \times n}} \quad &\langle \Pb, \C \rangle \\
+%     \text{s.t.} \quad &\sum_{i \in \integ{n}} \operatorname{H}(\Pb_{i:}) \geq \eta \\
+%     & \Pb \bm{1} = \bm{1}, \quad \Pb = \Pb^\top \:.
+% \end{align}
+% For the above convex problem the Lagrangian writes, where $\nu \in \mathbb{R}_+$, $\mathbf{f} \in \mathbb{R}^n$ and $\bm{\Gamma} \in \mathbb{R}^{n \times n}$:
+% \begin{align}
+%     \mathcal{L}(\Pb, \mathbf{f}, \nu, \bm{\Gamma}) &= \langle \Pb, \C \rangle + \Big\langle \nu, \eta - \sum_{i \in \integ{n}} \operatorname{H}(\Pb_i) \Big\rangle + 2\langle \mathbf{f}, \bm{1} - \Pb \bm{1} \rangle + \big\langle \bm{\Gamma}, \Pb - \Pb^\top \big\rangle \:.
+% \end{align}
+% Strong duality holds and the first order KKT condition gives for the optimal primal $\Pb^\star$ and dual $(\nu^\star, \mathbf{f}^\star, \bm{\Gamma}^\star)$ variables: 
+% \begin{align}
+%     \nabla_{\Pb} \mathcal{L}(\Pb^\star, \mathbf{f}^\star, \nu^\star, \bm{\Gamma}^\star) &= \C + \nu^\star \log{\Pb^\star} - 2\mathbf{f}^\star \bm{1}^\top + \bm{\Gamma}^\star - \bm{\Gamma}^{\star\top} = \bm{0} \:.
+% \end{align}
+% Since $\Pb^\star, \C \in \mathcal{S}$ we have $\bm{\Gamma}^\star - \bm{\Gamma}^{\star\top} = \mathbf{f}^\star \bm{1}^\top - \bm{1}\mathbf{f}^{\star \top}$. Hence $\C + \nu^\star \log{\Pb^\star} - \mathbf{f}^\star \oplus \mathbf{f}^\star = \bm{0}$. Suppose that $\nu^\star = 0$ then the previous reasoning implies that $\forall (i,j), C_{ij} = f_i^\star + f_j^\star$. Using that $\C \in \mathcal{D}$ we have $C_{ii} = C_{jj} = 0$ thus $\forall i,  f^\star_i = 0$ and thus this would imply that $\C = 0$ which is not allowed by hypothesis. Therefore $\nu^\star \neq 0$ and the entropy constraint is saturated at the optimum by complementary slackness. Isolating $\Pb^\star$ then yields:
+% \begin{align}
+%     \Pb^{\star} &= \exp{\left( (\mathbf{f}^\star \oplus \mathbf{f}^{\star} - \C) / \nu^\star \right)} \:.
+% \end{align}
+% $\Pb^\star$ must be primal feasible in particular $\Pb^\star \bm{1} = \bm{1}$. This constraint gives us the Sinkhorn fixed point relation for $\mathbf{f}^\star$:
+% \begin{align}
+%     \forall i \in \integ{n}, \quad [\mathbf{f}^\star]_i = - \nu^\star \operatorname{LSE} \big((\mathbf{f}^\star - \C_{:i}) / \nu^\star \big)\,,
+% \end{align}
+% where for a vector $\bm{\alpha}$, we use the notation
+% $\operatorname{LSE}(\bm{\alpha}) = \log \sum_{k} \exp (\alpha_k)$.
 
 
 

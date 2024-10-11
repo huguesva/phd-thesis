@@ -123,7 +123,7 @@ To the best of our knowledge, it is the first time such a link is uncovered betw
 
 
 \paragraph{Graph coupling in self-supervised learning.}
-The graph coupling approach introduced here can be applied beyond the scope of dimensionality reduction. \citet{tan2023contrastive} built on top of our model to derive a probabilistic model for self-supervised learning methods such as SimCLR \citep{chen2020simple} and CLIP \citep{radford2021learning}. In their case, the explicit kernel $\mK_{X}$ between input data points is replaced by a predefined similarity graph that encodes the augmentation process.
+Interestingly, the graph coupling approach introduced here can be applied beyond the scope of dimensionality reduction. \citet{tan2023contrastive} built on top of our model to derive a probabilistic model for self-supervised learning methods such as SimCLR \citep{chen2020simple} and CLIP \citep{radford2021learning}. In their case, the explicit kernel $\mK_{X}$ between input data points is replaced by a predefined similarity graph that encodes the augmentation process.
 
 \paragraph{Perspectives.}
 Our work offers many perspectives, among which the possibility to enrich the probabilistic model with more suited graph priors. Currently considered priors are simply the ones that are conjugate to the MRFs thus they are mostly designed to yield a tractable coupling objective. However they may not be optimal and could be modified to capture targeted features, \textit{e.g.}\ communities, in the input data, and give adapted representations in the latent space. The graph coupling approach could also be extended to more general latent structures governing the joint distribution of observations.

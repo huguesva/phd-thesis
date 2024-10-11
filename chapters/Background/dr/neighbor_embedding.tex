@@ -32,8 +32,10 @@ where $\varepsilon > 0$ is a bandwidth parameter. The exponent $\mathrm{r}$ in t
     To emphasize neighborhood relationships, it is common to set the diagonal elements of the affinity matrix to zero by imposing the constraint $[\simiX]_{ii} = 0$. This is similar to setting $[\mC_{\mX}]_{ii} = +\infty$. In practice, applying this constraint often enhances the results in dimensionality reduction tasks.
 \end{remark}
 
+Ideally, one should select a different bandwidth for each point to accommodate varying sampling densities and noise levels. One approach is to compute the bandwidth of a point based on the distance from its $k$-th nearest neighbor \citep{zelnik2004self}. However, this method fails to consider the entire distribution of distances.
+
 \paragraph{Entropic Affinities (EAs).}
-Crucially, to account for varying noise levels in the data, the authors of SNE propose to use an entropic affinity matrix, denoted $\simiX^{\mathrm{e}}$ for \emph{entropic}, instead of $\simiX^{\mathrm{r}}$. The core principle of EAs \citep{hinton2002stochastic} is to use \emph{adaptive} kernel bandwidths $(\varepsilon^\star_i)_{i \in \integ{N}}$ to better capture detailed structures in the data, as opposed to using constant bandwidths. The benefits of adaptive bandwidths have also been highlighted in other studies, such as \citep{van2018recovering} and \citep{zelnik2004self}. Adaptive bandwidths adjust distances to account for the varying density in different regions of the dataset.
+To account for varying noise levels in the data, the authors of SNE propose to use an entropic affinity matrix, denoted $\simiX^{\mathrm{e}}$ for \emph{entropic}, instead of $\simiX^{\mathrm{r}}$. The core principle of EAs \citep{hinton2002stochastic} is to use \emph{adaptive} kernel bandwidths $(\varepsilon^\star_i)_{i \in \integ{N}}$ to better capture detailed structures in the data, as opposed to using constant bandwidths. The benefits of adaptive bandwidths have also been highlighted in other studies, such as \citep{van2018recovering} and \citep{zelnik2004self}. Adaptive bandwidths adjust distances to account for the varying density in different regions of the dataset.
 
 Entropic affinities rely on adaptive bandwidths to control the entropy of each row of the affinity. More precisely, given $\xi \in \integ{N-1}$, the goal of EAs is to build a Gaussian Markov chain transition matrix $\simiX^{\mathrm{e}}$ with prescribed entropy as
 \begin{equation}
@@ -43,6 +45,7 @@ Entropic affinities rely on adaptive bandwidths to control the entropy of each r
 \end{split}\tag{EA}
 \end{equation}
 The hyperparameter $\xi$, which is also known as \emph{perplexity}, can be interpreted as the effective number of neighbors for each data point. Indeed, a perplexity of $\xi$ means that each row of $\simiX^{\mathrm{e}}$ (which is a discrete probability since $\simiX^{\mathrm{e}}$ is row-wise stochastic) has the same entropy as a uniform distribution over $\xi$ neighbors. Therefore, it provides the practitioner with an interpretable parameter specifying which scale of dependencies the affinity matrix should faithfully capture. In practice, a root-finding algorithm is used to find the bandwidth parameters $(\varepsilon_i^\star)_{i \in \integ{N}}$ that satisfy the constraints \citep{vladymyrov2013entropic}. Hereafter, with a slight abuse of language, we call $e^{\operatorname{H}([\simiX]_{i:})-1}$ the perplexity of the datapoint $i$ (associated with the affinity $\simiX$).
+
 
 \paragraph{SNE objective.}
 With this in place, SNE focuses on solving

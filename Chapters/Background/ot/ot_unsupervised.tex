@@ -1,55 +1,65 @@
-\subsection{OT for unsupervised representation learning}
+\subsection{OT for Unsupervised Representation Learning}
 
-Interestingly, many common unsupervised learning techniques can be framed using optimal transport (OT). We will illustrate the existing connections and highlight the limitations, which will be addressed in \Cref{chapter:DistR}. Throughout this section, we denote the empirical data measure as $\nu = \frac{1}{N} \sum_i \delta_{\vx_i}$, where $(\vx_1, \ldots, \vx_N)$ are the input data samples.
+Interestingly, many common unsupervised learning techniques can be framed as an OT problem. We will illustrate the existing connections and highlight the limitations, which will be addressed in \Cref{chapter:DistR}. Throughout this section, we denote the empirical data measure as $\nu = \frac{1}{N} \sum_i \delta_{\vx_i}$, where $(\vx_1, \ldots, \vx_N)$ are the input data samples.
 
 \subsubsection{Projection Tasks are Wasserstein Variational Problems}
 
-In this section, we will demonstrate that both PCA and k-means can be reformulated as a Wasserstein variational problem, where the objective is to find the distribution of the projected data that is closest in the sense of the Wasserstein distance. This result is inspired by \citep{Canas12}.
+In this section, we present a result by \citep{Canas12} showing that both PCA and k-means can be reformulated as a Wasserstein variational problem, where the objective is to find the distribution of the projected data that is closest in the sense of the Wasserstein distance. 
 
-We consider a cost function $c : \mathcal{X} \times \mathcal{X} \to \R_+$ and introduce $P_{\gU}$, the projection operator onto the space $\gU$, such that $P_{\gU} \circ P_{\gU} = P_{\gU}$ and $c(\vx, P_{\gU}(\vx)) \leq c(\vx, P_{\gU}(\vx'))$ for any $(\vx, \vx') \in \gU^2$. For k-means, $\gU$ is the set of centroids $\{\vm_1, \ldots, \vm_K\}$, and $P_{\gU}(\vx)$ is the closest centroid to $\vx$. For PCA, $\gU$ is the linear subspace spanned by the principal components of the data, and $P_{\gU}(\vx)$ is the projection of $\vx$ onto this subspace (see \Cref{memo:PCA}).
+We consider a cost function $c : \mathcal{X} \times \mathcal{X} \to \R_+$ and introduce $P_{\gV}$, the projection operator onto the space $\gV$, such that $P_{\gV} \circ P_{\gV} = P_{\gV}$ and $c(\vx, P_{\gV}(\vx)) \leq c(\vx, P_{\gV}(\vx'))$ for any $(\vx, \vx') \in \gX^2$. For k-means, $\gV$ is the set of centroids $\{\vm_1, \ldots, \vm_K\}$, and $P_{\gV}(\vx)$ is the closest centroid to $\vx$. For PCA, $\gV$ is the linear subspace spanned by the principal components of the data, and $P_{\gV}(\vx)$ is the projection of $\vx$ onto this subspace (see \Cref{memo:PCA}). Both methods amount to minimizing a criterion of the form $\frac{1}{N} \sum_{i=1}^N c(\vx_i, P_{\gV}(\vx_i))$ where $c$ is the squared Euclidean distance.
 
-Both methods amount to minimizing a criterion of the form $\frac{1}{N} \sum_{i=1}^N c(\vx_i, P_{\gU}(\vx_i))$ where $c$ is the squared Euclidean distance.
+Interestingly, one can show that this objective can be reformulated as a Wasserstein variational problem, where the goal is to make the projected data measure as close as possible to the empirical data measure. It is similar in essence to the \emph{Wasserstein Generative Adversarial Network} \citep{arjovsky2017wasserstein} which is a popular model for generative modelling where the map $P_{\gV}$ is a parameterized by a neural network.
 
-Interestingly, one can show that this objective can be reformulated as a Wasserstein variational problem, where the goal is to make the projected data measure as close as possible to the empirical data measure in terms of the Wasserstein distance. We provide a detailed proof in the discrete setting. This derivation is similar to those found in \citep{Canas12} and \citep{vayer2023controlling}.
+We provide a detailed proof in the discrete setting. This derivation is similar to those found in \citep{Canas12} and \citep{vayer2023controlling}.
 
 \begin{lemma}
     For the operator $W$ defined for discrete measures in \Cref{eq:Wasserstein}, one has:
     \begin{align}
-        W_c(\nu, P_{\gU} \# \nu) = \frac{1}{N} \sum_{i \in \integ{N}} c(\mathbf{x}_i, P_{\gU}(\mathbf{x}_i)) \:.
+        W_c(\nu, P_{\gV} \# \nu) = \frac{1}{N} \sum_{i \in \integ{N}} c(\mathbf{x}_i, P_{\gV}(\mathbf{x}_i)) \:.
     \end{align}
 \end{lemma}
 
 \begin{proof}
-Recall that $\nu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\vx_i}$ is the empirical data measure. Then the distribution of the data projected onto the space $\gU$ by $P_{\gU}$ reads
+Recall that $\nu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\vx_i}$ is the empirical data measure. Then the distribution of the data projected onto the space $\gV$ by $P_{\gV}$ reads
 \begin{align}
-    P_{\gU} \# \nu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{P_{\gU}(\vx_{i})} = \sum_{j \in \integ{n}} h_j \delta_{\vy_{j}}
+    P_{\gV} \# \nu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{P_{\gV}(\vx_{i})} = \sum_{j \in \integ{n}} h_j \delta_{\vy_{j}}
 \end{align} 
-where $\vh \in \Sigma_n$ and $\{\vy_j \}_{j \in \integ{n}} = \text{supp}\left( \{P_{\gU}(\vx_{i}) \}_{i \in \integ{N}} \right)$. We define the cost matrix $\mC = \left( c(\vx_i, \vy_j) \right)_{ij} \in \R_+^{N \times n}$ and we denote by $\mT^\star \coloneqq \argmin_{\mT \in \gU(\frac{1}{N} \one_N, \vh)} \: \langle \mT, \mC \rangle$.
+where $\vh \in \Sigma_n$ and $\{\vy_j \}_{j \in \integ{n}} = \text{supp}\left( \{P_{\gV}(\vx_{i}) \}_{i \in \integ{N}} \right)$. We define the cost matrix $\mC = \left( c(\vx_i, \vy_j) \right)_{ij} \in \R_+^{N \times n}$ and we denote by $\mT^\star \coloneqq \argmin_{\mT \in \gV(\frac{1}{N} \one_N, \vh)} \: \langle \mT, \mC \rangle$.
 
-We define $\mathbf{\Gamma} = \left( \Gamma_{ij} \right)_{ij} \in \R_+^{N \times n}$ such that $\Gamma_{ij} = \frac{1}{N}$ if $\vy_j = P_{\gU}(\vx_i)$ and $\Gamma_{ij} = 0$ otherwise.
-Then, given that $\mathbf{\Gamma} \in \gU(\frac{1}{N} \one_N, \vh)$ we have that
+We define $\mathbf{\Gamma} = \left( \Gamma_{ij} \right)_{ij} \in \R_+^{N \times n}$ such that $\Gamma_{ij} = \frac{1}{N}$ if $\vy_j = P_{\gV}(\vx_i)$ and $\Gamma_{ij} = 0$ otherwise.
+Then, given that $\mathbf{\Gamma} \in \gV(\frac{1}{N} \one_N, \vh)$ we have that
 \begin{align}
-    \langle \mT^\star, \mC \rangle \leq \langle \mC, \mathbf{\Gamma} \rangle = \frac{1}{N} \sum_{i \in \integ{N}} c(\mathbf{x}_i, P_{\gU}(\mathbf{x}_i)) \:.
+    \langle \mT^\star, \mC \rangle \leq \langle \mC, \mathbf{\Gamma} \rangle = \frac{1}{N} \sum_{i \in \integ{N}} c(\mathbf{x}_i, P_{\gV}(\mathbf{x}_i)) \:.
 \end{align}
 
-Conversely, since $\{\vy_j \}_{j \in \integ{n}} = \text{supp}\left( \{P_{\gU}(\vx_{i}) \}_{i \in \integ{N}} \right)$ we have in particular that for any $i \in \integ{n}$, $\vy_i \in \gU$. Thus by definition of $P_{\gU}$ we have for any $(i,j)$ that $c(\vx_i, \vy_j) \geq c(\vx_i, P_{\gU}(\vx_i))$ and therefore
+Conversely, since $\{\vy_j \}_{j \in \integ{n}} = \text{supp}\left( \{P_{\gV}(\vx_{i}) \}_{i \in \integ{N}} \right)$ we have in particular that for any $i \in \integ{n}$, $\vy_i \in \gV$. Thus by definition of $P_{\gV}$ we have for any $(i,j)$ that $c(\vx_i, \vy_j) \geq c(\vx_i, P_{\gV}(\vx_i))$ and therefore
 \begin{align}
-    \langle \mT^\star, \mC \rangle = \sum_{ij} c(\vx_i, \vy_j) T^\star_{ij} \geq \sum_{ij} c(\vx_i, P_{\gU}(\vx_i)) T^\star_{ij} = \sum_{i} c(\vx_i, P_{\gU}(\vx_i)) \sum_j T^\star_{ij} \:. 
+    \langle \mT^\star, \mC \rangle = \sum_{ij} c(\vx_i, \vy_j) T^\star_{ij} \geq \sum_{ij} c(\vx_i, P_{\gV}(\vx_i)) T^\star_{ij} = \sum_{i} c(\vx_i, P_{\gV}(\vx_i)) \sum_j T^\star_{ij} \:. 
 \end{align}
-Since $\mT^\star \in \gU(\frac{1}{N} \one_N, \vh)$, we have that $\sum_j T^\star_{ij} = \frac{1}{N}$ for all $i \in \integ{N}$, which implies the other inequality.
+Since $\mT^\star \in \gV(\frac{1}{N} \one_N, \vh)$, we have that $\sum_j T^\star_{ij} = \frac{1}{N}$ for all $i \in \integ{N}$, which implies the other inequality.
 
 \end{proof}
 
-This projection in the Wasserstein sense can be understood as a barycenter over a single measure \citep{agueh2011barycenters}. The algorithmic resolution, similar to the computation of barycenters, involves a block coordinate strategy where one alternates between optimizing the coupling $\mT$, thus computing the Wasserstein distance for a fixed $\gU$, and updating $\gU$ \citep{cuturi2014fast}. 
+This projection in the Wasserstein sense can be understood as a barycenter over a single measure \citep{agueh2011barycenters}. The algorithmic resolution, similar to the computation of barycenters, involves a block coordinate strategy where one alternates between optimizing the coupling $\mT$, thus computing the Wasserstein distance for a fixed $\gV$, and updating $\gV$ \citep{cuturi2014fast}. 
 
-Note that more general forms of $\gU$ and $P_{\gU}$ can be considered to extend beyond PCA or k-means. Along the same lines, \citep{sandler2011nonnegative} proposed the Wasserstein non-negative matrix factorization model, while \citep{schmitz2018wasserstein} suggested encoding $P_{\gU}$ as a Wasserstein barycenter of learned basis histograms.
+Note that more general forms of $\gV$ and $P_{\gV}$ can be considered to extend beyond PCA or k-means. Along the same lines, \citep{sandler2011nonnegative} proposed the Wasserstein non-negative matrix factorization model, while \citep{schmitz2018wasserstein} suggested encoding $P_{\gV}$ as a Wasserstein barycenter of learned basis histograms.
 
-Valuable extensions can also be derived by altering the constraints of OT problems, leading to balanced clustering \citep{de2023balanced}, or by introducing regularization (e.g., entropy), resulting in soft clustering formulations \citep{ferraro2020soft}.
-
-\subsubsection{Gromov-Wasserstein OT for unsupervised learning}
+Valuable extensions can also be derived by altering the constraints of OT problems, leading to balanced clustering \citep{de2023balanced}, or by introducing regularization (e.g., entropy), resulting in soft clustering formulations \citep{ferraro2020soft}. Interestingly, in the context of PCA, \cite{collas2023entropic} demonstrated that by varying the entropic penalty in the OT problem, it is possible to interpolate between the PCA components, transitioning from maximum to minimum variance subspaces.
 
 
+\subsubsection{Gromov-Wasserstein OT for Unsupervised Learning}
 
-\begin{prob}{Extending the scope of OT for unsupervised learning}\label{prob:ot_unsupervised}
-    This is exactly the objective of the probabilistic graph coupling model introduced in \Cref{chapter:DistR}.
+A natural question that arises is whether we can go beyond linear models and frame more general representation learning formulations as OT problems.
+
+The Gromov-Wasserstein (GW) discrepancy, which operates on affinity matrices, seems particularly relevant for the material introduced in \Cref{sec:background_dr}. Existing works have primarily focused on clustering using GW. Notably, \citep{xu2019scalable} demonstrated that transporting an affinity matrix defined on the input data to a template isolated affinity of $K$ nodes (\ie considering $\mQ = \mI_K$) leads to a competitive clustering algorithm, where the (potentially soft) cluster assignments are provided by the transport plan. 
+
+Building on this, some recent works have uncovered interesting connections with spectral clustering. \citep{chowdhury2021generalized} showed that, when using the graph Laplacian as the input similarity and choosing $K=2$ clusters, the partition provided by the GW OT plan aligns with the Fiedler partition, which is determined by the signs of the eigenvector associated with the smallest positive eigenvalue of the Laplacian. In a similar vein, \citep{chen2023gromov} derived an upper bound for the GW loss in the same clustering context. In the semi-relaxed context, the latter is minimized by a coupling matrix given by the associated kernel k-means solution, where the kernel corresponds to the input affinity. These intriguing connections suggest that GW OT could be applied to model a broader class of unsupervised representation learning methods.
+
+
+\vspace{0.5cm}
+\begin{prob}{Extending the scope of OT for Unsupervised Representation Learning}\label{prob:ot_unsupervised}
+    We have just seen that framing unsupervised learning tasks as OT problems is appealing, as it provides the flexibility to express both clustering and dimensionality reduction methods using the same variational formulation on measures. Unfortunately, most current formulations are limited to linear models. Ideally, we would like to encompass all affinity-based methods from \Cref{sec:background_dr} within the same distributional framework. This is precisely the objective of \Cref{chapter:DistR}, which introduces a new framework called \emph{Distributional Reduction}.
 \end{prob}
+\vspace{0.5cm}
+
+

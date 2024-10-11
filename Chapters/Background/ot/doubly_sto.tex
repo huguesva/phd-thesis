@@ -1,4 +1,18 @@
-\section{Enhancing the Ground Metric with Affinities}
+\subsection{Symmetric Optimal Transport for Normalizing Affinity Matrices}\label{sec:doubly_sto}
+
+In this section, we explore an unconventional formulation of OT, where the input measure is transported onto... itself! We call this problem \emph{symmetric} or \emph{self} optimal transport. An interesting initial observation is that the unregularized OT problem in this setting, as defined in \Cref{eq:OT}, has a trivial solution: the identity coupling, which assigns all the mass of each point to itself. Since the cost matrix $\C_{\X}$ is zero along the diagonal, this coupling results in a total transport cost of zero.
+
+In some applications, the smoothing effect induced by the regularization has a primary importance on its own. A key example is the construction of doubly stochastic affinity matrices for clustering and dimensionality reduction \citep{landa2021doubly,Zass}, where smoothing enables connecting to neighbor points.
+
+Doubly stochastic (DS) affinities are non-negative matrices whose rows and columns have unit $\ell_1$ norm. 
+
+\paragraph{Benefits of the doubly stochastic normalization.}
+In many applications, it has been demonstrated that DS affinity normalization (\ie determining the nearest DS matrix to a given affinity matrix) offers numerous benefits. First, it can be seen as a relaxation of k-means \citep{zass2005unifying} and it is well-established that it enhances spectral clustering performances \citep{Ding_understand,Zass,beauchemin2015affinity}. Additionally, DS matrices present the benefit of being invariant to the various Laplacian normalizations \citep{von2007tutorial}. Recent observations indicate that the DS projection of the Gaussian kernel under the $\KL$ geometry is more resilient to heteroscedastic noise compared to its stochastic counterpart \citep{landa2021doubly}. It also offers a more natural analog to the heat kernel \citep{marshall2019manifold}.
+These properties have led to a growing interest in DS affinities, with their use expanding to various applications such as smoothing filters \citep{Milanfar}, subspace clustering \citep{lim2020doubly} and transformers \citep{sander2022sinkformers}.
+
+
+
+
 
 \hva{
 TO DO:
@@ -6,23 +20,6 @@ TO DO:
     \item liens clustering spectral - doubly stochastic (zass sashua).
 \end{itemize}   
 }
-
-A common choice is to use a kernel (\eg Gaussian) derived from a distance matrix normalized by a bandwidth parameter that usually has a large influence on the outcome of the algorithm. 
-Indeed, excessively small kernel bandwidth can result in %points \nc{points ?} 
-solely capturing the positions of closest neighbors, at the expense of large-scale dependencies. Inversely, setting too large a bandwidth blurs information about close-range pairwise relations. 
-
-Ideally, one should select a different bandwidth for each point to accommodate varying sampling densities and noise levels. One approach is to compute the bandwidth of a point based on the distance from its $k$-th nearest neighbor \citep{zelnik2004self}. However, this method fails to consider the entire distribution of distances.
-In general, selecting appropriate kernel bandwidths can be a laborious task, and many practitioners resort to greedy search methods. This can be limiting in some settings, particularly when dealing with large sample sizes.
-
-\subsection{Affinity via Symmetric OT}\label{sec:affinity_sym_ot}
-
-\paragraph{Doubly Stochastic Affinities.}
-Doubly stochastic (DS) affinities are non-negative matrices whose rows and columns have unit $\ell_1$ norm. 
-In many applications, it has been demonstrated that DS affinity normalization (\ie determining the nearest DS matrix to a given affinity matrix) offers numerous benefits. First, it can be seen as a relaxation of k-means \citep{zass2005unifying} and it is well-established that it enhances spectral clustering performances \citep{Ding_understand,Zass,beauchemin2015affinity}. Additionally, DS matrices present the benefit of being invariant to the various Laplacian normalizations \citep{von2007tutorial}. Recent observations indicate that the DS projection of the Gaussian kernel under the $\KL$ geometry is more resilient to heteroscedastic noise compared to its stochastic counterpart \citep{landa2021doubly}. It also offers a more natural analog to the heat kernel \citep{marshall2019manifold}.
-These properties have led to a growing interest in DS affinities, with their use expanding to various applications such as smoothing filters \citep{Milanfar}, subspace clustering \citep{lim2020doubly} and transformers \citep{sander2022sinkformers}.
-%attention mechanisms 
-
-\subsection{From Symmetric Entropy-Constrained OT to Sinkhorn Iterations}\label{sec:proof_sinkhorn}
 
 \paragraph{Symmetric Entropy-Constrained Optimal Transport.} Entropy-regularized
 OT \citep{peyre2019computational} and its connection to affinity
@@ -138,20 +135,8 @@ where for a vector $\bm{\alpha}$, we use the notation
 $\operatorname{LSE}(\bm{\alpha}) = \log \sum_{k} \exp (\alpha_k)$.
 \end{proof}
 
-
-\subsection{Entropic Affinities}
-
-\paragraph{Entropic Affinities and SNE/t-SNE.}
-Entropic affinities (EAs) were first introduced in the
-seminal paper \emph{Stochastic Neighbor Embedding} (SNE) 
-\citep{hinton2002stochastic}. It consists in normalizing each row $i$ of a distance matrix by a
-bandwidth parameter $\varepsilon_i$ such that the distribution associated with each row of the corresponding stochastic (\ie row-normalized) Gaussian affinity has a fixed entropy. The value of this entropy, whose exponential is called
-the \emph{perplexity}, is then the only hyperparameter left to tune and has
-an intuitive interpretation as the number of effective neighbors of each point \citep{vladymyrov2013entropic}.
-EAs are notoriously used to encode pairwise relations in a high-dimensional space for the DR algorithm t-SNE \citep{van2008visualizing}, among other DR methods including \citep{carreira2010elastic}. t-SNE is increasingly popular in many applied fields \citep{kobak2019art,
-melit2020unsupervised} mostly due to its ability to represent clusters in the data \citep{linderman2019clustering, JMLR:v23:21-0524}. Nonetheless, one major flaw of EAs is that they are inherently directed and often require post-processing symmetrization.
-
-
+\vspace{0.5cm}
 \begin{prob}{Construction of adaptive affinities}
     aa
 \end{prob}
+\vspace{0.5cm}
