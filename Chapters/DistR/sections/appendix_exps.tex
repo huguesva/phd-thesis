@@ -184,7 +184,7 @@ In \Cref{tab:coot_scores}, we display the homogeneity values obtained with COOT 
 
 \subsection{Complete scores}\label{sec:full_sensitivity}
 
-We complete the results shown in \Cref{sec:exps} by providing the scores obtained on all datasets and models. Scores are plotted in \Cref{fig:sensitivity_sne} for the t-SNE model and in \Cref{fig:sensitivity_ip} for the PCA model. 
+We complete the results shown in \Cref{sec:exps_distr} by providing the scores obtained on all datasets and models. Scores are plotted in \Cref{fig:sensitivity_sne} for the t-SNE model and in \Cref{fig:sensitivity_ip} for the PCA model. 
 \begin{figure*}[h!]
 	\begin{center}
 		\centerline{\includegraphics[width=0.9\columnwidth]{figures/DistR/sensitivity_SNE_dim_2/full_sensitivity.pdf}}
@@ -315,7 +315,8 @@ C$\rightarrow$DR.
 	\vspace{-0.3cm}
 \end{figure*}
 
-Then we report in \Cref{fig:sensitivity_hyp} absolute performances for all methods and all datasets across various $n$, as done in \Cref{sec:full_sensitivity}. We can observe that both DistR and C$\rightarrow$DR achieve fairly high NMI and homogeneity scores across all settings, while DistR performs significantly better on average across the tested number of prototypes $n$.  However, DR$\rightarrow$C struggles significantly to learn both globally and individually discriminant prototypes. Notice that DR$\rightarrow$C's homogeneity scores are significantly lower on average than both benchmarked Euclidean kernels. This mitigates drastically the significance of the silhouette scores computed for this method, letting essentially DistR and C$\rightarrow$DR to compare. Even though DistR outperforms consistently C$\rightarrow$DR w.r.t silhouette scores, these scores remain significantly lower than with the other t-SNE kernels. As the latter is equivalent to a null curvature, this indicates that further fine-tuning of the curvature within these hyperbolic kernels could be beneficial. Nevertheless, these results confirm the versatility of our DistR approach, capable of operating on non-Euclidean geometries.
+Then we report in \Cref{fig:sensitivity_hyp} absolute performances for all methods and all datasets across various $n$, as done in \Cref{sec:full_sensitivity}. We can observe that both DistR and C$\rightarrow$DR achieve fairly high NMI and homogeneity scores across all settings, while DistR performs significantly better on average across the tested number of prototypes $n$.  However, DR$\rightarrow$C struggles significantly to learn both globally and individually discriminant prototypes. Notice that DR$\rightarrow$C's homogeneity scores are significantly lower on average than both benchmarked Euclidean kernels. This mitigates drastically the significance of the silhouette scores computed for this method, letting essentially DistR and C$\rightarrow$DR to compare. Even though DistR outperforms consistently C$\rightarrow$DR w.r.t silhouette scores, these scores remain significantly lower than with the other t-SNE kernels. 
+% As the latter is equivalent to a null curvature, this indicates that further fine-tuning of the curvature within these hyperbolic kernels could be beneficial. Nevertheless, these results confirm the versatility of our DistR approach, capable of operating on non-Euclidean geometries.
 
 \begin{figure*}[h]
 	\begin{center}

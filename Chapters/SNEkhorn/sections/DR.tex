@@ -4,7 +4,7 @@
 
 In this section, we build upon symmetric entropic affinities to introduce SNEkhorn, a new DR algorithm that fully benefits from the advantages of doubly stochastic affinities.
 
-\paragraph{SNEkhorn's objective.} Our proposed method relies on doubly stochastic affinity matrices to capture the dependencies among the samples in both input \emph{and} latent spaces. The $\KL$ divergence, which is the central criterion in most popular DR methods \citep{van2022probabilistic}, is used to measure the discrepancy between the two affinities. As detailed in sections \ref{sec:background} and \ref{sec:sym_entropic_affinity}, $\Pb^{\mathrm{se}}$ corrects for heterogeneity in the
+\paragraph{SNEkhorn's objective.} Our proposed method relies on doubly stochastic affinity matrices to capture the dependencies among the samples in both input \emph{and} latent spaces. The $\KL$ divergence, which is the central criterion in most popular DR methods \citep{van2022probabilistic}, is used to measure the discrepancy between the two affinities. As detailed in \Cref{sec:background_dr} and \Cref{sec:sym_entropic_affinity}, $\Pb^{\mathrm{se}}$ corrects for heterogeneity in the
 data density by imposing point-wise entropy constraints. As we do not need such correction for embedding coordinates $\Z$ since they must be optimized, we opt for the standard affinity \eqref{eq:plan_sym_sinkhorn} built as an OT transport plan with global entropy constraint \eqref{eq:entropy_constrained_OT}. This OT plan can be efficiently computed using Sinkhorn's algorithm. More precisely, 
 % considering $\C_\X$ and $\C_{\Zb}$  the pairwise cost matrices of $\X$ and $\Z$ respectively, 
 we propose the optimization problem

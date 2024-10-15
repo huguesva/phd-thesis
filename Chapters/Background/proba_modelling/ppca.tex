@@ -16,14 +16,9 @@ where $\mX \in \mathbb{R}^{N \times p}$ represents the data matrix, $\mZ \in \ma
 
 In this model, the $\vx_i$'s are independent since the samples in both $\mZ$ and $\mE$ are assumed to be independent. The relationship between $\mX$ and $\mZ$ can be simply expressed as the independent linear models: $\vx_i = \mW \vz_i + \ve_i$ for any $i$.
 
-\begin{remark}
-    Real-world data typically contain noise that exhibits some form of structure. To address this, several extensions of the PPCA model have been developed to relax the i.i.d. assumption, as we will do in \Cref{chapter:GraphCoupling}. For example, \cite{zhao2014robust} proposed a mixture of Gaussian noise, while \cite{kalaitzis2011residual} introduced additional fixed effects based on known covariates. In particular, \cite{allen2014generalized} modeled the noise structure using a matrix normal distribution, incorporating known covariance matrices for both rows and columns. This method is especially relevant to the contributions of \Cref{chapter:GraphCoupling}.
-\end{remark}
-
-
 \paragraph{Parameter estimation.} A standard approach to fitting latent variable models consists of marginalizing over the latent variables and optimizing the parameters using \emph{maximum likelihood estimation} (MLE). Since $\ve_i \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{N}(0, \sigma^2 \mI_p)$ for any $i$, one has
 \begin{align}\label{eq:ppca_likelihood}
-    \forall i, \quad \vx_i | \left( \vz_i, \mW, \sigma \right) \: \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{N}(\mW \vx_i, \sigma^2 \mI_p) \:.
+    \forall i, \quad \vx_i | \left( \vz_i, \mW, \sigma \right) \: \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{N}(\mW \vz_i, \sigma^2 \mI_p) \:.
 \end{align}
 Integrating over the latent variable $\vz_i \stackrel{\perp\!\!\!\!\perp}{\sim} \mathcal{N}(0, \mI_d)$, one obtains the marginal distribution of $\vx_i$ as follows
 \begin{align}\label{eq:ppca_marginal}
@@ -35,17 +30,22 @@ Since the $\vx_i$'s are \emph{iid}, the log marginal likelihood can be expressed
     \max_{\mW, \sigma} \: -N \log |\mC| - \langle \mX^\top \mX, \mC^{-1} \rangle \quad \text{where} \quad \mC = \mW \mW^\top + \sigma^2 \mI_p \:.
 \end{align}
 
-We consider again $\mX = \sum_{i=1}^{r} s_i \vu_i \vv_i^\top$ the reduced and ordered SVD decomposition of $\mX$. \cite{tipping1999probabilistic} provided the stationary points of the above problem in closed form. For $\mW$, any optimal solution has the form:
+We consider again $\mX = \sum_{i=1}^{r} s_i \vu_i \vv_i^\top$ the reduced and ordered SVD decomposition of $\mX$. \cite{tipping1999probabilistic} provided the maxima of the above problem in closed form. For $\mW$, any optimal solution has the form:
 \begin{align}
     \mW^* = \sum_{i=1}^d \lambda_i \vv_i \vr_i^\top \:,
 \end{align}
 where $\lambda_i = \sqrt{s_i^{2} - \sigma^{2}}$ and $(\vr_1, \dots, \vr_d)$ is any orthonormal family of vectors in $\mathbb{R}^d$. Consequently, the resulting matrix $\mW^\star$ spans the principal subspaces of the data, corresponding to the first $d$ eigenvectors $(\vv_1, \dots, \vv_d)$ of the covariance matrix, thereby establishing the connection to the PCA model (see \Cref{memo:PCA}).
 
-Interestingly, the optimal solution for $\sigma$ is given by $\sigma^\star = \sqrt{\frac{1}{p-d} \sum_{i=d+1}^{r} s^2_i}$. In essence, the probabilistic PCA model captures the full covariance of the data along the principal $d$ retained axes, while approximating the standard deviation of the discarded axes through the parameter $\sigma^\star$. This can be viewed as a strategy for fitting a multivariate Gaussian model while focusing on the dominant correlations. For a fixed latent dimensionality $d$, the number of total parameters now scales linearly with the dimensionality of the input data. A comprehensive treatment of this model can be found in \citep{bishop2006pattern}.
+Interestingly, the optimal solution for $\sigma$ is given by $\sigma^\star = \sqrt{\frac{1}{p-d} \sum_{i=d+1}^{r} s^2_i}$. In essence, the probabilistic PCA model captures the full covariance of the data along the principal $d$ retained axes, while approximating the standard deviation of the discarded axes through the parameter $\sigma^\star$. This can be viewed as a strategy for fitting a multivariate Gaussian model while focusing on the dominant correlations. For a fixed latent dimensionality $d$, the total number of parameters now scales linearly with the dimensionality of the input data. A comprehensive treatment of this model can be found in \citep{bishop2006pattern}.
 
 \begin{mem1}{Latent variable models as cornerstones of generative modelling}
     One might naturally consider extending the linear relationship described in \Cref{eq:ppca_linear} to capture more complex interactions between latent and observed variables. Indeed, any parametric estimator, such as a neural network, can be employed for this purpose. While this increases expressivity, the downside is that the log-likelihood of \Cref{eq:ppca_marginal} becomes intractable. A common approach to address this is to approximate the log-likelihood via Markov chain Monte Carlo techniques \citep{andrieu2003introduction}; however, these methods often suffer from the curse of dimensionality. A more popular and effective solution is to employ variational inference. This concept forms the basis of the \emph{variational autoencoder} (VAE) model \citep{kingma2013auto}, which has proven to be a powerful tool, defining an entire family of generative modeling methods (see, for example, the comprehensive overview provided by \cite{tomczak2021latent}). These methods can be viewed as a nonlinear extension of the PPCA model discussed here, while maintaining the fundamental principle of utilizing a latent random variable mapped to the input data space.
 \end{mem1}
+
+\begin{remark}
+    Real-world data typically contain noise that exhibits some form of structure. Several extensions of the PPCA model have been developed to relax the i.i.d. assumption, as we will do in \Cref{chapter:GraphCoupling}. For example, \cite{zhao2014robust} proposed a mixture of Gaussian noise, while \cite{kalaitzis2011residual} introduced additional fixed effects based on known covariates. In particular, \cite{allen2014generalized} modeled the noise structure using a matrix normal distribution, incorporating known covariance matrices for both rows and columns. This method is especially relevant to the contributions of \Cref{chapter:GraphCoupling}.
+\end{remark}
+
 
 \subsection{... to its Dual View}\label{sec:dual_view}
 

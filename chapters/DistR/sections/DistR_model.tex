@@ -26,24 +26,24 @@ prototypes $\vz_j$ (clusters). In \Cref{sec:clustering_properties} we explore
 conditions where these soft assignments transform into hard ones, such that each
 point is therefore linked to a unique prototype/cluster.
 
-% \begin{figure*}[t!]
-% 	\begin{center}
-% 		\centerline{\includegraphics[height=3.3cm]{figures/grids/PCA_embeddings.pdf}
-% 			\includegraphics[height=3.3cm]{figures/grids/srGWprojections_largegrid_PCA_px16_cut.pdf}
-% 			\includegraphics[height=3.3cm]{figures/grids/srGWprojections_largegrid_PCA_px32_cut.pdf}
-% 			\includegraphics[height=3.3cm]{figures/grids/srGWprojections_largegrid_PCA_px64_cut.pdf}
-% 			\includegraphics[height=3.3cm]{figures/grids/srGWprojections_largegrid_PCA_px96_cut.pdf}
-% 		}
-% 		%\centerline{\includegraphics[height=3cm]{figures/grids/kernelPCA_embeddings.pdf}
-% 		%	\includegraphics[height=3cm]{figures/grids/srGWprojections_largegrid_kernelPCA_px16_cut.pdf}
-% 		%	\includegraphics[height=3cm]{figures/grids/srGWprojections_largegrid_kernelPCA_px32_cut.pdf}
-% 		%	\includegraphics[height=3cm]{figures/grids/srGWprojections_largegrid_kernelPCA_px64_cut.pdf}
-% 		%	\includegraphics[height=3cm]{figures/grids/srGWprojections_largegrid_kernelPCA_px96_cut.pdf}}
-% 		\caption{GW projections of a single-cell genomics dataset \citep{chen2019high} on regular grids with increasing resolutions, respectively encoded as $C_X(\mX) = \mX \mX^\top$ and $C_Z(\mZ) = \mZ \mZ^\top$. Pixels on cropped grids are colored by interpolating samples' colors according to the transport plan and their intensity is proportional to their mass.}
-% 		\label{fig:visu_fixedsupport}
-% 	\end{center}
-% 	\vspace{-0.8cm}
-% \end{figure*}
+\begin{figure*}[t!]
+	\begin{center}
+		\centerline{\includegraphics[height=2.7cm]{figures/DistR/grids/PCA_embeddings.pdf}
+			\includegraphics[height=2.7cm]{figures/DistR/grids/srGWprojections_largegrid_PCA_px16_cut.pdf}
+			\includegraphics[height=2.7cm]{figures/DistR/grids/srGWprojections_largegrid_PCA_px32_cut.pdf}
+			\includegraphics[height=2.7cm]{figures/DistR/grids/srGWprojections_largegrid_PCA_px64_cut.pdf}
+			\includegraphics[height=2.7cm]{figures/DistR/grids/srGWprojections_largegrid_PCA_px96_cut.pdf}
+		}
+		%\centerline{\includegraphics[height=3cm]{figures/grids/kernelPCA_embeddings.pdf}
+		%	\includegraphics[height=3cm]{figures/grids/srGWprojections_largegrid_kernelPCA_px16_cut.pdf}
+		%	\includegraphics[height=3cm]{figures/grids/srGWprojections_largegrid_kernelPCA_px32_cut.pdf}
+		%	\includegraphics[height=3cm]{figures/grids/srGWprojections_largegrid_kernelPCA_px64_cut.pdf}
+		%	\includegraphics[height=3cm]{figures/grids/srGWprojections_largegrid_kernelPCA_px96_cut.pdf}}
+		\caption{GW projections of a single-cell genomics dataset \citep{chen2019high} on regular grids with increasing resolutions, respectively encoded as $\simiX(\mX) = \mX \mX^\top$ and $\simiZ(\mZ) = \mZ \mZ^\top$. Pixels on cropped grids are colored by interpolating samples' colors according to the transport plan and their intensity is proportional to their mass.}
+		\label{fig:visu_fixedsupport}
+	\end{center}
+	\vspace{-0.8cm}
+\end{figure*}
 
 
 \paragraph{A semi-relaxed objective.} For a given embedding $\mZ$ and $L=L_2$, it is known that minimizing in $\vh_{Z}$ the DistR objective is \emph{equivalent} to a problem that is computationally simpler than the usual GW one, namely the semi-relaxed GW divergence $\srGW_L$ \citep{vincent2021semi}:
@@ -114,7 +114,7 @@ We establish below that srGWB is of particular interest for clustering. The moti
 % The sufficient condition in Theorem \ref{theo:srgw_bary_concavity} is satisfied for existing DR methods (\Cref{sec:dr_methods}), \emph{e.g} when $\mC_X$ outputs a PSD, NSD or a squared Euclidean distance matrix . 
 % Notice that we also establish a corollary of \Cref{theo:srgw_bary_concavity} providing an analog result when masses on $\overline{\mC}$ are not optimized. 
 %These relations and \Cref{theo:srgw_bary_concavity} further legitimize the use of GW projections for clustering and allow us to expect OT plans of \ref{eq:Dist-DR} to be close to providing a hard-clustering of $\mX$. \tv{a reformuler}
-\Cref{theo:srgw_bary_concavity} and relations proven in \citep{chen2023gromov} provide that  \cref{eq:srGBW} is equivalent to the aforementioned kernel K-means when $\mC_X(\mX)$ is positive semi-definite. Moreover, as the (hard) clustering property holds for more generic types of matrices, namely CPD and CND, srGWB stands out as a fully-fledged clustering method.
+\Cref{theo:srgw_bary_concavity} and relations proven in \citep{chen2023gromov} provide that  \cref{eq:srGBW} is equivalent to the aforementioned kernel K-means when $\simiX(\mX)$ is positive semi-definite. Moreover, as the (hard) clustering property holds for more generic types of matrices, namely CPD and CND, srGWB stands out as a fully-fledged clustering method.
 Although these results do not apply directly to DistR, we argue that they further legitimize the use of GW projections for clustering. Interestingly, we also observe in practice that the couplings obtained by DistR are always membership matrices, regardless of $\simiZ$. Further research will be carried out to better understand this phenomenon. 
 %and allow us to believe that the OT of DistR are close to providing hard clustering. We point out that it was always the case in our experiments.
 %When $\vh$ is uniform, these extremities are membership matrices up to a factor $\frac{1}{N}$ \cite[Theorem 1]{cao2022centrosymmetric}. 

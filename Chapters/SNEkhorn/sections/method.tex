@@ -59,8 +59,8 @@ where we recall that $\mathcal{S}$ is the set of $n \times n$ symmetric matrices
 Let $\Cb \in \mathcal{S}$ with zero diagonal, then \eqref{eq:sym_entropic_affinity} with cost $\Cb$ has a \emph{unique solution} that we denote by $\Pb^{\mathrm{se}}$. If moreover $\Cb \in \mathcal{D}$, then for at least $n-1$ indices $i \in \integ{n}$ the solution satisfies $\operatorname{H}(\Pb^{\mathrm{se}}_{i:}) = \log \xi + 1$.
 \end{restatable}
 In other words, the unique solution $\Pb^{\mathrm{se}}$ has at least $n-1$ saturated entropies \ie the corresponding $n-1$ points have exactly a perplexity of $\xi$. In practice, with the algorithmic solution detailed below, we have observed that all $n$ entropies are saturated. Therefore, we believe that this proposition can be extended with a few more assumptions on $\Cb$. Accordingly,
-problem \eqref{eq:sym_entropic_affinity} allows accurate control over the point-wise entropies while providing a symmetric doubly stochastic matrix, unlike $\overline{\Pb^{\mathrm{e}}}$ defined in
-\eqref{symmetrization_tsne}, as summarized in \cref{recap_properties_sym}. In the sequel, we denote by $\operatorname{H}_{\mathrm{r}}(\Pb) = \left( \operatorname{H}(\Pb_{i:}) \right)_{i}$ the vector of row-wise entropies of $\Pb$. We rely on the following result to compute $\Pb^{\mathrm{se}}$.
+problem \Cref{eq:sym_entropic_affinity} allows accurate control over the point-wise entropies while providing a symmetric doubly stochastic matrix, unlike $\overline{\Pb^{\mathrm{e}}}$ defined in
+\Cref{sec:background_dr}, as summarized in \Cref{fig:recap_properties_sym}. In the sequel, we denote by $\operatorname{H}_{\mathrm{r}}(\Pb) = \left( \operatorname{H}(\Pb_{i:}) \right)_{i}$ the vector of row-wise entropies of $\Pb$. We rely on the following result to compute $\Pb^{\mathrm{se}}$.
 \begin{restatable}[Solving for \ref{eq:sym_entropic_affinity}]{proposition}{solvingsea}
 \label{prop:sol_gamma_non_null}
 Let $\Cb \in \mathcal{D}, \mathcal{L}(\Pb, \bm{\gamma}, \bm{\lambda})= \langle \Pb, \Cb \rangle + \langle \gammab, (\log{\xi} + 1) \bm{1} - \operatorname{H}_{\mathrm{r}}(\Pb) \rangle + \langle \lambdab, \bm{1} - \Pb \bm{1} \rangle$ and $q(\bm{\gamma}, \bm{\lambda}) = \min_{\Pb \in \R_{+}^{n \times n} \cap \mathcal{S}} \mathcal{L}(\Pb, \bm{\gamma}, \bm{\lambda})$. Strong duality holds for \eqref{eq:sym_entropic_affinity}. Moreover, let
@@ -138,6 +138,7 @@ Consequently, to find $\Pb^{\mathrm{se}}$ we solve the problem \eqref{eq:dual_pr
 \caption{Properties of $\Pb^{\mathrm{e}}$, $\overline{\Pb^{\mathrm{e}}}$, $\Pb^{\mathrm{ds}}$ and $\Pb^{\mathrm{se}}$.}
   \begin{tabular}{lcccc}
   \toprule[1.5pt]
+  \label{fig:recap_properties_sym}
   Affinity matrix& $\Pb^{\mathrm{e}}$& $\overline{\Pb^{\mathrm{e}}}$
   & $\Pb^{\mathrm{ds}}$& $\Pb^{\mathrm{se}}$ \\
   % Reference & \citep{hinton2002stochastic} & \citep{van2008visualizing} & \citep{lu2019doubly} & \eqref{eq:sym_entropic_affinity} \\

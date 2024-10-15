@@ -50,7 +50,6 @@
 
 \subsection{Proof of \cref{prop:entropic_affinity_as_linear_program}}
 
-We recall the result
 \entropicaffinityaslinearprogram*
 
 \begin{proof}
@@ -72,7 +71,7 @@ where we recall that $\operatorname{H}_{\mathrm{r}}(\Pb) = \left( \operatorname{
 \tag{first-order}
     \nabla_{\Pb} \mathcal{L}(\Pb^\star, \bm{\varepsilon}^\star, \bm{\lambda}^\star) = \C + \operatorname{diag}(\bm{\varepsilon}^\star)\log{\Pb^\star} - \bm{\lambda}^\star \bm{1}^\top = \bm{0} \:.
 \end{equation}
-Assume that there exists $\ell \in \integ{n}$ such that $\bm{\varepsilon}_\ell^\star = 0$. Then \eqref{kkt_ea} gives that the $\ell^{th}$ row of $\C$ is constant which is not allowed by hypothesis. Therefore $\bm{\varepsilon}^\star>\bm{0}$ (\ie $\bm{\varepsilon}^\star$ has positive entries). 
+Assume that there exists $\ell \in \integ{n}$ such that $\bm{\varepsilon}_\ell^\star = 0$. Then \Cref{kkt_ea} gives that the $\ell^{th}$ row of $\C$ is constant which is not allowed by hypothesis. Therefore $\bm{\varepsilon}^\star>\bm{0}$ (\ie $\bm{\varepsilon}^\star$ has positive entries). 
 Thus isolating $\Pb^\star$ in the first order condition results in:
 \begin{align}
     \Pb^\star &= \operatorname{diag}(\mathbf{u}) \exp{(-\operatorname{diag}(\bm{\varepsilon}^\star)^{-1}\C)}
@@ -82,7 +81,7 @@ This matrix must satisfy the stochasticity constraint $\Pb \bm{1}=\bm{1}$. Hence
 \begin{align}
     \forall (i,j) \in \integ{n}^2, \quad P^{\star}_{ij} = \frac{\exp{(-C_{ij}/\varepsilon^\star_i)}}{\sum_\ell \exp{(-C_{i\ell}/\varepsilon^\star_i)}} \:.
 \end{align}
-As a consequence of $\bm{\varepsilon}^\star \bm{>} \bm{0}$, complementary slackness in the KKT conditions gives us that for all $i$, the entropy constraint is saturated \ie $\operatorname{H}(\Pb^\star_{i:}) = \log{\xi} + 1$. Therefore $\Pb^\star$ solves the problem \eqref{eq:entropic_affinity_pb}. Conversely any solution of \eqref{eq:entropic_affinity_pb} $P^{\star}_{ij} = \frac{\exp{(-C_{ij}/\varepsilon^\star_i)}}{\sum_\ell \exp{(-C_{i\ell}/\varepsilon^\star_i)}}$ with $(\varepsilon^\star_i)$ such that $\operatorname{H}(\Pb^\star_{i:}) = \log{\xi} + 1$  gives an admissible matrix for $\min_{\Pb \in \mathcal{H}_\xi} \langle \Pb, \C \rangle$ and the associated variables satisfy the KKT conditions which are sufficient conditions for optimality since the problem is convex.
+As a consequence of $\bm{\varepsilon}^\star \bm{>} \bm{0}$, complementary slackness in the KKT conditions gives us that for all $i$, the entropy constraint is saturated \ie $\operatorname{H}(\Pb^\star_{i:}) = \log{\xi} + 1$. Therefore $\Pb^\star$ solves the problem \Cref{eq:entropic_affinity_pb}. Conversely any solution of \Cref{eq:entropic_affinity_pb} $P^{\star}_{ij} = \frac{\exp{(-C_{ij}/\varepsilon^\star_i)}}{\sum_\ell \exp{(-C_{i\ell}/\varepsilon^\star_i)}}$ with $(\varepsilon^\star_i)$ such that $\operatorname{H}(\Pb^\star_{i:}) = \log{\xi} + 1$  gives an admissible matrix for $\min_{\Pb \in \mathcal{H}_\xi} \langle \Pb, \C \rangle$ and the associated variables satisfy the KKT conditions which are sufficient conditions for optimality since the problem is convex.
 \end{proof}
 
 \subsection{Proof of \cref{prop:saturation_entropies} and \cref{prop:sol_gamma_non_null} \label{proof:main_props}}

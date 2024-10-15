@@ -1,6 +1,6 @@
 \subsection{Spectral methods}\label{sec:spectral_methods}
 
-In this initial section, we focus on dimensionality reduction methods that have closed-form solutions. These methods are commonly referred to as \emph{spectral methods} because they are based on the spectral decomposition of the input affinity matrix. We will demonstrate that these methods are particular cases of \Cref{eq:DR_criterion} with the element-wise $L_2$ loss and $[\simiZ]_{ij} = \langle \vz_i, \vz_j \rangle$. Closed form solutions are based on the following key result by \cite{eckart1936approximation}.
+In this initial section, we focus on DR methods that have closed-form solutions. Though they were historically the first methods considered for DR, the are still widely used nowadays. These methods are commonly referred to as \emph{spectral methods} because they are based on the spectral decomposition of the input affinity matrix. We will demonstrate that these methods are particular cases of \Cref{eq:DR_criterion} with the element-wise $L_2$ loss and $[\simiZ]_{ij} = \langle \vz_i, \vz_j \rangle$. Closed form solutions are based on the following key result by \cite{eckart1936approximation}.
 
 \begin{theorem}{\cite{eckart1936approximation}}\label{thm:eckart}
 	Let $\mM \in \R^{m \times n}$ be a real matrix with singular value decomposition (SVD) given by $\mM = \sum_{i=1}^{r} \sigma_i \vu_i \vv_i^\top$ where $(\vu_1, \dots, \vu_r)$ and $(\vv_1, \dots, \vv_r)$ are orthonormal families of vectors in $\R^m$ and $\R^n$ respectively, and $\sigma_1 \geq \dots \geq \sigma_r > 0$ are the singular values of $\mM$. Let $k \in \N$ with $k \leq r$ and define 
@@ -20,18 +20,18 @@ We start by considering the most canonical instance of \Cref{eq:DR_criterion} wi
 \begin{equation*}\label{eq:DR_IP}\tag{DR-IP}
 	\sum_{(i,j) \in \integ{N}^2} (\langle \vx_i, \vx_j \rangle - \langle \vz_i, \vz_j \rangle)^2 = \| \mX \mX^\top - \mZ \mZ^\top \|_F^2 \:.
 \end{equation*}
+Throughout this section, we consider that the features of the input data $\mX \in \R^{N \times p}$ are centered, \ie $\one_N \mX = \bm{0}_p$. Note that this can be ensured as a preprocessing step by applying the transformation $\mX \leftarrow \mX - \one_N \bm{\mu}^\top$ where $\bm{\mu} = \frac{1}{N} \one_N^\top \mX$ is the empirical mean along the rows of $\mX$.
 
 We give a formal definition of a Principal Component Analysis (PCA) embedding.
-
 \begin{definition}{(PCA embedding)}\label{def:PCA_embedding}
-	Let $\mX \in \mathbb{R}^{N \times p}$ be a matrix of rank $r$ such that $\mathbf{1}_N \mX = \mathbf{0}_p$ (i.e., it is centered). Suppose $\mX$ has the singular value decomposition (SVD) given by $\mX = \sum_{i=1}^{r} s_i \vu_i \vv_i^\top$, where $s_1 \geq \dots \geq s_r > 0$ are its positive singular values. A matrix $\mZ \in \mathbb{R}^{N \times d}$ is called a \emph{PCA embedding} of $\mX$ of dimension $d \leq r$ if there exists an orthonormal family of vectors $(\vq_1, \dots, \vq_d)$ in $\mathbb{R}^d$ and a family of positive scalars $(\lambda_1, \dots, \lambda_d)$ such that $\mZ = \sum_{i=1}^{d} \lambda_i \vu_i \vq_i^\top$. Moreover, if $\lambda_i = s_i$ for any $i \in \integ{d}$, then $\mZ$ is called a \emph{standard PCA embedding} of $\mX$.
+	Let $\mX \in \mathbb{R}^{N \times p}$ be a centered matrix of rank $r$. Suppose $\mX$ has the singular value decomposition (SVD) given by $\mX = \sum_{i=1}^{r} s_i \vu_i \vv_i^\top$, where $s_1 \geq \dots \geq s_r > 0$ are its positive singular values. A matrix $\mZ \in \mathbb{R}^{N \times d}$ is called a \emph{PCA embedding} of $\mX$ of dimension $d \leq r$ if there exists an orthonormal family of vectors $(\vq_1, \dots, \vq_d)$ in $\mathbb{R}^d$ and a family of positive scalars $(\lambda_1, \dots, \lambda_d)$ such that $\mZ = \sum_{i=1}^{d} \lambda_i \vu_i \vq_i^\top$. Moreover, if $\lambda_i = s_i$ for any $i \in \integ{d}$, then $\mZ$ is called a \emph{standard PCA embedding} of $\mX$.
 \end{definition}
 	
 \begin{remark}
 	Note that PCA embeddings are defined up to rotation of the features in the latent space via the orthonormal matrix $\mQ = (\vq_1, ..., \vq_d) \in \R^{d \times d}$ that can be chosen arbitrarily. This is a direct consequence of the invariance of the inner product under such orthonormal transformations.
 \end{remark}
 
-Throughout this section, we consider that the features of the input data $\mX \in \R^{N \times p}$ are centered, \ie $\one_N \mX = \bm{0}_p$. Note that this can be ensured as a preprocessing step by applying the transformation $\mX \leftarrow \mX - \one_N \bm{\mu}^\top$ where $\bm{\mu} = \frac{1}{N} \one_N^\top \mX$ is the empirical mean along the rows of $\mX$.
+
 
 \begin{proposition}\label{prop:PCA_embedding}
     The embeddings $\mZ \in \mathbb{R}^{N \times d}$ that minimize \ref{eq:DR_IP} are PCA embeddings of $\mX$.

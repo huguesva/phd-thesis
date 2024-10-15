@@ -1,9 +1,0 @@
-% !TeX root = ../paper.tex
-
-\section{Conclusion}\label{sec:conclusion}
-
-We have introduced a new principled and efficient method for constructing symmetric entropic affinities. Unlike the current formulation that enforces symmetry through an orthogonal projection, our approach allows control over the entropy in each point thus achieving entropic affinities' primary goal. Additionally, it produces a DS-normalized affinity and thus benefits from the well-known advantages of this normalization. Our affinity takes as input the same perplexity parameter as EAs and can thus be used with little hassle for practitioners. We demonstrate experimentally that both our affinity and DR algorithm (SNEkhorn), leveraging a doubly stochastic kernel in the latent space, achieve substantial improvements over state-of-the-art approaches.
-
-% Although our work enhances clustering abilities which are often the prime focus when one runs \texttt{t-SNE}, 
-Note that in the present work we do not address the issue of large-scale dependencies that are not faithfully represented in the low-dimensional space \cite{van2022probabilistic}. The latter shall be treated in future works. 
-Among other promising research directions, one could focus on building multi-scale versions of symmetric entropic affinities \cite{lee2015multi} as well as fast approximations for SNEkhorn forces by adapting \eg Barnes-Hut \cite{van2013barnes} or interpolation-based methods \cite{linderman2019fast} to the doubly stochastic setting. It could also be interesting to use SEAs in order to study the training dynamics of transformers \cite{zhai2023sigmareparam}.

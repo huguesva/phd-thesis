@@ -179,7 +179,7 @@ We present a detailed proof for pedagogical purposes, as it employs tools that w
 
 Interpreting the problem as a $\psi$-Bregman projection over a convex set as done in \Cref{eq:proj-rot} gives the advantage of employing alternating Bregman projection schemes \citep{benamou2015iterative}. This approach involves decomposing the convex set into an intersection of convex subsets for which projection is straightforward, and then alternating these projections cyclically until convergence. Convergence to the projection onto the intersection is guaranteed if the sets are affine. If the sets are not affine, such as $\overline{\mathcal{B}}(\eta)$, we can introduce auxiliary variables to slightly modify the updates while still ensuring convergence \citep{censor1998dykstra}. This approach is known as \emph{Dykstra's algorithm} \citep{dykstra1983algorithm}. Overall, this framework of Bregman projections is highly flexible and allows for the easy incorporation of various convex constraints by simply applying the corresponding projections \citep{benamou2015iterative}.
 
-\begin{remark}
+\begin{remark}\label{rem:mirror_descent}
     The aforementioned characterization as a projection holds under the condition $0 < \sigma \leq \varepsilon^\star$. Intuitively, this condition ensures that the initial point $\mK_\sigma$ lies outside the set $\overline{\mathcal{B}}(\eta)$ so that the constraint is active when projecting.
     It is important to note that there is a more general method that does not require a well-chosen initial point. This method is based on mirror descent under the geometry induced by the Bregman divergence $D_\psi$. At each iteration, it involves solving a projection problem, relying on Bregman or Dykstra depending on whether all the convex sets are affine. We detail the update of the primal variable $\mT$ and show how it can be expressed as a projection under the Bregman divergence $D_\psi$.
     \begin{align}
@@ -218,7 +218,7 @@ where $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ are the solution
 
 Using the dual formulation of \Cref{eq:dual-ROT}, which is convex like any dual problem, as it involves maximizing a concave objective, one can leverage any convex optimization solver, such as stochastic gradient descent (SGD), BFGS \citep{liu1989limited}, or ADAM \citep{kingma2014adam}, to solve the problem exactly.
 
-\begin{mem1}{Relation with the Sinkhorn Algorithm}\label{mem:sinkhorn}
+\begin{mem1}{Sinkhorn Algorithm}\label{mem:sinkhorn}
     As highlighted earlier, in the optimal transport (OT) literature, the spread constraint governed by the function $\psi$ is often handled via a fixed dual variable, $\varepsilon^\star$. To establish connections with existing approaches, we now assume $\varepsilon^\star$ is fixed. The most commonly used Bregman divergence for optimal transport is the Kullback-Leibler (KL) divergence, defined as
     \[
     \KL(\mT \| \mQ) = \langle \mT, \log \left( \mT \oslash \mQ \right) - \bm{1} \bm{1}^\top \rangle,

@@ -245,4 +245,10 @@ SNAREseq & $6.8\pm6.0$ & $35.8\pm5.2$ & $\mathbf{67.9\pm1.2}$ && $93.1\pm2.8$ & 
 %     \end{tabular}
 %     \end{small}
 % \end{table*}
-    
+
+
+\paragraph{Opening remarks.}
+We have introduced a new principled and efficient method for constructing symmetric entropic affinities. Unlike the current formulation that enforces symmetry through an orthogonal projection, our approach allows control over the entropy in each point thus achieving entropic affinities' primary goal. Additionally, it produces a DS-normalized affinity and thus benefits from the well-known advantages of this normalization. Our affinity takes as input the same perplexity parameter as EAs and can thus be used with little hassle for practitioners.
+
+% Note that in the present work we do not address the issue of large-scale dependencies that are not faithfully represented in the low-dimensional space \citep{van2022probabilistic}. The latter shall be treated in future works. 
+Among promising research directions, one could focus on building multi-scale versions of symmetric entropic affinities \citep{lee2015multi} as well as fast approximations for SNEkhorn forces by adapting \eg Barnes-Hut \citep{van2013barnes} or interpolation-based methods \citep{linderman2019fast} to the doubly stochastic setting. It could also be interesting to use SEAs in order to study the training dynamics of transformers \citep{zhai2023sigmareparam}.
