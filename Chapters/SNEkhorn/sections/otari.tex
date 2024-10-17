@@ -2,22 +2,21 @@
 
 \section{Optimal Transport with Adaptive Regularization}\label{sec:OTARI}
 
-\subsection{Motivations}
 
-Optimal transport (OT) is a well-established framework to compare probability distributions with numerous applications in machine learning \citep{arjovsky2017wasserstein, ozair2019wasserstein, peyre2019computational}.
-Discrete OT seeks a transportation plan that minimizes the total transportation cost between samples from the source and target distributions.
-In the absence of regularization, this optimal OT plan is inherently sparse. 
-Regularizing OT with a strictly convex term is a widely adopted practical approach, leading to reduced numerical complexity and more diffuse OT plans \citep{peyre2019computational}.
+\paragraph{Motivations.}
+As we have seen in \Cref{sec:background_ot}, regularizing OT with a strictly convex term is a widely adopted practical approach, leading to reduced numerical complexity and more diffuse OT plans \citep{peyre2019computational}.
 As an illustration, the prominent entropic regularization \citep{cuturi2013sinkhorn} leads to a dense plan.
-In some applications, the smoothing effect induced by the regularization has a primary importance on its own. A key example is the construction of doubly stochastic affinity matrices for clustering and dimensionality reduction \citep{landa2021doubly,Zass}, where smoothing enables connecting to neighbor points.
-Another is domain adaptation \citep{courty2017joint} where smoothed OT often results in enhanced performance when compared to non-regularized ones (see for instance \cref{tab:da_exps}). Many OT regularization schemes on the primal formulation impose a scalar constraint on the global transport plan.
+In some applications, the smoothing effect induced by the regularization has a primary importance on its own. A key example is the construction of doubly stochastic affinity matrices for clustering and dimensionality reduction: \citep{landa2021doubly,Zass}, where smoothing enables connecting to neighbor points, as presented in \Cref{sec:doubly_sto} and in \Cref{subsec:sea} with the \emph{symmetric entropic affinity}.
+Another is domain adaptation \citep{courty2017joint} where smoothed OT often results in enhanced performance when compared to non-regularized ones (see for instance \cref{tab:da_exps}). 
+
+Many OT regularization schemes on the primal formulation impose a scalar constraint on the global transport plan.
 % \titouan{bon c'est pas si vrai il y a plein de manière de pénaliser: dual semi-dual, primal sur les colonnes etc... j'ai donc un peu changé}.
 Consequently, central data points tend to exhibit a denser (or more diffuse) transport plan compared to extreme (or outlier) data points, for which diffusion is more costly. As a result, the latter points receive limited benefits from the smoothing effect introduced by the regularizer as shown in the left side of \cref{fig:entropic_ot_plans}. This partly explains OT's significant sensitivity to outliers in many applications \citep{mukherjee2021outlier, pmlr-v202-chuang23a}. 
 % \titouan{la je pense qu'il faut parler de toute la littérature ‘‘outlier robust OT'' par exemple justin solomon mais il y en a plein d'autres}. 
 To remedy this, one needs to constrain the transport plan in a pointwise manner.
 Note that this has recently been explored for constructing affinity matrices \citep{van2023snekhorn} (\ie symmetric OT setting) leading to enhanced noise robustness and clustering abilities.
 
-\paragraph{Contributions.} In this work, we develop a new formulation of OT, called OT with Adaptive Regularization (OTARI), allowing to control, for any strictly convex function $\psi$, the value of $\psi$ on each row and/or column of the OT plan. 
+In this section, we develop a new formulation of OT, called OT with Adaptive Regularization (OTARI), allowing to control, for any strictly convex function $\psi$, the value of $\psi$ on each row and/or column of the OT plan. 
 We then show the advantages of OTARI over usual regularized OT on domain adaptation tasks, focusing particularly on the negative entropy and the $\ell_2$ norm respectively associated with entropic \citep{cuturi2013sinkhorn} and quadratic \citep{blondel2018smooth} optimal transport.
 
 
@@ -26,27 +25,21 @@ We then show the advantages of OTARI over usual regularized OT on domain adaptat
 In this section, we present a new formulation of OT that imposes constraints on each row of the OT plan.
 We begin by introducing the set of matrices with \emph{point-wise} constraints. To set the upper bound, we rely on the perplexity parameter $\xi$ \citep{van2023snekhorn} that can be interpreted as the number of effective neighbors for each point. Concretely, we define $\mathbf{e}_{\xi} = \frac{1}{\xi}(\ind_{i \leq \xi})_{i}$ the probability vector of $\xi$ uniform arms and
 \begin{align}
-  \mathcal{B}_\psi(\xi) &\coloneqq \{\mP \bm{\geq} \bm{0} \: \text{s.t.}\ \: \forall i, \: \psi(\mP_{i:}) \leq \psi(\mathbf{e}_{\xi}) \} \:.
+  \mathcal{H}_\psi(\xi) &\coloneqq \{\mP \bm{\geq} \bm{0} \: \text{s.t.}\ \: \forall i, \: \psi(\mP_{i:}) \leq \psi(\mathbf{e}_{\xi}) \} \:.
 \end{align}
 Note that in particular $\psi_{\KL}(\mathbf{e}_{\xi}) = - (\log \xi + 1)$ and $\psi_2(\mathbf{e}_{\xi}) = 1/\xi$.
-% In contrast to the constraint utilized in standard strictly convex OT \eqref{eq:scOT}, $\mathcal{B}_\psi(\xi)$ imposes a constraint on \emph{each row} of the transport plan $\mP$.
-We now define Optimal Transport with Adaptive Regularization (OTARI) as the generalization of \eqref{eq:cot} to the case where the strictly convex constraint is given by $\mathcal{B}_\psi(\xi)$. Similarly to \Cref{prop:cot}, we can frame OTARI as a $\psi$-Bregman projection of $\mK_\sigma = \nabla \psi^*(-\mC / \sigma)$ or solve it using dual ascent.
+% In contrast to the constraint utilized in standard strictly convex OT \eqref{eq:scOT}, $\mathcal{H}_\psi(\xi)$ imposes a constraint on \emph{each row} of the transport plan $\mP$.
+We now define Optimal Transport with Adaptive Regularization (OTARI) as the generalization of \eqref{eq:cot} to the case where the strictly convex constraint is given by $\mathcal{H}_\psi(\xi)$. Similarly to \Cref{prop:cot}, we can frame OTARI as a $\psi$-Bregman projection of $\mK_\sigma = \nabla \psi^*(-\mC / \sigma)$ or solve it using dual ascent.
 
 \paragraph{OTARI problem.}
-  Let $(\bm{a}, \bm{b}, \xi)$ be such that $\gU(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)$ has an interior point.
+  Let $(\bm{a}, \bm{b}, \xi)$ be such that $\gU(\bm{a}, \bm{b}) \cap \mathcal{H}_\psi(\xi)$ has an interior point.
   We consider the following problem:
   \begin{align}\label{eq:pcOT}
-    \min_{\mP \in \gU(\bm{a}, \bm{b})} \: \langle \mP, \mC \rangle \quad \text{s.t.} \quad  \mP \in \mathcal{B}_\psi(\xi) \:.
+    \min_{\mP \in \gU(\bm{a}, \bm{b})} \: \langle \mP, \mC \rangle \quad \text{s.t.} \quad  \mP \in \mathcal{H}_\psi(\xi) \:.
     \tag{OTARI-s}
 \end{align}
 
 \paragraph{Mirror descent.}
-We propose to solve the above using a mirror descent algorithm that consists in the following update of the primal variable $\mP$:
-\begin{align}
-  \mP_{t+1} &= \argmin_{\mP \in \gU(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)} \: \scalar{\mP}{\mC} + \frac{1}{\gamma_t} D_{\psi}(\mP, \mP_t) \\
-  &= \argmin_{\mP \in \gU(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)} \: \psi(\mP) - \scalar{\mP}{\nabla \psi(\mP_t) - \gamma_t \mC} \\
-  &= \operatorname{Proj}^{D_\psi}_{\gU(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)}(\nabla \psi^*(\nabla \psi(\mP_t) - \gamma_t \mC)) \:.
-\end{align}
 
 % \begin{table}[h]
 %   \centering
@@ -66,13 +59,13 @@ We propose to solve the above using a mirror descent algorithm that consists in 
 
 
 \begin{proposition}\label{prop:pcot}
-  Let $(\bm{a}, \bm{b}, \xi)$ be such that $\gU(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)$ has an interior point and let $\mP^\star$ solve
+  Let $(\bm{a}, \bm{b}, \xi)$ be such that $\gU(\bm{a}, \bm{b}) \cap \mathcal{H}_\psi(\xi)$ has an interior point and let $\mP^\star$ solve
   \begin{align}\label{eq:pcOT}
-    \min_{\mP \in \gU(\bm{a}, \bm{b})} \: \langle \mP, \C \rangle \quad \text{s.t.} \quad  \mP \in \mathcal{B}_\psi(\xi) \:.
+    \min_{\mP \in \gU(\bm{a}, \bm{b})} \: \langle \mP, \C \rangle \quad \text{s.t.} \quad  \mP \in \mathcal{H}_\psi(\xi) \:.
     \tag{OTARI-s}
 \end{align}
-Let $\bm{\varepsilon}^\star$ be the optimal dual variable associated with the constraint $\mP \in \mathcal{B}_\psi(\xi)$.
-If $\bm{\varepsilon}^\star \bm{>} \bm{0}$, then it holds $\mP^\star = \operatorname{Proj}^{D_\psi}_{\gU(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)}(\mK_\sigma)$ for any $0 < \sigma \leq \min_i{\varepsilon_i^\star}$. Moreover it holds $\mP^\star = \nabla \psi^* \left(\diag(\bm{\varepsilon}^\star)^{-1} (\mC - \bm{\lambda}^\star \oplus \bm{\mu}^\star) \right)$ where $(\bm{\lambda}^\star, \bm{\mu}^\star, \bm{\varepsilon}^\star)$ solve the following dual
+Let $\bm{\varepsilon}^\star$ be the optimal dual variable associated with the constraint $\mP \in \mathcal{H}_\psi(\xi)$.
+If $\bm{\varepsilon}^\star \bm{>} \bm{0}$, then it holds $\mP^\star = \operatorname{Proj}^{D_\psi}_{\gU(\bm{a}, \bm{b}) \cap \mathcal{H}_\psi(\xi)}(\mK_\sigma)$ for any $0 < \sigma \leq \min_i{\varepsilon_i^\star}$. Moreover it holds $\mP^\star = \nabla \psi^* \left(\diag(\bm{\varepsilon}^\star)^{-1} (\mC - \bm{\lambda}^\star \oplus \bm{\mu}^\star) \right)$ where $(\bm{\lambda}^\star, \bm{\mu}^\star, \bm{\varepsilon}^\star)$ solve the following dual
 \begin{align}
   \max_{\bm{\lambda}, \bm{\mu}, \bm{\varepsilon} \bm{>} \bm{0}} \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle + \left\langle \bm{\varepsilon}, \psi^*\left(\diag(\bm{\varepsilon})^{-1} (\mC - \bm{\lambda} \oplus \bm{\mu}) \right) - \psi(\mathbf{e}_\xi) \bm{1}  \right\rangle \:.
   \tag{Dual-OTARI-s}
@@ -95,8 +88,8 @@ If $\bm{\varepsilon}^\star \bm{>} \bm{0}$, then it holds $\mP^\star = \operatorn
 %   \end{align}
 % and can also be seen as a $\psi$-Bregman projection through a trivial extension of \cref{prop:pcot}. \hug{à reprendre}
 
-\begin{wrapfigure}[18]{L}{0.52\textwidth}
-  \begin{minipage}{0.52\textwidth}
+% \begin{wrapfigure}[18]{L}{0.52\textwidth}
+%   \begin{minipage}{0.52\textwidth}
 \begin{algorithm}[H]
   \caption{\textit{Dykstra} for solving (OTARI-d)}
   \label{algo:Dykstra_pcot}
@@ -121,26 +114,26 @@ If $\bm{\varepsilon}^\star \bm{>} \bm{0}$, then it holds $\mP^\star = \operatorn
       \STATE {\bfseries Output: $\overline{\mP}_{b}$}
 \end{algorithmic}
 \end{algorithm}
-\end{minipage}
-\end{wrapfigure}
+% \end{minipage}
+% \end{wrapfigure}
 
 According to \cref{prop:pcot}, one can solve \eqref{eq:pcOT} using either alternating projections or dual ascent. 
 % Note that upon convergence, dual ascent outputs the exact solution of \eqref{eq:pcOT} as it provides a set of variables $(\mP^\star, \bm{\lambda}^\star, \bm{\mu}^\star, \bm{\varepsilon}^\star)$ satisfying its KKT conditions. 
-When $\bm{\varepsilon}^\star \bm{>} \bm{0}$, meaning that all constraints are active \ie $\forall i, \: \psi(\mP^\star_{i:}) = \psi(\mathbf{p}_{\xi})$, dual ascent is usually faster. However, if $\bm{\varepsilon}^\star$ has null components, one can still rely on $\operatorname{Proj}^{D_\psi}_{\gU(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)}(\mK_\varepsilon)$ to provide an approximate solution as alternating Bregman projections are always guaranteed to converge.
+When $\bm{\varepsilon}^\star \bm{>} \bm{0}$, meaning that all constraints are active \ie $\forall i, \: \psi(\mP^\star_{i:}) = \psi(\mathbf{p}_{\xi})$, dual ascent is usually faster. However, if $\bm{\varepsilon}^\star$ has null components, one can still rely on $\operatorname{Proj}^{D_\psi}_{\gU(\bm{a}, \bm{b}) \cap \mathcal{H}_\psi(\xi)}(\mK_\varepsilon)$ to provide an approximate solution as alternating Bregman projections are always guaranteed to converge.
 
-Note that we can impose the pointwise constraint equivalently on the rows or the columns of the OT plan. Hence (OTARI-t) can be defined by imposing the constraint on the target samples \textit{i.e.}\ $\mP^\top \in \mathcal{B}_\psi(\xi)$.
+Note that we can impose the pointwise constraint equivalently on the rows or the columns of the OT plan. Hence (OTARI-t) can be defined by imposing the constraint on the target samples \textit{i.e.}\ $\mP^\top \in \mathcal{H}_\psi(\xi)$.
 We also propose a doubly constrained formulation called (OTARI-d) that consists of projecting $\mK_\sigma$ onto the nonempty set $\mathcal{B}_\psi(\xi^{a}) \cap \mathcal{B}^\top_\psi(\xi^b)$ 
 % where $\xi^{a}$ and $\xi^{b}$ are chosen such that this intersection is nonempty 
-where we defined $\mathcal{B}^\top_\psi(\xi) = \{ \mP^\top \in \mathcal{B}_\psi(\xi)\}$ thus ensuring sufficient smoothing for both rows and columns.
+where we defined $\mathcal{B}^\top_\psi(\xi) = \{ \mP^\top \in \mathcal{H}_\psi(\xi)\}$ thus ensuring sufficient smoothing for both rows and columns.
 Such projection can be computed using alternating Bregman projections, whose convergence has been well-studied \citep{censor1998dykstra, benamou2015iterative}.
 As we generally do not have access to a closed form for the projection onto the transport polytope $\gU(\bm{a}, \bm{b})$, it is common to alternate projection onto $\gU(\bm{a})$ and $\Pi(\bm{b})$ separately (see \eg the seminal Sinkhorn algorithm \citep{cuturi2013sinkhorn}).
-We extend this scheme by adding projection steps into the pointwise constraints $\mathcal{B}_\psi(\xi)$ for both $\mP$ and $\mP^\top$. As this set is not affine, one needs to resort to the Dykstra procedure \citep{dykstra1983algorithm} that can be applied to a broad class of Bregman divergences \citep{bauschke2000dykstras}, as shown in \cref{algo:Dykstra_pcot}.
+We extend this scheme by adding projection steps into the pointwise constraints $\mathcal{H}_\psi(\xi)$ for both $\mP$ and $\mP^\top$. As this set is not affine, one needs to resort to the Dykstra procedure \citep{dykstra1983algorithm} that can be applied to a broad class of Bregman divergences \citep{bauschke2000dykstras}, as shown in \cref{algo:Dykstra_pcot}.
 % It consists of adding corrective terms to the non-affine projection. 
 In \cref{sec:proof_projs}, we provide the form of the projections for $\psi_{\KL}$ and $\psi_2$. A key benefit of decoupling both row and column constraints is that projection onto $\mathcal{B}_{\psi}(\xi)$ exhibits a simple structure where the rows can be decoupled into independent subproblems.
 % In the latter, $\psi^*$ is the Fenchel conjugate of $\psi$.
 
 
-\subsection{Application to Domain Adaptation}
+\subsubsection{Application to Domain Adaptation}
 
 \begin{figure}[h]
   \begin{center}
@@ -185,10 +178,9 @@ In \cref{sec:proof_projs}, we provide the form of the projections for $\psi_{\KL
 
 In this section, we evaluate OTARI on a domain adaptation task where the goal is to transport labeled data points to a target domain where a classifier is trained. Mapping onto the target domain is performed through a barycentric mapping of the form: for any $i \in \integ{N_S}$, $\hat{\bm{x}}_i = \frac{1}{a_i} \sum_j T_{ij} \bm{x}_j^T$.
 Looking at \cref{fig:visu_DA}, one can notice that using OTARI for domain adaptation yields a mapping that is concentrated in high-density (thus more faithful) regions of the target domain. On the opposite, when using globally constrained OT (left side of \cref{fig:visu_DA}), the barycentric mapping associated with an outlier is concentrated on the outlier's position. For the experiments, we take $\C$ as the squared Euclidean distance computed from raw images of the handwritten digit classification benchmark MNIST-USPS. 
-Following the standard practice in OT-based domain adaptation \cite{flamary2016optimal}, we map the source to the target samples and then train a 1-NN classifier on the barycentric mappings with source labels.
+Following the standard practice in OT-based domain adaptation \citep{flamary2016optimal}, we map the source to the target samples and then train a 1-NN classifier on the barycentric mappings with source labels.
 We compute the outcomes across 10 independent trials. In each of these experiments, the target data is partitioned into a 90\% training and 10\% testing split, with OT barycentric mappings and 1-NN classifiers exclusively applied to the training set. Mean scores and standard deviations are displayed in \cref{tab:da_exps}. The latter shows that adaptive regularization consistently outperforms global regularization (set such that $\sum_i \psi(\mP^\star_{i:}) = n \psi(\mathbf{e}_{\xi})$ where $\mP^\star$ solves \ref{eq:cot} for a fair comparison) with significant performance gains in some settings.
 
 \paragraph{Possible extensions.}
-Among possible extensions of \Cref{eq:pcOT}, one could also extend OTARI to continuous distributions and apply it to OT mapping
-estimation \cite{pooladian2021entropic}. Other interesting directions include
+Among possible extensions of \Cref{eq:pcOT}, one could also extend OTARI to continuous distributions and apply it to OT mapping estimation \citep{pooladian2021entropic}. Other interesting directions include
 investigating optimization algorithms that can avoid quadratic memory complexity.

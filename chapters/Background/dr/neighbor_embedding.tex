@@ -68,7 +68,8 @@ where $\simiZ = \exp{(-[\mC_{\mZ}])}$ is the Gaussian kernel matrix in the laten
     \item First, instead of the Gaussian kernel, t-SNE considers a different distribution in the latent space $[\simiZ]_{ij} = (1 + [\C_{\Z}]_{ij})^{-1}$. In this formulation, $\simiZ$ is a joint Student $t$-distribution that accounts for crowding effects: a relatively small
     distance in a high-dimensional space can be accurately represented by a
     significantly greater distance in the low-dimensional space. 
-    \item Second, authors propose symmetric versions of the affinities used in SNE. In input space, t-SNE still relies on the entropic affinity matrix $\simiX^{\mathrm{e}}$ and averages it with its transpose to make it symmetric : $\overline{\simiX^{\mathrm{e}}} = \frac{1}{2}(\simiX^{\mathrm{e}} + \simiX^{\mathrm{e} \top})$. Note that the affinity matrix $\overline{\simiX^{\mathrm{e}}}$ is the Euclidean (or Frobenius) projection of $\simiX^{\mathrm{e}}$ on the space of symmetric matrices $\mathcal{S}$. In latent space, the affinity matrix is normalized by a scalar which is the sum on both axes \ie it defines $[\simiZ^{\mathrm{b}}]_{ij} = [\simiZ]_{ij} /\sum_{\ell,t}[\simiZ]_{\ell t}$.
+    \item Second, authors propose symmetric versions of the affinities used in SNE. In input space, t-SNE still relies on the entropic affinity matrix $\simiX^{\mathrm{e}}$ and averages it with its transpose to make it symmetric : 
+    $\overline{\simiX^{\mathrm{e}}} = \frac{1}{2}(\simiX^{\mathrm{e}} + \simiX^{\mathrm{e} \top})$. Note that the affinity matrix $\overline{\simiX^{\mathrm{e}}}$ is the Euclidean (or Frobenius) projection of $\simiX^{\mathrm{e}}$ on the space of symmetric matrices $\mathcal{S}$. In latent space, the affinity matrix is normalized by a scalar which is the sum on both axes \ie it defines $[\simiZ^{\mathrm{b}}]_{ij} = [\simiZ]_{ij} /\sum_{\ell,t}[\simiZ]_{\ell t}$.
 \end{itemize}
 
 \begin{remark}

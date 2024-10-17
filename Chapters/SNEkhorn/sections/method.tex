@@ -34,7 +34,7 @@ next section.
 
 \begin{remark}\label{Pe_proj}
   Let $\K_{\sigma} = \exp(-\Cb / \sigma)$. As shown in \cref{sec:proj_KL}, if $\bm{\varepsilon}^\star$ solves (\ref{eq:entropic_affinity_pb}) and $\sigma \leq \min(\bm{\varepsilon}^\star)$, then $\Pb^{\mathrm{e}} = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{H}_{\xi}}(\K_{\sigma})  =  \argmin_{\Pb \in \mathcal{H}_{\xi}} \KL(\Pb | \K_\sigma)$.
-  Therefore $\Pb^{\mathrm{e}}$ can be seen as a $\KL$ Bregman projection \citep{benamou2015iterative} of a Gaussian kernel onto $\mathcal{H}_{\xi}$. Hence the input matrix in \eqref{symmetrization_tsne}  is $\overline{\Pb^{\mathrm{e}}}= \operatorname{Proj}^{\ell_2}_{\mathcal{S}}(\operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{H}_{\xi}}(\K_\sigma))$ which corresponds to a surprising mixture of $\KL$ and orthogonal projections.
+  Therefore $\Pb^{\mathrm{e}}$ can be seen as a $\KL$ Bregman projection \citep{benamou2015iterative} of a Gaussian kernel onto $\mathcal{H}_{\xi}$. Hence the input affinity matrix of t-SNE (\Cref{sec:sne}) is $\overline{\Pb^{\mathrm{e}}}= \operatorname{Proj}^{\ell_2}_{\mathcal{S}}(\operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{H}_{\xi}}(\K_\sigma))$ which corresponds to a surprising mixture of $\KL$ and orthogonal projections.
 \end{remark}
 
 \subsection{Symmetric Entropic Affinity Formulation}\label{subsec:sea}
@@ -178,7 +178,7 @@ operations. From a practical perspective, we found that using a change of variab
 \begin{remark}
   In the same spirit as \cref{Pe_proj}, one can express $\Pb^{\mathrm{se}}$ as a $\KL$ projection of $\K_{\sigma} = \exp(-\Cb/\sigma)$.
   Indeed, we show in \cref{sec:proj_KL} that if $0 < \sigma \leq \min_i \gamma^\star_i$, then $\Pb^{\mathrm{se}} = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{H}_{\xi} \cap
-  \mathcal{S}}(\K_{\sigma})$. This characterization opens the door for alternating Bregman projection methods (described in \cref{sec:dykstra}) which were not found to be more efficient than dual ascent.
+  \mathcal{S}}(\K_{\sigma})$. This characterization opens the door for alternating Bregman projection methods which were not found to be more efficient than dual ascent.
 \end{remark}
 
 \textbf{Comparison between $\Pb^{\mathrm{ds}}$ and $\Pb^{\mathrm{se}}$.} In \cref{fig:Ps_vs_Pse} we illustrate the ability of our proposed affinity $\Pb^{\mathrm{se}}$ to adapt to varying noise levels. In the OT problem that we consider, each sample is given a mass of one that is distributed over its neighbors (including itself since self-loops are allowed). For each sample, we refer to the entropy of the distribution over its neighbors as the \emph{spreading} of its mass. One can notice that for $\Pb^{\mathrm{ds}}$ \eqref{eq:plan_sym_sinkhorn} 

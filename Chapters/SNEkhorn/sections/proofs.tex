@@ -350,7 +350,7 @@ By hypothesis $\gammab^\star > 0$ which gives $\forall i, \operatorname{H}(\Pb^{
 Define also $\forall i, \mu_i^\star = \lambda_i^\star/\sigma$ and $\forall (i,j), \beta_{ij}^\star = \Gamma_{ij}^\star/\sigma$. Since $\Pb^{\mathrm{se}}, (\bm{\gamma}^\star, \bm{\lambda}^\star, \bm{\Gamma}^\star)$ satisfies the KKT conditions \eqref{eq:kkt2} then by the previous reasoning $\Pb^{\mathrm{se}}, (\bm{\omega}^\star, \bm{\mu}^\star, \bm{\beta}^\star)$ satisfy the KKT conditions \eqref{kkt1} and in particular $\Pb^{\mathrm{se}}$ is an optimal solution of \eqref{projkl} since KKT conditions are sufficient. Thus we have proven that $\Pb^{\mathrm{se}} \in \argmin_{\Pb \in \mathcal{H}_{\xi} \cap \mathcal{S}} \KL(\Pb | \K_\sigma)$ and by the uniqueness of the solution this is in fact an equality.
 \end{proof}
 
-\section{Alternating Bregman Projections for Solving \eqref{eq:sym_entropic_affinity}}\label{sec:dykstra}
+% \section{Alternating Bregman Projections for Solving \eqref{eq:sym_entropic_affinity}}\label{sec:dykstra}
 
 % \paragraph{Entropic affinities existence.}
 % Solving \eqref{eq:entropic_affinity_pb} consists in $n$ independent root
@@ -432,32 +432,32 @@ Define also $\forall i, \mu_i^\star = \lambda_i^\star/\sigma$ and $\forall (i,j)
 %   \min_{\Pb \in \mathcal{H}_{\xi} \cap \mathcal{S}} \: \langle \Pb, \C \rangle + \sigma \operatorname{H}(\Pb)\:.
 % \end{align}
 
-For $\sigma > 0$ and $\K_{\sigma} = \exp(-\C/\sigma)$, we introduce $\Pb^{\mathrm{se}}_{\sigma} = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{H}_{\xi} \cap \mathcal{S}}(\K_{\sigma})$. Note that \cref{lemma_sea_proj} gives us that when $\sigma \leq \min_i \gamma^\star_i$ ($\bm{\gamma}^\star$ is defined as the solution in $\bm{\gamma}$ of the \ref{eq:dual_problem} problem), we get $\Pb^{\mathrm{se}}_{\sigma} = \Pb^{\mathrm{se}}$. In \cref{subsec:sea}, we have seen a dual ascent algorithm to compute $\Pb^{\mathrm{se}}$. We now provide an alternative computational approach to compute $\Pb^{\mathrm{se}}_{\sigma}$ for any $\sigma$. In particular, when $\sigma \leq \min_i \gamma^\star_i$, the presented approach provides an alternative to dual ascent for solving \eqref{eq:sym_entropic_affinity}.
+% For $\sigma > 0$ and $\K_{\sigma} = \exp(-\C/\sigma)$, we introduce $\Pb^{\mathrm{se}}_{\sigma} = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{H}_{\xi} \cap \mathcal{S}}(\K_{\sigma})$. Note that \cref{lemma_sea_proj} gives us that when $\sigma \leq \min_i \gamma^\star_i$ ($\bm{\gamma}^\star$ is defined as the solution in $\bm{\gamma}$ of the \ref{eq:dual_problem} problem), we get $\Pb^{\mathrm{se}}_{\sigma} = \Pb^{\mathrm{se}}$. In \cref{subsec:sea}, we have seen a dual ascent algorithm to compute $\Pb^{\mathrm{se}}$. We now provide an alternative computational approach to compute $\Pb^{\mathrm{se}}_{\sigma}$ for any $\sigma$. In particular, when $\sigma \leq \min_i \gamma^\star_i$, the presented approach provides an alternative to dual ascent for solving \eqref{eq:sym_entropic_affinity}.
 
-To compute $\Pb^{\mathrm{se}}_{\sigma}$, one can rely on the well-studied convergence of alternating Bregman projection methods \cite{benamou2015iterative}. The core idea is to alternate projection onto $\mathcal{H}_{\xi}$  with the projection onto $\mathcal{S}$. As $\mathcal{H}_{\xi}$ is not affine, one needs to resort to the Dykstra procedure \cite{dykstra1983algorithm} described in \cref{algo:Dykstra_symmetric_entropic_affinity}. Note that Dykstra's algorithm can be applied to any Bregman divergence including $\KL$ \cite{censor1998dykstra} with guarantees \cite{bauschke2000dykstras}. 
+% To compute $\Pb^{\mathrm{se}}_{\sigma}$, one can rely on the well-studied convergence of alternating Bregman projection methods \cite{benamou2015iterative}. The core idea is to alternate projection onto $\mathcal{H}_{\xi}$  with the projection onto $\mathcal{S}$. As $\mathcal{H}_{\xi}$ is not affine, one needs to resort to the Dykstra procedure \cite{dykstra1983algorithm} described in \cref{algo:Dykstra_symmetric_entropic_affinity}. Note that Dykstra's algorithm can be applied to any Bregman divergence including $\KL$ \cite{censor1998dykstra} with guarantees \cite{bauschke2000dykstras}. 
 
-\begin{algorithm}[H]
-    \caption{\textit{Dykstra} for computing  $\Pb^{\mathrm{se}}_{\sigma}$}
-    \label{algo:Dykstra_symmetric_entropic_affinity}
-    \begin{algorithmic}[1]
-        \STATE {\textbf{Input}: cost $\C$, perplexity $\xi$, scaling $\sigma$} \\
-        % \STATE $t \leftarrow 0$ \\
-        \STATE $\left(\Pb_s, \bm{\Xi} \right) \leftarrow \left(\exp(-\C / \sigma), \bm{1} \bm{1}^\top \right)$ \\
-        \WHILE{not converged}
-            % \STATE $t \leftarrow t+1$ \\
-            \STATE $\Pb_h \leftarrow \operatorname{Proj}^{\operatorname{KL}}_{\mathcal{H}_{\xi}}(\Pb_s \odot \bm{\Xi})$ 
-            \\
-            \STATE $\bm{\Xi} \leftarrow \bm{\Xi} \odot \Pb_s \oslash \Pb_h$
-            \\
-            \STATE $\Pb_s \leftarrow \operatorname{Proj}^{\operatorname{KL}}_{\mathcal{S}}(\Pb_h)$
-        \ENDWHILE  
-        \STATE {\bfseries Output: $\Pb_s$}
-\end{algorithmic}
-\end{algorithm}
+% \begin{algorithm}[H]
+%     \caption{\textit{Dykstra} for computing  $\Pb^{\mathrm{se}}_{\sigma}$}
+%     \label{algo:Dykstra_symmetric_entropic_affinity}
+%     \begin{algorithmic}[1]
+%         \STATE {\textbf{Input}: cost $\C$, perplexity $\xi$, scaling $\sigma$} \\
+%         % \STATE $t \leftarrow 0$ \\
+%         \STATE $\left(\Pb_s, \bm{\Xi} \right) \leftarrow \left(\exp(-\C / \sigma), \bm{1} \bm{1}^\top \right)$ \\
+%         \WHILE{not converged}
+%             % \STATE $t \leftarrow t+1$ \\
+%             \STATE $\Pb_h \leftarrow \operatorname{Proj}^{\operatorname{KL}}_{\mathcal{H}_{\xi}}(\Pb_s \odot \bm{\Xi})$ 
+%             \\
+%             \STATE $\bm{\Xi} \leftarrow \bm{\Xi} \odot \Pb_s \oslash \Pb_h$
+%             \\
+%             \STATE $\Pb_s \leftarrow \operatorname{Proj}^{\operatorname{KL}}_{\mathcal{S}}(\Pb_h)$
+%         \ENDWHILE  
+%         \STATE {\bfseries Output: $\Pb_s$}
+% \end{algorithmic}
+% \end{algorithm}
     
-The factor $\sigma$ scales the distance matrix such that row-wise entropies are controlled when projecting onto $\mathcal{H}_\xi$. As such, choosing a $\sigma$ too high might result in some entropies being unsaturated while a $\sigma$  too small generally leads to slow convergence.
+% The factor $\sigma$ scales the distance matrix such that row-wise entropies are controlled when projecting onto $\mathcal{H}_\xi$. As such, choosing a $\sigma$ too high might result in some entropies being unsaturated while a $\sigma$  too small generally leads to slow convergence.
 
-We now describe how to perform the two $\KL$ projection steps. 
+% We now describe how to perform the two $\KL$ projection steps. 
 
 % \textbf{Projection onto $\mathcal{S}$.}
 % The symmetric projection is given by the following lemma.
@@ -466,25 +466,25 @@ We now describe how to perform the two $\KL$ projection steps.
 %     For any matrix $\Pb \in \R_+^{n \times n}$, it holds $\operatorname{Proj}^{\operatorname{KL}}_{\mathcal{S}}(\Pb) = \big(\Pb \odot \Pb^\top \big)^{\odot \frac{1}{2}}$.
 % \end{lemma}
 
-\paragraph{Projection onto $\mathcal{S}$.} The $\KL$ projection onto $\mathcal{S}$ of $\K \in \R_+^{n \times n}$ amounts to the following problem.
-\begin{align}
-    \argmin_{\Pb \in \mathcal{S}} \ &\KL(\Pb | \K) \:.
-\end{align}
-For this problem the Lagrangian reads, where $\W \in \R^{n \times n}$ is a dual variable: 
-\begin{equation}
-\mathcal{L}(\Pb, \W) = \KL(\Pb | \K) +\langle \W, \Pb -\Pb^{\top} \rangle \:.
-\end{equation}
-Similarly as before, if we cancel the gradient of $\mathcal{L}$ with respect to $\Pb$ we obtain $\log(\Pb^\star \oslash \K) + \W - \W^\top = \bm{0}$. Thus $\Pb^\star = \exp( \W-\W^\top) \odot \K$. We must also have the primal feasibility that is $\Pb^\star = \Pb^{\star \top}$. Plugging the expression in this condition leads to $\W - \W^\top= \frac{1}{2} \log(\K^\top \oslash \K)$. Hence plugging it back we get $\Pb^\star = \exp( \frac{1}{2} \log(\K^\top \oslash \K)) \odot \K = \left(\K^\top \oslash \K \right)^{\odot \frac {1}{2}} \odot \K = \left(\K \odot \K^{\top}\right)^{\odot \frac {1}{2}}$. Overall the projection reads:
-\begin{equation}
-\argmin_{\Pb \in \mathcal{S}} \: \KL(\Pb | \K) = \left(\K \odot \K^{\top}\right)^{\odot \frac{1}{2}} \:.
-\end{equation}
+% \paragraph{Projection onto $\mathcal{S}$.} The $\KL$ projection onto $\mathcal{S}$ of $\K \in \R_+^{n \times n}$ amounts to the following problem.
+% \begin{align}
+%     \argmin_{\Pb \in \mathcal{S}} \ &\KL(\Pb | \K) \:.
+% \end{align}
+% For this problem the Lagrangian reads, where $\W \in \R^{n \times n}$ is a dual variable: 
+% \begin{equation}
+% \mathcal{L}(\Pb, \W) = \KL(\Pb | \K) +\langle \W, \Pb -\Pb^{\top} \rangle \:.
+% \end{equation}
+% Similarly as before, if we cancel the gradient of $\mathcal{L}$ with respect to $\Pb$ we obtain $\log(\Pb^\star \oslash \K) + \W - \W^\top = \bm{0}$. Thus $\Pb^\star = \exp( \W-\W^\top) \odot \K$. We must also have the primal feasibility that is $\Pb^\star = \Pb^{\star \top}$. Plugging the expression in this condition leads to $\W - \W^\top= \frac{1}{2} \log(\K^\top \oslash \K)$. Hence plugging it back we get $\Pb^\star = \exp( \frac{1}{2} \log(\K^\top \oslash \K)) \odot \K = \left(\K^\top \oslash \K \right)^{\odot \frac {1}{2}} \odot \K = \left(\K \odot \K^{\top}\right)^{\odot \frac {1}{2}}$. Overall the projection reads:
+% \begin{equation}
+% \argmin_{\Pb \in \mathcal{S}} \: \KL(\Pb | \K) = \left(\K \odot \K^{\top}\right)^{\odot \frac{1}{2}} \:.
+% \end{equation}
 
-\paragraph{Projection onto $\mathcal{H}_{\xi}$.}
-Concerning the entropic projection, on can compute $\operatorname{Proj}^{\operatorname{KL}}_{\mathcal{H}_{\xi}} \colon \mathcal{S} \to \mathcal{H}_\xi$ using a slight adaptation of \cref{lemma_ea_proj}. For any $\Pb \in \mathcal{S}$, it holds
-\begin{align}
-  \forall (i,j), \quad \operatorname{Proj}^{\operatorname{KL}}_{\mathcal{H}_{\xi}}(\Pb)_{ij} =  \frac{\exp{(-\log P_{ij}/\rho_i)}}{\sum_\ell \exp{(- \log P_{i\ell}/\rho_i)}}
-\end{align}
-where for any $i$, $\rho_i = \max(\varepsilon^\star_i, 1)$ where $\bm{\varepsilon}^\star$ solves (\ref{eq:entropic_affinity_pb}) with cost $\C = -\log \K$. Note that this projection is more efficient to compute than $\Pb^{\mathrm{e}}$ as one can stop the search when the upper bound on the root becomes smaller than one. 
+% \paragraph{Projection onto $\mathcal{H}_{\xi}$.}
+% Concerning the entropic projection, on can compute $\operatorname{Proj}^{\operatorname{KL}}_{\mathcal{H}_{\xi}} \colon \mathcal{S} \to \mathcal{H}_\xi$ using a slight adaptation of \cref{lemma_ea_proj}. For any $\Pb \in \mathcal{S}$, it holds
+% \begin{align}
+%   \forall (i,j), \quad \operatorname{Proj}^{\operatorname{KL}}_{\mathcal{H}_{\xi}}(\Pb)_{ij} =  \frac{\exp{(-\log P_{ij}/\rho_i)}}{\sum_\ell \exp{(- \log P_{i\ell}/\rho_i)}}
+% \end{align}
+% where for any $i$, $\rho_i = \max(\varepsilon^\star_i, 1)$ where $\bm{\varepsilon}^\star$ solves (\ref{eq:entropic_affinity_pb}) with cost $\C = -\log \K$. Note that this projection is more efficient to compute than $\Pb^{\mathrm{e}}$ as one can stop the search when the upper bound on the root becomes smaller than one. 
 
 % \section{Experiment's Supplementary Material}
 

@@ -1,8 +1,5 @@
 % !TeX root = ../workshop_paper.tex
 
-
-\section{Proofs}
-
 \subsection{$\psi$-Bregman Projections for $\psi_{\KL}$ and $\psi_{\alpha}$}\label{sec:proof_projs}
 
     In this section, we detail the expressions of the projections used in the alternating Bregman projection approach.
@@ -20,7 +17,7 @@
     We first consider the negative Shannon entropy $\psi_{\KL}(\vp) = \scalar{\vp}{\log \vp - \bm{1}}$.
 
     \paragraph{Projection onto $\gU(\bm{a}) \cap \mathcal{B}_{\KL}(\xi)$.}
-    The $\KL$ projection of a matrix $\mK \in \R_+^{N_S \times N_T}$ onto $\gU(\bm{a}) \cap \mathcal{B}_1(\xi)$ is the following problem.
+    The $\KL$ projection of a matrix $\mK \in \R_+^{N_S \times N_T}$ onto $\gU(\bm{a}) \cap \mathcal{B}_{\KL}(\xi)$ is the following problem.
     \begin{align}
         \min_{\mP \in \R_+^{N_S \times N_T}} \quad &\langle \mP, \log (\mP \oslash \mK) - \bm{1}\bm{1}^\top \rangle \\
         \text{s.t.} \quad &\forall i \in \integ{N_S}, \: \psi_{\KL}(\mP_{i:}) \leq \eta \\
@@ -220,18 +217,16 @@ Therefore we have
 %     \end{proof}
 
 
-\subsection{Proofs of the Optimal Transport Solutions}
-
-\subsubsection{OT with Pointwise Constraints on Either Sources or Targets (OTARI-s and OTARI-t) : proof of \cref{prop:pcot}}\label{sec:proofs}
+\subsection{OT with Pointwise Constraints on Either Sources or Targets (OTARI-s and OTARI-t) : proof of \cref{prop:pcot}}\label{sec:proofs_otari}
 
 \begin{proposition}
-    Let $(\bm{a}, \bm{b}, \xi)$ be such that $\gU(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)$ has an interior point and let $\mP^\star$ solve
+    Let $(\bm{a}, \bm{b}, \xi)$ be such that $\gU(\bm{a}, \bm{b}) \cap \mathcal{H}_\psi(\xi)$ has an interior point and let $\mP^\star$ solve
     \begin{align}
-      \min_{\mP \in \gU(\bm{a}, \bm{b})} \: \langle \mP, \mC \rangle \quad \text{s.t.} \quad  \mP \in \mathcal{B}_\psi(\xi) \:.
+      \min_{\mP \in \gU(\bm{a}, \bm{b})} \: \langle \mP, \mC \rangle \quad \text{s.t.} \quad  \mP \in \mathcal{H}_\psi(\xi) \:.
       \tag{OTARI-s}
   \end{align}
-  Let $\bm{\varepsilon}^\star$ be the optimal dual variable associated with the constraint $\mP \in \mathcal{B}_\psi(\xi)$.
-  If $\bm{\varepsilon}^\star \bm{>} \bm{0}$, then it holds $\mP^\star = \operatorname{Proj}^{D_\psi}_{\gU(\bm{a}, \bm{b}) \cap \mathcal{B}_\psi(\xi)}(\mK_\varepsilon)$ for any $0 < \varepsilon \leq \min_i{\varepsilon_i^\star}$. Moreover it holds $\mP^\star = \nabla \psi^* \left(\diag(\bm{\varepsilon}^\star)^{-1} (\mC - \bm{\lambda}^\star \oplus \bm{\mu}^\star) \right)$ where $(\bm{\lambda}^\star, \bm{\mu}^\star, \bm{\varepsilon}^\star)$ solve the following dual
+  Let $\bm{\varepsilon}^\star$ be the optimal dual variable associated with the constraint $\mP \in \mathcal{H}_\psi(\xi)$.
+  If $\bm{\varepsilon}^\star \bm{>} \bm{0}$, then it holds $\mP^\star = \operatorname{Proj}^{D_\psi}_{\gU(\bm{a}, \bm{b}) \cap \mathcal{H}_\psi(\xi)}(\mK_\varepsilon)$ for any $0 < \varepsilon \leq \min_i{\varepsilon_i^\star}$. Moreover it holds $\mP^\star = \nabla \psi^* \left(\diag(\bm{\varepsilon}^\star)^{-1} (\mC - \bm{\lambda}^\star \oplus \bm{\mu}^\star) \right)$ where $(\bm{\lambda}^\star, \bm{\mu}^\star, \bm{\varepsilon}^\star)$ solve the following dual
   \begin{align}
     \max_{\bm{\lambda}, \bm{\mu}, \bm{\varepsilon} \bm{>} \bm{0}} \: \langle \bm{\lambda}, \bm{a} \rangle + \langle \bm{\mu}, \bm{b} \rangle + \left\langle \bm{\varepsilon}, \psi^*\left(\diag(\bm{\varepsilon})^{-1} (\mC - \bm{\lambda} \oplus \bm{\mu}) \right) - \psi(\mathbf{e}_\xi) \bm{1}  \right\rangle \:.
     \tag{Dual-OTARI-s}
@@ -257,9 +252,9 @@ We end the proof by following the same reasoning as for \cref{prop:cot}, choosin
 
 The optimization problem \eqref{eq:pcOT} writes
 \begin{align}
-    \min_{\mP \in \gU(\bm{a}, \bm{b})} \: \langle \mP, \mC \rangle \quad \text{s.t.} \quad  \mP \in \mathcal{B}_\psi(\xi) \:.
+    \min_{\mP \in \gU(\bm{a}, \bm{b})} \: \langle \mP, \mC \rangle \quad \text{s.t.} \quad  \mP \in \mathcal{H}_\psi(\xi) \:.
 \end{align}
-Introducing the dual variables $\bm{\lambda} \in \mathbb{R}^n$ and $\bm{\mu} \in \mathbb{R}^n$ for the marginals and $\bm{\varepsilon} \in \mathbb{R}_+^{n}$ for the constraint $\mP \in \mathcal{B}_\psi(\xi)$. The problem can be formulated as
+Introducing the dual variables $\bm{\lambda} \in \mathbb{R}^n$ and $\bm{\mu} \in \mathbb{R}^n$ for the marginals and $\bm{\varepsilon} \in \mathbb{R}_+^{n}$ for the constraint $\mP \in \mathcal{H}_\psi(\xi)$. The problem can be formulated as
 \begin{align}
     \min_{\mP \bm{\geq} \bm{0}} \: \max_{\bm{\lambda}, \bm{\mu}, \bm{\varepsilon} \bm{\geq} \bm{0}} \: \langle \mP, \mC \rangle + \langle \bm{\lambda}, \bm{a} - \mP \bm{1} \rangle + \langle \bm{\mu}, \bm{b} - \mP^\top \bm{1} \rangle + \langle \bm{\varepsilon}, \psi(\mP) - \psi(\mathbf{e}_\xi) \bm{1} \rangle \:.
 \end{align} 

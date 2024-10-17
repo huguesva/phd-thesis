@@ -2,7 +2,7 @@
 
 \section{Introduction}
 
-This chapter is based on material from the following publication:
+This chapter is based on material from the following publications:
 
 \begin{mdframed}
 \begin{center} 
@@ -10,9 +10,14 @@ This chapter is based on material from the following publication:
 \end{center}
 \end{mdframed}
 
+\begin{mdframed}
+    \begin{center} 
+        \bibentry{van2023optimal} 
+    \end{center}
+\end{mdframed}
+
 Considering symmetric similarities is appealing since the proximity between two
-points is inherently symmetric. Nonetheless, the Euclidean projection in
-\eqref{symmetrization_tsne} \emph{does not preserve the construction of entropic
+points is inherently symmetric. Nonetheless, the Euclidean projection done in t-SNE : $\overline{\Pb^{\mathrm{e}}} = \frac{1}{2} \left( \Pb^{\mathrm{e}} + \Pb^{\mathrm{e} \top} \right)$ \emph{does not preserve the construction of entropic
 affinities}.  In particular, $\overline{\Pb^{\mathrm{e}}}$ is not stochastic in
 general and $\operatorname{H}(\overline{\Pb_{i:}^{\mathrm{e}}}) \neq (\log{\xi} + 1)$ thus the entropy associated with each point is no longer controlled after symmetrization (see the bottom left plot of \cref{fig:coil}). This is
 arguably one of the main drawbacks of the approach. By contrast, the
@@ -27,7 +32,7 @@ accurately set the entropy in each point to the desired value $\log \xi + 1$.  A
 \end{figure}
 
 \paragraph{Contributions.} In this work, we study the missing
-link between EAs, which are easy to tune and adaptable to data with heterogeneous density, and DS affinities which have interesting properties in practical applications as aforementioned. 
+link between EAs, which are easy to tune and adaptable to data with heterogeneous density, and doubly stochastic affinities which have interesting properties in practical applications as seen in \Cref{sec:doubly_sto}. 
 %To this end, we tackle two major challenges.
 %Extending entropic affinities from stochastic to
 %doubly stochastic seems promising given all the aforementioned benefits. 
