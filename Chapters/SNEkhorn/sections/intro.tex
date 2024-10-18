@@ -19,15 +19,15 @@ This chapter is based on material from the following publications:
 Considering symmetric similarities is appealing since the proximity between two
 points is inherently symmetric. Nonetheless, the Euclidean projection done in t-SNE : $\overline{\Pb^{\mathrm{e}}} = \frac{1}{2} \left( \Pb^{\mathrm{e}} + \Pb^{\mathrm{e} \top} \right)$ \emph{does not preserve the construction of entropic
 affinities}.  In particular, $\overline{\Pb^{\mathrm{e}}}$ is not stochastic in
-general and $\operatorname{H}(\overline{\Pb_{i:}^{\mathrm{e}}}) \neq (\log{\xi} + 1)$ thus the entropy associated with each point is no longer controlled after symmetrization (see the bottom left plot of \cref{fig:coil}). This is
+general and $\operatorname{H}(\overline{\Pb_{i:}^{\mathrm{e}}}) \neq (\log{\xi} + 1)$ thus the entropy associated with each point is no longer controlled after symmetrization (see the bottom left plot of \Cref{fig:coil}). This is
 arguably one of the main drawbacks of the approach. By contrast, the
-$\Pb^{\mathrm{se}}$ affinity that will be introduced in \cref{sec:sym_entropic_affinity} can
-accurately set the entropy in each point to the desired value $\log \xi + 1$.  As shown in \cref{fig:coil} this leads to more faithful embeddings with higher silhouette scores when combined with the SNEkhorn algorithm (\cref{sec:DR_with_OT}).
+$\Pb^{\mathrm{se}}$ affinity that will be introduced in \Cref{sec:sym_entropic_affinity} can
+accurately set the entropy in each point to the desired value $\log \xi + 1$.  As shown in \Cref{fig:coil} this leads to more faithful embeddings with higher silhouette scores when combined with the SNEkhorn algorithm (\Cref{sec:DR_with_OT}).
 
 \begin{figure}
     \centering
     \includegraphics[width=0.6\linewidth]{figures/SNEkhorn/fig_coil.pdf}
-    \caption{Top: COIL \cite{nene1996columbia} embeddings with silhouette scores produced by Symmetric-SNE and SNEkhorn (our method introduced in  \cref{sec:DR_with_OT}) for $\xi=30$. Bottom: $e^{\operatorname{H}(\Pb_{i:})-1}$ (\emph{perplexity}) for each point $i$.}
+    \caption{Top: COIL \cite{nene1996columbia} embeddings with silhouette scores produced by Symmetric-SNE and SNEkhorn (our method introduced in  \Cref{sec:DR_with_OT}) for $\xi=30$. Bottom: $e^{\operatorname{H}(\Pb_{i:})-1}$ (\emph{perplexity}) for each point $i$.}
     \label{fig:coil}
 \end{figure}
 
@@ -43,8 +43,8 @@ link between EAs, which are easy to tune and adaptable to data with heterogeneou
 % surface (typical use case of DR) of limited use \titouan{a reformuler ces deux phrases: la deuxieme est effectivement un challenge mais je ne comprends pas en quoi ce qu'on fait le résoud, et le premier c'est pas vraiment un challenge, c'est juste que ça n'existe pas}\nc{agree with that}.  
 Our main contributions are as follows. We uncover the convex
 optimization problem that underpins classical entropic affinities, exhibiting
-novel links with entropy-regularized Optimal Transport (OT) (\cref{sec:entropic_affinity_semi_relaxed}). We then propose in \cref{subsec:sea} a principled symmetrization of entropic
+novel links with entropy-regularized Optimal Transport (OT) (\Cref{sec:entropic_affinity_semi_relaxed}). We then propose in \Cref{subsec:sea} a principled symmetrization of entropic
 affinities. The latter enables controlling the entropy in each point, unlike
 t-SNE's post-processing symmetrization, and producing a genuinely doubly stochastic affinity. We show how to
 compute this new affinity efficiently using a dual ascent algorithm.
-In \cref{sec:DR_with_OT}, we introduce SNEkhorn: a DR algorithm that couples this new symmetric entropic affinity with a doubly stochastic kernel in the low-dimensional embedding space, without sphere concentration issue \cite{lu2019doubly}. We finally showcase the benefits of symmetric entropic affinities on a variety of applications in Section \ref{sec:DR_experiments} including spectral clustering and DR experiments on datasets ranging from images to genomics data.
+In \Cref{sec:DR_with_OT}, we introduce SNEkhorn: a DR algorithm that couples this new symmetric entropic affinity with a doubly stochastic kernel in the low-dimensional embedding space, without sphere concentration issue \cite{lu2019doubly}. We finally showcase the benefits of symmetric entropic affinities on a variety of applications in Section \ref{sec:DR_experiments} including spectral clustering and DR experiments on datasets ranging from images to genomics data.

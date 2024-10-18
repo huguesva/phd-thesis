@@ -33,7 +33,7 @@ First, note that there may not always exist a map \(T\) that pushes \(\mu_S\) fo
 
 
 \paragraph{Kantorovich relaxation.}
-We have just seen that defining transport through a map considerably limits the scope of problems that can be efficiently addressed. To overcome this, a well-known relaxation proposed by \citep{kantorovich1942translocation} involves optimizing over the space of probabilistic couplings with marginals \(\mu_S\) and \(\mu_T\). This approach seeks to compute a \emph{coupling} \(\mT \in \mathbb{R}_{+}^{N_S \times N_T}\), which represents a joint probability measure over \(\text{supp}(\mu_S) \times \text{supp}(\mu_T)\). Intuitively, this relaxation allows for mass splitting, meaning that a unit of mass from \(\mu_S\) can be distributed across multiple points in \(\mu_T\).
+We have just seen that defining transport through a map considerably limits the scope of problems that can be efficiently addressed. To overcome this, a well-known relaxation proposed by \citep{kantorovich1942translocation} involves optimizing over the space of probabilistic couplings with marginals \(\mu_S\) and \(\mu_T\). This approach seeks to compute a \emph{coupling} \(\mT \in \mathbb{R}_{+}^{N_S \times N_T}\), which represents a joint probability measure over \(\text{supp}(\mu_S) \times \text{supp}(\mu_T)\). Note that the same relaxation can be performed in the continuous setting as detailed in \Cref{mem:ot_continuous}. Intuitively, this relaxation allows for mass splitting, meaning that a unit of mass from \(\mu_S\) can be distributed across multiple points in \(\mu_T\).
 The Kantorovich formulation of OT is then given by the following linear program
 \begin{equation}
     \tag{OT}
@@ -42,9 +42,9 @@ The Kantorovich formulation of OT is then given by the following linear program
 \end{equation}
 where $\gU(\va, \vb)$ is the transport polytope with marginals $(\bm{a}, \bm{b})$ that is $\gU(\va, \vb) \coloneqq \left\{ \mT \in \R_+^{N_S \times N_T} \mid \mT \mathbf{1}_n = \va, \mT^\top \mathbf{1}_N = \vb \right\}$ and the \emph{cost matrix} $\mathbf{C} \in \R_+^{N_S \times N_T}$ such that $C_{ij} = c(\vx_i^S, \vx_j^T)$ encodes the pairwise distances between the source and target samples. 
 
-Note that for discrete measures, the Monge and Kantorovich formulations are equivalent when $\mu_S = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\vx^S_i}$ and $\nu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\vx^T_i}$. In this case, there exists a solution of \eqref{eq:Wasserstein} which corresponds to an extremal point of the polytope of doubly stochastic matrices \citep{bertsimas1997introduction}. This implies that there is no splitting of mass, meaning that each row of the optimal solution $\mT^\star$ contains exactly one non-zero coefficient. These solutions are also referred to as \emph{assignation matrices} in \Cref{chapter:DistR}.
+Note that for discrete measures, the Monge and Kantorovich formulations are equivalent when $\mu_S = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\vx^S_i}$ and $\nu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\vx^T_i}$. In this case, there exists a solution of \Cref{eq:Wasserstein} which corresponds to an extremal point of the polytope of doubly stochastic matrices \citep{bertsimas1997introduction}. This implies that there is no splitting of mass, meaning that each row of the optimal solution $\mT^\star$ contains exactly one non-zero coefficient. These solutions are also referred to as \emph{assignation matrices} in \Cref{chapter:DistR}.
 
-In the Kantorovich formulation, the set $\gU(\va, \vb)$ forms a convex polytope, making the optimal transport (OT) problem in \eqref{eq:OT} a linear program. As a result, it can be efficiently solved using linear programming solvers \citep{dantzig2016linear}. For a comprehensive review of network flow algorithms employed to solve \Cref{eq:OT}, we refer the reader to \citep{peyre2019computational}.
+In the Kantorovich formulation, the set $\gU(\va, \vb)$ forms a convex polytope, making the optimal transport (OT) problem in \Cref{eq:OT} a linear program. As a result, it can be efficiently solved using linear programming solvers \citep{dantzig2016linear}. For a comprehensive review of network flow algorithms employed to solve \Cref{eq:OT}, we refer the reader to \citep{peyre2019computational}.
 
 \begin{mem1}{Primer on OT for continuous distributions}\label{mem:ot_continuous}
     We consider a Polish space, \ie a separable completely metrizable topological space, denoted $(\mathcal{X}, d_{\gX})$ and a cost function $c : \mathcal{X} \times \mathcal{X} \to \R_+$. Let $\mu_S \in \mathcal{P}(\mathcal{X})$ and $\mu_T \in \mathcal{P}(\mathcal{X})$ be two probability measures that we aim to compare.
@@ -64,7 +64,7 @@ In the Kantorovich formulation, the set $\gU(\va, \vb)$ forms a convex polytope,
     defined under mild assumptions \citep{santambrogio2015optimal}. If the optimal
     coupling $\gU^\star$ is supported on a \emph{deterministic} function, \ie
     $\gU^\star$ is of the form $(\mathrm{id} \times T^\star)\# \mu_S$, then
-    $T^\star$ solves \eqref{eq:monge_pb}. This holds under the assumption that one
+    $T^\star$ solves \Cref{eq:monge_pb}. This holds under the assumption that one
     of the inputs is absolutely continuous with respect to the Lebesgue measure
     and $c(\bm{x}, \bm{y}) = h(\bm{x} - \bm{y})$ with
     $h$ strictly convex \citep{gangbo1996geometry}.
@@ -181,7 +181,7 @@ Interpreting the problem as a $\psi$-Bregman projection over a convex set as don
 
 \begin{remark}\label{rem:mirror_descent}
     The aforementioned characterization as a projection holds under the condition $0 < \sigma \leq \varepsilon^\star$. Intuitively, this condition ensures that the initial point $\mK_\sigma$ lies outside the set $\mathcal{B}(\eta)$ so that the constraint is active when projecting.
-    It is important to note that there is a more general method that does not require a well-chosen initial point. This method is based on mirror descent under the geometry induced by the Bregman divergence $D_\psi$. At each iteration, it involves solving a projection problem, relying on Bregman or Dykstra depending on whether all the convex sets are affine. We detail the update of the primal variable $\mT$ and show how it can be expressed as a projection under the Bregman divergence $D_\psi$.
+    Note that there is a more general method that does not require a well-chosen initial point. This method is based on mirror descent under the geometry induced by the Bregman divergence $D_\psi$. At each iteration, it involves solving a projection problem, relying on Bregman or Dykstra depending on whether all the convex sets are affine. We detail the update of the primal variable $\mT$ and show how it can be expressed as a projection under the Bregman divergence $D_\psi$.
     \begin{align}
     \mT^{(t+1)} &= \argmin_{\mT \in \gC} \: \langle \mT, \mC \rangle + \frac{1}{\gamma^{(t)}} D_{\psi}(\mT, \mT^{(t)}), \\
     &= \argmin_{\mT \in \gC} \: \psi(\mT) - \langle \mT, \nabla \psi(\mT^{(t)}) - \gamma^{(t)} \mC \rangle, \\
