@@ -1,49 +1,31 @@
 \subsection{Symmetric Optimal Transport for Normalizing Affinity Matrices}\label{sec:doubly_sto}
 
-In this section, we explore an unconventional formulation of OT, where the input measure is transported onto... itself! We call this problem \emph{symmetric} or \emph{self} optimal transport. An interesting initial observation is that the unregularized OT problem in this setting, as defined in \Cref{eq:OT}, has a trivial solution: the identity coupling, which assigns all the mass of each point to itself. Since the cost matrix $\C_{\X}$ is zero along the diagonal, this coupling results in a total transport cost of zero.
+In this section, we introduce an unconventional formulation of optimal transport (OT), where the input measure is transported onto itself. We refer to this problem as \emph{symmetric} or \emph{self} optimal transport. A noteworthy initial observation is that the unregularized OT problem of \Cref{eq:OT} has a trivial solution under this setting: the identity coupling, which assigns each point's mass to itself. This occurs because the cost matrix $\C_{\X}$ has zero entries along the diagonal, resulting in a total transport cost of zero. However, by introducing constraints as in \Cref{eq:cot}, the mass is encouraged to distribute among neighboring points, producing a smooth version of a k-nearest neighbor graph.
 
-In some applications, the smoothing effect induced by the regularization has a primary importance on its own. A key example is the construction of doubly stochastic affinity matrices for clustering and dimensionality reduction \citep{landa2021doubly,Zass}, where smoothing enables connecting to neighbor points.
+We refer to these matrices as \emph{symmetric doubly stochastic matrices} \footnote{Doubly stochastic (DS) affinities are non-negative matrices whose rows and columns each have a unit $\ell_1$ norm.}. We first describe their construction under the specific choice of $D_\psi = \KL$ \ie the entropic OT setting. We then explore their interesting properties.
 
-Doubly stochastic (DS) affinities are non-negative matrices whose rows and columns have unit $\ell_1$ norm. 
-
-\paragraph{Benefits of the doubly stochastic normalization.}
-In many applications, it has been demonstrated that DS affinity normalization (\ie determining the nearest DS matrix to a given affinity matrix) offers numerous benefits. First, it can be seen as a relaxation of k-means \citep{zass2005unifying} and it is well-established that it enhances spectral clustering performances \citep{Ding_understand,Zass,beauchemin2015affinity}. Additionally, DS matrices present the benefit of being invariant to the various Laplacian normalizations \citep{von2007tutorial}. Recent observations indicate that the DS projection of the Gaussian kernel under the $\KL$ geometry is more resilient to heteroscedastic noise compared to its stochastic counterpart \citep{landa2021doubly}. It also offers a more natural analog to the heat kernel \citep{marshall2019manifold}.
-These properties have led to a growing interest in DS affinities, with their use expanding to various applications such as smoothing filters \citep{Milanfar}, subspace clustering \citep{lim2020doubly} and transformers \citep{sander2022sinkformers}.
-
-
-
-
-
-\hva{
-TO DO:
-\begin{itemize}
-    \item liens clustering spectral - doubly stochastic (zass sashua).
-\end{itemize}   
-}
-
-\paragraph{Symmetric Entropy-Constrained Optimal Transport.} Entropy-regularized
-OT \citep{peyre2019computational} and its connection to affinity
-matrices are crucial components in our solution. In the special case of uniform
-marginals, and for $\nu > 0$, entropic OT computes the minimum of $\Pb
-\mapsto \langle \Pb, \C \rangle -\nu \sum_{i} \operatorname{H}(\Pb_{i:})$
+\paragraph{Symmetric Entropy-Constrained Optimal Transport.} 
+We consider a setting where $N_S = N_T = n$. In the special case of uniform
+marginals, and for $\varepsilon^\star > 0$, entropic OT computes the minimum of $\Pb
+\mapsto \langle \Pb, \C \rangle -\varepsilon^\star \sum_{i} \operatorname{H}(\Pb_{i:})$
 over the space of doubly stochastic matrices $\{\Pb \in \R_{+}^{n \times n} :
 \Pb \bm{1} = \Pb^\top \bm{1} =\bm{1}\}$. The optimal solution is the
 \emph{unique} doubly stochastic matrix $\Pb^{\mathrm{ds}}$ of the form $\Pb^{\mathrm{ds}}=\diag(\mathbf{u})\K
-\diag(\mathbf{v})$ where $\K = \exp(-\C/\nu)$ is the Gibbs energy derived from
+\diag(\mathbf{v})$ where $\K = \exp(-\C/\varepsilon^\star)$ is the Gibbs energy derived from
 $\C$ and $\mathbf{u}, \mathbf{v}$ are positive vectors that can be found with
 the celebrated Sinkhorn-Knopp’s algorithm \citep{cuturi2013sinkhorn,
-sinkhorn1964relationship}. Interestingly, when the cost $\C$ is \emph{symmetric}
+sinkhorn1964relationship} (see \Cref{mem:sinkhorn}). Interestingly, when the cost $\C$ is \emph{symmetric}
 (\eg $\C \in \mathcal{D}$) we can take $\mathbf{u} = \mathbf{v}$ \cite[Section
 5.2]{idel2016review} so that the unique optimal solution is itself symmetric and writes  
 \begin{align}\label{eq:plan_sym_sinkhorn}
-    \Pb^{\mathrm{ds}} = \exp \left((\mathbf{f} \oplus \mathbf{f} - \Cb) / \nu \right) \text{ where } \mathbf{f} \in \R^n \,.
+    \Pb^{\mathrm{ds}} = \exp \left((\mathbf{f}^\star \oplus \mathbf{f}^\star - \Cb) / \varepsilon^\star \right) \text{ where } \mathbf{f} \in \R^n \,.
 \tag{DS}
 \end{align}
-In this case, an equivalent formulation for the symmetric entropic OT problem is
+In this case, an equivalent constrained formulation for the symmetric entropic OT problem is
 % To define a DS affinity from $\X$ using OT, the somewhat counterintuitive idea is to transport the unit vector $\bm{1}$ to itself with transportation cost $\C_{\X}$. Note that, since $\C_{\X} \in \mathcal{D}$ is null on the diagonal, the unconstrained OT plan is trivially the identity matrix $\mathbf{I}_n$. To retrieve information about the samples' neighborhoods, the idea is to force the mass to spread outside the diagonal typically using constraints on the entropy of the OT plan.
 % \begin{equation}
 % \begin{split}
-%     &\min_{\begin{smallmatrix} \Pb \in \R_{+}^{n \times n}: \ \Pb \bm{1} = \bm{1},  \Pb^\top \bm{1} = \bm{1}\end{smallmatrix}} \quad \langle \Pb, \C \rangle \quad -\nu \sum_{i} \operatorname{H}(\Pb_{i:}) 
+%     &\min_{\begin{smallmatrix} \Pb \in \R_{+}^{n \times n}: \ \Pb \bm{1} = \bm{1},  \Pb^\top \bm{1} = \bm{1}\end{smallmatrix}} \quad \langle \Pb, \C \rangle \quad -\varepsilon \sum_{i} \operatorname{H}(\Pb_{i:}) 
 %     %\text{s.t.} \quad \Pb \bm{1} = \bm{1}, \: \Pb = \Pb^\top \text{ and } \sum_i \operatorname{H}(\Pb_{i:}) \geq \eta \:,
 % \end{split}
 % \end{equation}
@@ -52,16 +34,16 @@ In this case, an equivalent formulation for the symmetric entropic OT problem is
 \label{eq:entropy_constrained_OT}
 \min_{\Pb \in \R_{+}^{n \times n}} \quad \langle \Pb, \Cb \rangle \quad \text{s.t.} \quad \Pb \bm{1} = \bm{1}, \: \Pb = \Pb^\top \text{ and } \sum_i \operatorname{H}(\Pb_{i:}) \geq \eta \:,
 \end{equation}
-where $0 \leq \eta \leq n (\log n + 1)$ is a constraint on the global entropy $\sum_i \operatorname{H}(\Pb_{i:})$ of the OT plan $\Pb$ which happens to be saturated at optimum (Appendix \ref{sec:proof_sinkhorn}). This constrained formulation of symmetric entropic OT will provide new insights into entropic affinities, as detailed in the next sections.
+where $0 \leq \eta \leq n (\log n + 1)$ is a constraint on the global entropy $\sum_i \operatorname{H}(\Pb_{i:})$ of the OT plan $\Pb$ which happens to be saturated at optimum.
 
 % \begin{remark}\label{rem:sink_proj}
 %     For a set $\mathcal{E}$, we denote $\operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{E}}(\K) = \argmin_{\Pb \in \mathcal{E}}\KL(\Pb | \K)$ the projection on $\mathcal{E}$ under the $\KL$ geometry. Then \citep{benamou2015iterative} shows that $\Pb^s = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{P} \cap \mathcal{S}}(\K)$ is another way of characterizing the solution of problem (\ref{eq:entropy_constrained_OT}), which thus consists in projecting a Gaussian kernel onto the set of doubly stochastic matrices under the $\KL$ geometry. As shown in \citep{Zass}, finding this closest doubly stochastic matrix can be linked to solving a relaxed cluster assignment problem. \titouan{vraiment pas sûr de 'intéret de cette remarque ici, + c'est pas vraiment proj sur P et S, c'est proj sur P, S et entropie globale geq than $\eta$}
 %     %In this framework, the KL is linked to normalized cut clustering \citep{shi2000normalized}.
 % \end{remark}
 
-%In practice, we fix $\nu$ which is equivalent to setting the entropy lower bound $\eta$ while $\f$ can be computed by solving the dual of (\ref{eq:entropy_constrained_OT}).
+%In practice, we fix $\varepsilon$ which is equivalent to setting the entropy lower bound $\eta$ while $\f$ can be computed by solving the dual of (\ref{eq:entropy_constrained_OT}).
 
-%and $\f \in \R^n$ and $\nu \in \R^*_+$ are the optimal Lagrange dual variables associated respectively with the stochasticity and entropy constraints in \eqref{eq:entropy_constrained_OT}. 
+%and $\f \in \R^n$ and $\varepsilon \in \R^*_+$ are the optimal Lagrange dual variables associated respectively with the stochasticity and entropy constraints in \eqref{eq:entropy_constrained_OT}. 
 
 %The problem \eqref{eq:entropy_constrained_OT} is convex since $\bm{p} \in \R_+^n \mapsto \operatorname{H}(\bm{p})$ is concave.
 
@@ -88,52 +70,51 @@ where $0 \leq \eta \leq n (\log n + 1)$ is a constraint on the global entropy $\
 
 % Relying on strong duality, one can show  that the solution, \ie the OT plan, has the form: 
 % \begin{align}\label{eq:plan_sym_sinkhorn}
-%     \Pb^{\mathrm{s}} = \exp \left((\f \oplus \f - \C) / \nu \right)
+%     \Pb^{\mathrm{s}} = \exp \left((\f \oplus \f - \C) / \varepsilon \right)
 % \tag{DS}
 % \end{align}
-% where $\f \in \R^n$ and $\nu \in \R^*_+$ are the optimal Lagrange dual variables associated respectively with the stochasticity and entropy constraints. . 
+% where $\f \in \R^n$ and $\varepsilon \in \R^*_+$ are the optimal Lagrange dual variables associated respectively with the stochasticity and entropy constraints. . 
 
 %As derived in appendix \ref{sec:proof_sinkhorn}, $\f$ must obey the following fixed point relation:$f_k
-% = - \nu \operatorname{LSE}\big((\f - \C_{:k}) / \nu \big)$  where $\operatorname{LSE}$ stands for \texttt{logsumexp}. Iterating this
+% = - \varepsilon \operatorname{LSE}\big((\f - \C_{:k}) / \varepsilon \big)$  where $\operatorname{LSE}$ stands for \texttt{logsumexp}. Iterating this
 % fixed point relation to compute $\f$ yields the celebrated Sinkhorn algorithm (in log domain) \citep{sinkhorn1967concerning}. The latter is very popular in OT, especially thanks to its quadratic complexity \citep{cuturi2013sinkhorn}.
 
 %\begin{remark}\label{rem:sink_proj}
-%    For a set $\mathcal{E}$, we denote $\operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{E}}(\K) =    \argmin_{\Pb \in \mathcal{E}}\KL(\Pb | \K)$. Denoting $\K = \exp(-\C/\nu)$, another characterization of this solution can be obtained with a Bregman KL projection: $\Pb^s = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{P} \cap \mathcal{S}}(\K)$ \citep{darroch1972generalized}. Hence solving (\ref{eq:entropy_constrained_OT}) is equivalent to projecting a Gaussian kernel $\K$ onto the set of doubly stochastic matrices under the $\KL$ geometry. As shown in \citep{Zass}, finding the closest doubly stochastic matrix to  $\K$ can be linked to solving a relaxed cluster assignment problem. In this framework, the KL is linked to normalized cut clustering \citep{shi2000normalized}.
+%    For a set $\mathcal{E}$, we denote $\operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{E}}(\K) =    \argmin_{\Pb \in \mathcal{E}}\KL(\Pb | \K)$. Denoting $\K = \exp(-\C/\varepsilon)$, another characterization of this solution can be obtained with a Bregman KL projection: $\Pb^s = \operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{P} \cap \mathcal{S}}(\K)$ \citep{darroch1972generalized}. Hence solving (\ref{eq:entropy_constrained_OT}) is equivalent to projecting a Gaussian kernel $\K$ onto the set of doubly stochastic matrices under the $\KL$ geometry. As shown in \citep{Zass}, finding the closest doubly stochastic matrix to  $\K$ can be linked to solving a relaxed cluster assignment problem. In this framework, the KL is linked to normalized cut clustering \citep{shi2000normalized}.
 %\end{remark}
 
 
 
 % Using Lagrangian duality, the above problem can be seen as a regularized problem of the form $\langle \Pb, \C \rangle + \varepsilon^\star \langle \operatorname{H}(\Pb), \bm{1} \rangle$, where $\varepsilon^\star$ is the optimal dual variable associated with the entropy constraint.
 
+We are going to see in what follows how to retrieve the formulation of the symmetric OT plan of \Cref{eq:plan_sym_sinkhorn} from \Cref{eq:entropy_constrained_OT}.
 
-In this section, we derive Sinkhorn iterations from the problem (\ref{eq:entropy_constrained_OT}). Let $\C \in \mathcal{D}$. 
-
-\begin{proof}
-We start by making the constraints explicit.
+For the above convex problem of \Cref{eq:entropy_constrained_OT} the Lagrangian writes, where $\varepsilon \in \mathbb{R}_+$, $\mathbf{f} \in \mathbb{R}^n$ and $\bm{\Gamma} \in \mathbb{R}^{n \times n}$:
 \begin{align}
-    \min_{\Pb \in \R_+^{n \times n}} \quad &\langle \Pb, \C \rangle \\
-    \text{s.t.} \quad &\sum_{i \in \integ{n}} \operatorname{H}(\Pb_{i:}) \geq \eta \\
-    & \Pb \bm{1} = \bm{1}, \quad \Pb = \Pb^\top \:.
+    \mathcal{L}(\Pb, \mathbf{f}, \varepsilon, \bm{\Gamma}) &= \langle \Pb, \C \rangle + \Big\langle \varepsilon, \eta - \sum_{i \in \integ{n}} \operatorname{H}(\Pb_i) \Big\rangle + 2\langle \mathbf{f}, \bm{1} - \Pb \bm{1} \rangle + \big\langle \bm{\Gamma}, \Pb - \Pb^\top \big\rangle \:.
 \end{align}
-For the above convex problem the Lagrangian writes, where $\nu \in \mathbb{R}_+$, $\mathbf{f} \in \mathbb{R}^n$ and $\bm{\Gamma} \in \mathbb{R}^{n \times n}$:
+Strong duality holds and the first order KKT condition gives for the optimal primal $\Pb^\star$ and dual $(\varepsilon^\star, \mathbf{f}^\star, \bm{\Gamma}^\star)$ variables: 
 \begin{align}
-    \mathcal{L}(\Pb, \mathbf{f}, \nu, \bm{\Gamma}) &= \langle \Pb, \C \rangle + \Big\langle \nu, \eta - \sum_{i \in \integ{n}} \operatorname{H}(\Pb_i) \Big\rangle + 2\langle \mathbf{f}, \bm{1} - \Pb \bm{1} \rangle + \big\langle \bm{\Gamma}, \Pb - \Pb^\top \big\rangle \:.
+    \nabla_{\Pb} \mathcal{L}(\Pb^\star, \mathbf{f}^\star, \varepsilon^\star, \bm{\Gamma}^\star) &= \C + \varepsilon^\star \log{\Pb^\star} - 2\mathbf{f}^\star \bm{1}^\top + \bm{\Gamma}^\star - \bm{\Gamma}^{\star\top} = \bm{0} \:.
 \end{align}
-Strong duality holds and the first order KKT condition gives for the optimal primal $\Pb^\star$ and dual $(\nu^\star, \mathbf{f}^\star, \bm{\Gamma}^\star)$ variables: 
+Since $\Pb^\star, \C \in \mathcal{S}$ we have $\bm{\Gamma}^\star - \bm{\Gamma}^{\star\top} = \mathbf{f}^\star \bm{1}^\top - \bm{1}\mathbf{f}^{\star \top}$. Hence $\C + \varepsilon^\star \log{\Pb^\star} - \mathbf{f}^\star \oplus \mathbf{f}^\star = \bm{0}$. Suppose that $\varepsilon^\star = 0$ then the previous reasoning implies that $\forall (i,j), C_{ij} = f_i^\star + f_j^\star$. Using that $\C \in \mathcal{D}$ we have $C_{ii} = C_{jj} = 0$ thus $\forall i,  f^\star_i = 0$ and thus this would imply that $\C = 0$ which is not allowed by hypothesis. Therefore $\varepsilon^\star \neq 0$ and the entropy constraint is saturated at the optimum by complementary slackness. Isolating $\Pb^\star$ then yields:
 \begin{align}
-    \nabla_{\Pb} \mathcal{L}(\Pb^\star, \mathbf{f}^\star, \nu^\star, \bm{\Gamma}^\star) &= \C + \nu^\star \log{\Pb^\star} - 2\mathbf{f}^\star \bm{1}^\top + \bm{\Gamma}^\star - \bm{\Gamma}^{\star\top} = \bm{0} \:.
+    \Pb^{\star} &= \exp{\left( (\mathbf{f}^\star \oplus \mathbf{f}^{\star} - \C) / \varepsilon^\star \right)} \:.
 \end{align}
-Since $\Pb^\star, \C \in \mathcal{S}$ we have $\bm{\Gamma}^\star - \bm{\Gamma}^{\star\top} = \mathbf{f}^\star \bm{1}^\top - \bm{1}\mathbf{f}^{\star \top}$. Hence $\C + \nu^\star \log{\Pb^\star} - \mathbf{f}^\star \oplus \mathbf{f}^\star = \bm{0}$. Suppose that $\nu^\star = 0$ then the previous reasoning implies that $\forall (i,j), C_{ij} = f_i^\star + f_j^\star$. Using that $\C \in \mathcal{D}$ we have $C_{ii} = C_{jj} = 0$ thus $\forall i,  f^\star_i = 0$ and thus this would imply that $\C = 0$ which is not allowed by hypothesis. Therefore $\nu^\star \neq 0$ and the entropy constraint is saturated at the optimum by complementary slackness. Isolating $\Pb^\star$ then yields:
+$\Pb^\star$ must be primal feasible in particular $\Pb^\star \bm{1} = \bm{1}$. This constraint gives us the Sinkhorn fixed point relation in the symmetric setting. It gives for $\mathbf{f}^\star$:
 \begin{align}
-    \Pb^{\star} &= \exp{\left( (\mathbf{f}^\star \oplus \mathbf{f}^{\star} - \C) / \nu^\star \right)} \:.
-\end{align}
-$\Pb^\star$ must be primal feasible in particular $\Pb^\star \bm{1} = \bm{1}$. This constraint gives us the Sinkhorn fixed point relation for $\mathbf{f}^\star$:
-\begin{align}
-    \forall i \in \integ{n}, \quad [\mathbf{f}^\star]_i = - \nu^\star \operatorname{LSE} \big((\mathbf{f}^\star - \C_{:i}) / \nu^\star \big)\,,
+    \forall i \in \integ{n}, \quad [\mathbf{f}^\star]_i = - \varepsilon^\star \operatorname{LSE} \big((\mathbf{f}^\star - \C_{:i}) / \varepsilon^\star \big)\,,
 \end{align}
 where for a vector $\bm{\alpha}$, we use the notation
 $\operatorname{LSE}(\bm{\alpha}) = \log \sum_{k} \exp (\alpha_k)$.
-\end{proof}
+
+\paragraph{Benefits of the doubly stochastic normalization.}
+In many applications, it has been demonstrated that DS affinity normalization (\ie determining the nearest DS matrix to a given affinity matrix) offers numerous benefits. First, and it is well-established that it enhances spectral clustering performances \citep{Ding_understand,Zass,beauchemin2015affinity}. Additionally, DS matrices present the benefit of being invariant to the various Laplacian normalizations \citep{von2007tutorial}. Recent observations indicate that the DS projection of the Gaussian kernel under the $\KL$ geometry is more resilient to heteroscedastic noise compared to its stochastic counterpart \citep{landa2021doubly}. It also offers a more natural analog to the heat kernel \citep{marshall2019manifold}.
+These properties have led to a growing interest in DS affinities, with their use expanding to various applications such as smoothing filters \citep{Milanfar}, subspace clustering \citep{lim2020doubly} and transformers \citep{sander2022sinkformers}.
+
+\begin{remark}{Relation with clustering}
+    it can be seen as a relaxation of k-means \citep{zass2005unifying}
+\end{remark}
 
 \vspace{0.5cm}
 \begin{prob}{Construction of adaptive affinities}

@@ -152,8 +152,6 @@ Second, we turn our attention to the repulsion term $\mathcal{L}_{\mathrm{rep}}(
 
 \end{mem1}
 
-\todo{add details about the difference between NCE and NEG}
-
 Applying the Noise Contrastive Estimation (NCE) technique to the repulsion term $\mathcal{L}_{\mathrm{rep}}(\mZ)$ in t-SNE has led to the development of several practical and effective methods. For the purposes of what follows, we introduce the matrix $\widehat{\simiZ}$, where $[\widehat{\simiZ}]_{ij} = [\simiZ]_{ij} / ([\simiZ]_{ij} + 1)$. The first approach leveraging this technique was LargeVis \citep{tang2016visualizing}, which simplifies to the following objective for minimizing the embeddings $\mZ$:
 \begin{align}\label{eq:LargeVis_pb}\tag{LargeVis}
     - \sum_{ij} [\simiX]_{ij} \log [\widehat{\simiZ}]_{ij} + \sum_{i \in N(i)} \log \left(1 - [\widehat{\simiZ}]_{ij}\right)

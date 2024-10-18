@@ -2,7 +2,7 @@
 
 In this initial section, we focus on DR methods that have closed-form solutions. Though they were historically the first methods considered for DR, the are still widely used nowadays. These methods are commonly referred to as \emph{spectral methods} because they are based on the spectral decomposition of the input affinity matrix. We will demonstrate that these methods are particular cases of \Cref{eq:DR_criterion} with the element-wise $L_2$ loss and $[\simiZ]_{ij} = \langle \vz_i, \vz_j \rangle$. Closed form solutions are based on the following key result by \cite{eckart1936approximation}.
 
-\begin{theorem}{\cite{eckart1936approximation}}\label{thm:eckart}
+\begin{theorem}{\citep{eckart1936approximation}}\label{thm:eckart}
 	Let $\mM \in \R^{m \times n}$ be a real matrix with singular value decomposition (SVD) given by $\mM = \sum_{i=1}^{r} \sigma_i \vu_i \vv_i^\top$ where $(\vu_1, \dots, \vu_r)$ and $(\vv_1, \dots, \vv_r)$ are orthonormal families of vectors in $\R^m$ and $\R^n$ respectively, and $\sigma_1 \geq \dots \geq \sigma_r > 0$ are the singular values of $\mM$. Let $k \in \N$ with $k \leq r$ and define 
 	\begin{align}
 		\mS_k = \sum_{i=1}^{k} \vu_i \vu_i^\top \quad \text{and} \quad \mM_k = \mS_k \mM = \sum_{i=1}^{k} \sigma_i \vu_i \vv_i^\top

@@ -1,6 +1,6 @@
 \section{The Distributional Perspective}\label{sec:dist_perspective_dr}
 
-In this section, we propose to treat both data samples and their embeddings as probability distributions. We introduce the theory of Optimal Transport (OT) \citep{villani2009optimal,peyre2019computational}, which plays a central role in this thesis. OT offers an elegant approach for quantifying the distance between two distributions, specifically a source and a target, while leveraging the geometry of the underlying spaces. It can be seen as a canonical way to lift a ground distance between points to a distance between measures supported on these points. We begin by outlining the classical formulation of OT, where a well-defined cost is assigned between individual source and target samples, and then expand the presentation to cases where the source and target distributions lie in incomparable spaces. While the classical setting is useful for defining meaningful affinities within a domain, the latter approach becomes particularly relevant when modeling the embedding process from high-dimensional to low-dimensional spaces as an OT problem.
+In this section, we propose to treat both data samples and their embeddings as probability distributions. We introduce the principles of Optimal Transport (OT) \citep{villani2009optimal,peyre2019computational}, which plays a central role in this thesis. OT offers an elegant approach for quantifying the distance between two distributions, specifically a source and a target, while leveraging the geometry of the underlying spaces. It can be seen as a canonical way to lift a ground distance between points to a distance between measures supported on these points. We begin by outlining the classical formulation of OT, where a well-defined cost is assigned between individual source and target samples, and then expand the presentation to cases where the source and target distributions lie in incomparable spaces. While the classical setting is useful for defining meaningful affinities within a domain, the latter approach becomes particularly relevant when modeling the embedding process from high-dimensional to low-dimensional spaces as an OT problem.
 
 
 \subsection{Comparing Distributions with Optimal Transport}\label{sec:background_ot}
@@ -21,7 +21,7 @@ In what follows, we first introduce the discrete OT problem before presenting re
 \subsubsection{Unregularized Optimal Transport}
 
 \paragraph{Monge formulation.}
-In the original Monge formulation, the transfer of mass is modeled by a mapping, known as the Monge map, which assigns each point \(\vx^S_i\) in the support of \(\mu_S\) to a point \(\vx^T_j\) in the support of \(\mu_T\), thereby transporting the mass from \(\mu_S\) to \(\mu_T\). To define the overall transport cost, we introduce a ground cost function \(c: (\vx, \vy) \in \text{supp}(\mu_S) \times \text{supp}(\mu_T) \to \mathbb{R}_+\). One can typically consider the squared Euclidean distance $(\vx, \vy) \mapsto \| \vx - \vy \|_2^2$ or any Riemannian distance over a manifold \citep{villani2009optimal} depending on the underlying spaces of $\text{supp}(\mu_S) \times \text{supp}(\mu_T)$. The total transport cost is then the sum of the ground costs for each unit of mass moved according to the map \(T\). Thus, the Monge problem is formulated as
+In the original Monge formulation, the transfer of mass is modeled by a mapping, known as the Monge map, which assigns each point \(\vx^S_i\) in the support of \(\mu_S\) to a point \(\vx^T_j\) in the support of \(\mu_T\), thereby transporting the mass from \(\mu_S\) to \(\mu_T\). To define the overall transport cost, we introduce a ground cost function \(c: (\vx, \vy) \in \text{supp}(\mu_S) \times \text{supp}(\mu_T) \to \mathbb{R}_+\). One can typically consider the squared Euclidean distance $(\vx, \vy) \mapsto \| \vx - \vy \|_2^2$ or any Riemannian distance over a manifold \citep{villani2009optimal} depending on the underlying spaces of $\text{supp}(\mu_S) \times \text{supp}(\mu_T)$. The total transport cost is then the sum of the ground costs for each unit of mass moved according to the map $T : \text{supp}(\mu_S) \to \text{supp}(\mu_T)$. Thus, the Monge problem is formulated as
 \begin{align}
     \label{eq:monge_pb}
     \tag{Monge}
@@ -33,7 +33,7 @@ First, note that there may not always exist a map \(T\) that pushes \(\mu_S\) fo
 
 
 \paragraph{Kantorovich relaxation.}
-We have just seen that defining transport through a map considerably limits the scope of problems that can be efficiently addressed. To overcome this, a well-known relaxation proposed by \citep{kantorovich1942translocation} involves optimizing over the space of probabilistic couplings with marginals \(\mu_S\) and \(\mu_T\). This approach seeks to compute a \emph{coupling} \(\mT \in \mathbb{R}_{+}^{N_S \times N_T}\), which represents a joint probability measure over \(\text{supp}(\mu_S) \times \text{supp}(\mu_T)\). Intuitively, this relaxation allows for mass splitting, meaning that a unit of mass from \(\mu_S\) can be distributed across multiple points in \(\mu_T\), and vice versa.
+We have just seen that defining transport through a map considerably limits the scope of problems that can be efficiently addressed. To overcome this, a well-known relaxation proposed by \citep{kantorovich1942translocation} involves optimizing over the space of probabilistic couplings with marginals \(\mu_S\) and \(\mu_T\). This approach seeks to compute a \emph{coupling} \(\mT \in \mathbb{R}_{+}^{N_S \times N_T}\), which represents a joint probability measure over \(\text{supp}(\mu_S) \times \text{supp}(\mu_T)\). Intuitively, this relaxation allows for mass splitting, meaning that a unit of mass from \(\mu_S\) can be distributed across multiple points in \(\mu_T\).
 The Kantorovich formulation of OT is then given by the following linear program
 \begin{equation}
     \tag{OT}
@@ -42,11 +42,11 @@ The Kantorovich formulation of OT is then given by the following linear program
 \end{equation}
 where $\gU(\va, \vb)$ is the transport polytope with marginals $(\bm{a}, \bm{b})$ that is $\gU(\va, \vb) \coloneqq \left\{ \mT \in \R_+^{N_S \times N_T} \mid \mT \mathbf{1}_n = \va, \mT^\top \mathbf{1}_N = \vb \right\}$ and the \emph{cost matrix} $\mathbf{C} \in \R_+^{N_S \times N_T}$ such that $C_{ij} = c(\vx_i^S, \vx_j^T)$ encodes the pairwise distances between the source and target samples. 
 
-Note that for discrete measures, the Monge and Kantorovich formulations are equivalent when $\mu_S = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\vx^S_i}$ and $\nu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\vx^T_i}$. In this case, the solution of \eqref{eq:Wasserstein} corresponds to an extremal point of the polytope of doubly stochastic matrices \citep{bertsimas1997introduction}. This implies that there is no splitting of mass, meaning that each row of the optimal solution $\mT^\star$ contains exactly one non-zero coefficient. These solutions are also referred to as \emph{assignation matrices} in \Cref{chapter:DistR}.
+Note that for discrete measures, the Monge and Kantorovich formulations are equivalent when $\mu_S = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\vx^S_i}$ and $\nu = \frac{1}{N} \sum_{i \in \integ{N}} \delta_{\vx^T_i}$. In this case, there exists a solution of \eqref{eq:Wasserstein} which corresponds to an extremal point of the polytope of doubly stochastic matrices \citep{bertsimas1997introduction}. This implies that there is no splitting of mass, meaning that each row of the optimal solution $\mT^\star$ contains exactly one non-zero coefficient. These solutions are also referred to as \emph{assignation matrices} in \Cref{chapter:DistR}.
 
 In the Kantorovich formulation, the set $\gU(\va, \vb)$ forms a convex polytope, making the optimal transport (OT) problem in \eqref{eq:OT} a linear program. As a result, it can be efficiently solved using linear programming solvers \citep{dantzig2016linear}. For a comprehensive review of network flow algorithms employed to solve \Cref{eq:OT}, we refer the reader to \citep{peyre2019computational}.
 
-\begin{mem1}{Primer on OT for continuous distributions}
+\begin{mem1}{Primer on OT for continuous distributions}\label{mem:ot_continuous}
     We consider a Polish space, \ie a separable completely metrizable topological space, denoted $(\mathcal{X}, d_{\gX})$ and a cost function $c : \mathcal{X} \times \mathcal{X} \to \R_+$. Let $\mu_S \in \mathcal{P}(\mathcal{X})$ and $\mu_T \in \mathcal{P}(\mathcal{X})$ be two probability measures that we aim to compare.
 
     The original Monge formulation \citep{monge1781memoire} of OT seeks the map $T$ satisfying $T_{\#}\mu_S = \mu_T$ that minimizes the transportation cost given by
@@ -72,7 +72,7 @@ In the Kantorovich formulation, the set $\gU(\va, \vb)$ forms a convex polytope,
     \end{mem1}
 
 \begin{mem1}{Metric properties of the Wasserstein distance}
-    When \( c = d_{\gX}^p \), the Wasserstein distance \( W \) defined in \Cref{eq:Wasserstein} forms a proper metric between probability measures on \( \mathcal{X} \) with bounded p-moments, known as the \( p \)-Wasserstein distance \citep{villani2009optimal}. A key advantage of Wasserstein distances is their capacity to compare probability measures while taking into account the geometry of the underlying space, as dictated by the ground cost \( c \). This contrasts with commonly used f-divergences \citep{csiszar1967information}, such as the Total Variation (TV) norm or Kullback-Leibler (KL) divergence, which only perform pointwise comparisons of the two density functions. Another crucial aspect of the Wasserstein distance is its ability to compare distributions with non-overlapping supports and quantify the dissimilarity between these supports. A consequence is that the Wasserstein distance is closely related to weak convergence. Indeed, convergence in Wasserstein distance \( W(\mu_n,\mu) \xrightarrow{n \to +\infty} 0 \) is equivalent to the weak convergence of measures, meaning that for any continuous and bounded function $f$: $\int_{\gX} f \mathrm{d}\mu_n \xrightarrow{n \to +\infty} \int_{\gX} f \mathrm{d}\mu$ \citep{villani2009optimal}.
+    When \( c = d_{\gX}^p \), the Wasserstein distance \( W \) defined in \Cref{eq:Wasserstein} forms a proper metric between probability measures on \( \mathcal{X} \) with bounded p-moments, known as the \( p \)-Wasserstein distance \citep{villani2009optimal}. A key advantage of Wasserstein distances is their capacity to compare probability measures while taking into account the geometry of the underlying space, as dictated by the ground cost \( c \). This contrasts with commonly used f-divergences \citep{csiszar1967information}, such as the Total Variation (TV) norm or Kullback-Leibler (KL) divergence, which only perform pointwise comparisons of the two density functions. In particular, unlike these divergences, the Wasserstein distance is able to compare distributions with non-overlapping supports and quantify the dissimilarity between these supports. A consequence is that the Wasserstein distance is closely related to weak convergence. Indeed, convergence in Wasserstein distance \( W(\mu_n,\mu) \xrightarrow{n \to +\infty} 0 \) is equivalent to the weak convergence of measures, meaning that for any continuous and bounded function $f$: $\int_{\gX} f \mathrm{d}\mu_n \xrightarrow{n \to +\infty} \int_{\gX} f \mathrm{d}\mu$ \citep{villani2009optimal}.
 \end{mem1}
 
 
@@ -83,15 +83,15 @@ To enable faster algorithmic resolution as well as smoother solutions, one can r
 \begin{align}
     \min_{\mT \in \gU(\bm{a}, \bm{b})} \: \langle \mT, \C \rangle + \varepsilon^\star \sum_i \psi(\mT_{i:})
 \end{align} 
-where $\varepsilon^\star > 0$. The regularizer $\Psi$ is typically related to the notion of \emph{generalized entropy} \citep{blondel2020learning} and encourages the mass transported from each source sample to be usually more dispersed compared to the non regularized OT formulation of \Cref{eq:OT}.
+where $\varepsilon^\star > 0$. The regularizer $\psi$ is typically related to the notion of \emph{generalized entropy} \citep{blondel2020learning} and encourages the mass transported from each source sample to be usually more dispersed compared to the non regularized OT formulation of \Cref{eq:OT}.
 
 We now introduce a slightly unconventional perspective on regularized optimal transport (OT) \citep{dessein2018regularized}, which is equivalent to the penalized objective and will serve as the foundation for \Cref{chapter:SNEkhorn}.
 Interestingly, regularized OT can also be framed using a convex constraint as follows
 \begin{align}\label{eq:cot}
-    \min_{\mT \in \gU(\bm{a}, \bm{b})} \: \langle \mT, \mC \rangle \quad \text{s.t.} \quad  \mT \in \overline{\mathcal{B}}(\eta)
+    \min_{\mT \in \gU(\bm{a}, \bm{b})} \: \langle \mT, \mC \rangle \quad \text{s.t.} \quad  \mT \in \mathcal{B}(\eta)
     \tag{ROT}
 \end{align}
-where $\overline{\mathcal{B}}(\eta) \coloneqq \{ \mT \: \text{s.t.} \: \sum_i \psi(\mT_{i:}) \leq \eta \}$. Note that the previously introduced $\varepsilon^\star$ is the optimal dual variable associated with the constraint $\overline{\mathcal{B}}(\eta)$. Therefore the two formulations are equivalent if the constraint $\mT \in \overline{\mathcal{B}}(\eta)$ is active. The formulation of \Cref{eq:cot} allows for direct control over the value of the regularizer \( \psi \) in the solution, whereas in the more commonly used penalized formulation, this control is typically indirect and governed by the regularization parameter \( \varepsilon^\star \).
+where $\mathcal{B}(\eta) \coloneqq \{ \mT \: \text{s.t.} \: \sum_i \psi(\mT_{i:}) \leq \eta \}$. Note that the previously introduced $\varepsilon^\star$ is the optimal dual variable associated with the constraint $\mathcal{B}(\eta)$. Therefore the two formulations are equivalent if the constraint $\mT \in \mathcal{B}(\eta)$ is active. The formulation of \Cref{eq:cot} allows for direct control over the value of the regularizer \( \psi \) in the solution, whereas in the more commonly used penalized formulation, this control is typically indirect and governed by the regularization parameter \( \varepsilon^\star \).
 
 Throughout, we make the following assumption on $\psi$.
 \begin{assumption}\label{assumption_psi}
@@ -108,17 +108,17 @@ Note that when $\psi$ is strictly convex, this supremum is uniquely achieved and
 The following proposition offers valuable insights into solving the regularized optimal transport (OT) problem using two key strategies: optimization via the primal variables using a projection-based method, or through the dual variables using standard convex optimization techniques.
 
 \begin{proposition}\label{prop:cot}
-    Let $\psi : \R^{N_S} \to \R$ satisfy \cref{assumption_psi}. Let $(\bm{a}, \bm{b}, \eta)$ be such that $\gU(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)$ has an interior point and let $\mT^\star$ be a solution of
+    Let $\psi : \R^{N_S} \to \R$ satisfy \Cref{assumption_psi}. Let $(\bm{a}, \bm{b}, \eta)$ be such that $\gU(\bm{a}, \bm{b}) \cap \mathcal{B}(\eta)$ has an interior point and let $\mT^\star$ be a solution of
 \begin{align}
-    \min_{\mT \in \gU(\bm{a}, \bm{b})} \: \langle \mT, \mC \rangle \quad \text{s.t.} \quad  \mT \in \overline{\mathcal{B}}(\eta) \:.
+    \min_{\mT \in \gU(\bm{a}, \bm{b})} \: \langle \mT, \mC \rangle \quad \text{s.t.} \quad  \mT \in \mathcal{B}(\eta) \:.
     \tag{ROT}
 \end{align}
-    Let $\varepsilon^\star$ be an optimal dual variable associated with $\mT \in \overline{\mathcal{B}}(\eta)$.
+    Let $\varepsilon^\star$ be an optimal dual variable associated with $\mT \in \mathcal{B}(\eta)$.
     If $\varepsilon^\star > 0$, then
     \begin{itemize}[leftmargin=*, labelsep=0.1em]
         \item for any $0 < \sigma \leq \varepsilon^\star$, it holds, where $\mK_\sigma \coloneqq \nabla \psi^*(-\mC/ \sigma)$, 
         \begin{align}\label{eq:proj-rot}\tag{Proj-ROT}
-            \mT^\star = \operatorname{Proj}^{D_\psi}_{\gU(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)}(\mK_\sigma) \:.
+            \mT^\star = \operatorname{Proj}^{D_\psi}_{\gU(\bm{a}, \bm{b}) \cap \mathcal{B}(\eta)}(\mK_\sigma) \:.
         \end{align}
         \item One also has $\mT^\star = \nabla \psi^*((\mC - \bm{\lambda}^\star \oplus \bm{\mu}^\star) / \varepsilon^\star)$
         where $(\bm{\lambda}^\star, \bm{\mu}^\star, \varepsilon^\star)$ solve
@@ -136,7 +136,7 @@ We present a detailed proof for pedagogical purposes, as it employs tools that w
 \begin{proof}    
     % \vspace{0.5cm}
     % \textbf{\underline{$\ast$ Part I : Proof of the Bregman projection formulation.}}
-    Simplifying the constant terms $\operatorname{Proj}^{D_\psi}_{\gU(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta)}(\mK_\varepsilon)$ boils down to the following problem
+    Simplifying the constant terms $\operatorname{Proj}^{D_\psi}_{\gU(\bm{a}, \bm{b}) \cap \mathcal{B}(\eta)}(\mK_\varepsilon)$ boils down to the following problem
     \begin{align}
         \min_{\mT \in \gU(\va, \vb)} \quad &\sum_i \psi(\mT_{i:}) - \langle \mT, \nabla \psi(\mK_\sigma) \rangle \\
         \text{s.t.} \quad &\sum_i \psi(\mT_{i:}) \leq \eta \:.
@@ -157,7 +157,7 @@ We present a detailed proof for pedagogical purposes, as it employs tools that w
     \end{align}
     Similarly, for the optimal transport problem of \eqref{prop:cot}
     \begin{align}
-        \min_{\mT} \quad \langle \mT, \mC \rangle \quad \text{s.t.} \quad  \mT \in \gU(\bm{a}, \bm{b}) \cap \overline{\mathcal{B}}(\eta) \:,
+        \min_{\mT} \quad \langle \mT, \mC \rangle \quad \text{s.t.} \quad  \mT \in \gU(\bm{a}, \bm{b}) \cap \mathcal{B}(\eta) \:,
     \end{align}
     we get the optimality condition for optimal primal-dual variables $(\mT^\star, \varepsilon^\star, \bm{\rho}^\star, \bm{\kappa}^\star, \mathbf{\Lambda}^\star)$
     \begin{align}
@@ -177,10 +177,10 @@ We present a detailed proof for pedagogical purposes, as it employs tools that w
     Therefore the KKT conditions are met hence $(\mT, \nu, \bm{\lambda}, \bm{\mu}, \mathbf{\Omega}) = (\mT^\star, \nu^\star, \bm{\lambda}^\star, \bm{\mu}^\star, \mathbf{\Omega}^\star)$ and $\mT^\star = \mT^\star$.
 \end{proof}
 
-Interpreting the problem as a $\psi$-Bregman projection over a convex set as done in \Cref{eq:proj-rot} gives the advantage of employing alternating Bregman projection schemes \citep{benamou2015iterative}. This approach involves decomposing the convex set into an intersection of convex subsets for which projection is straightforward, and then alternating these projections cyclically until convergence. Convergence to the projection onto the intersection is guaranteed if the sets are affine. If the sets are not affine, such as $\overline{\mathcal{B}}(\eta)$, we can introduce auxiliary variables to slightly modify the updates while still ensuring convergence \citep{censor1998dykstra}. This approach is known as \emph{Dykstra's algorithm} \citep{dykstra1983algorithm}. Overall, this framework of Bregman projections is highly flexible and allows for the easy incorporation of various convex constraints by simply applying the corresponding projections \citep{benamou2015iterative}.
+Interpreting the problem as a $\psi$-Bregman projection over a convex set as done in \Cref{eq:proj-rot} gives the advantage of employing alternating Bregman projection schemes \citep{benamou2015iterative}. This approach involves decomposing the convex set into an intersection of convex subsets for which projection is straightforward, and then alternating these projections cyclically until convergence. Convergence to the projection onto the intersection is guaranteed if the sets are affine. If the sets are not affine, such as $\mathcal{B}(\eta)$, we can introduce auxiliary variables to slightly modify the updates while still ensuring convergence \citep{censor1998dykstra}. This approach is known as \emph{Dykstra's algorithm} \citep{dykstra1983algorithm} (see \eg \Cref{algo:Dykstra_pcot} in \Cref{sec:OTARI}). Overall, this framework of Bregman projections is highly flexible and allows for the easy incorporation of various convex constraints by simply applying the corresponding projections \citep{benamou2015iterative}.
 
 \begin{remark}\label{rem:mirror_descent}
-    The aforementioned characterization as a projection holds under the condition $0 < \sigma \leq \varepsilon^\star$. Intuitively, this condition ensures that the initial point $\mK_\sigma$ lies outside the set $\overline{\mathcal{B}}(\eta)$ so that the constraint is active when projecting.
+    The aforementioned characterization as a projection holds under the condition $0 < \sigma \leq \varepsilon^\star$. Intuitively, this condition ensures that the initial point $\mK_\sigma$ lies outside the set $\mathcal{B}(\eta)$ so that the constraint is active when projecting.
     It is important to note that there is a more general method that does not require a well-chosen initial point. This method is based on mirror descent under the geometry induced by the Bregman divergence $D_\psi$. At each iteration, it involves solving a projection problem, relying on Bregman or Dykstra depending on whether all the convex sets are affine. We detail the update of the primal variable $\mT$ and show how it can be expressed as a projection under the Bregman divergence $D_\psi$.
     \begin{align}
     \mT^{(t+1)} &= \argmin_{\mT \in \gC} \: \langle \mT, \mC \rangle + \frac{1}{\gamma^{(t)}} D_{\psi}(\mT, \mT^{(t)}), \\
@@ -232,7 +232,7 @@ Using the dual formulation of \Cref{eq:dual-ROT}, which is convex like any dual 
     \begin{align}
         \operatorname{Proj}^{\KL}_{\gU(\vh)}(\mT) = \left(\left(\vh \oslash \mT \one  \right) \one^\top \right) \odot \mT
     \end{align}
-    and the Sinkhorn algorithm in the primal simply alternates projections onto $\{ \mT \in \gU(\bm{a}) \}$ and $\{ \mT^\top \in \gU(\bm{b}) \}$ until convergence.
+    and the Sinkhorn algorithm in the primal simply alternates projections onto $\{ \mT \in \gU(\bm{a}) \}$ and $\{ \mT^\top \in \gU(\bm{b}) \}$ until convergence. This algorithm converges exponentially fast, \ie at a linear rate, when applied to a reference matrix $\mK_{\varepsilon^\star}$ whose entries are all lower bounded by a positive number \citep{sinkhorn1967concerning}. For an in-depth study of cases where convergence is not guaranteed, \ie when the reference matrix contains zero entries, we refer to \citep{baradat2022convergence}.
 
     \paragraph{Dual formulation.} Again considering a fixed dual variable $\varepsilon^\star$, the dual problem of \Cref{eq:dual-ROT} can be adressed using a block coordinate strategy on the dual variables $(\bm{\lambda}, \bm{\mu})$. Indeed for a fixed $\bm{\mu}$ one has a closed form solution for $\bm{\lambda}$ and vice versa. This dual ascent strategy can be understood as a Sinkhorn algorithm in log domain:
     \begin{align}

@@ -44,17 +44,12 @@
     \begin{align}
         \nabla_{\bm{\gamma}} \mathcal{G}(\bm{\gamma}) = (\log \xi + 1 )\bm{1} - \operatorname{H}(\mP^\star(\bm{\gamma})) \:.
     \end{align}
-    Similarly to \citep{van2023snekhorn}, one can show that the above gradient is canceled for a unique $\overline{\bm{\gamma}}$. The optimal dual variable is then given by $\bm{\gamma}^\star = [\overline{\bm{\gamma}}]_+$.
-    % Denoting by $\bm{\rho} = \bm{1} + \bm{\kappa}$ and taking the dual feasibility constraint $\bm{\kappa} \bm{\geq} \bm{0}$ into account gives the solution: for any $i$, $\rho^\star_i = \max(\varepsilon^\star_i, 1)$ where $\bm{\varepsilon}^\star$ solves (\ref{eq:entropic_affinity_pb}) with cost $\C = -\log \mK$.
-    % Moreover we have that $\sigma \leq \min(\bm{\varepsilon}^\star)$ where $\bm{\varepsilon}^\star \in (\R^*_+)^n$ solves (\ref{eq:entropic_affinity_pb}). Therefore for any $i \in \integ{n}$, one has $\varepsilon_i^\star / \sigma \geq 1$. Thus there exists $\kappa_i^\star \in \R_+$ such that $\sigma (1 + \kappa_i^\star) = \varepsilon_i^\star$. 
-    
-    % This $\bm{\kappa}^\star$ cancels the above gradient \ie $(\log \xi + 1 )\bm{1} = \operatorname{H}(\mP^\star(\bm{\kappa}^\star))$ thus solves the dual problem. Therefore given the expression of $\mP^\star$ we have that $\operatorname{Proj}^{\operatorname{\KL}}_{\mathcal{B}_{\xi}}(\mK) = \mP^{\mathrm{e}}$.
-
-    Hence 
+    Similarly to \Cref{prop:entropic_affinity_as_linear_program}, one can show that the above gradient is canceled for a unique $\overline{\bm{\gamma}}$. The optimal dual variable is then given by $\bm{\gamma}^\star = [\overline{\bm{\gamma}}]_+$.
+    Hence we have 
     \begin{align}
         \operatorname{Proj}^{\KL}_{\gU(\bm{a}) \cap \mathcal{B}_{\KL}(\xi)}(\mathbf{K}) = \diag(\mathbf{\Lambda} \mathbf{1})^{-1} \mathbf{\Lambda} \quad \text{with} \quad \mathbf{\Lambda} = \exp{(\diag(\bm{1} + \bm{\gamma}^\star)^{-1} \log \mathbf{K})}
     \end{align}
-    where the optimal dual variable $\bm{\gamma}^\star \bm{\geq} \bm{0}$ can be found using any unidimensional root search method.
+    where the optimal dual variable $\bm{\gamma}^\star \bm{\geq} \bm{0}$ can be found using any unidimensional root search method \citep{vladymyrov2013entropic}.
 
     \paragraph{Projection onto $\mathcal{S}$.} The $\KL$ projection onto $\mathcal{S}$ of $\mK \in \R_+^{n \times n}$ amounts to the following problem:
     \begin{align}
@@ -273,6 +268,6 @@ From Danskin's theorem \citep{danskin1966theory}, one can recover the solution o
 \begin{align}
     \mP^\star = \nabla \psi^* \left(\diag(\bm{\varepsilon}^\star)^{-1} (\C - \bm{\lambda}^\star \oplus \bm{\mu}^\star) \right)
 \end{align}
-where $(\bm{\lambda}^\star, \bm{\mu}^\star, \bm{\varepsilon}^\star)$ solve \eqref{eq:dual-otari-s}.
+where $(\bm{\lambda}^\star, \bm{\mu}^\star, \bm{\varepsilon}^\star)$ solve \Cref{eq:dual-otari-s}.
 \end{proof}
 
