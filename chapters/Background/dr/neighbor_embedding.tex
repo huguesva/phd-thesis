@@ -44,7 +44,14 @@ Entropic affinities rely on adaptive bandwidths to control the entropy of each r
     &\text{with} \:\: \varepsilon^\star_i \in \mathbb{R}^*_+ \:\: \text{s.t.} \: \operatorname{H}([\simiX^{\mathrm{e}}]_{i:}) = \log{\xi} + 1\,. \label{eq:entropic_affinity_pb}
 \end{split}\tag{EA}
 \end{equation}
-The hyperparameter $\xi$, which is also known as \emph{perplexity}, can be interpreted as the effective number of neighbors for each data point. Indeed, a perplexity of $\xi$ means that each row of $\simiX^{\mathrm{e}}$ (which is a discrete probability since $\simiX^{\mathrm{e}}$ is row-wise stochastic) has the same entropy as a uniform distribution over $\xi$ neighbors. Therefore, it provides the practitioner with an interpretable parameter specifying which scale of dependencies the affinity matrix should faithfully capture. In practice, a root-finding algorithm is used to find the bandwidth parameters $(\varepsilon_i^\star)_{i \in \integ{N}}$ that satisfy the constraints \citep{vladymyrov2013entropic}. Hereafter, with a slight abuse of language, we call $e^{\operatorname{H}([\simiX]_{i:})-1}$ the perplexity of the datapoint $i$ (associated with the affinity $\simiX$).
+The hyperparameter $\xi$, which is also known as \emph{perplexity}, can be interpreted as the effective number of neighbors for each data point. Indeed, a perplexity of $\xi$ means that each row of $\simiX^{\mathrm{e}}$ (which is a discrete probability since $\simiX^{\mathrm{e}}$ is row-wise stochastic) has the same entropy as a uniform distribution over $\xi$ neighbors. Therefore, it provides the practitioner with an interpretable parameter specifying which scale of dependencies the affinity matrix should faithfully capture. In \Cref{fig:varying_perp}, we present the TSNE embedding of a 3D Mammoth point cloud dataset. As the perplexity increases, the representation captures the global structure of the mammoth more effectively. In contrast, when the perplexity is set too low, the embedding primarily focuses on local relationships, leading to a less coherent global representation. In practice, a root-finding algorithm is used to find the bandwidth parameters $(\varepsilon_i^\star)_{i \in \integ{N}}$ that satisfy the constraints \citep{vladymyrov2013entropic}. Hereafter, with a slight abuse of language, we call $e^{\operatorname{H}([\simiX]_{i:})-1}$ the perplexity of the datapoint $i$ (associated with the affinity $\simiX$).
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/Background/mammoth_varying_perp.pdf}
+    \caption{TSNE embedding of a 3D Mammoth using different values of perplexity. Generated with \emph{TorchDR} \citep{vanassel2024torchdr}.}
+    \label{fig:varying_perp}
+\end{figure}
 
 
 \paragraph{SNE objective.}
@@ -156,7 +163,14 @@ Applying the Noise Contrastive Estimation (NCE) technique to the repulsion term 
 \begin{align}\label{eq:LargeVis_pb}\tag{LargeVis}
     - \sum_{ij} [\simiX]_{ij} \log [\widehat{\simiZ}]_{ij} + \sum_{i \in N(i)} \log \left(1 - [\widehat{\simiZ}]_{ij}\right)
 \end{align}
-where $N(i)$ denotes the set of negative samples for point $i$, randomly drawn from the dataset. UMAP \citep{mcinnes2018umap}, a closely related algorithm, has since gained more popularity among practitioners than LargeVis. While LargeVis uses the same affinity matrix as t-SNE for both input, $ \simiX = \overline{\simiX^{\mathrm{e}}}$, and output, $ \simiZ = \simiZ^{\mathrm{b}}$ with a Student-t kernel, UMAP introduces customized affinity matrices inspired by Riemannian geometry and algebraic topology. Apart from these differences in affinity matrices, which have been shown to have limited impact in practice \citep{bohm2020unifying}, the design of UMAP and LargeVis is nearly identical with the use of the binary cross entropy as core objective. We refer to \citep{damrich2022t} for a comprehensive review of NCE-based neighbor embedding methods.
+where $N(i)$ denotes the set of negative samples for point $i$, randomly drawn from the dataset. UMAP \citep{mcinnes2018umap}, a closely related algorithm, has since gained more popularity among practitioners than LargeVis. While LargeVis uses the same affinity matrix as t-SNE for both input, $ \simiX = \overline{\simiX^{\mathrm{e}}}$, and output, $ \simiZ = \simiZ^{\mathrm{b}}$ with a Student-t kernel, UMAP introduces customized affinity matrices inspired by Riemannian geometry and algebraic topology. Apart from these differences in affinity matrices, the design of UMAP and LargeVis is very similar with the use of the binary cross entropy as core objective. Another variant of interest is InfoTSNE \citep{damrich2022t}, which utilizes the InfoNCE criterion \citep{oord2018representation} in place of the binary cross-entropy loss. The embeddings produced by these methods are displayed for the MNIST dataset in \Cref{fig:pano_ne}. While they all successfully cluster the data, they exhibit different inter-cluster spacing due to various trade-offs between attractive and repulsive forces. In contrastive-based methods, this trade-off can be adjusted by varying the number of negative samples for each point. For a more detailed discussion on these properties, we refer to \citep{damrich2022t}.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/Background/pano_ne.pdf}
+    \caption{TSNE, InfoTSNE, LargeVis and UMAP embeddings of MNIST. Generated with \emph{TorchDR} \citep{vanassel2024torchdr}.}
+    \label{fig:pano_ne}
+\end{figure}
 
 
 \paragraph{b) Escaping local minima with early exaggeration.} Unlike spectral methods (\Cref{sec:spectral_methods}), neighborhood embedding (NE) techniques do not have closed-form solutions and are solved using gradient-based approaches such as stochastic gradient descent or Adam \citep{kingma2014adam}. To better understand why the NE optimization problem, shown in \Cref{eq:ne_attraction_repulsion}, is particularly prone to local minima, let us consider the case of t-SNE, where the gradients are given by:

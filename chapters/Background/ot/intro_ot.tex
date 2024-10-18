@@ -223,7 +223,7 @@ Using the dual formulation of \Cref{eq:dual-ROT}, which is convex like any dual 
     \[
     \KL(\mT \| \mQ) = \langle \mT, \log \left( \mT \oslash \mQ \right) - \bm{1} \bm{1}^\top \rangle,
     \]
-    with the associated negative entropy $\psi_{\KL}(\mathbf{p}) = \operatorname{H}(\vp) \coloneqq \langle \mathbf{p}, \log \mathbf{p} - 1 \rangle$.
+    with the associated negative entropy $\psi_{\KL}(\mathbf{p}) = - \operatorname{H}(\vp) \coloneqq \langle \mathbf{p}, \log \mathbf{p} - 1 \rangle$.
     In this case, \Cref{eq:cot} simplifies to the widely popular entropic OT \citep{cuturi2013sinkhorn}. Its popularity arises from the significant computational gains it enables, with a runtime complexity of $\gO(N_S \times N_T)$, compared to at least $\gO(N^3 \log N)$, when $N_S \sim N_T \sim N$, required by the network flow algorithm \citep{peyre2019computational}. Moreover, it is highly compatible with modern hardware (see \Cref{remark:ot_gpu}).
     
     \paragraph{Primal formulation.}
