@@ -2,7 +2,6 @@
 
 
 We begin by considering the most canonical Markov Random Field (MRF), the multivariate Gaussian model. To emphasize dependencies among the samples, we employ a covariance structure in the form of a Kronecker product between the row and column covariances. For simplicity, we assume an identity matrix for the column covariance, though any covariance structure could be used. For the row precision matrix, we adopt the conjugate prior to this MRF likelihood, which is the well-known Wishart distribution. As we will demonstrate, the natural adaptation of our framework to this model results in the widely recognized PCA embedding solution. In what follows, for a continuous variable $\bm{\Theta}_{Z}$, $\mathbb{P}(\bm{\Theta}_{Z} = \cdot)$ denotes its density.
-\todo{give formula of Wishart}
 
 \begin{restatable}{theorem}{PCAgraphcoupling}
 \label{PCA_graph_coupling}

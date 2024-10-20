@@ -112,7 +112,7 @@ If $\bm{\varepsilon}^\star \bm{>} \bm{0}$, then it holds $\mP^\star = \operatorn
 
 According to \cref{prop:pcot}, one can solve \eqref{eq:pcOT} using either alternating projections or dual ascent. 
 % Note that upon convergence, dual ascent outputs the exact solution of \eqref{eq:pcOT} as it provides a set of variables $(\mP^\star, \bm{\lambda}^\star, \bm{\mu}^\star, \bm{\varepsilon}^\star)$ satisfying its KKT conditions. 
-When $\bm{\varepsilon}^\star \bm{>} \bm{0}$, meaning that all constraints are active \ie $\forall i, \: \psi(\mP^\star_{i:}) = \psi(\mathbf{p}_{\xi})$, dual ascent is usually faster. However, if $\bm{\varepsilon}^\star$ has null components, one can still rely on $\operatorname{Proj}^{D_\psi}_{\gU(\bm{a}, \bm{b}) \cap \mathcal{H}_\psi(\xi)}(\mK_\varepsilon)$ to provide an approximate solution as alternating Bregman projections are always guaranteed to converge.
+When $\bm{\varepsilon}^\star \bm{>} \bm{0}$, meaning that all constraints are active \ie $\forall i, \: \psi(\mP^\star_{i:}) = \psi(\mathbf{p}_{\xi})$, dual ascent is usually faster. If $\bm{\varepsilon}^\star$ has null components, one can apply the mirror descent strategy outlined in \Cref{rem:mirror_descent}, selecting $\gU(\bm{a}, \bm{b}) \cap \mathcal{H}_\psi(\xi)$ (or an appropriate variant) as the feasible set.
 
 Note that we can impose the pointwise constraint equivalently on the rows or the columns of the OT plan. Hence (OTARI-t) can be defined by imposing the constraint on the target samples \textit{i.e.}\ $\mP^\top \in \mathcal{H}_\psi(\xi)$.
 We also propose a doubly constrained formulation called (OTARI-d) that consists of projecting $\mK_\sigma$ onto the nonempty set $\mathcal{B}_\psi(\xi^{a}) \cap \mathcal{B}^\top_\psi(\xi^b)$ 
