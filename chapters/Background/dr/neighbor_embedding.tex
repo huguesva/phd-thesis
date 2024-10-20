@@ -13,7 +13,7 @@ In this section, we focus on the second major family of DR methods : the neighbo
 The core idea of these methods is to focus on capturing the neighborhood relationships of each point by relying on soft neighborhood graphs defined in both the input and latent spaces. These soft neighborhood graphs are usually constructed from a \emph{kernel-like} matrix which undergoes a scalar \citep{van2008visualizing}, row-stochastic \citep{hinton2002stochastic} or doubly stochastic \citep{lu2019doubly,van2023snekhorn} normalization. Gaussian kernel $[\simiZ]_{ij} = \exp(- [\mC_{\mZ}]_{ij} / \sigma)$, or heavy-tailed Student-t kernel $[\simiZ]_{ij} = (1+\sigma^{-1}[\mC_{\mZ}]_{ij})^{-1}$, are typical choices \citep{van2008visualizing}, where $\sigma > 0$ is a bandwidth parameter.
 Within our framework, these methods correspond to \cref{eq:DR_criterion} with $L = \KL$ or $L=\BCE$.
 
-A key advantage of these soft neighborhood graphs is their lower sensitivity to data dimensionality compared to traditional affinity measures. For instance, the inner product affinity, $\mP = \mX \mX^\top$, has a magnitude that scales directly with the dimensionality. This often leads to collapsed embeddings, where distinguishing class separability becomes challenging, particularly when the embedding dimension is much smaller than the input dimension (see, e.g., \Cref{fig:kuzushiji}). As a result, neighborhood-based embeddings have become the preferred approach for data visualization, especially in dimensionality reduction settings where $d=2$.
+One notable advantage of these soft neighborhood graphs is their reduced sensitivity to data dimensionality compared to conventional affinity measures. It is well-known that the largest singular value of a matrix drawn from a standard Gaussian distribution tends to increase in proportion to the square root of its dimension \citep{pastur1967distribution}. This phenomenon partly accounts for the tendency of spectral methods to produce collapsed embeddings, making it difficult to maintain class separability, particularly when the embedding dimension is significantly smaller than the input dimension (see, e.g., \Cref{fig:kuzushiji}). As a result, neighborhood-based embeddings have become the preferred approach for data visualization where $d=2$.
 
 \begin{remark}
     Note that the bandwidth $\sigma$ is often set to $1$ as it only influences the scale of the obtained embeddings thus has limited practical impact.
@@ -25,8 +25,8 @@ NE objectives share a common structure: they aim to minimize the weighted sum of
     \min_{\mZ \in \R^{N \times d}} \: - \sum_{ij} [\simiX]_{ij} \log [\simiZ]_{ij} + \mathcal{L}_{\mathrm{rep}}(\mZ) \:.
 \end{align}
 
-In the above, \(\mathcal{L}_{\mathrm{rep}}(\mZ)\) represents the repulsive part of the loss function that takes different forms depending on the method. We now detail the two most popular NE methods: Stochastic Neighbor Embedding (SNE) and t-Distributed Stochastic Neighbor Embedding (t-SNE) as their principles are at the core of other NE approaches.
-% while \(\gamma\) is a hyperparameter that controls the balance between attraction and repulsion.
+In the above, \(\mathcal{L}_{\mathrm{rep}}(\mZ)\) represents the repulsive part of the loss function that takes different forms depending on the method. We will now discuss the most influential NE technique: t-Distributed Stochastic Neighbor Embedding (t-SNE). To provide context, we begin by introducing Stochastic Neighbor Embedding (SNE), the original model that established the foundational principles.
+
 
 \subsubsection{The Stochastic Neighbor Embedding Approach}\label{sec:sne}
 
@@ -198,7 +198,7 @@ To mitigate this issue, \citet{van2008visualizing} introduced a technique known 
 \begin{figure}[t]
     \centering
     \includegraphics[width=\linewidth]{figures/Background/various_init_exagg.pdf}
-    \caption{TSNE embedding with different initialization and early exaggeration settings. Top : MNIST dataset. Bottom : single cell RNA-seq data from \citep{macosko2015highly}. Generated using \emph{TorchDR} \citep{vanassel2024torchdr}.
+    \caption{TSNE embedding with different initialization and early exaggeration settings. Top: MNIST dataset. Bottom: single cell RNA-seq data from \citep{macosko2015highly}. Generated using \emph{TorchDR} \citep{vanassel2024torchdr}.
     }
     \label{fig:init_exagg}
 \end{figure}

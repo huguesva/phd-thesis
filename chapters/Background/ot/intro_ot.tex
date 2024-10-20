@@ -58,7 +58,7 @@ In the Kantorovich formulation, the set $\gU(\va, \vb)$ forms a convex polytope,
     The relaxation by \cite{kantorovich1942translocation} consists of optimizing instead over the space of probabilistic couplings with marginals $\mu_S$ and $\mu_T$ denoted by $\gU(\mu_S, \mu_T)$. The latter is defined as the probability distributions on $(\mathcal{X} \times \mathcal{X})$ whose marginals are $\mu$ and $\nu$ that is $\gU(\mu_S, \mu_T) = \left\{ \gamma \in \mathcal{P}(\mathcal{X} \times \mathcal{X}) : (P_{1})_\# \gamma = \mu_S, (P_{2})_\# \gamma = \mu_T \right\}$ where $P_{1}$ and $P_{2}$ are the projections such that $P_{1}(\bm{x}, \bm{y}) = \bm{x}$ and $P_{2}(\bm{x}, \bm{y}) = \bm{y}$.
     The Kantorovich formulation of OT is then given by
     \begin{align}\label{eq:Wasserstein}
-        W_c(\mu_S, \mu_T) \coloneqq \inf_{\gU \in \gU(\mu_S, \mu_T)} \int_{\mathcal{X} \times \mathcal{X}} c(\bm{x}, \bm{y}) \mathrm{d}\pi(\bm{x}, \bm{y}) \:.
+        W_c(\mu_S, \mu_T) \coloneqq \inf_{\pi \in \gU(\mu_S, \mu_T)} \int_{\mathcal{X} \times \mathcal{X}} c(\bm{x}, \bm{y}) \mathrm{d}\pi(\bm{x}, \bm{y}) \:.
     \end{align}
     This formulation is a convex optimization problem and the infimum is well
     defined under mild assumptions \citep{santambrogio2015optimal}. If the optimal
@@ -244,7 +244,7 @@ Using the dual formulation of \Cref{eq:dual-ROT}, which is convex like any dual 
 \end{mem1}
 
 \begin{remark}{(OT on the GPU)}\label{remark:ot_gpu}
-    For common choices of regularizers $\Psi$ (e.g., Shannon entropy or $\ell_\alpha$-norms), both formulations \Cref{eq:proj-rot} and \Cref{eq:dual-rot} rely heavily on matrix reductions, which are easily parallelizable and can be significantly accelerated when computed on a GPU.
+    For common choices of regularizers $\psi$ (e.g., Shannon entropy or $\ell_\alpha$-norms), both formulations \Cref{eq:proj-rot} and \Cref{eq:dual-rot} rely heavily on matrix reductions, which are easily parallelizable and can be significantly accelerated when computed on a GPU.
     
     As highlighted previously, the primal formulation of \Cref{eq:proj-rot} is appealing because it allows for easily adapting the OT problem by incorporating new constraints in the alternating projection scheme. However, working in the primal space can be limiting in terms of memory when using a GPU. Indeed, when $N_S \times N_T$ exceeds a dimensionality on the order of $10^8$, it is likely that the full transport plan $\mT$ will not fit entirely in the GPU memory.
     

@@ -2,28 +2,23 @@
 
 \section{Optimal Transport with Adaptive Regularization}\label{sec:OTARI}
 
-
-\paragraph{Motivations.}
-As we have seen in \Cref{sec:background_ot}, regularizing OT with a strictly convex term is a widely adopted practical approach, leading to reduced numerical complexity and more diffuse OT plans \citep{peyre2019computational}.
-As an illustration, the prominent entropic regularization \citep{cuturi2013sinkhorn} leads to a dense plan.
-In some applications, the smoothing effect induced by the regularization has a primary importance on its own. A key example is the construction of doubly stochastic affinity matrices for clustering and dimensionality reduction: \citep{landa2021doubly,Zass}, where smoothing enables connecting to neighbor points, as presented in \Cref{sec:doubly_sto} and in \Cref{subsec:sea} with the \emph{symmetric entropic affinity}.
-Another is domain adaptation \citep{courty2017joint} where smoothed OT often results in enhanced performance when compared to non-regularized ones (see for instance \cref{tab:da_exps}). 
-
-Many OT regularization schemes on the primal formulation impose a scalar constraint on the global transport plan.
-% \titouan{bon c'est pas si vrai il y a plein de manière de pénaliser: dual semi-dual, primal sur les colonnes etc... j'ai donc un peu changé}.
-Consequently, central data points tend to exhibit a denser (or more diffuse) transport plan compared to extreme (or outlier) data points, for which diffusion is more costly. As a result, the latter points receive limited benefits from the smoothing effect introduced by the regularizer as shown in the left side of \cref{fig:entropic_ot_plans}. This partly explains OT's significant sensitivity to outliers in many applications \citep{mukherjee2021outlier, pmlr-v202-chuang23a}. 
-% \titouan{la je pense qu'il faut parler de toute la littérature ‘‘outlier robust OT'' par exemple justin solomon mais il y en a plein d'autres}. 
-To remedy this, one needs to constrain the transport plan in a pointwise manner.
-Note that this has recently been explored for constructing affinity matrices \citep{van2023snekhorn} (\ie symmetric OT setting) leading to enhanced noise robustness and clustering abilities.
-
 In this section, we develop a new formulation of OT, called OT with Adaptive Regularization (OTARI), allowing to control, for any strictly convex function $\psi$, the value of $\psi$ on each row and/or column of the OT plan. 
 We then show the advantages of OTARI over usual regularized OT on domain adaptation tasks, focusing particularly on the negative entropy and the $\ell_2$ norm respectively associated with entropic \citep{cuturi2013sinkhorn} and quadratic \citep{blondel2018smooth} optimal transport.
+
+\paragraph{Motivations.}
+As discussed in \Cref{sec:background_ot}, regularizing optimal transport (OT) with a strictly convex term is a widely adopted approach that reduces numerical complexity and results in more diffuse OT plans \citep{peyre2019computational}. A prominent example is entropic regularization \citep{cuturi2013sinkhorn}, which produces dense transport plans.
+
+In some applications, the smoothing effect introduced by regularization is of primary importance. A key example, beyond constructing doubly stochastic affinity matrices for clustering and dimensionality reduction, where smoothing helps connect neighboring points (\Cref{sec:doubly_sto} and \Cref{subsec:sea}), is domain adaptation \citep{courty2017joint}, where regularized OT often improves performance compared to non-regularized alternatives (see, for example, \Cref{tab:da_exps}).
+
+Many OT regularization schemes on the primal formulation impose a scalar constraint on the global transport plan.
+Consequently, central data points tend to exhibit a denser (or more diffuse) transport plan compared to extreme (or outlier) data points, for which diffusion is more costly. As a result, the latter points receive limited benefits from the smoothing effect introduced by the regularizer as shown in the left side of \cref{fig:entropic_ot_plans}. This partly explains OT's significant sensitivity to outliers in many applications \citep{mukherjee2021outlier, pmlr-v202-chuang23a}.
+To remedy this, one needs to constrain the transport plan in a pointwise manner, as we did in the previous sections of this chapter.
 
 
 \subsection{Formulation of the Problem}\label{sec:pwot}
 
 In this section, we present a new formulation of OT that imposes constraints on each row of the OT plan.
-We begin by introducing the set of matrices with \emph{point-wise} constraints. To set the upper bound, we rely on the perplexity parameter $\xi$ \citep{van2023snekhorn} that can be interpreted as the number of effective neighbors for each point. Concretely, we define $\mathbf{e}_{\xi} = \frac{1}{\xi}(\ind_{i \leq \xi})_{i}$ the probability vector of $\xi$ uniform arms and
+We begin by introducing the set of matrices with \emph{point-wise} constraints. To set the upper bound, we rely again on the perplexity parameter $\xi$ that can be interpreted as the number of effective neighbors for each point. Concretely, we define $\mathbf{e}_{\xi} = \frac{1}{\xi}(\ind_{i \leq \xi})_{i}$ the probability vector of $\xi$ uniform arms and
 \begin{align}
   \mathcal{H}_\psi(\xi) &\coloneqq \{\mP \bm{\geq} \bm{0} \: \text{s.t.}\ \: \forall i, \: \psi(\mP_{i:}) \leq \psi(\mathbf{e}_{\xi}) \} \:.
 \end{align}

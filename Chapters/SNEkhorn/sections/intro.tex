@@ -16,9 +16,9 @@ This chapter is based on material from the following publications:
     \end{center}
 \end{mdframed}
 
-Considering symmetric similarities is appealing since the proximity between two
-points is inherently symmetric. Nonetheless, the Euclidean projection done in t-SNE : $\overline{\Pb^{\mathrm{e}}} = \frac{1}{2} \left( \Pb^{\mathrm{e}} + \Pb^{\mathrm{e} \top} \right)$ \emph{does not preserve the construction of entropic
-affinities}.  In particular, $\overline{\Pb^{\mathrm{e}}}$ is not stochastic in
+It focuses on addressing \Cref{prob:adaptive_ds}, which aims to reconcile entropic affinities (\Cref{sec:background_dr}) with symmetric doubly stochastic ones (\Cref{sec:doubly_sto}). In other words, it involves finding the appropriate method for symmetrizing entropic affinities.
+The Euclidean projection used in t-SNE, $\overline{\Pb^{\mathrm{e}}} = \frac{1}{2} \left( \Pb^{\mathrm{e}} + \Pb^{\mathrm{e} \top} \right)$, is inadequate because it \emph{fails to preserve the structure of the entropic affinities}.
+In particular, $\overline{\Pb^{\mathrm{e}}}$ is not stochastic in
 general and $\operatorname{H}(\overline{\Pb_{i:}^{\mathrm{e}}}) \neq (\log{\xi} + 1)$ thus the entropy associated with each point is no longer controlled after symmetrization (see the bottom left plot of \Cref{fig:coil}). This is
 arguably one of the main drawbacks of the approach. By contrast, the
 $\Pb^{\mathrm{se}}$ affinity that will be introduced in \Cref{sec:sym_entropic_affinity} can
@@ -31,7 +31,7 @@ accurately set the entropy in each point to the desired value $\log \xi + 1$.  A
     \label{fig:coil}
 \end{figure}
 
-\paragraph{Contributions.} In this work, we study the missing
+\paragraph{Outline.} In this work, we study the missing
 link between EAs, which are easy to tune and adaptable to data with heterogeneous density, and doubly stochastic affinities which have interesting properties in practical applications as seen in \Cref{sec:doubly_sto}. 
 %To this end, we tackle two major challenges.
 %Extending entropic affinities from stochastic to
@@ -47,4 +47,4 @@ novel links with entropy-regularized Optimal Transport (OT) (\Cref{sec:entropic_
 affinities. The latter enables controlling the entropy in each point, unlike
 t-SNE's post-processing symmetrization, and producing a genuinely doubly stochastic affinity. We show how to
 compute this new affinity efficiently using a dual ascent algorithm.
-In \Cref{sec:DR_with_OT}, we introduce SNEkhorn: a DR algorithm that couples this new symmetric entropic affinity with a doubly stochastic kernel in the low-dimensional embedding space, without sphere concentration issue \cite{lu2019doubly}. We finally showcase the benefits of symmetric entropic affinities on a variety of applications in Section \ref{sec:DR_experiments} including spectral clustering and DR experiments on datasets ranging from images to genomics data.
+In \Cref{sec:DR_with_OT}, we introduce SNEkhorn: a DR algorithm that couples this new symmetric entropic affinity with a doubly stochastic kernel in the low-dimensional embedding space, without sphere concentration issue \cite{lu2019doubly}. We showcase the benefits of symmetric entropic affinities on a variety of applications in Section \ref{sec:DR_experiments} including spectral clustering and DR experiments on datasets ranging from images to genomics data. In \Cref{sec:OTARI}, we build upon these findings to introduce an adaptive version of regularized optimal transport.
