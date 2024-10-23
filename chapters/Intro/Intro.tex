@@ -4,33 +4,24 @@
 
 \section{Representation Learning at the Core of Data Science}
 
-One major objective of unsupervised learning \citep{Hastie2009} is to provide interpretable and meaningful approximate representations of the data that best reveal its structure \ie the underlying geometric relationships between the data samples.
+When working with unlabeled data, practitioners often rely on unsupervised learning tools to gain insights that help them adapt subsequent analysis pipelines for better utilization of the available data. Thus, building tools to explore and analyze high-dimensional data has become a core challenge in modern data science \citep{donoho2000high, rudin2022interpretable}. The primary difficulty lies in developing interpretable and meaningful approximate representations of the data that effectively reveal its structure, particularly the underlying geometric relationships between data samples.
 
-Similar in essence to Occam's principle frequently employed in supervised learning, the preference for unsupervised data representation often aligns with the pursuit of simplicity, interpretability or visualizability in the associated model.
+These aspects are critical in many real-world applications, such as cell biology \citep{regev2017human, kobak2019art, becht2019dimensionality}, where collaboration with domain experts is essential for interpreting results, extracting meaningful insights from models, and refining experimental designs accordingly.
 
-These aspects are determinant in many real-world applications, such as cell biology
-\citep{regev2017human,kobak2019art,becht2019dimensionality} where the interaction with domain experts is paramount for interpreting the results and extracting meaningful insights from the model. 
-
+In line with Occam's principle, the preference for unsupervised data representation is often driven by the pursuit of simplicity and interpretability in the resulting models. However, real-world data is typically both redundant and noisy, so the models must account for this complexity and normalize the noise to capture the underlying meaningful structure.
 
 
-Exploring and analyzing high-dimensional data is a core problem of data science. As presented in, it often requires constructing dense low-dimensional and interpretable representations of the data. 
-
-
-Typically, this data is redundant and noisy, making it difficult to directly extract useful information from the raw data. Therefore, the challenge of finding a compact and meaningful representation of high-dimensional data becomes paramount.
-
-
-
-
-Ideally, the reduced representation should align with the intrinsic dimensionality of the data, which broadly refers to the minimum number of parameters needed to capture its essential characteristics.
-
-
-
-\paragraph{The AI revolution is happening in latent space.} aaa
+\paragraph{The AI revolution is happening in latent space.} \citep{assran2023self} \citep{rombach2022high}
 
 
 \section{What is Dimensionality reduction in this Landscape}
 
-When a ground distance (or similarity) metric is available on $\mathcal{X}$, learning data representations translates into solving a dimensionality reduction (DR) problem.
+
+\begin{mdframed}
+When a ground distance (or similarity) metric is available in the input space, learning data representations translates into solving a dimensionality reduction (DR) problem.
+\end{mdframed}
+
+\citep{chen2020simple}
 
 \begin{figure}[t]
     \centering
@@ -40,12 +31,18 @@ When a ground distance (or similarity) metric is available on $\mathcal{X}$, lea
     \label{fig:intro_fig}
 \end{figure}
 
+Ideally, the reduced representation should align with the intrinsic dimensionality of the data, which broadly refers to the minimum number of parameters needed to capture its essential characteristics.
+
 \paragraph{Classical approaches to dimensionality reduction.}
-Dimensionality reduction (DR) is of central importance when dealing with high-dimensional data \citep{donoho2000high}. It mitigates the curse of dimensionality, allowing for greater statistical flexibility and less computational complexity. DR also enables visualization that can be of great practical interest for understanding and interpreting the structure of large datasets.
-Most seminal approaches include Principal Component Analysis (PCA) \citep{pearson1901liii},  multidimensional scaling \citep{kruskal1978multidimensional} and more broadly kernel eigenmaps methods such as Isomap \citep{balasubramanian2002isomap}, Laplacian eigenmaps \citep{belkin2003laplacian} and diffusion maps \citep{coifman2006diffusion}. These methods share the definition of a pairwise similarity kernel that assigns a high value to close neighbors and the resolution of a spectral problem. They are well understood and unified in the kernel PCA framework \citep{ham2004kernel}.
+The most foundational methods involve linearly projecting the data onto a lower-dimensional space. These approaches, including Principal Component Analysis (PCA) \citep{pearson1901liii} and multidimensional scaling \citep{kruskal1978multidimensional}, are among the most well-established and widely studied techniques in dimensionality reduction. Their mechanisms can be extended by considering various types of similarity measures between data points in the input space. This leads to kernel-based methods such as Isomap \citep{balasubramanian2002isomap}, Laplacian eigenmaps \citep{belkin2003laplacian}, and diffusion maps \citep{coifman2006diffusion}. These methods share a common structure: they define a pairwise similarity kernel that assigns high values to nearby neighbors and solve a spectral problem. They are well understood and can be unified under the kernel PCA framework \citep{ham2004kernel}.
 
 \paragraph{The revolution of neighbor embedding methods.}
-In the past decade, the field has witnessed a major shift with the emergence of a new class of methods. They are also based on pairwise similarities but these are not converted into inner products. Instead, they define pairwise similarity functions in both input and latent spaces and optimize a cost between the two. Among such methods, the Stochastic Neighbor Embedding (SNE) algorithm \citep{NIPS2002SNE}, its heavy-tailed symmetrized version t-SNE \citep{maaten2008tSNE} or more recent approaches like LargeVis \citep{tang2016visualizing} and UMAP \citep{mcinnes2018umap} are arguably the most used in practice. These will be referred to as \textit{SNE-like} or \textit{neighbor embedding} methods in what follows. They are increasingly popular and now considered state-of-art techniques in many fields \citep{li2017application,kobak2019art,anders2018dissecting}. Their popularity is mainly due to their exceptional ability to preserve the local structure, \textit{i.e.}\ close points in the input space have close embeddings, as shown empirically \citep{wang2021understanding}. They also demonstrate impressive performances in identifying clusters \citep{arora2018analysis, linderman2019clustering}. However this is done at the expense of global structure, that these methods struggle in preserving \citep{wattenberg2016use, coenen2019understanding} \textit{i.e.}\ the relative large-scale distances between embedded points do not necessarily correspond to the original ones.
+In the past decade, the field has undergone a significant transformation with the rise of a new class of methods that have largely surpassed classical spectral approaches in the context of data visualization. Although still based on pairwise similarities, these methods do not convert these similarities into inner products. Instead, they define similarity functions in both the input and latent spaces, optimizing a cost function between the two. Prominent examples of such methods include the Stochastic Neighbor Embedding (SNE) algorithm \citep{NIPS2002SNE}, its heavy-tailed and symmetrized version t-SNE \citep{maaten2008tSNE}, and more recent approaches like LargeVis \citep{tang2016visualizing} and UMAP \citep{mcinnes2018umap}. These methods, referred to as \textit{SNE-like} or \textit{neighbor embedding} methods, have become increasingly popular and are now considered state-of-the-art in many fields \citep{li2017application,kobak2019art,anders2018dissecting}.
+ 
+Their popularity stems from their remarkable ability to preserve local structure—i.e., nearby points in the input space remain close in the embedding space, as shown empirically \citep{wang2021understanding}. Moreover, they excel at identifying clusters \citep{arora2018analysis, linderman2019clustering}, although this often comes at the expense of preserving global structure \citep{wattenberg2016use, coenen2019understanding}. Finally, these methods are highly scalable and particularly well-suited for GPU computation.
+
+
+Although they are widely used in practice, there remains a significant gap in the theoretical understanding of neighbor embedding methods compared to well-known spectral algorithms. Addressing this gap is one of the primary objectives of this thesis.
 
 
 \section{Outline of the thesis}
@@ -53,13 +50,19 @@ In the past decade, the field has witnessed a major shift with the emergence of 
 This thesis is organized as follows.
 
 \paragraph{Chapter 2.}
-In this chapter, we review all the necessary background material for the subsequent chapters. We begin with an overview of various dimensionality reduction (DR) methods through the lens of the affinity matching problem, where affinities are defined in both input and latent spaces, and the goal is to match them. We then provide two perspectives on DR methods: one based on latent variable models and the other from a distributional viewpoint using the framework of optimal transport. Extending these perspectives to neighbor embedding methods will be the primary focus of \Cref{chapter:GraphCoupling} and \Cref{chapter:DistR}. Finally, we raise the question of designing new affinity matrices that are more robust to noise heterogeneities in order to address real-world scenarios. This motivates the work presented in \Cref{chapter:SNEkhorn}.
+We review all the necessary background material for the subsequent chapters. We begin with an overview of various dimensionality reduction (DR) methods through the lens of the affinity matching problem, where affinities are defined in both input and latent spaces, and the goal is to match them. We then provide two perspectives on DR methods: one based on latent variable models and the other from a distributional viewpoint using the framework of optimal transport. Extending these perspectives to neighbor embedding methods will be the primary focus of \Cref{chapter:GraphCoupling} and \Cref{chapter:DistR}. Finally, we raise the question of designing new affinity matrices that are more robust to noise heterogeneities in order to address real-world scenarios. This motivates the work presented in \Cref{chapter:SNEkhorn}.
 
 \paragraph{Chatper 3.} 
-In this chapter, we introduce a new latent variable model that broadly encompasses both linear and non-linear dimensionality reduction (DR) methods. This framework allows us to conceptualize these methods in a probabilistic manner, thus facilitating the incorporation of priors and providing a clearer understanding of the underlying modeling assumptions when applying these methods in practice.
+Latent variable models offer a grounded and intuitive formulation of dimensionality reduction (DR). Their key advantage is that they enable extensions to various models and the adaptation of priors. However, current formulations of DR as latent variable models are restricted to linear DR methods, thus excluding popular approaches such as neighborhood embedding methods. 
 
-\paragraph{Chapter 4.} 
-In this chapter, we adopt a distributional perspective and frame affinity-based dimensionality reduction (DR) approaches as optimal transport problems. Thinking in terms of distributions provides the flexibility to control the granularity of the resulting low-dimensional representation, allowing us to retrieve points that serve as prototypes for multiple input data points. This perspective unifies DR and clustering within a common framework, and we introduce a novel method that jointly learns both a reduced representation and a clustering of the data. We demonstrate that, in practice, this approach delivers strong performance in both clustering and dimensionality reduction, allowing for a more effective exploration of the trade-offs between these two aspects.
+In \Cref{chapter:GraphCoupling}, we introduce a novel latent variable model that broadly encompasses both linear and non-linear dimensionality reduction (DR) methods. This framework allows us to conceptualize these methods in a probabilistic manner, thus facilitating the incorporation of priors and providing a clearer understanding of the underlying modeling assumptions when applying these methods in practice.
 
-\paragraph{Chapter 5.} 
-In this final chapter, we introduce a new family of affinity matrices that effectively account for varying noise levels in the data. This is achieved by adapting the geometry under which the symmetric version is constructed, leading to a more coherent framework where normalization and symmetrization are performed simultaneously.
+\paragraph{Chapter 4.}  
+Existing dimensionality reduction (DR) approaches primarily focus on computing a unique embedding for each input data, resulting in the same number of points in the latent space as in the input space. In parallel with this DR framework, clustering methods are often employed to group points into meaningful clusters that can be easily inspected. This approach can be understood as a way to control the \emph{granularity} of the embedding, as aggregating points helps mitigate experimental noise and enhances the robustness of downstream analysis \emph{(Persad et al., 2023)}. Although DR and clustering share some key similarities, these processes are typically addressed separately, as no specific relationship between them has yet been established.
+
+In \Cref{chapter:DistR}, we propose a novel approach that unifies DR and clustering within a common framework by treating both the data and the embeddings as probability distributions. Through this lens, we demonstrate that dimensionality reduction (DR) approaches can be interpreted as optimal transport problems. Conceptualizing the problem in terms of distributions allows us to control the granularity of the resulting low-dimensional representation, enabling the retrieval of points that act as prototypes for multiple input data points. This formulation allows for the joint computation of a reduced representation and a clustering of the data. We show that, in practice, this approach achieves strong performance in simultaneous clustering and dimensionality reduction, enabling a more effective exploration of the trade-offs between these two aspects.
+
+\paragraph{Chapter 5.}  
+In dimensionality reduction (DR) formulations, it is common to represent the structure of the data using a Markov chain matrix, which defines the transition probabilities between points. These row-normalized, or \emph{row-stochastic}, matrices are often symmetrized for DR purposes, typically by averaging them with their transposes—a process known as Euclidean symmetrization. However, in most neighbor embedding methods, the affinity matrix is often preprocessed using pointwise control of Shannon entropy to account for heteroscedastic noise.
+
+In \Cref{chapter:SNEkhorn}, we argue that Euclidean symmetrization may not be suitable in such cases. We demonstrate that symmetrizing under the appropriate geometric framework can resolve this inconsistency, allowing for the simultaneous handling of both Shannon entropy control and symmetrization. We then extend this formulation to a broader class of entropy functions in the context of non-symmetric optimal transport, showing that pointwise constraints can enhance the robustness of the resulting projections in domain adaptation scenarios.
