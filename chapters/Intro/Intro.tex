@@ -2,31 +2,43 @@
 
 \minitoc
 
-\section{Representation Learning at the Core of Data Science}
+\section{The Central Role of Representation Learning in Machine Learning}
 
-When working with unlabeled data, practitioners often rely on unsupervised learning tools to gain insights that help them adapt subsequent analysis pipelines. Thus, building tools to explore and analyze high-dimensional data has become a core challenge in modern data science \citep{donoho2000high, rudin2022interpretable}. The primary difficulty lies in developing interpretable and meaningful approximate representations of the data that effectively reveal its structure, particularly the underlying geometric relationships between data samples.
+When working with unlabeled data, practitioners often rely on unsupervised learning tools to gain insights that help them adapt subsequent analysis pipelines. Thus, building tools to explore and analyze high-dimensional data has become a core challenge in modern data science \citep{donoho2000high, rudin2022interpretable}. 
 
-These aspects are critical in many real-world applications, such as cell biology \citep{regev2017human, kobak2019art, becht2019dimensionality}, where collaboration with domain experts is essential for interpreting results, extracting meaningful insights from models, and refining experimental designs accordingly.
+The primary difficulty lies in developing interpretable and meaningful approximate representations of the data that effectively reveal its structure, particularly the underlying geometric relationships between data samples. These aspects are critical in many real-world applications, such as cell biology \citep{regev2017human, kobak2019art, becht2019dimensionality}, where collaboration with domain experts is essential for interpreting results, extracting meaningful insights from models, and refining experimental designs accordingly.
 
-Importantly, real-world data is typically both redundant and noisy, so the models must account for this complexity and normalize the noise to capture the underlying meaningful structure. Ideally, the reduced representation should align with the intrinsic dimensionality of the data, which refers to the minimum number of parameters required to capture its essential characteristics. However, the definition of these essential characteristics depends on the specific downstream task being addressed, making the problem somewhat ill-defined.
+Real-world data is often both redundant and noisy, requiring models to manage this complexity and filter out the noise to capture the underlying meaningful structure. Ideally, the reduced representation should align with the intrinsic dimensionality of the data \ie the minimal number of parameters needed to encapsulate its essential characteristics. However, what constitutes these essential characteristics depends on the specific downstream task, making the problem somewhat ill-defined.
 
 
 \paragraph{On the key role of latent spaces.} 
-Beyond simple data exploration, building meaningful representations significantly enhances the performance of machine learning models in general \citep{bengio2013representation}. This is because operating directly in input space is often suboptimal.
+Beyond basic data exploration, constructing meaningful data representations can greatly enhance the performance of machine learning models \citep{bengio2013representation}. Working directly in the input space is frequently suboptimal, as latent representations often capture underlying structure more effectively.
 
-For instance, in the case of images, the distance between raw pixel values can be misleading, as even slight deformations, like rotations, can drastically change pixel values while the overall representation of the image remains the same. Therefore, it is preferable to work in a latent space where points are close in terms of conceptual similarity. Concretely, horses and zebras should be closer to each other than horses and goldfish.
+% For instance, in the case of images, the distance between raw pixel values can be misleading, as even slight deformations, like rotations, can drastically change pixel values while the overall representation of the image remains the same. Therefore, it is preferable to work in a latent space where points are close in terms of conceptual similarity \ie we want points to be close in this space if the corresponding images rerpesent a similar concept. Such Latent spaces enable models to capture higher-level abstractions, leading to improved generalization and greater learning efficiency. There are numerous examples of such models for tasks like planning \citep{hafner2019dream}, latent diffusion for image generation \citep{rombach2022high}, and joint embedding models for downstream tasks in image and video processing \citep{assran2023self, bardes2023v}.
 
-Latent spaces enable models to capture higher-level abstractions, leading to improved generalization and greater learning efficiency. There are numerous examples of such models for tasks like planning \citep{hafner2019dream}, latent diffusion for image generation \citep{rombach2022high}, and joint embedding models for downstream tasks in image and video processing \citep{assran2023self, bardes2023v}.
+For instance, in the case of images, the distance between raw pixel values can be misleading, as even slight deformations, like rotations, can drastically change pixel values while the overall representation of the image remains the same. Therefore, it is preferable to work in a latent space where points are close in terms of conceptual similarity, \ie we want points to be close in this space if the corresponding images represent a similar concept. Such latent spaces enable models to capture higher-level abstractions, leading to improved generalization and greater learning efficiency.
+
+There are numerous examples where models utilizing latent spaces unlock the potential of machine learning models. Some of these include:
+
+\begin{itemize}
+    \item \textbf{Planning and Decision-Making.} In reinforcement learning and planning, latent spaces offer an efficient means to simulate environments and predict future states by abstracting away from pixel-level detail. Models like Dreamer \citep{hafner2019dream} leverage latent representations to perform planning in the embedding space, enabling efficient modeling of potential future scenarios to guide action planning. By operating in this abstract space, such models can make meaningful predictions without the computational burden of exact pixel alignment, thus optimizing planning and decision-making processes in complex environments.
+    
+    \item \textbf{Latent Diffusion for Image Generation.} Similarly, latent diffusion models, like those proposed by \cite{rombach2022high}, enhance image generation by operating within a latent space. This approach allows for efficient sampling, producing coherent, high-quality images that effectively capture intricate visual patterns. This focus on latent representations over direct pixel manipulation enables significant improvements in computational efficiency and image fidelity when compared to pixel-based approaches \citep{song2020score}.
+    
+    \item \textbf{Joint Embedding Models.} Joint embedding approaches, as introduced in recent work by Assran \citep{assran2023self} and Bardes \citep{bardes2023v}, are unlocking new possibilities for video generation, positioning it to reach the levels of success achieved in text generation. The key innovation in these methods lies in predicting missing or masked segments directly in embedding space. Operating in embedding space is particularly advantageous, as it enables the model to discard unpredictable elements from the input space, thereby increasing efficiency and robustness.
+\end{itemize}
+
+Latent representations thus form a robust foundation for these models, enabling greater flexibility, abstraction, and resilience against irrelevant variations.
 
 
-\section{What is Dimensionality reduction in this Landscape}
+\section{Dimensionality Reduction in the Representation Learning Landscape}
 
-Learning representations from data is a broad problem in machine learning that spans many families of methods. In this thesis, we focus specifically on the family often referred to as \emph{dimensionality reduction (DR)} methods. These methods address the particular case of representation learning when a \textbf{ground distance (or similarity) metric is available in the input space}. This ground metric can be leveraged as a form of supervision, guiding the model to reproduce a similar inter-sample dependency structure in the latent space (we detail this view in \Cref{sec:background_dr}). Methods that address such problems are therefore classified as DR methods.
+Learning representations from data is a central and very general problem in machine learning that spans many areas of research. In this thesis, we focus specifically on the family of algorithms often referred to as \emph{dimensionality reduction (DR)} methods. These methods address the particular case of representation learning when a \textbf{ground distance (or similarity) metric is available in the input space}. This ground metric can be leveraged as a form of supervision, guiding the model to reproduce a similar inter-sample dependency structure in the latent space (we detail this view in \Cref{sec:background_dr}). Methods that address such problems are therefore classified as \emph{dimensionality reduction (DR)} methods. The main factors that differentiate DR methods include how affinities are defined from the metric in both input and latent spaces, the criterion used to match them, and the optimization strategy employed. 
 
-In 2000, the machine learning community launched the research on manifold learning, which is to discover the
-intrinsic structure of high dimensional data. 
+Defining a meaningful distance in the input space is notably challenging for most data modalities. For instance, in the case of images, data augmentations are commonly used to approximate a ground-truth distance or to circumvent the need for one altogether \citep{chen2020simple}. Nonetheless, these methods, often referred to as \emph{self-supervised learning (SSL)} algorithms, share key similarities with DR methods, including aspects of loss functions and optimization strategies. This perspective motivates our presentation of DR methods as a specific case within the broader family of representation learning techniques. Notable viewpoints establishing clear connections between DR and SSL can be found in \citep{balestriero2022contrastive} and \citep{tan2023contrastive}. These approaches contrast with popular reconstruction-based methods, such as the variational autoencoder (VAE) \citep{kingma2013auto} and the masked autoencoder \citep{he2022masked}. In the reconstruction setting, the objective is to map the input to a latent space and then back from the latent space to the input space for reconstruction. This approach is valuable as it provides reconstructed samples that are human-interpretable, enabling an informed quality assessment of the model. However, recent studies have shown that reconstruction can sometimes hinder generalization to certain downstream tasks \citep{balestriero2024learning}. This limitation partly explains why reconstruction-based methods often underperform compared to self-supervised learning (SSL) approaches \citep{otero2024self}.
+In the context of data visualization, we observe a similar trend, with variational autoencoders (VAEs) being less popular than neighbor embedding methods, which we will discuss in detail shortly.
 
-Notably, defining a meaningful distance in the input space is not trivial for most data modalities. For example, in the case of images, data augmentations are often employed to either approximate a ground truth distance or circumvent the need for one \citep{chen2020simple}. However, other modalities are more conducive to providing a meaningful distance. This is evident, for instance, in single-cell genomics \citep{amir2013visne}, where variations in gene expression encode biologically significant information (see, \eg \Cref{fig:intro_fig}).
+Some data modalities are more conducive to providing a meaningful distance metric. This is evident, for example, in single-cell genomics \citep{amir2013visne}, where variations in gene expression capture biologically significant information (see, \eg \Cref{fig:intro_fig}). This characteristic partly explains the popularity of dimensionality reduction (DR) methods in this field \citep{kobak2019art}.
 
 
 \begin{figure}[t]
@@ -38,32 +50,27 @@ Notably, defining a meaningful distance in the input space is not trivial for mo
 \end{figure}
 
 
-
 \paragraph{Classical approaches to dimensionality reduction.}
+The story begins with a surge of interest in manifold learning in the 2000s, as the machine learning community sought to reveal the intrinsic structure of high-dimensional data.
 The most foundational methods involve linearly projecting the data onto a lower-dimensional space. These approaches, including Principal Component Analysis (PCA) \citep{pearson1901liii} and multidimensional scaling \citep{kruskal1978multidimensional}, are among the most well-established and widely studied techniques in dimensionality reduction. Their mechanisms can be extended by considering various types of similarity measures between data points in the input space. This leads to kernel-based methods such as Isomap \citep{balasubramanian2002isomap}, Laplacian eigenmaps \citep{belkin2003laplacian}, and diffusion maps \citep{coifman2006diffusion}. These methods share a common structure: they define a pairwise similarity kernel that assigns high values to nearby neighbors and solve a spectral problem. They are well understood and can be unified under the kernel PCA framework \citep{ham2004kernel}.
 
 \paragraph{The revolution of neighbor embedding methods.}
 In the past decade, the field has undergone a significant transformation with the rise of a new class of methods that have largely surpassed classical spectral approaches in the context of data visualization. 
 
-Informally, the algorithm places all
-points on the 2D plane, initially at random positions, and lets them
-interact as if they were physical particles. The interaction is governed by two laws: first, all points are repelled from each other;
-second, each point is attracted to its nearest neighbours
+Informally, the algorithm begins by positioning all points randomly and then simulates interactions as if they were physical particles. The interactions follow two main principles: first, each point experiences a repulsive force from all other points; second, each point is attracted to its nearest neighbors.
 
 Prominent examples of such methods include the Stochastic Neighbor Embedding (SNE) algorithm \citep{NIPS2002SNE}, its heavy-tailed and symmetrized version t-SNE \citep{maaten2008tSNE}, and more recent approaches like LargeVis \citep{tang2016visualizing} and UMAP \citep{mcinnes2018umap}. These methods, referred to as \textit{SNE-like} or \textit{neighbor embedding} methods, have become increasingly popular and are now considered state-of-the-art in many fields \citep{li2017application,kobak2019art,anders2018dissecting}.
  
 Their popularity stems from their remarkable ability to preserve local structure \ie, nearby points in the input space remain close in the embedding space, as shown empirically \citep{wang2021understanding}. Moreover, they excel at identifying clusters \citep{arora2018analysis, linderman2019clustering}, although this often comes at the expense of preserving global structure \citep{wattenberg2016use, coenen2019understanding}. Finally, these methods are highly scalable and particularly well-suited for GPU computation.
 
-
-Although they are widely used in practice, there remains a significant gap in the understanding of neighbor embedding methods compared to well-known spectral algorithms. Addressing this gap is one of the primary objectives of this thesis.
-
-
 \section{Outline of the thesis}
 
-This thesis is organized as follows.
+Although neighbor embedding methods are widely used in practice, a significant gap in understanding remains compared to well-known spectral algorithms. Addressing this gap is one of the primary objectives of this thesis.
+
+This manuscript is organized as follows.
 
 \paragraph{Chapter 2.}
-We review all the necessary background material for the subsequent chapters. We begin with an overview of various dimensionality reduction (DR) methods through the lens of the affinity matching problem, where affinities are defined in both input and latent spaces, and the goal is to match them. We then provide two perspectives on DR methods: one based on latent variable models and the other from a distributional viewpoint using the framework of optimal transport. Extending these perspectives to neighbor embedding methods will be the primary focus of \Cref{chapter:GraphCoupling} and \Cref{chapter:DistR}. Finally, we raise the question of designing new affinity matrices that are more robust to noise heterogeneities in order to address real-world scenarios. This motivates the work presented in \Cref{chapter:SNEkhorn}.
+We review all the necessary background material for the subsequent chapters. We begin with an overview of various dimensionality reduction (DR) methods through the lens of the affinity matching problem, where affinities are defined in both input and latent spaces, and the goal is to match them. We then provide two perspectives on DR methods: one based on latent variable models and the other from a distributional viewpoint using the framework of optimal transport. Extending these perspectives to neighbor embedding methods is a key objective of \Cref{chapter:GraphCoupling} and \Cref{chapter:DistR}. Finally, we raise the question of designing new affinity matrices that are more robust to noise heterogeneities in order to address real-world scenarios. This motivates the work presented in \Cref{chapter:SNEkhorn}.
 
 \paragraph{Chatper 3.} 
 Latent variable models offer a grounded and intuitive formulation of dimensionality reduction (DR). Their key advantage is that they enable extensions to various models and the adaptation of priors. However, current formulations of DR as latent variable models are restricted to linear DR methods, thus excluding popular approaches such as neighborhood embedding methods. 
